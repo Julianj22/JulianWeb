@@ -17,7 +17,7 @@ body {
 .header {
   font-family: 'Noto Sans', sans-serif;
 
- 
+
   margin-left: 5%;
   font-size: large;
   display: inline-block;
@@ -53,7 +53,7 @@ body {
 #wall {
   height: 100%;
   position: relative;
-  margin-bottom:0%;
+  margin-bottom: 0%;
 }
 
 
@@ -89,8 +89,8 @@ body {
 
 }
 
-#wall{
-  margin-bottom:0;
+#wall {
+  margin-bottom: 0;
 }
 
 .text-block {
@@ -101,7 +101,7 @@ body {
   padding-left: 20px;
   padding-right: 20px;
   transition: 1s;
-  
+
 
 }
 
@@ -176,7 +176,7 @@ body {
 #sf {
 
   object-position: 100% 50%;
-  transform: scaleX(-1);
+  transform: scaleX(1);
 }
 
 
@@ -209,15 +209,15 @@ img {
 
 
 
-a:link{
-  color:#5f5959;
-}
-
-a:visited{
+a:link {
   color: #5f5959;
 }
 
-#homePageImg{
+a:visited {
+  color: #5f5959;
+}
+
+#homePageImg {
   animation: ease-out fadeIn 2s;
   margin: 50px;
 }
@@ -233,53 +233,54 @@ a:visited{
 }
 
 
-.heading{
+.heading {
   width: 100%;
   text-align: center;
 
-  font-family:'Noto Sans', sans-serif;
+  font-family: 'Noto Sans', sans-serif;
   font-style: normal;
   font-weight: 100;
   font-size: 50px;
   letter-spacing: -1px;
   color: #000;
   margin-bottom: 8%;
- 
+
 }
 
-.ajj:visited{
-  color:black;
-}
-.ajj:link{
-  color:black;
+.ajj:visited {
+  color: black;
 }
 
-.bott{
+.ajj:link {
+  color: black;
+}
+
+.bott {
   text-align: center;
 }
 
-.bottom{
-  width:80;
-  margin-top:0;
+.bottom {
+  width: 80;
+  margin-top: 0;
 }
 
-.bot{
+.bot {
   clear: both;
   margin-bottom: 20px;
   text-align: center;
-  overflow-y:hidden;
+  overflow-y: hidden;
   opacity: 0;
   font-family: 'Noto Sans', sans-serif;
 }
 
-.bottt{
+.bottt {
   text-align: center;
   margin-bottom: 0;
 }
 
 
-.p1{
-  font-family:'Noto Sans', sans-serif;
+.p1 {
+  font-family: 'Noto Sans', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 62.5%;
@@ -287,19 +288,21 @@ a:visited{
   color: #000;
   margin-bottom: 10%;
   width: 70%;
-  margin:auto;
-  margin-bottom:10%;
+  margin: auto;
+  margin-bottom: 10%;
 }
 
 .grid {
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: center; /* Center horizontally */
+  justify-content: center;
+  /* Center horizontally */
   align-items: center;
   flex-wrap: wrap;
-  max-width: 50%; 
+  max-width: 50%;
 }
+
 .grid-item {
   width: 50%;
   box-sizing: border-box;
@@ -316,98 +319,104 @@ a:visited{
   width: 100%;
   height: auto;
   display: block;
-  
+
 }
 
-.grid-container{
-  width:100%;
+.grid-container {
+  width: 100%;
   display: flex;
   justify-content: center;
 }
 
-.imgL{
+.imgL {
   opacity: 1;
-  width:30%;
-  float: left; 
-  margin-left:1%;
-  margin-right:4%;
-  margin-top:5%;
-  margin-bottom:5%;
+  width: 30%;
+  float: left;
+  margin-left: 1%;
+  margin-right: 4%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
-.imgR{
+.imgR {
   opacity: 1;
-  width:30%;
-  margin-top:5%;
-  margin-bottom:5%;
-  float:right;
-  margin-left:4%;
-  margin-right:4%;
+  width: 30%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  float: right;
+  margin-left: 4%;
+  margin-right: 4%;
 }
 
-.imgLMOBILE{
-  width:50%;
-  margin:auto;
-  opacity:1;
+.imgLMOBILE {
+  width: 50%;
+  margin: auto;
+  opacity: 1;
   margin-top: 12%;
 }
 
-.imgRMOBILE{
-  width:50%;
-  margin:auto;
-  margin-bottom:10%;
+.imgRMOBILE {
+  width: 50%;
+  margin: auto;
+  margin-bottom: 10%;
   margin-top: 5%;
-  opacity:1;
+  opacity: 1;
 }
 
 @media (max-width: 1024px) {
-  .imgLMOBILE{
-    display:block;
+  .imgLMOBILE {
+    display: block;
   }
-  .imgRMOBILE{
-    display:block;
+
+  .imgRMOBILE {
+    display: block;
   }
-  .imgL{
-    display:none;
+
+  .imgL {
+    display: none;
   }
-  .imgR{
-    display:none;
+
+  .imgR {
+    display: none;
   }
 }
 
 @media (min-width: 1024px) {
-  .imgLMOBILE{
-    display:none;
-  }
-  .imgRMOBILE{
-    display:none;
-  }
-  .imgL{
-    display:block;
-  }
-  .imgR{
-    display:block;
+  .imgLMOBILE {
+    display: none;
   }
 
+  .imgRMOBILE {
+    display: none;
+  }
+
+  .imgL {
+    display: block;
+  }
+
+  .imgR {
+    display: block;
+  }
+
 }
 
-.pageText{
-  opacity:0;
+.pageText {
+  opacity: 0;
 }
 
-#IAC{
-  margin-top:0;
+#IAC {
+  margin-top: 0;
 }
 
-#camp{
-  margin-bottom:0;
+#camp {
+  margin-bottom: 0;
 }
 
-#gg{
-  margin-bottom:0;
-  margin-top:10%;
+#gg {
+  margin-bottom: 0;
+  margin-top: 10%;
 }
 
-#camp1{
-  margin-bottom:20%;
+#camp1 {
+  margin-bottom: 20%;
 }
