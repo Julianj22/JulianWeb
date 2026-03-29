@@ -419,3 +419,94 @@ a:visited {
 #camp1 {
   margin-bottom: 20%;
 }
+
+.contact-form-section {
+  max-width: 600px;
+  margin: 60px auto 60px auto;
+  padding: 0 5%;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.form-heading {
+  font-family: 'GFS Didot', serif;
+  font-weight: normal;
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+  color: #2c3e50;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(0, 0, 0, 0.55);
+  margin-bottom: 6px;
+  transition: color 0.2s;
+}
+
+.form-group.focused label {
+  color: #2c3e50;
+}
+
+.form-group.error label {
+  color: #c0392b;
+}
+
+.form-group input,
+.form-group textarea {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 1rem;
+  border: none;
+  border-bottom: 1.5px solid rgba(0, 0, 0, 0.2);
+  outline: none;
+  padding: 8px 2px;
+  background: transparent;
+  transition: border-color 0.2s;
+  resize: none;
+  color: #2c3e50;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.form-group.focused input,
+.form-group.focused textarea {
+  border-bottom-color: #2c3e50;
+}
+
+.form-group.error input,
+.form-group.error textarea {
+  border-bottom-color: #c0392b;
+}
+
+#form-submit {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: none;
+  border: 1.5px solid #2c3e50;
+  color: #2c3e50;
+  padding: 10px 28px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+
+#form-submit:hover {
+  background: #2c3e50;
+  color: #fff;
+}
+
+#form-feedback {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.95rem;
+}
