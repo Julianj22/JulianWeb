@@ -1,57 +1,47 @@
 $(document).ready(function () {
 
-  $('#contact-form input, #contact-form textarea').on('focus', function () {
-    $(this).parent('.form-group').addClass('focused');
-  });
+  var correctAnswer;
 
-  $('#contact-form input, #contact-form textarea').on('blur', function () {
-    $(this).parent('.form-group').removeClass('focused');
-    if ($(this).val().trim() !== '') {
-      $(this).parent('.form-group').addClass('filled');
-    } else {
-      $(this).parent('.form-group').removeClass('filled');
-    }
-  });
+  function generateProblem() {
+    var a = Math.floor(Math.random() * 20) + 1;
+    var b = Math.floor(Math.random() * 20) + 1;
+    var ops = ['+', '-', '\u00d7'];
+    var op = ops[Math.floor(Math.random() * ops.length)];
 
-  $('#contact-form').on('submit', function (e) {
-    e.preventDefault();
+    if (op === '+') correctAnswer = a + b;
+    if (op === '-') correctAnswer = a - b;
+    if (op === '\u00d7') correctAnswer = a * b;
 
-    var name = $('#input-name').val().trim();
-    var email = $('#input-email').val().trim();
-    var message = $('#input-message').val().trim();
-    var valid = true;
+    $('#math-question').text('What is ' + a + ' ' + op + ' ' + b + '?');
+    $('#math-answer').val('');
+    $('#math-feedback').text('').css('color', '');
+  }
 
-    $('.form-group').removeClass('error');
-    $('#form-feedback').text('').hide();
+  generateProblem();
 
-    if (!name) {
-      $('#input-name').parent('.form-group').addClass('error');
-      valid = false;
-    }
-    if (!email || !email.includes('@')) {
-      $('#input-email').parent('.form-group').addClass('error');
-      valid = false;
-    }
-    if (!message) {
-      $('#input-message').parent('.form-group').addClass('error');
-      valid = false;
-    }
+  $('#math-submit').on('click', function () {
+    var userAnswer = parseInt($('#math-answer').val().trim(), 10);
 
-    if (!valid) {
-      $('#form-feedback')
-        .text('Please fill in all fields correctly.')
-        .css('color', '#c0392b')
-        .fadeIn();
+    if (isNaN(userAnswer)) {
+      $('#math-feedback').text('Please enter a number.').css('color', '#c0392b');
       return;
     }
 
-    $('#form-feedback')
-      .text('Thanks for reaching out, ' + name + '! I\'ll be in touch soon.')
-      .css('color', '#2c3e50')
-      .fadeIn();
+    if (userAnswer === correctAnswer) {
+      $('#math-feedback').text('Correct!').css('color', '#27ae60');
+      setTimeout(function () {
+        generateProblem();
+        $('#math-feedback').text('');
+      }, 1200);
+    } else {
+      $('#math-feedback').text('Not quite, try again.').css('color', '#c0392b');
+    }
+  });
 
-    $('#contact-form')[0].reset();
-    $('.form-group').removeClass('filled');
+  $('#math-answer').on('keydown', function (e) {
+    if (e.key === 'Enter') {
+      $('#math-submit').click();
+    }
   });
 
 });
