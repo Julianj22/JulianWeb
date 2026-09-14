@@ -1,0 +1,2360 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>A Packages used in this book | Modern Data Science with R</title>
+  <meta name="description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="A Packages used in this book | Modern Data Science with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://mdsr-book.github.io/mdsr2e/" />
+  <meta property="og:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+  <meta property="og:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="github-repo" content="mdsr-book/mdsr2e" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Packages used in this book | Modern Data Science with R" />
+  
+  <meta name="twitter:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="twitter:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+
+<meta name="author" content="Benjamin S. Baumer, Daniel T. Kaplan, and Nicholas J. Horton" />
+
+
+<meta name="date" content="2021-07-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="references.html"/>
+<link rel="next" href="ch-R.html"/>
+<script src="book_assets/header-attrs-2.9/header-attrs.js"></script>
+<script src="book_assets/jquery-3.5.1/jquery.min.js"></script>
+<link href="book_assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="book_assets/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="book_assets/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="book_assets/kePrint-0.0.1/kePrint.js"></script>
+<link href="book_assets/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="book_assets/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="book_assets/bsTable-3.3.7/bootstrapTable.js"></script>
+<script src="book_assets/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="book_assets/plotly-binding-4.9.4.1/plotly.js"></script>
+<script src="book_assets/typedarray-0.1/typedarray.min.js"></script>
+<link href="book_assets/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="book_assets/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="book_assets/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="book_assets/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<link href="book_assets/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="book_assets/datatables-binding-0.18/datatables.js"></script>
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="book_assets/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="book_assets/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="book_assets/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="book_assets/dygraphs-1.1.1/shapes.js"></script>
+<script src="book_assets/moment-2.8.4/moment.js"></script>
+<script src="book_assets/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="book_assets/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="book_assets/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<script src="book_assets/d3-3.5.3/d3.min.js"></script>
+<link href="book_assets/colorbrewer-1/colorbrewer.css" rel="stylesheet" />
+<script src="book_assets/colorbrewer-1/colorbrewer.js"></script>
+<link href="book_assets/streamgraph-1/streamgraph.css" rel="stylesheet" />
+<script src="book_assets/streamgraph-binding-0.9.0/streamgraph.js"></script>
+<link href="book_assets/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-1.3.1/leaflet.js"></script>
+<link href="book_assets/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="book_assets/proj4-2.6.2/proj4.min.js"></script>
+<script src="book_assets/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="book_assets/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-binding-2.0.4.1/leaflet.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html">Modern Data Science with R, 2nd edition</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#nd-edition"><i class="fa fa-check"></i>2nd edition</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#note-about-erroneous-black-and-white-printing"><i class="fa fa-check"></i>Note about erroneous black-and-white printing!</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#cover"><i class="fa fa-check"></i>Cover</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#st-edition"><i class="fa fa-check"></i>1st edition</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#copyright"><i class="fa fa-check"></i>Copyright</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#background-and-motivation"><i class="fa fa-check"></i>Background and motivation</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#intended-audience"><i class="fa fa-check"></i>Intended audience</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-features-of-this-book"><i class="fa fa-check"></i>Key features of this book</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#focus-on-case-studies-and-extended-examples"><i class="fa fa-check"></i>Focus on case studies and extended examples</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#structure"><i class="fa fa-check"></i>Structure</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#supporting-materials"><i class="fa fa-check"></i>Supporting materials</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#changes-in-the-second-edition"><i class="fa fa-check"></i>Changes in the second edition</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-role-of-technology"><i class="fa fa-check"></i>Key role of technology</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#how-to-use-this-book"><i class="fa fa-check"></i>How to use this book</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="part"><span><b>I Part I: Introduction to Data Science</b></span></li>
+<li class="chapter" data-level="1" data-path="ch-prologue.html"><a href="ch-prologue.html"><i class="fa fa-check"></i><b>1</b> Prologue: Why data science?</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="ch-prologue.html"><a href="ch-prologue.html#what-is-data-science"><i class="fa fa-check"></i><b>1.1</b> What is data science?</a></li>
+<li class="chapter" data-level="1.2" data-path="ch-prologue.html"><a href="ch-prologue.html#case-study-the-evolution-of-sabermetrics"><i class="fa fa-check"></i><b>1.2</b> Case study: The evolution of sabermetrics</a></li>
+<li class="chapter" data-level="1.3" data-path="ch-prologue.html"><a href="ch-prologue.html#datasets"><i class="fa fa-check"></i><b>1.3</b> Datasets</a></li>
+<li class="chapter" data-level="1.4" data-path="ch-prologue.html"><a href="ch-prologue.html#intro-further"><i class="fa fa-check"></i><b>1.4</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch-vizI.html"><a href="ch-vizI.html"><i class="fa fa-check"></i><b>2</b> Data visualization</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#the-2012-federal-election-cycle"><i class="fa fa-check"></i><b>2.1</b> The 2012 federal election cycle</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="ch-vizI.html"><a href="ch-vizI.html#are-these-two-groups-different"><i class="fa fa-check"></i><b>2.1.1</b> Are these two groups different?</a></li>
+<li class="chapter" data-level="2.1.2" data-path="ch-vizI.html"><a href="ch-vizI.html#graphing-variation"><i class="fa fa-check"></i><b>2.1.2</b> Graphing variation</a></li>
+<li class="chapter" data-level="2.1.3" data-path="ch-vizI.html"><a href="ch-vizI.html#examining-relationships-among-variables"><i class="fa fa-check"></i><b>2.1.3</b> Examining relationships among variables</a></li>
+<li class="chapter" data-level="2.1.4" data-path="ch-vizI.html"><a href="ch-vizI.html#networks"><i class="fa fa-check"></i><b>2.1.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#composing-data-graphics"><i class="fa fa-check"></i><b>2.2</b> Composing data graphics</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#a-taxonomy-for-data-graphics"><i class="fa fa-check"></i><b>2.2.1</b> A taxonomy for data graphics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#sec:color"><i class="fa fa-check"></i><b>2.2.2</b> Color</a></li>
+<li class="chapter" data-level="2.2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#dissecting-data-graphics"><i class="fa fa-check"></i><b>2.2.3</b> Dissecting data graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#importance-of-data-graphics-challenger"><i class="fa fa-check"></i><b>2.3</b> Importance of data graphics: <em>Challenger</em></a></li>
+<li class="chapter" data-level="2.4" data-path="ch-vizI.html"><a href="ch-vizI.html#creating-effective-presentations"><i class="fa fa-check"></i><b>2.4</b> Creating effective presentations</a></li>
+<li class="chapter" data-level="2.5" data-path="ch-vizI.html"><a href="ch-vizI.html#the-wider-world-of-data-visualization"><i class="fa fa-check"></i><b>2.5</b> The wider world of data visualization</a></li>
+<li class="chapter" data-level="2.6" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-further"><i class="fa fa-check"></i><b>2.6</b> Further resources</a></li>
+<li class="chapter" data-level="2.7" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-exercises"><i class="fa fa-check"></i><b>2.7</b> Exercises</a></li>
+<li class="chapter" data-level="2.8" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-online-exercises"><i class="fa fa-check"></i><b>2.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch-vizII.html"><a href="ch-vizII.html"><i class="fa fa-check"></i><b>3</b> A grammar for graphics</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#a-grammar-for-data-graphics"><i class="fa fa-check"></i><b>3.1</b> A grammar for data graphics</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="ch-vizII.html"><a href="ch-vizII.html#aesthetics"><i class="fa fa-check"></i><b>3.1.1</b> Aesthetics</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ch-vizII.html"><a href="ch-vizII.html#scales"><i class="fa fa-check"></i><b>3.1.2</b> Scales</a></li>
+<li class="chapter" data-level="3.1.3" data-path="ch-vizII.html"><a href="ch-vizII.html#guides"><i class="fa fa-check"></i><b>3.1.3</b> Guides</a></li>
+<li class="chapter" data-level="3.1.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:facet"><i class="fa fa-check"></i><b>3.1.4</b> Facets</a></li>
+<li class="chapter" data-level="3.1.5" data-path="ch-vizII.html"><a href="ch-vizII.html#layers"><i class="fa fa-check"></i><b>3.1.5</b> Layers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:canonical"><i class="fa fa-check"></i><b>3.2</b> Canonical data graphics in (ref:R)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch-vizII.html"><a href="ch-vizII.html#univariate-displays"><i class="fa fa-check"></i><b>3.2.1</b> Univariate displays</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch-vizII.html"><a href="ch-vizII.html#multivariate-displays"><i class="fa fa-check"></i><b>3.2.2</b> Multivariate displays</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch-vizII.html"><a href="ch-vizII.html#maps"><i class="fa fa-check"></i><b>3.2.3</b> Maps</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:datanetwork"><i class="fa fa-check"></i><b>3.2.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:babynames"><i class="fa fa-check"></i><b>3.3</b> Extended example: Historical baby names</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#percentage-of-people-alive-today"><i class="fa fa-check"></i><b>3.3.1</b> Percentage of people alive today</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#most-common-names-for-women"><i class="fa fa-check"></i><b>3.3.2</b> Most common names for women</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-further"><i class="fa fa-check"></i><b>3.4</b> Further resources</a></li>
+<li class="chapter" data-level="3.5" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-exercises"><i class="fa fa-check"></i><b>3.5</b> Exercises</a></li>
+<li class="chapter" data-level="3.6" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-online-exercises"><i class="fa fa-check"></i><b>3.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch-dataI.html"><a href="ch-dataI.html"><i class="fa fa-check"></i><b>4</b> Data wrangling on one table</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:five_idioms"><i class="fa fa-check"></i><b>4.1</b> A grammar for data wrangling</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:pipe"><i class="fa fa-check"></i><b>4.1.1</b> <code>select()</code> and <code>filter()</code></a></li>
+<li class="chapter" data-level="4.1.2" data-path="ch-dataI.html"><a href="ch-dataI.html#mutate-and-rename"><i class="fa fa-check"></i><b>4.1.2</b> <code>mutate()</code> and <code>rename()</code></a></li>
+<li class="chapter" data-level="4.1.3" data-path="ch-dataI.html"><a href="ch-dataI.html#arrange"><i class="fa fa-check"></i><b>4.1.3</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="4.1.4" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:summarize"><i class="fa fa-check"></i><b>4.1.4</b> <code>summarize()</code> with <code>group_by()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:mets"><i class="fa fa-check"></i><b>4.2</b> Extended example: Ben’s time with the Mets</a></li>
+<li class="chapter" data-level="4.3" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-further"><i class="fa fa-check"></i><b>4.3</b> Further resources</a></li>
+<li class="chapter" data-level="4.4" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-exercises"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+<li class="chapter" data-level="4.5" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-online-exercises"><i class="fa fa-check"></i><b>4.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch-join.html"><a href="ch-join.html"><i class="fa fa-check"></i><b>5</b> Data wrangling on multiple tables</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch-join.html"><a href="ch-join.html#inner_join"><i class="fa fa-check"></i><b>5.1</b> <code>inner_join()</code></a></li>
+<li class="chapter" data-level="5.2" data-path="ch-join.html"><a href="ch-join.html#left_join"><i class="fa fa-check"></i><b>5.2</b> <code>left_join()</code></a></li>
+<li class="chapter" data-level="5.3" data-path="ch-join.html"><a href="ch-join.html#extended-example-manny-ramirez"><i class="fa fa-check"></i><b>5.3</b> Extended example: Manny Ramirez</a></li>
+<li class="chapter" data-level="5.4" data-path="ch-join.html"><a href="ch-join.html#joins-further"><i class="fa fa-check"></i><b>5.4</b> Further resources</a></li>
+<li class="chapter" data-level="5.5" data-path="ch-join.html"><a href="ch-join.html#join-exercises"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
+<li class="chapter" data-level="5.6" data-path="ch-join.html"><a href="ch-join.html#join-online-exercises"><i class="fa fa-check"></i><b>5.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch-dataII.html"><a href="ch-dataII.html"><i class="fa fa-check"></i><b>6</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch-dataII.html"><a href="ch-dataII.html#tidy-data"><i class="fa fa-check"></i><b>6.1</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="ch-dataII.html"><a href="ch-dataII.html#motivation"><i class="fa fa-check"></i><b>6.1.1</b> Motivation</a></li>
+<li class="chapter" data-level="6.1.2" data-path="ch-dataII.html"><a href="ch-dataII.html#what-are-tidy-data"><i class="fa fa-check"></i><b>6.1.2</b> What are tidy data?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="ch-dataII.html"><a href="ch-dataII.html#reshaping-data"><i class="fa fa-check"></i><b>6.2</b> Reshaping data</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-verbs-for-converting-wide-to-narrow-and-vice-versa"><i class="fa fa-check"></i><b>6.2.1</b> Data verbs for converting wide to narrow and <em>vice versa</em></a></li>
+<li class="chapter" data-level="6.2.2" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-wider"><i class="fa fa-check"></i><b>6.2.2</b> Pivoting wider</a></li>
+<li class="chapter" data-level="6.2.3" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-longer"><i class="fa fa-check"></i><b>6.2.3</b> Pivoting longer</a></li>
+<li class="chapter" data-level="6.2.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nest"><i class="fa fa-check"></i><b>6.2.4</b> List-columns</a></li>
+<li class="chapter" data-level="6.2.5" data-path="ch-dataII.html"><a href="ch-dataII.html#example-gender-neutral-names"><i class="fa fa-check"></i><b>6.2.5</b> Example: Gender-neutral names</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:naming"><i class="fa fa-check"></i><b>6.3</b> Naming conventions</a></li>
+<li class="chapter" data-level="6.4" data-path="ch-dataII.html"><a href="ch-dataII.html#data-intake"><i class="fa fa-check"></i><b>6.4</b> Data intake</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-table-friendly-formats"><i class="fa fa-check"></i><b>6.4.1</b> Data-table friendly formats</a></li>
+<li class="chapter" data-level="6.4.2" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:apis"><i class="fa fa-check"></i><b>6.4.2</b> APIs</a></li>
+<li class="chapter" data-level="6.4.3" data-path="ch-dataII.html"><a href="ch-dataII.html#cleaning-data"><i class="fa fa-check"></i><b>6.4.3</b> Cleaning data</a></li>
+<li class="chapter" data-level="6.4.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nukes"><i class="fa fa-check"></i><b>6.4.4</b> Example: Japanese nuclear reactors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-further"><i class="fa fa-check"></i><b>6.5</b> Further resources</a></li>
+<li class="chapter" data-level="6.6" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-exercises"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+<li class="chapter" data-level="6.7" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-online-exercises"><i class="fa fa-check"></i><b>6.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch-iteration.html"><a href="ch-iteration.html"><i class="fa fa-check"></i><b>7</b> Iteration</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:vectorized"><i class="fa fa-check"></i><b>7.1</b> Vectorized operations</a></li>
+<li class="chapter" data-level="7.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:scoped"><i class="fa fa-check"></i><b>7.2</b> Using <code>across()</code> with <strong>dplyr</strong> functions</a></li>
+<li class="chapter" data-level="7.3" data-path="ch-iteration.html"><a href="ch-iteration.html#appR:apply"><i class="fa fa-check"></i><b>7.3</b> The <code>map()</code> family of functions</a></li>
+<li class="chapter" data-level="7.4" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-over-a-one-dimensional-vector"><i class="fa fa-check"></i><b>7.4</b> Iterating over a one-dimensional vector</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-a-known-function"><i class="fa fa-check"></i><b>7.4.1</b> Iterating a known function</a></li>
+<li class="chapter" data-level="7.4.2" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-an-arbitrary-function"><i class="fa fa-check"></i><b>7.4.2</b> Iterating an arbitrary function</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:group-map"><i class="fa fa-check"></i><b>7.5</b> Iteration over subgroups</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:pythag"><i class="fa fa-check"></i><b>7.5.1</b> Example: Expected winning percentage</a></li>
+<li class="chapter" data-level="7.5.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:hrs"><i class="fa fa-check"></i><b>7.5.2</b> Example: Annual leaders</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="ch-iteration.html"><a href="ch-iteration.html#simulation"><i class="fa fa-check"></i><b>7.6</b> Simulation</a></li>
+<li class="chapter" data-level="7.7" data-path="ch-iteration.html"><a href="ch-iteration.html#extended-example-factors-associated-with-bmi"><i class="fa fa-check"></i><b>7.7</b> Extended example: Factors associated with BMI</a></li>
+<li class="chapter" data-level="7.8" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-further"><i class="fa fa-check"></i><b>7.8</b> Further resources</a></li>
+<li class="chapter" data-level="7.9" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-exercises"><i class="fa fa-check"></i><b>7.9</b> Exercises</a></li>
+<li class="chapter" data-level="7.10" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-online-exercises"><i class="fa fa-check"></i><b>7.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch-ethics.html"><a href="ch-ethics.html"><i class="fa fa-check"></i><b>8</b> Data science ethics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-intro"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ch-ethics.html"><a href="ch-ethics.html#truthful-falsehoods"><i class="fa fa-check"></i><b>8.2</b> Truthful falsehoods</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ch-ethics.html"><a href="ch-ethics.html#stand-your-ground"><i class="fa fa-check"></i><b>8.2.1</b> Stand your ground</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ch-ethics.html"><a href="ch-ethics.html#global-temperature"><i class="fa fa-check"></i><b>8.2.2</b> Global temperature</a></li>
+<li class="chapter" data-level="8.2.3" data-path="ch-ethics.html"><a href="ch-ethics.html#covid-19-reporting"><i class="fa fa-check"></i><b>8.2.3</b> COVID-19 reporting</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ch-ethics.html"><a href="ch-ethics.html#role-of-data-science-in-society"><i class="fa fa-check"></i><b>8.3</b> Role of data science in society</a></li>
+<li class="chapter" data-level="8.4" data-path="ch-ethics.html"><a href="ch-ethics.html#some-settings-for-professional-ethics"><i class="fa fa-check"></i><b>8.4</b> Some settings for professional ethics</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-chief-executive-officer"><i class="fa fa-check"></i><b>8.4.1</b> The chief executive officer</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination"><i class="fa fa-check"></i><b>8.4.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar"><i class="fa fa-check"></i><b>8.4.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.4.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction"><i class="fa fa-check"></i><b>8.4.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.4.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping"><i class="fa fa-check"></i><b>8.4.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.4.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis"><i class="fa fa-check"></i><b>8.4.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.4.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers"><i class="fa fa-check"></i><b>8.4.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.4.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations"><i class="fa fa-check"></i><b>8.4.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ch-ethics.html"><a href="ch-ethics.html#some-principles-to-guide-ethical-action"><i class="fa fa-check"></i><b>8.5</b> Some principles to guide ethical action</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-ceo"><i class="fa fa-check"></i><b>8.5.1</b> The CEO</a></li>
+<li class="chapter" data-level="8.5.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination-1"><i class="fa fa-check"></i><b>8.5.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.5.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar-1"><i class="fa fa-check"></i><b>8.5.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.5.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction-1"><i class="fa fa-check"></i><b>8.5.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.5.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping-1"><i class="fa fa-check"></i><b>8.5.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.5.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis-1"><i class="fa fa-check"></i><b>8.5.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.5.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers-1"><i class="fa fa-check"></i><b>8.5.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.5.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations-1"><i class="fa fa-check"></i><b>8.5.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="ch-ethics.html"><a href="ch-ethics.html#algorithmic-bias"><i class="fa fa-check"></i><b>8.6</b> Algorithmic bias</a></li>
+<li class="chapter" data-level="8.7" data-path="ch-ethics.html"><a href="ch-ethics.html#data-and-disclosure"><i class="fa fa-check"></i><b>8.7</b> Data and disclosure</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="ch-ethics.html"><a href="ch-ethics.html#reidentification-and-disclosure-avoidance"><i class="fa fa-check"></i><b>8.7.1</b> Reidentification and disclosure avoidance</a></li>
+<li class="chapter" data-level="8.7.2" data-path="ch-ethics.html"><a href="ch-ethics.html#safe-data-storage"><i class="fa fa-check"></i><b>8.7.2</b> Safe data storage</a></li>
+<li class="chapter" data-level="8.7.3" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:terms-of-use"><i class="fa fa-check"></i><b>8.7.3</b> Data scraping and terms of use</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:reproducibility"><i class="fa fa-check"></i><b>8.8</b> Reproducibility</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#example-erroneous-data-merging"><i class="fa fa-check"></i><b>8.8.1</b> Example: Erroneous data merging</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-collectively"><i class="fa fa-check"></i><b>8.9</b> Ethics, collectively</a></li>
+<li class="chapter" data-level="8.10" data-path="ch-ethics.html"><a href="ch-ethics.html#professional-guidelines-for-ethical-conduct"><i class="fa fa-check"></i><b>8.10</b> Professional guidelines for ethical conduct</a></li>
+<li class="chapter" data-level="8.11" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-further"><i class="fa fa-check"></i><b>8.11</b> Further resources</a></li>
+<li class="chapter" data-level="8.12" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-exercises"><i class="fa fa-check"></i><b>8.12</b> Exercises</a></li>
+<li class="chapter" data-level="8.13" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-online-exercises"><i class="fa fa-check"></i><b>8.13</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>II Part II: Statistics and Modeling</b></span></li>
+<li class="chapter" data-level="9" data-path="ch-foundations.html"><a href="ch-foundations.html"><i class="fa fa-check"></i><b>9</b> Statistical foundations</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch-foundations.html"><a href="ch-foundations.html#samples-and-populations"><i class="fa fa-check"></i><b>9.1</b> Samples and populations</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy-by-sampling-from-the-population"><i class="fa fa-check"></i><b>9.1.1</b> Example: Setting travel policy by sampling from the population</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="ch-foundations.html"><a href="ch-foundations.html#sample-statistics"><i class="fa fa-check"></i><b>9.2</b> Sample statistics</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:lln"><i class="fa fa-check"></i><b>9.2.1</b> The sampling distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:boot"><i class="fa fa-check"></i><b>9.3</b> The bootstrap</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy"><i class="fa fa-check"></i><b>9.3.1</b> Example: Setting travel policy</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="ch-foundations.html"><a href="ch-foundations.html#outliers"><i class="fa fa-check"></i><b>9.4</b> Outliers</a></li>
+<li class="chapter" data-level="9.5" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:gooddesign"><i class="fa fa-check"></i><b>9.5</b> Statistical models: Explaining variation</a></li>
+<li class="chapter" data-level="9.6" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:confound"><i class="fa fa-check"></i><b>9.6</b> Confounding and accounting for other factors</a></li>
+<li class="chapter" data-level="9.7" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:p-perils"><i class="fa fa-check"></i><b>9.7</b> The perils of p-values</a></li>
+<li class="chapter" data-level="9.8" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-further"><i class="fa fa-check"></i><b>9.8</b> Further resources</a></li>
+<li class="chapter" data-level="9.9" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-exercises"><i class="fa fa-check"></i><b>9.9</b> Exercises</a></li>
+<li class="chapter" data-level="9.10" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-online-exercises"><i class="fa fa-check"></i><b>9.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch-modeling.html"><a href="ch-modeling.html"><i class="fa fa-check"></i><b>10</b> Predictive modeling</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch-modeling.html"><a href="ch-modeling.html#predictive-modeling"><i class="fa fa-check"></i><b>10.1</b> Predictive modeling</a></li>
+<li class="chapter" data-level="10.2" data-path="ch-modeling.html"><a href="ch-modeling.html#simple-classification-models"><i class="fa fa-check"></i><b>10.2</b> Simple classification models</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="ch-modeling.html"><a href="ch-modeling.html#example-high-earners-in-the-1994-united-states-census"><i class="fa fa-check"></i><b>10.2.1</b> Example: High-earners in the 1994 United States Census</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="ch-modeling.html"><a href="ch-modeling.html#evaluating-models"><i class="fa fa-check"></i><b>10.3</b> Evaluating models</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:bias-variance"><i class="fa fa-check"></i><b>10.3.1</b> Bias-variance trade-off</a></li>
+<li class="chapter" data-level="10.3.2" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:cv"><i class="fa fa-check"></i><b>10.3.2</b> Cross-validation</a></li>
+<li class="chapter" data-level="10.3.3" data-path="ch-modeling.html"><a href="ch-modeling.html#confusion-matrices-and-roc-curves"><i class="fa fa-check"></i><b>10.3.3</b> Confusion matrices and ROC curves</a></li>
+<li class="chapter" data-level="10.3.4" data-path="ch-modeling.html"><a href="ch-modeling.html#measuring-prediction-error-for-quantitative-responses"><i class="fa fa-check"></i><b>10.3.4</b> Measuring prediction error for quantitative responses</a></li>
+<li class="chapter" data-level="10.3.5" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:evaluate"><i class="fa fa-check"></i><b>10.3.5</b> Example: Evaluation of income models</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:diabetes"><i class="fa fa-check"></i><b>10.4</b> Extended example: Who has diabetes?</a></li>
+<li class="chapter" data-level="10.5" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-further"><i class="fa fa-check"></i><b>10.5</b> Further resources</a></li>
+<li class="chapter" data-level="10.6" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-exercises"><i class="fa fa-check"></i><b>10.6</b> Exercises</a></li>
+<li class="chapter" data-level="10.7" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-online-exercises"><i class="fa fa-check"></i><b>10.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch-learningI.html"><a href="ch-learningI.html"><i class="fa fa-check"></i><b>11</b> Supervised learning</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch-learningI.html"><a href="ch-learningI.html#non-regression-classifiers"><i class="fa fa-check"></i><b>11.1</b> Non-regression classifiers</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="ch-learningI.html"><a href="ch-learningI.html#decision-trees"><i class="fa fa-check"></i><b>11.1.1</b> Decision trees</a></li>
+<li class="chapter" data-level="11.1.2" data-path="ch-learningI.html"><a href="ch-learningI.html#random-forests"><i class="fa fa-check"></i><b>11.1.2</b> Random forests</a></li>
+<li class="chapter" data-level="11.1.3" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:knn"><i class="fa fa-check"></i><b>11.1.3</b> Nearest neighbor</a></li>
+<li class="chapter" data-level="11.1.4" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:bayes"><i class="fa fa-check"></i><b>11.1.4</b> Naïve Bayes</a></li>
+<li class="chapter" data-level="11.1.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:neuralnet"><i class="fa fa-check"></i><b>11.1.5</b> Artificial neural networks</a></li>
+<li class="chapter" data-level="11.1.6" data-path="ch-learningI.html"><a href="ch-learningI.html#ensemble-methods"><i class="fa fa-check"></i><b>11.1.6</b> Ensemble methods</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:tuning"><i class="fa fa-check"></i><b>11.2</b> Parameter tuning</a></li>
+<li class="chapter" data-level="11.3" data-path="ch-learningI.html"><a href="ch-learningI.html#example-evaluation-of-income-models-redux"><i class="fa fa-check"></i><b>11.3</b> Example: Evaluation of income models redux</a></li>
+<li class="chapter" data-level="11.4" data-path="ch-learningI.html"><a href="ch-learningI.html#extended-example-who-has-diabetes-this-time"><i class="fa fa-check"></i><b>11.4</b> Extended example: Who has diabetes this time?</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch-learningI.html"><a href="ch-learningI.html#comparing-all-models"><i class="fa fa-check"></i><b>11.4.1</b> Comparing all models</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:regularization"><i class="fa fa-check"></i><b>11.5</b> Regularization</a></li>
+<li class="chapter" data-level="11.6" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-further"><i class="fa fa-check"></i><b>11.6</b> Further resources</a></li>
+<li class="chapter" data-level="11.7" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-exercises"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
+<li class="chapter" data-level="11.8" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-online-exercises"><i class="fa fa-check"></i><b>11.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch-learningII.html"><a href="ch-learningII.html"><i class="fa fa-check"></i><b>12</b> Unsupervised learning</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch-learningII.html"><a href="ch-learningII.html#clustering"><i class="fa fa-check"></i><b>12.1</b> Clustering</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="ch-learningII.html"><a href="ch-learningII.html#sec:hclust"><i class="fa fa-check"></i><b>12.1.1</b> Hierarchical clustering</a></li>
+<li class="chapter" data-level="12.1.2" data-path="ch-learningII.html"><a href="ch-learningII.html#k-means"><i class="fa fa-check"></i><b>12.1.2</b> <span class="math inline">\(k\)</span>-means</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="ch-learningII.html"><a href="ch-learningII.html#dimension-reduction"><i class="fa fa-check"></i><b>12.2</b> Dimension reduction</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch-learningII.html"><a href="ch-learningII.html#intuitive-approaches"><i class="fa fa-check"></i><b>12.2.1</b> Intuitive approaches</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch-learningII.html"><a href="ch-learningII.html#singular-value-decomposition"><i class="fa fa-check"></i><b>12.2.2</b> Singular value decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-further"><i class="fa fa-check"></i><b>12.3</b> Further resources</a></li>
+<li class="chapter" data-level="12.4" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-exercises"><i class="fa fa-check"></i><b>12.4</b> Exercises</a></li>
+<li class="chapter" data-level="12.5" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-online-exercises"><i class="fa fa-check"></i><b>12.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch-simulation.html"><a href="ch-simulation.html"><i class="fa fa-check"></i><b>13</b> Simulation</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch-simulation.html"><a href="ch-simulation.html#reasoning-in-reverse"><i class="fa fa-check"></i><b>13.1</b> Reasoning in reverse</a></li>
+<li class="chapter" data-level="13.2" data-path="ch-simulation.html"><a href="ch-simulation.html#extended-example-grouping-cancers"><i class="fa fa-check"></i><b>13.2</b> Extended example: Grouping cancers</a></li>
+<li class="chapter" data-level="13.3" data-path="ch-simulation.html"><a href="ch-simulation.html#randomizing-functions"><i class="fa fa-check"></i><b>13.3</b> Randomizing functions</a></li>
+<li class="chapter" data-level="13.4" data-path="ch-simulation.html"><a href="ch-simulation.html#simulating-variability"><i class="fa fa-check"></i><b>13.4</b> Simulating variability</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch-simulation.html"><a href="ch-simulation.html#the-partially-planned-rendezvous"><i class="fa fa-check"></i><b>13.4.1</b> The partially-planned rendezvous</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:jobsnum"><i class="fa fa-check"></i><b>13.4.2</b> The jobs report</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch-simulation.html"><a href="ch-simulation.html#restaurant-health-and-sanitation-grades"><i class="fa fa-check"></i><b>13.4.3</b> Restaurant health and sanitation grades</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch-simulation.html"><a href="ch-simulation.html#random-networks"><i class="fa fa-check"></i><b>13.5</b> Random networks</a></li>
+<li class="chapter" data-level="13.6" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:key-principles-random"><i class="fa fa-check"></i><b>13.6</b> Key principles of simulation</a>
+<ul>
+<li class="chapter" data-level="13.6.1" data-path="ch-simulation.html"><a href="ch-simulation.html#design"><i class="fa fa-check"></i><b>13.6.1</b> Design</a></li>
+<li class="chapter" data-level="13.6.2" data-path="ch-simulation.html"><a href="ch-simulation.html#modularity"><i class="fa fa-check"></i><b>13.6.2</b> Modularity</a></li>
+<li class="chapter" data-level="13.6.3" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:seed"><i class="fa fa-check"></i><b>13.6.3</b> Reproducibility and random number seeds</a></li>
+</ul></li>
+<li class="chapter" data-level="13.7" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-further"><i class="fa fa-check"></i><b>13.7</b> Further resources</a></li>
+<li class="chapter" data-level="13.8" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-exercises"><i class="fa fa-check"></i><b>13.8</b> Exercises</a></li>
+<li class="chapter" data-level="13.9" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-online-exercises"><i class="fa fa-check"></i><b>13.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>III Part III: Topics in Data Science</b></span></li>
+<li class="chapter" data-level="14" data-path="ch-vizIII.html"><a href="ch-vizIII.html"><i class="fa fa-check"></i><b>14</b> Dynamic and customized data graphics</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:d3"><i class="fa fa-check"></i><b>14.1</b> Rich Web content using <code>D3.js</code> and <strong>htmlwidgets</strong></a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#leaflet"><i class="fa fa-check"></i><b>14.1.1</b> Leaflet</a></li>
+<li class="chapter" data-level="14.1.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#plot.ly"><i class="fa fa-check"></i><b>14.1.2</b> Plot.ly</a></li>
+<li class="chapter" data-level="14.1.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datatables"><i class="fa fa-check"></i><b>14.1.3</b> DataTables</a></li>
+<li class="chapter" data-level="14.1.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#dygraphs"><i class="fa fa-check"></i><b>14.1.4</b> Dygraphs</a></li>
+<li class="chapter" data-level="14.1.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#streamgraphs"><i class="fa fa-check"></i><b>14.1.5</b> Streamgraphs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#animation"><i class="fa fa-check"></i><b>14.2</b> Animation</a></li>
+<li class="chapter" data-level="14.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:fleshdashboard"><i class="fa fa-check"></i><b>14.3</b> Flexdashboard</a></li>
+<li class="chapter" data-level="14.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:shiny"><i class="fa fa-check"></i><b>14.4</b> Interactive web apps with Shiny</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#example-interactive-display-of-the-beatles"><i class="fa fa-check"></i><b>14.4.1</b> Example: interactive display of the Beatles</a></li>
+<li class="chapter" data-level="14.4.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#more-on-reactive-programming"><i class="fa fa-check"></i><b>14.4.2</b> More on reactive programming</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:themes"><i class="fa fa-check"></i><b>14.5</b> Customization of <strong>ggplot2</strong> graphics</a></li>
+<li class="chapter" data-level="14.6" data-path="ch-vizIII.html"><a href="ch-vizIII.html#extended-example-hot-dog-eating"><i class="fa fa-check"></i><b>14.6</b> Extended example: Hot dog eating</a></li>
+<li class="chapter" data-level="14.7" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-further"><i class="fa fa-check"></i><b>14.7</b> Further resources</a></li>
+<li class="chapter" data-level="14.8" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-exercises"><i class="fa fa-check"></i><b>14.8</b> Exercises</a></li>
+<li class="chapter" data-level="14.9" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-online-exercises"><i class="fa fa-check"></i><b>14.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch-sql.html"><a href="ch-sql.html"><i class="fa fa-check"></i><b>15</b> Database querying using SQL</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch-sql.html"><a href="ch-sql.html#sec:dplyr-sql"><i class="fa fa-check"></i><b>15.1</b> From <strong>dplyr</strong> to SQL</a></li>
+<li class="chapter" data-level="15.2" data-path="ch-sql.html"><a href="ch-sql.html#flat-file-databases"><i class="fa fa-check"></i><b>15.2</b> Flat-file databases</a></li>
+<li class="chapter" data-level="15.3" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-universe"><i class="fa fa-check"></i><b>15.3</b> The SQL universe</a></li>
+<li class="chapter" data-level="15.4" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-data-manipulation-language"><i class="fa fa-check"></i><b>15.4</b> The SQL data manipulation language</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="ch-sql.html"><a href="ch-sql.html#select...from"><i class="fa fa-check"></i><b>15.4.1</b> <code>SELECT...FROM</code></a></li>
+<li class="chapter" data-level="15.4.2" data-path="ch-sql.html"><a href="ch-sql.html#where"><i class="fa fa-check"></i><b>15.4.2</b> <code>WHERE</code></a></li>
+<li class="chapter" data-level="15.4.3" data-path="ch-sql.html"><a href="ch-sql.html#group-by"><i class="fa fa-check"></i><b>15.4.3</b> <code>GROUP BY</code></a></li>
+<li class="chapter" data-level="15.4.4" data-path="ch-sql.html"><a href="ch-sql.html#order-by"><i class="fa fa-check"></i><b>15.4.4</b> <code>ORDER BY</code></a></li>
+<li class="chapter" data-level="15.4.5" data-path="ch-sql.html"><a href="ch-sql.html#having"><i class="fa fa-check"></i><b>15.4.5</b> <code>HAVING</code></a></li>
+<li class="chapter" data-level="15.4.6" data-path="ch-sql.html"><a href="ch-sql.html#limit"><i class="fa fa-check"></i><b>15.4.6</b> <code>LIMIT</code></a></li>
+<li class="chapter" data-level="15.4.7" data-path="ch-sql.html"><a href="ch-sql.html#join"><i class="fa fa-check"></i><b>15.4.7</b> <code>JOIN</code></a></li>
+<li class="chapter" data-level="15.4.8" data-path="ch-sql.html"><a href="ch-sql.html#union"><i class="fa fa-check"></i><b>15.4.8</b> <code>UNION</code></a></li>
+<li class="chapter" data-level="15.4.9" data-path="ch-sql.html"><a href="ch-sql.html#subqueries"><i class="fa fa-check"></i><b>15.4.9</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="ch-sql.html"><a href="ch-sql.html#sec:ft8-flights"><i class="fa fa-check"></i><b>15.5</b> Extended example: FiveThirtyEight flights</a></li>
+<li class="chapter" data-level="15.6" data-path="ch-sql.html"><a href="ch-sql.html#sql-vs.-refr"><i class="fa fa-check"></i><b>15.6</b> SQL vs. (ref:R)</a></li>
+<li class="chapter" data-level="15.7" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-further"><i class="fa fa-check"></i><b>15.7</b> Further resources</a></li>
+<li class="chapter" data-level="15.8" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-exercises"><i class="fa fa-check"></i><b>15.8</b> Exercises</a></li>
+<li class="chapter" data-level="15.9" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-online-exercises"><i class="fa fa-check"></i><b>15.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="ch-sql2.html"><a href="ch-sql2.html"><i class="fa fa-check"></i><b>16</b> Database administration</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:indices"><i class="fa fa-check"></i><b>16.1</b> Constructing efficient SQL databases</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="ch-sql2.html"><a href="ch-sql2.html#creating-new-databases"><i class="fa fa-check"></i><b>16.1.1</b> Creating new databases</a></li>
+<li class="chapter" data-level="16.1.2" data-path="ch-sql2.html"><a href="ch-sql2.html#create-table"><i class="fa fa-check"></i><b>16.1.2</b> <code>CREATE TABLE</code></a></li>
+<li class="chapter" data-level="16.1.3" data-path="ch-sql2.html"><a href="ch-sql2.html#keys"><i class="fa fa-check"></i><b>16.1.3</b> Keys</a></li>
+<li class="chapter" data-level="16.1.4" data-path="ch-sql2.html"><a href="ch-sql2.html#indices"><i class="fa fa-check"></i><b>16.1.4</b> Indices</a></li>
+<li class="chapter" data-level="16.1.5" data-path="ch-sql2.html"><a href="ch-sql2.html#query-plans"><i class="fa fa-check"></i><b>16.1.5</b> Query plans</a></li>
+<li class="chapter" data-level="16.1.6" data-path="ch-sql2.html"><a href="ch-sql2.html#partitioning"><i class="fa fa-check"></i><b>16.1.6</b> Partitioning</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-sql-data"><i class="fa fa-check"></i><b>16.2</b> Changing SQL data</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-data"><i class="fa fa-check"></i><b>16.2.1</b> Changing data</a></li>
+<li class="chapter" data-level="16.2.2" data-path="ch-sql2.html"><a href="ch-sql2.html#adding-data"><i class="fa fa-check"></i><b>16.2.2</b> Adding data</a></li>
+<li class="chapter" data-level="16.2.3" data-path="ch-sql2.html"><a href="ch-sql2.html#importing-data-from-a-file"><i class="fa fa-check"></i><b>16.2.3</b> Importing data from a file</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:toy-db"><i class="fa fa-check"></i><b>16.3</b> Extended example: Building a database</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="ch-sql2.html"><a href="ch-sql2.html#extract"><i class="fa fa-check"></i><b>16.3.1</b> Extract</a></li>
+<li class="chapter" data-level="16.3.2" data-path="ch-sql2.html"><a href="ch-sql2.html#transform"><i class="fa fa-check"></i><b>16.3.2</b> Transform</a></li>
+<li class="chapter" data-level="16.3.3" data-path="ch-sql2.html"><a href="ch-sql2.html#load-into-mysql-database"><i class="fa fa-check"></i><b>16.3.3</b> Load into MySQL database</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="ch-sql2.html"><a href="ch-sql2.html#scalability"><i class="fa fa-check"></i><b>16.4</b> Scalability</a></li>
+<li class="chapter" data-level="16.5" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-further"><i class="fa fa-check"></i><b>16.5</b> Further resources</a></li>
+<li class="chapter" data-level="16.6" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-exercises"><i class="fa fa-check"></i><b>16.6</b> Exercises</a></li>
+<li class="chapter" data-level="16.7" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-online-exercises"><i class="fa fa-check"></i><b>16.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="ch-spatial.html"><a href="ch-spatial.html"><i class="fa fa-check"></i><b>17</b> Working with geospatial data</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="ch-spatial.html"><a href="ch-spatial.html#motivation-whats-so-great-about-geospatial-data"><i class="fa fa-check"></i><b>17.1</b> Motivation: What’s so great about geospatial data?</a></li>
+<li class="chapter" data-level="17.2" data-path="ch-spatial.html"><a href="ch-spatial.html#spatial-data-structures"><i class="fa fa-check"></i><b>17.2</b> Spatial data structures</a></li>
+<li class="chapter" data-level="17.3" data-path="ch-spatial.html"><a href="ch-spatial.html#making-maps"><i class="fa fa-check"></i><b>17.3</b> Making maps</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="ch-spatial.html"><a href="ch-spatial.html#static-maps"><i class="fa fa-check"></i><b>17.3.1</b> Static maps</a></li>
+<li class="chapter" data-level="17.3.2" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:projections"><i class="fa fa-check"></i><b>17.3.2</b> Projections</a></li>
+<li class="chapter" data-level="17.3.3" data-path="ch-spatial.html"><a href="ch-spatial.html#dynamic-maps-with-leaflet"><i class="fa fa-check"></i><b>17.3.3</b> Dynamic maps with <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="ch-spatial.html"><a href="ch-spatial.html#extended-example-congressional-districts"><i class="fa fa-check"></i><b>17.4</b> Extended example: Congressional districts</a>
+<ul>
+<li class="chapter" data-level="17.4.1" data-path="ch-spatial.html"><a href="ch-spatial.html#election-results"><i class="fa fa-check"></i><b>17.4.1</b> Election results</a></li>
+<li class="chapter" data-level="17.4.2" data-path="ch-spatial.html"><a href="ch-spatial.html#congressional-districts"><i class="fa fa-check"></i><b>17.4.2</b> Congressional districts</a></li>
+<li class="chapter" data-level="17.4.3" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:sf-inner-join"><i class="fa fa-check"></i><b>17.4.3</b> Putting it all together</a></li>
+<li class="chapter" data-level="17.4.4" data-path="ch-spatial.html"><a href="ch-spatial.html#using-ggplot2"><i class="fa fa-check"></i><b>17.4.4</b> Using <code>ggplot2</code></a></li>
+<li class="chapter" data-level="17.4.5" data-path="ch-spatial.html"><a href="ch-spatial.html#using-leaflet"><i class="fa fa-check"></i><b>17.4.5</b> Using <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="ch-spatial.html"><a href="ch-spatial.html#effective-maps-how-not-to-lie"><i class="fa fa-check"></i><b>17.5</b> Effective maps: How (not) to lie</a></li>
+<li class="chapter" data-level="17.6" data-path="ch-spatial.html"><a href="ch-spatial.html#projecting-polygons"><i class="fa fa-check"></i><b>17.6</b> Projecting polygons</a></li>
+<li class="chapter" data-level="17.7" data-path="ch-spatial.html"><a href="ch-spatial.html#playing-well-with-others"><i class="fa fa-check"></i><b>17.7</b> Playing well with others</a></li>
+<li class="chapter" data-level="17.8" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialII-further"><i class="fa fa-check"></i><b>17.8</b> Further resources</a></li>
+<li class="chapter" data-level="17.9" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-exercises"><i class="fa fa-check"></i><b>17.9</b> Exercises</a></li>
+<li class="chapter" data-level="17.10" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-online-exercises"><i class="fa fa-check"></i><b>17.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="ch-spatial2.html"><a href="ch-spatial2.html"><i class="fa fa-check"></i><b>18</b> Geospatial computations</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-operations"><i class="fa fa-check"></i><b>18.1</b> Geospatial operations</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geocoding-routes-and-distances"><i class="fa fa-check"></i><b>18.1.1</b> Geocoding, routes, and distances</a></li>
+<li class="chapter" data-level="18.1.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#sec:geometric-operations"><i class="fa fa-check"></i><b>18.1.2</b> Geometric operations</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-aggregation"><i class="fa fa-check"></i><b>18.2</b> Geospatial aggregation</a></li>
+<li class="chapter" data-level="18.3" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-joins"><i class="fa fa-check"></i><b>18.3</b> Geospatial joins</a></li>
+<li class="chapter" data-level="18.4" data-path="ch-spatial2.html"><a href="ch-spatial2.html#extended-example-trail-elevations-at-macleish"><i class="fa fa-check"></i><b>18.4</b> Extended example: Trail elevations at MacLeish</a></li>
+<li class="chapter" data-level="18.5" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialI-further"><i class="fa fa-check"></i><b>18.5</b> Further resources</a></li>
+<li class="chapter" data-level="18.6" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-exercises"><i class="fa fa-check"></i><b>18.6</b> Exercises</a></li>
+<li class="chapter" data-level="18.7" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-online-exercises"><i class="fa fa-check"></i><b>18.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="ch-text.html"><a href="ch-text.html"><i class="fa fa-check"></i><b>19</b> Text as data</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="ch-text.html"><a href="ch-text.html#regular-expressions-using-macbeth"><i class="fa fa-check"></i><b>19.1</b> Regular expressions using <em>Macbeth</em></a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="ch-text.html"><a href="ch-text.html#parsing-the-text-of-the-scottish-play"><i class="fa fa-check"></i><b>19.1.1</b> Parsing the text of the <span><em>Scottish play</em></span></a></li>
+<li class="chapter" data-level="19.1.2" data-path="ch-text.html"><a href="ch-text.html#life-and-death-in-macbeth"><i class="fa fa-check"></i><b>19.1.2</b> Life and death in <em>Macbeth</em></a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="ch-text.html"><a href="ch-text.html#extended-example-analyzing-textual-data-from-arxiv.org"><i class="fa fa-check"></i><b>19.2</b> Extended example: Analyzing textual data from arXiv.org</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="ch-text.html"><a href="ch-text.html#corpora"><i class="fa fa-check"></i><b>19.2.1</b> Corpora</a></li>
+<li class="chapter" data-level="19.2.2" data-path="ch-text.html"><a href="ch-text.html#word-clouds"><i class="fa fa-check"></i><b>19.2.2</b> Word clouds</a></li>
+<li class="chapter" data-level="19.2.3" data-path="ch-text.html"><a href="ch-text.html#sentiment-analysis"><i class="fa fa-check"></i><b>19.2.3</b> Sentiment analysis</a></li>
+<li class="chapter" data-level="19.2.4" data-path="ch-text.html"><a href="ch-text.html#bigrams-and-n-grams"><i class="fa fa-check"></i><b>19.2.4</b> Bigrams and N-grams</a></li>
+<li class="chapter" data-level="19.2.5" data-path="ch-text.html"><a href="ch-text.html#document-term-matrices"><i class="fa fa-check"></i><b>19.2.5</b> Document term matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="ch-text.html"><a href="ch-text.html#ingesting-text"><i class="fa fa-check"></i><b>19.3</b> Ingesting text</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="ch-text.html"><a href="ch-text.html#example-scraping-the-songs-of-the-beatles"><i class="fa fa-check"></i><b>19.3.1</b> Example: Scraping the songs of the Beatles</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="ch-text.html"><a href="ch-text.html#text-further"><i class="fa fa-check"></i><b>19.4</b> Further resources</a></li>
+<li class="chapter" data-level="19.5" data-path="ch-text.html"><a href="ch-text.html#text-exercises"><i class="fa fa-check"></i><b>19.5</b> Exercises</a></li>
+<li class="chapter" data-level="19.6" data-path="ch-text.html"><a href="ch-text.html#text-online-exercises"><i class="fa fa-check"></i><b>19.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="ch-netsci.html"><a href="ch-netsci.html"><i class="fa fa-check"></i><b>20</b> Network science</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-intro"><i class="fa fa-check"></i><b>20.1</b> Introduction to network science</a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="ch-netsci.html"><a href="ch-netsci.html#definitions"><i class="fa fa-check"></i><b>20.1.1</b> Definitions</a></li>
+<li class="chapter" data-level="20.1.2" data-path="ch-netsci.html"><a href="ch-netsci.html#a-brief-history-of-network-science"><i class="fa fa-check"></i><b>20.1.2</b> A brief history of network science</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-six-degrees-of-kristen-stewart"><i class="fa fa-check"></i><b>20.2</b> Extended example: Six degrees of Kristen Stewart</a>
+<ul>
+<li class="chapter" data-level="20.2.1" data-path="ch-netsci.html"><a href="ch-netsci.html#sql:imdb"><i class="fa fa-check"></i><b>20.2.1</b> Collecting Hollywood data</a></li>
+<li class="chapter" data-level="20.2.2" data-path="ch-netsci.html"><a href="ch-netsci.html#building-the-hollywood-network"><i class="fa fa-check"></i><b>20.2.2</b> Building the Hollywood network</a></li>
+<li class="chapter" data-level="20.2.3" data-path="ch-netsci.html"><a href="ch-netsci.html#building-a-kristen-stewart-oracle"><i class="fa fa-check"></i><b>20.2.3</b> Building a Kristen Stewart oracle</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="ch-netsci.html"><a href="ch-netsci.html#sec:pagerank"><i class="fa fa-check"></i><b>20.3</b> PageRank</a>
+<ul>
+<li class="chapter" data-level="20.3.1" data-path="ch-netsci.html"><a href="ch-netsci.html#eigenvector-centrality"><i class="fa fa-check"></i><b>20.3.1</b> Eigenvector centrality</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-1996-mens-college-basketball"><i class="fa fa-check"></i><b>20.4</b> Extended example: 1996 men’s college basketball</a></li>
+<li class="chapter" data-level="20.5" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-further"><i class="fa fa-check"></i><b>20.5</b> Further resources</a></li>
+<li class="chapter" data-level="20.6" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-exercises"><i class="fa fa-check"></i><b>20.6</b> Exercises</a></li>
+<li class="chapter" data-level="20.7" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-online-exercises"><i class="fa fa-check"></i><b>20.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="ch-big.html"><a href="ch-big.html"><i class="fa fa-check"></i><b>21</b> Epilogue: Towards “big data”</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="ch-big.html"><a href="ch-big.html#notions-of-big-data"><i class="fa fa-check"></i><b>21.1</b> Notions of big data</a></li>
+<li class="chapter" data-level="21.2" data-path="ch-big.html"><a href="ch-big.html#tools-for-bigger-data"><i class="fa fa-check"></i><b>21.2</b> Tools for bigger data</a>
+<ul>
+<li class="chapter" data-level="21.2.1" data-path="ch-big.html"><a href="ch-big.html#data-and-memory-structures-for-big-data"><i class="fa fa-check"></i><b>21.2.1</b> Data and memory structures for big data</a></li>
+<li class="chapter" data-level="21.2.2" data-path="ch-big.html"><a href="ch-big.html#compilation"><i class="fa fa-check"></i><b>21.2.2</b> Compilation</a></li>
+<li class="chapter" data-level="21.2.3" data-path="ch-big.html"><a href="ch-big.html#parallel-and-distributed-computing"><i class="fa fa-check"></i><b>21.2.3</b> Parallel and distributed computing</a></li>
+<li class="chapter" data-level="21.2.4" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-sql"><i class="fa fa-check"></i><b>21.2.4</b> Alternatives to SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-refr"><i class="fa fa-check"></i><b>21.3</b> Alternatives to (ref:R)</a></li>
+<li class="chapter" data-level="21.4" data-path="ch-big.html"><a href="ch-big.html#closing-thoughts"><i class="fa fa-check"></i><b>21.4</b> Closing thoughts</a></li>
+<li class="chapter" data-level="21.5" data-path="ch-big.html"><a href="ch-big.html#bigdata-further"><i class="fa fa-check"></i><b>21.5</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="part"><span><b>IV Part IV: Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="ch-mdsr.html"><a href="ch-mdsr.html"><i class="fa fa-check"></i><b>A</b> Packages used in this book</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="ch-mdsr.html"><a href="ch-mdsr.html#the-mdsr-package"><i class="fa fa-check"></i><b>A.1</b> The <strong>mdsr</strong> package</a></li>
+<li class="chapter" data-level="A.2" data-path="ch-mdsr.html"><a href="ch-mdsr.html#other-packages"><i class="fa fa-check"></i><b>A.2</b> Other packages</a></li>
+<li class="chapter" data-level="A.3" data-path="ch-mdsr.html"><a href="ch-mdsr.html#pkg-further"><i class="fa fa-check"></i><b>A.3</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="ch-R.html"><a href="ch-R.html"><i class="fa fa-check"></i><b>B</b> Introduction to <code>R</code> and RStudio</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="ch-R.html"><a href="ch-R.html#appR:install"><i class="fa fa-check"></i><b>B.1</b> Installation</a>
+<ul>
+<li class="chapter" data-level="B.1.1" data-path="ch-R.html"><a href="ch-R.html#rstudio"><i class="fa fa-check"></i><b>B.1.1</b> RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="B.2" data-path="ch-R.html"><a href="ch-R.html#learning-refr"><i class="fa fa-check"></i><b>B.2</b> Learning (ref:R)</a></li>
+<li class="chapter" data-level="B.3" data-path="ch-R.html"><a href="ch-R.html#appR:objects"><i class="fa fa-check"></i><b>B.3</b> Fundamental structures and objects</a>
+<ul>
+<li class="chapter" data-level="B.3.1" data-path="ch-R.html"><a href="ch-R.html#appR:assign"><i class="fa fa-check"></i><b>B.3.1</b> Objects and vectors</a></li>
+<li class="chapter" data-level="B.3.2" data-path="ch-R.html"><a href="ch-R.html#appR:operators"><i class="fa fa-check"></i><b>B.3.2</b> Operators</a></li>
+<li class="chapter" data-level="B.3.3" data-path="ch-R.html"><a href="ch-R.html#appR:lists"><i class="fa fa-check"></i><b>B.3.3</b> Lists</a></li>
+<li class="chapter" data-level="B.3.4" data-path="ch-R.html"><a href="ch-R.html#appR:matrix"><i class="fa fa-check"></i><b>B.3.4</b> Matrices</a></li>
+<li class="chapter" data-level="B.3.5" data-path="ch-R.html"><a href="ch-R.html#appR:dataframe"><i class="fa fa-check"></i><b>B.3.5</b> Dataframes and tibbles</a></li>
+<li class="chapter" data-level="B.3.6" data-path="ch-R.html"><a href="ch-R.html#appR:attr"><i class="fa fa-check"></i><b>B.3.6</b> Attributes and classes</a></li>
+<li class="chapter" data-level="B.3.7" data-path="ch-R.html"><a href="ch-R.html#appR:options"><i class="fa fa-check"></i><b>B.3.7</b> Options</a></li>
+<li class="chapter" data-level="B.3.8" data-path="ch-R.html"><a href="ch-R.html#sec:func"><i class="fa fa-check"></i><b>B.3.8</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="ch-R.html"><a href="ch-R.html#add-ons-packages"><i class="fa fa-check"></i><b>B.4</b> Add-ons: Packages</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="ch-R.html"><a href="ch-R.html#appR:packages"><i class="fa fa-check"></i><b>B.4.1</b> Introduction to packages</a></li>
+<li class="chapter" data-level="B.4.2" data-path="ch-R.html"><a href="ch-R.html#packages-and-name-conflicts"><i class="fa fa-check"></i><b>B.4.2</b> Packages and name conflicts</a></li>
+<li class="chapter" data-level="B.4.3" data-path="ch-R.html"><a href="ch-R.html#appR:tasks"><i class="fa fa-check"></i><b>B.4.3</b> CRAN task views</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="ch-R.html"><a href="ch-R.html#appR-further"><i class="fa fa-check"></i><b>B.5</b> Further resources</a></li>
+<li class="chapter" data-level="B.6" data-path="ch-R.html"><a href="ch-R.html#appR-exercises"><i class="fa fa-check"></i><b>B.6</b> Exercises</a></li>
+<li class="chapter" data-level="B.7" data-path="ch-R.html"><a href="ch-R.html#appR-online-exercises"><i class="fa fa-check"></i><b>B.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="ch-function.html"><a href="ch-function.html"><i class="fa fa-check"></i><b>C</b> Algorithmic thinking</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-intro"><i class="fa fa-check"></i><b>C.1</b> Introduction</a></li>
+<li class="chapter" data-level="C.2" data-path="ch-function.html"><a href="ch-function.html#simple-example"><i class="fa fa-check"></i><b>C.2</b> Simple example</a></li>
+<li class="chapter" data-level="C.3" data-path="ch-function.html"><a href="ch-function.html#sec:runaverage"><i class="fa fa-check"></i><b>C.3</b> Extended example: Law of large numbers</a></li>
+<li class="chapter" data-level="C.4" data-path="ch-function.html"><a href="ch-function.html#sec:tidyeval"><i class="fa fa-check"></i><b>C.4</b> Non-standard evaluation</a></li>
+<li class="chapter" data-level="C.5" data-path="ch-function.html"><a href="ch-function.html#sec:debugging"><i class="fa fa-check"></i><b>C.5</b> Debugging and defensive coding</a></li>
+<li class="chapter" data-level="C.6" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-further"><i class="fa fa-check"></i><b>C.6</b> Further resources</a></li>
+<li class="chapter" data-level="C.7" data-path="ch-function.html"><a href="ch-function.html#algorithmic-exercises"><i class="fa fa-check"></i><b>C.7</b> Exercises</a></li>
+<li class="chapter" data-level="C.8" data-path="ch-function.html"><a href="ch-function.html#algorithmic-online-exercises"><i class="fa fa-check"></i><b>C.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="ch-reproduce.html"><a href="ch-reproduce.html"><i class="fa fa-check"></i><b>D</b> Reproducible analysis and workflow</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="ch-reproduce.html"><a href="ch-reproduce.html#scriptable-statistical-computing"><i class="fa fa-check"></i><b>D.1</b> Scriptable statistical computing</a></li>
+<li class="chapter" data-level="D.2" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-analysis-with-refr-markdown"><i class="fa fa-check"></i><b>D.2</b> Reproducible analysis with (ref:R) Markdown</a></li>
+<li class="chapter" data-level="D.3" data-path="ch-reproduce.html"><a href="ch-reproduce.html#projects-and-version-control"><i class="fa fa-check"></i><b>D.3</b> Projects and version control</a></li>
+<li class="chapter" data-level="D.4" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-further"><i class="fa fa-check"></i><b>D.4</b> Further resources</a></li>
+<li class="chapter" data-level="D.5" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-exercises"><i class="fa fa-check"></i><b>D.5</b> Exercises</a></li>
+<li class="chapter" data-level="D.6" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-online-exercises"><i class="fa fa-check"></i><b>D.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="ch-regression.html"><a href="ch-regression.html"><i class="fa fa-check"></i><b>E</b> Regression modeling</a>
+<ul>
+<li class="chapter" data-level="E.1" data-path="ch-regression.html"><a href="ch-regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>E.1</b> Simple linear regression</a>
+<ul>
+<li class="chapter" data-level="E.1.1" data-path="ch-regression.html"><a href="ch-regression.html#motivating-example-modeling-usage-of-a-rail-trail"><i class="fa fa-check"></i><b>E.1.1</b> Motivating example: Modeling usage of a rail trail</a></li>
+<li class="chapter" data-level="E.1.2" data-path="ch-regression.html"><a href="ch-regression.html#model-visualization"><i class="fa fa-check"></i><b>E.1.2</b> Model visualization</a></li>
+<li class="chapter" data-level="E.1.3" data-path="ch-regression.html"><a href="ch-regression.html#measuring-the-strength-of-fit"><i class="fa fa-check"></i><b>E.1.3</b> Measuring the strength of fit</a></li>
+<li class="chapter" data-level="E.1.4" data-path="ch-regression.html"><a href="ch-regression.html#sec:anova"><i class="fa fa-check"></i><b>E.1.4</b> Categorical explanatory variables</a></li>
+</ul></li>
+<li class="chapter" data-level="E.2" data-path="ch-regression.html"><a href="ch-regression.html#multiple-regression"><i class="fa fa-check"></i><b>E.2</b> Multiple regression</a>
+<ul>
+<li class="chapter" data-level="E.2.1" data-path="ch-regression.html"><a href="ch-regression.html#sec:indicators"><i class="fa fa-check"></i><b>E.2.1</b> Parallel slopes: Multiple regression with a categorical variable</a></li>
+<li class="chapter" data-level="E.2.2" data-path="ch-regression.html"><a href="ch-regression.html#parallel-planes-multiple-regression-with-a-second-quantitative-variable"><i class="fa fa-check"></i><b>E.2.2</b> Parallel planes: Multiple regression with a second quantitative variable</a></li>
+<li class="chapter" data-level="E.2.3" data-path="ch-regression.html"><a href="ch-regression.html#sec:interaction"><i class="fa fa-check"></i><b>E.2.3</b> Non-parallel slopes: Multiple regression with interaction</a></li>
+<li class="chapter" data-level="E.2.4" data-path="ch-regression.html"><a href="ch-regression.html#modeling-non-linear-relationships"><i class="fa fa-check"></i><b>E.2.4</b> Modeling non-linear relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="E.3" data-path="ch-regression.html"><a href="ch-regression.html#inference-for-regression"><i class="fa fa-check"></i><b>E.3</b> Inference for regression</a></li>
+<li class="chapter" data-level="E.4" data-path="ch-regression.html"><a href="ch-regression.html#assumptions-underlying-regression"><i class="fa fa-check"></i><b>E.4</b> Assumptions underlying regression</a></li>
+<li class="chapter" data-level="E.5" data-path="ch-regression.html"><a href="ch-regression.html#sec:logistic"><i class="fa fa-check"></i><b>E.5</b> Logistic regression</a></li>
+<li class="chapter" data-level="E.6" data-path="ch-regression.html"><a href="ch-regression.html#regression-further"><i class="fa fa-check"></i><b>E.6</b> Further resources</a></li>
+<li class="chapter" data-level="E.7" data-path="ch-regression.html"><a href="ch-regression.html#regression-exercises"><i class="fa fa-check"></i><b>E.7</b> Exercises</a></li>
+<li class="chapter" data-level="E.8" data-path="ch-regression.html"><a href="ch-regression.html#regression-online-exercises"><i class="fa fa-check"></i><b>E.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="F" data-path="ch-db-setup.html"><a href="ch-db-setup.html"><i class="fa fa-check"></i><b>F</b> Setting up a database server</a>
+<ul>
+<li class="chapter" data-level="F.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sqlite"><i class="fa fa-check"></i><b>F.1</b> SQLite</a></li>
+<li class="chapter" data-level="F.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#mysql"><i class="fa fa-check"></i><b>F.2</b> MySQL</a>
+<ul>
+<li class="chapter" data-level="F.2.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#installation"><i class="fa fa-check"></i><b>F.2.1</b> Installation</a></li>
+<li class="chapter" data-level="F.2.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:mysql-access"><i class="fa fa-check"></i><b>F.2.2</b> Access</a></li>
+<li class="chapter" data-level="F.2.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#running-scripts-from-the-command-line"><i class="fa fa-check"></i><b>F.2.3</b> Running scripts from the command line</a></li>
+</ul></li>
+<li class="chapter" data-level="F.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#postgresql"><i class="fa fa-check"></i><b>F.3</b> PostgreSQL</a></li>
+<li class="chapter" data-level="F.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-sql"><i class="fa fa-check"></i><b>F.4</b> Connecting to SQL</a>
+<ul>
+<li class="chapter" data-level="F.4.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#the-command-line-client"><i class="fa fa-check"></i><b>F.4.1</b> The command line client</a></li>
+<li class="chapter" data-level="F.4.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#guis"><i class="fa fa-check"></i><b>F.4.2</b> GUIs</a></li>
+<li class="chapter" data-level="F.4.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-r-sql"><i class="fa fa-check"></i><b>F.4.3</b> R and RStudio</a></li>
+<li class="chapter" data-level="F.4.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:sqlitebaby"><i class="fa fa-check"></i><b>F.4.4</b> Load into SQLite database</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="index.html">Modern Data Science with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch:mdsr" class="section level1" number="22">
+<h1><span class="header-section-number">A</span> Packages used in this book</h1>
+<div id="the-mdsr-package" class="section level2" number="22.1">
+<h2><span class="header-section-number">A.1</span> The <strong>mdsr</strong> package</h2>
+<p>
+
+The <strong>mdsr</strong> package contains most of the small data sets used in this book that are not available in other packages.
+To install it from CRAN, use <code>install.packages()</code>.
+To get the latest release, use the <code>install_github()</code> function from the <strong>remotes</strong> package.
+(See Section <a href="ch-R.html#appR:packages">B.4.1</a> for more comprehensive information about <strong>R</strong> package maintenance.)</p>
+<div class="sourceCode" id="cb1211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1211-1"><a href="ch-mdsr.html#cb1211-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this command only needs to be run once</span></span>
+<span id="cb1211-2"><a href="ch-mdsr.html#cb1211-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;mdsr&quot;</span>)</span>
+<span id="cb1211-3"><a href="ch-mdsr.html#cb1211-3" aria-hidden="true" tabindex="-1"></a><span class="co"># if you want the development version</span></span>
+<span id="cb1211-4"><a href="ch-mdsr.html#cb1211-4" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;mdsr-book/mdsr&quot;</span>)</span></code></pre></div>
+<p>The list of data sets provided can be retrieved using the <code>data()</code> function.</p>
+<p>
+
+</p>
+<div class="sourceCode" id="cb1212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1212-1"><a href="ch-mdsr.html#cb1212-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdsr)</span>
+<span id="cb1212-2"><a href="ch-mdsr.html#cb1212-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="at">package =</span> <span class="st">&quot;mdsr&quot;</span>)</span></code></pre></div>
+<p>The <strong>mdsr</strong> package includes some functions that simplify a number of tasks.
+In particular, the <code>dbConnect_scidb()</code> function provides a shorthand for connecting to the public SQL server hosted by <a href="https://en.wikipedia.org/w/index.php?search=Amazon%20Web%20Services"><em>Amazon Web Services</em></a>.
+We use this function extensively in Chapter <a href="ch-sql.html#ch:sql">15</a> and in our classes and projects.</p>
+<p>
+
+
+In keeping with best practices, <strong>mdsr</strong> no longer loads any other packages.
+In every chapter in this book, a call to <code>library(tidyverse)</code> precedes a call to <code>library(mdsr)</code>.
+These two steps will set up an <strong>R</strong> session to replicate the code in the book.</p>
+</div>
+<div id="other-packages" class="section level2" number="22.2">
+<h2><span class="header-section-number">A.2</span> Other packages</h2>
+<p>
+
+
+
+
+As we discuss in Chapters <a href="ch-prologue.html#ch:prologue">1</a> and <a href="ch-big.html#ch:big">21</a>, this book is not explicitly about “big data”—it is about mastering data science techniques for small and medium data with an eye towards big data. To that end, we need medium-sized data sets to work with. We have introduced several such data sets in this book, namely <strong>airlines</strong>, <strong>fec12</strong>, and <strong>fec16</strong>.</p>
+<p>
+
+
+
+
+
+
+
+
+The <strong>airlines</strong> package, which was inspired by the <strong>nycflights13</strong> package, gives <strong>R</strong> users the ability to download the full 33 years (and counting) of flight data from the United States Bureau of Transportation Statistics and bring it seamlessly into SQL without actually having to write any SQL code.
+The <strong>macleish</strong> package also uses the <strong>etl</strong> framework for hourly-updated weather data from the MacLeish field station.</p>
+<p>The full list of packages used in this book appears below in Tables <a href="ch-mdsr.html#tab:cran-pkgs">A.1</a> and <a href="ch-mdsr.html#tab:github-pkgs">A.2</a>.
+</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:cran-pkgs">Table A.1: </span>List of CRAN packages used in this book.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Package
+</th>
+<th style="text-align:left;">
+Citation
+</th>
+<th style="text-align:left;">
+Title
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+alr4
+</td>
+<td style="text-align:left;">
+<span class="citation">(Weisberg 2018)</span>
+</td>
+<td style="text-align:left;">
+Data to Accompany Applied Linear Regression 4th Edition
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ape
+</td>
+<td style="text-align:left;">
+<span class="citation">(Paradis et al. 2021)</span>
+</td>
+<td style="text-align:left;">
+Analyses of Phylogenetics and Evolution
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+assertthat
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham 2019a)</span>
+</td>
+<td style="text-align:left;">
+Easy Pre and Post Assertions
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+available
+</td>
+<td style="text-align:left;">
+<span class="citation">(Ganz et al. 2019)</span>
+</td>
+<td style="text-align:left;">
+Check if the Title of a Package is Available, Appropriate and Interesting
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+babynames
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham 2021a)</span>
+</td>
+<td style="text-align:left;">
+US Baby Names 1880-2017
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bench
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hester 2020)</span>
+</td>
+<td style="text-align:left;">
+High Precision Timing of R Expressions
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+biglm
+</td>
+<td style="text-align:left;">
+<span class="citation">(Lumley 2020)</span>
+</td>
+<td style="text-align:left;">
+Bounded Memory Linear and Generalized Linear Models
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bookdown
+</td>
+<td style="text-align:left;">
+<span class="citation">(Yihui Xie 2021a)</span>
+</td>
+<td style="text-align:left;">
+Authoring Books and Technical Documents with R Markdown
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+broom
+</td>
+<td style="text-align:left;">
+<span class="citation">(Robinson, Hayes, and Couch 2021)</span>
+</td>
+<td style="text-align:left;">
+Convert Statistical Objects into Tidy Tibbles
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DBI
+</td>
+<td style="text-align:left;">
+<span class="citation">(R Special Interest Group on Databases (R-SIG-DB), Wickham, and Müller 2021)</span>
+</td>
+<td style="text-align:left;">
+R Database Interface
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+dbplyr
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham, Girlich, and Ruiz 2021)</span>
+</td>
+<td style="text-align:left;">
+A ‘dplyr’ Back End for Databases
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+discrim
+</td>
+<td style="text-align:left;">
+<span class="citation">(Kuhn 2021)</span>
+</td>
+<td style="text-align:left;">
+Model Wrappers for Discriminant Analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+dplyr
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham, François, et al. 2021)</span>
+</td>
+<td style="text-align:left;">
+A Grammar of Data Manipulation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DT
+</td>
+<td style="text-align:left;">
+<span class="citation">(Yihui Xie, Cheng, and Tan 2021)</span>
+</td>
+<td style="text-align:left;">
+A Wrapper of the JavaScript Library ‘DataTables’
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+dygraphs
+</td>
+<td style="text-align:left;">
+<span class="citation">(Vanderkam et al. 2018)</span>
+</td>
+<td style="text-align:left;">
+Interface to ‘Dygraphs’ Interactive Time Series Charting Library
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+etl
+</td>
+<td style="text-align:left;">
+<span class="citation">(Benjamin S. Baumer 2021)</span>
+</td>
+<td style="text-align:left;">
+Extract-Transform-Load Framework for Medium Data
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+extrafont
+</td>
+<td style="text-align:left;">
+<span class="citation">(Winston Chang 2014)</span>
+</td>
+<td style="text-align:left;">
+Tools for using fonts
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+forcats
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham 2021b)</span>
+</td>
+<td style="text-align:left;">
+Tools for Working with Categorical Variables (Factors)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fs
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hester and Wickham 2020)</span>
+</td>
+<td style="text-align:left;">
+Cross-Platform File System Operations Based on ‘libuv’
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+furrr
+</td>
+<td style="text-align:left;">
+<span class="citation">(Vaughan and Dancho 2021)</span>
+</td>
+<td style="text-align:left;">
+Apply Mapping Functions in Parallel using Futures
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+future
+</td>
+<td style="text-align:left;">
+<span class="citation">(Bengtsson 2020)</span>
+</td>
+<td style="text-align:left;">
+Unified Parallel and Distributed Processing in R for Everyone
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ggmosaic
+</td>
+<td style="text-align:left;">
+<span class="citation">(Jeppson, Hofmann, and Cook 2021)</span>
+</td>
+<td style="text-align:left;">
+Mosaic Plots in the ‘ggplot2’ Framework
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ggplot2
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham, Chang, et al. 2021)</span>
+</td>
+<td style="text-align:left;">
+Create Elegant Data Visualisations Using the Grammar of Graphics
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ggraph
+</td>
+<td style="text-align:left;">
+<span class="citation">(Pedersen 2021)</span>
+</td>
+<td style="text-align:left;">
+An Implementation of Grammar of Graphics for Graphs and Networks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ggrepel
+</td>
+<td style="text-align:left;">
+<span class="citation">(Slowikowski 2021)</span>
+</td>
+<td style="text-align:left;">
+Automatically Position Non-Overlapping Text Labels with ‘ggplot2’
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ggspatial
+</td>
+<td style="text-align:left;">
+<span class="citation">(Dunnington 2021)</span>
+</td>
+<td style="text-align:left;">
+Spatial Data Framework for ggplot2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ggthemes
+</td>
+<td style="text-align:left;">
+<span class="citation">(Arnold 2021)</span>
+</td>
+<td style="text-align:left;">
+Extra Themes, Scales and Geoms for ‘ggplot2’
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+glmnet
+</td>
+<td style="text-align:left;">
+<span class="citation">(Friedman et al. 2021)</span>
+</td>
+<td style="text-align:left;">
+Lasso and Elastic-Net Regularized Generalized Linear Models
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+googlesheets4
+</td>
+<td style="text-align:left;">
+<span class="citation">(Bryan 2021)</span>
+</td>
+<td style="text-align:left;">
+Access Google Sheets using the Sheets API V4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+haven
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham and Miller 2021)</span>
+</td>
+<td style="text-align:left;">
+Import and Export ‘SPSS,’ ‘Stata’ and ‘SAS’ Files
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+here
+</td>
+<td style="text-align:left;">
+<span class="citation">(Müller 2020)</span>
+</td>
+<td style="text-align:left;">
+A Simpler Way to Find Your Files
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hmisc
+</td>
+<td style="text-align:left;">
+<span class="citation">(Harrell 2021)</span>
+</td>
+<td style="text-align:left;">
+Harrell Miscellaneous
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+htmlwidgets
+</td>
+<td style="text-align:left;">
+<span class="citation">(Vaidyanathan et al. 2020)</span>
+</td>
+<td style="text-align:left;">
+HTML Widgets for R
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+igraph
+</td>
+<td style="text-align:left;">
+<span class="citation">(Csárdi et al. 2020)</span>
+</td>
+<td style="text-align:left;">
+Network Analysis and Visualization
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+janitor
+</td>
+<td style="text-align:left;">
+<span class="citation">(Firke 2021)</span>
+</td>
+<td style="text-align:left;">
+Simple Tools for Examining and Cleaning Dirty Data
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+jsonlite
+</td>
+<td style="text-align:left;">
+<span class="citation">(Ooms 2020)</span>
+</td>
+<td style="text-align:left;">
+A Simple and Robust JSON Parser and Generator for R
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+kableExtra
+</td>
+<td style="text-align:left;">
+<span class="citation">(Zhu 2021)</span>
+</td>
+<td style="text-align:left;">
+Construct Complex Table with ‘kable’ and Pipe Syntax
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+kknn
+</td>
+<td style="text-align:left;">
+<span class="citation">(Schliep and Hechenbichler 2016)</span>
+</td>
+<td style="text-align:left;">
+Weighted k-Nearest Neighbors
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+knitr
+</td>
+<td style="text-align:left;">
+<span class="citation">(Yihui Xie 2021b)</span>
+</td>
+<td style="text-align:left;">
+A General-Purpose Package for Dynamic Report Generation in R
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lahman
+</td>
+<td style="text-align:left;">
+<span class="citation">(Friendly et al. 2021)</span>
+</td>
+<td style="text-align:left;">
+Sean ‘Lahman’ Baseball Database
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lattice
+</td>
+<td style="text-align:left;">
+<span class="citation">(Sarkar 2021)</span>
+</td>
+<td style="text-align:left;">
+Trellis Graphics for R
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lazyeval
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham 2019c)</span>
+</td>
+<td style="text-align:left;">
+Lazy (Non-Standard) Evaluation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leaflet
+</td>
+<td style="text-align:left;">
+<span class="citation">(Cheng, Karambelkar, and Xie 2021)</span>
+</td>
+<td style="text-align:left;">
+Create Interactive Web Maps with the JavaScript ‘Leaflet’ Library
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lubridate
+</td>
+<td style="text-align:left;">
+<span class="citation">(Spinu, Grolemund, and Wickham 2021)</span>
+</td>
+<td style="text-align:left;">
+Make Dealing with Dates a Little Easier
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+macleish
+</td>
+<td style="text-align:left;">
+<span class="citation">(Benjamin S. Baumer et al. 2020)</span>
+</td>
+<td style="text-align:left;">
+Retrieve Data from MacLeish Field Station
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+magick
+</td>
+<td style="text-align:left;">
+<span class="citation">(Ooms 2021)</span>
+</td>
+<td style="text-align:left;">
+Advanced Graphics and Image-Processing in R
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mapproj
+</td>
+<td style="text-align:left;">
+<span class="citation">(McIlroy et al. 2020)</span>
+</td>
+<td style="text-align:left;">
+Map Projections
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+maps
+</td>
+<td style="text-align:left;">
+<span class="citation">(Brownrigg 2018)</span>
+</td>
+<td style="text-align:left;">
+Draw Geographical Maps
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mclust
+</td>
+<td style="text-align:left;">
+<span class="citation">(Fraley, Raftery, and Scrucca 2020)</span>
+</td>
+<td style="text-align:left;">
+Gaussian Mixture Modelling for Model-Based Clustering, Classification, and Density Estimation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mdsr
+</td>
+<td style="text-align:left;">
+<span class="citation">(Benjamin S. Baumer, Horton, and Kaplan 2021)</span>
+</td>
+<td style="text-align:left;">
+Complement to ‘Modern Data Science with R’
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+modelr
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham 2020b)</span>
+</td>
+<td style="text-align:left;">
+Modelling Functions that Work with the Pipe
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mosaic
+</td>
+<td style="text-align:left;">
+<span class="citation">(Pruim, Kaplan, and Horton 2021a)</span>
+</td>
+<td style="text-align:left;">
+Project MOSAIC Statistics and Mathematics Teaching Utilities
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mosaicData
+</td>
+<td style="text-align:left;">
+<span class="citation">(Pruim, Kaplan, and Horton 2021b)</span>
+</td>
+<td style="text-align:left;">
+Project MOSAIC Data Sets
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NeuralNetTools
+</td>
+<td style="text-align:left;">
+<span class="citation">(Beck 2018)</span>
+</td>
+<td style="text-align:left;">
+Visualization and Analysis Tools for Neural Networks
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NHANES
+</td>
+<td style="text-align:left;">
+<span class="citation">(Pruim 2015)</span>
+</td>
+<td style="text-align:left;">
+Data from the US National Health and Nutrition Examination Study
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nycflights13
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham 2021c)</span>
+</td>
+<td style="text-align:left;">
+Flights that Departed NYC in 2013
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+parsnip
+</td>
+<td style="text-align:left;">
+<span class="citation">(Kuhn and Vaughan 2021a)</span>
+</td>
+<td style="text-align:left;">
+A Common API to Modeling and Analysis Functions
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+partykit
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hothorn and Zeileis 2021)</span>
+</td>
+<td style="text-align:left;">
+A Toolkit for Recursive Partytioning
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+patchwork
+</td>
+<td style="text-align:left;">
+<span class="citation">(Pedersen 2020a)</span>
+</td>
+<td style="text-align:left;">
+The Composer of Plots
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+plotly
+</td>
+<td style="text-align:left;">
+<span class="citation">(Sievert et al. 2021)</span>
+</td>
+<td style="text-align:left;">
+Create Interactive Web Graphics via ‘plotly.js’
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+purrr
+</td>
+<td style="text-align:left;">
+<span class="citation">(Henry and Wickham 2020)</span>
+</td>
+<td style="text-align:left;">
+Functional Programming Tools
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+randomForest
+</td>
+<td style="text-align:left;">
+<span class="citation">(Breiman et al. 2018)</span>
+</td>
+<td style="text-align:left;">
+Breiman and Cutler’s Random Forests for Classification and Regression
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RColorBrewer
+</td>
+<td style="text-align:left;">
+<span class="citation">(Neuwirth 2014)</span>
+</td>
+<td style="text-align:left;">
+ColorBrewer Palettes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rcpp
+</td>
+<td style="text-align:left;">
+<span class="citation">(Eddelbuettel et al. 2021)</span>
+</td>
+<td style="text-align:left;">
+Seamless R and C++ Integration
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+readr
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham and Hester 2021)</span>
+</td>
+<td style="text-align:left;">
+Read Rectangular Text Data
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+readxl
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham and Bryan 2019)</span>
+</td>
+<td style="text-align:left;">
+Read Excel Files
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+remotes
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hester et al. 2021)</span>
+</td>
+<td style="text-align:left;">
+R Package Installation from Remote Repositories, Including ‘GitHub’
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+renv
+</td>
+<td style="text-align:left;">
+<span class="citation">(Ushey 2021)</span>
+</td>
+<td style="text-align:left;">
+Project Environments
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+reticulate
+</td>
+<td style="text-align:left;">
+<span class="citation">(Ushey, Allaire, and Tang 2021)</span>
+</td>
+<td style="text-align:left;">
+Interface to ‘Python’
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rgdal
+</td>
+<td style="text-align:left;">
+<span class="citation">(R. Bivand, Keitt, and Rowlingson 2021)</span>
+</td>
+<td style="text-align:left;">
+Bindings for the ‘Geospatial’ Data Abstraction Library
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rlang
+</td>
+<td style="text-align:left;">
+<span class="citation">(Henry and Wickham 2021)</span>
+</td>
+<td style="text-align:left;">
+Functions for Base Types and Core R and ‘Tidyverse’ Features
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rmarkdown
+</td>
+<td style="text-align:left;">
+<span class="citation">(J. Allaire et al. 2021)</span>
+</td>
+<td style="text-align:left;">
+Dynamic Documents for R
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RMySQL
+</td>
+<td style="text-align:left;">
+<span class="citation">(Ooms et al. 2021)</span>
+</td>
+<td style="text-align:left;">
+Database Interface and ‘MySQL’ Driver for R
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rpart
+</td>
+<td style="text-align:left;">
+<span class="citation">(Therneau and Atkinson 2019)</span>
+</td>
+<td style="text-align:left;">
+Recursive Partitioning and Regression Trees
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RSQLite
+</td>
+<td style="text-align:left;">
+<span class="citation">(Müller et al. 2021)</span>
+</td>
+<td style="text-align:left;">
+‘SQLite’ Interface for R
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rvest
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham 2021d)</span>
+</td>
+<td style="text-align:left;">
+Easily Harvest (Scrape) Web Pages
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+scales
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham and Seidel 2020)</span>
+</td>
+<td style="text-align:left;">
+Scale Functions for Visualization
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sessioninfo
+</td>
+<td style="text-align:left;">
+<span class="citation">(Csárdi et al. 2018)</span>
+</td>
+<td style="text-align:left;">
+R Session Information
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sf
+</td>
+<td style="text-align:left;">
+<span class="citation">(Pebesma 2021)</span>
+</td>
+<td style="text-align:left;">
+Simple Features for R
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shiny
+</td>
+<td style="text-align:left;">
+<span class="citation">(Chang et al. 2021)</span>
+</td>
+<td style="text-align:left;">
+Web Application Framework for R
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sp
+</td>
+<td style="text-align:left;">
+<span class="citation">(Pebesma and Bivand 2021)</span>
+</td>
+<td style="text-align:left;">
+Classes and Methods for Spatial Data
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sparklyr
+</td>
+<td style="text-align:left;">
+<span class="citation">(Luraschi et al. 2021)</span>
+</td>
+<td style="text-align:left;">
+R Interface to Apache Spark
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+stopwords
+</td>
+<td style="text-align:left;">
+<span class="citation">(Benoit, Muhr, and Watanabe 2021)</span>
+</td>
+<td style="text-align:left;">
+Multilingual Stopword Lists
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+stringr
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham 2019d)</span>
+</td>
+<td style="text-align:left;">
+Simple, Consistent Wrappers for Common String Operations
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+styler
+</td>
+<td style="text-align:left;">
+<span class="citation">(Müller and Walthert 2021)</span>
+</td>
+<td style="text-align:left;">
+Non-Invasive Pretty Printing of R Code
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+testthat
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham 2021e)</span>
+</td>
+<td style="text-align:left;">
+Unit Testing for R
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+textdata
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hvitfeldt 2020)</span>
+</td>
+<td style="text-align:left;">
+Download and Load Various Text Datasets
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tidycensus
+</td>
+<td style="text-align:left;">
+<span class="citation">(Walker and Herman 2021)</span>
+</td>
+<td style="text-align:left;">
+Load US Census Boundary and Attribute Data as ‘tidyverse’ and ‘sf’-Ready Data Frames
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tidygeocoder
+</td>
+<td style="text-align:left;">
+<span class="citation">(Cambon et al. 2021)</span>
+</td>
+<td style="text-align:left;">
+Geocoding Made Easy
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tidygraph
+</td>
+<td style="text-align:left;">
+<span class="citation">(Pedersen 2020b)</span>
+</td>
+<td style="text-align:left;">
+A Tidy API for Graph Manipulation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tidymodels
+</td>
+<td style="text-align:left;">
+<span class="citation">(Kuhn and Wickham 2021)</span>
+</td>
+<td style="text-align:left;">
+Easily Install and Load the ‘Tidymodels’ Packages
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tidyr
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham 2021f)</span>
+</td>
+<td style="text-align:left;">
+Tidy Messy Data
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tidytext
+</td>
+<td style="text-align:left;">
+<span class="citation">(Robinson and Silge 2021)</span>
+</td>
+<td style="text-align:left;">
+Text Mining using ‘dplyr,’ ‘ggplot2,’ and Other Tidy Tools
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tidyverse
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham 2021g)</span>
+</td>
+<td style="text-align:left;">
+Easily Install and Load the ‘Tidyverse’
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tigris
+</td>
+<td style="text-align:left;">
+<span class="citation">(Walker 2021)</span>
+</td>
+<td style="text-align:left;">
+Load Census TIGER/Line Shapefiles
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tm
+</td>
+<td style="text-align:left;">
+<span class="citation">(Feinerer and Hornik 2020)</span>
+</td>
+<td style="text-align:left;">
+Text Mining Package
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+units
+</td>
+<td style="text-align:left;">
+<span class="citation">(Pebesma et al. 2021)</span>
+</td>
+<td style="text-align:left;">
+Measurement Units for R Vectors
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+usethis
+</td>
+<td style="text-align:left;">
+<span class="citation">(Hadley Wickham and Bryan 2021)</span>
+</td>
+<td style="text-align:left;">
+Automate Package and Project Setup
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+viridis
+</td>
+<td style="text-align:left;">
+<span class="citation">(Garnier 2021a)</span>
+</td>
+<td style="text-align:left;">
+Colorblind-Friendly Color Maps for R
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+viridisLite
+</td>
+<td style="text-align:left;">
+<span class="citation">(Garnier 2021b)</span>
+</td>
+<td style="text-align:left;">
+Colorblind-Friendly Color Maps (Lite Version)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+webshot
+</td>
+<td style="text-align:left;">
+<span class="citation">(Chang 2019)</span>
+</td>
+<td style="text-align:left;">
+Take Screenshots of Web Pages
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+wordcloud
+</td>
+<td style="text-align:left;">
+<span class="citation">(Fellows 2018)</span>
+</td>
+<td style="text-align:left;">
+Word Clouds
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+wru
+</td>
+<td style="text-align:left;">
+<span class="citation">(Khanna and Imai 2021)</span>
+</td>
+<td style="text-align:left;">
+Who are You? Bayesian Prediction of Racial Category Using Surname and Geolocation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+xaringanthemer
+</td>
+<td style="text-align:left;">
+<span class="citation">(Aden-Buie 2021)</span>
+</td>
+<td style="text-align:left;">
+Custom ‘xaringan’ CSS Themes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+xfun
+</td>
+<td style="text-align:left;">
+<span class="citation">(Yihui Xie 2021c)</span>
+</td>
+<td style="text-align:left;">
+Supporting Functions for Packages Maintained by ‘Yihui Xie’
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+xkcd
+</td>
+<td style="text-align:left;">
+<span class="citation">(Torres-Manzanera 2018)</span>
+</td>
+<td style="text-align:left;">
+Plotting ggplot2 Graphics in an XKCD Style
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+yardstick
+</td>
+<td style="text-align:left;">
+<span class="citation">(Kuhn and Vaughan 2021b)</span>
+</td>
+<td style="text-align:left;">
+Tidy Characterizations of Model Performance
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:github-pkgs">Table A.2: </span>List of GitHub packages used in this book.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Package
+</th>
+<th style="text-align:left;">
+GitHub User
+</th>
+<th style="text-align:left;">
+Citation
+</th>
+<th style="text-align:left;">
+Title
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+etude
+</td>
+<td style="text-align:left;">
+dtkaplan
+</td>
+<td style="text-align:left;">
+<span class="citation">(Kaplan 2021)</span>
+</td>
+<td style="text-align:left;">
+Utilities for Handling Textbook Exercises with Knitr
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fec12
+</td>
+<td style="text-align:left;">
+baumer-lab
+</td>
+<td style="text-align:left;">
+<span class="citation">(Tapal, Gahwagy, and Ryan 2021)</span>
+</td>
+<td style="text-align:left;">
+Data Package for 2012 Federal Elections
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+openrouteservice
+</td>
+<td style="text-align:left;">
+GIScience
+</td>
+<td style="text-align:left;">
+<span class="citation">(Oleś 2021)</span>
+</td>
+<td style="text-align:left;">
+Openrouteservice API Client
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+streamgraph
+</td>
+<td style="text-align:left;">
+hrbrmstr
+</td>
+<td style="text-align:left;">
+<span class="citation">(Rudis 2019)</span>
+</td>
+<td style="text-align:left;">
+Build Streamgraph Visualizations
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+</div>
+<div id="pkg-further" class="section level2" number="22.3">
+<h2><span class="header-section-number">A.3</span> Further resources</h2>
+<p>
+
+
+
+
+
+More information on the <a href="http://www.github.com/mdsr-book/mdsr"><strong>mdsr</strong></a> package can be found at <a href="http://www.github.com/mdsr-book/mdsr" class="uri">http://www.github.com/mdsr-book/mdsr</a>.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="references.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch-R.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="book_assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/A-pkg.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["mdsr2e.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

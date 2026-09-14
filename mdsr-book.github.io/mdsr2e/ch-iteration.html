@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 Iteration | Modern Data Science with R</title>
+  <meta name="description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 Iteration | Modern Data Science with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://mdsr-book.github.io/mdsr2e/" />
+  <meta property="og:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+  <meta property="og:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="github-repo" content="mdsr-book/mdsr2e" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Iteration | Modern Data Science with R" />
+  
+  <meta name="twitter:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="twitter:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+
+<meta name="author" content="Benjamin S. Baumer, Daniel T. Kaplan, and Nicholas J. Horton" />
+
+
+<meta name="date" content="2021-07-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch-dataII.html"/>
+<link rel="next" href="ch-ethics.html"/>
+<script src="book_assets/header-attrs-2.9/header-attrs.js"></script>
+<script src="book_assets/jquery-3.5.1/jquery.min.js"></script>
+<link href="book_assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="book_assets/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="book_assets/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="book_assets/kePrint-0.0.1/kePrint.js"></script>
+<link href="book_assets/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="book_assets/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="book_assets/bsTable-3.3.7/bootstrapTable.js"></script>
+<script src="book_assets/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="book_assets/plotly-binding-4.9.4.1/plotly.js"></script>
+<script src="book_assets/typedarray-0.1/typedarray.min.js"></script>
+<link href="book_assets/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="book_assets/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="book_assets/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="book_assets/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<link href="book_assets/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="book_assets/datatables-binding-0.18/datatables.js"></script>
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="book_assets/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="book_assets/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="book_assets/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="book_assets/dygraphs-1.1.1/shapes.js"></script>
+<script src="book_assets/moment-2.8.4/moment.js"></script>
+<script src="book_assets/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="book_assets/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="book_assets/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<script src="book_assets/d3-3.5.3/d3.min.js"></script>
+<link href="book_assets/colorbrewer-1/colorbrewer.css" rel="stylesheet" />
+<script src="book_assets/colorbrewer-1/colorbrewer.js"></script>
+<link href="book_assets/streamgraph-1/streamgraph.css" rel="stylesheet" />
+<script src="book_assets/streamgraph-binding-0.9.0/streamgraph.js"></script>
+<link href="book_assets/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-1.3.1/leaflet.js"></script>
+<link href="book_assets/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="book_assets/proj4-2.6.2/proj4.min.js"></script>
+<script src="book_assets/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="book_assets/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-binding-2.0.4.1/leaflet.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html">Modern Data Science with R, 2nd edition</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#nd-edition"><i class="fa fa-check"></i>2nd edition</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#note-about-erroneous-black-and-white-printing"><i class="fa fa-check"></i>Note about erroneous black-and-white printing!</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#cover"><i class="fa fa-check"></i>Cover</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#st-edition"><i class="fa fa-check"></i>1st edition</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#copyright"><i class="fa fa-check"></i>Copyright</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#background-and-motivation"><i class="fa fa-check"></i>Background and motivation</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#intended-audience"><i class="fa fa-check"></i>Intended audience</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-features-of-this-book"><i class="fa fa-check"></i>Key features of this book</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#focus-on-case-studies-and-extended-examples"><i class="fa fa-check"></i>Focus on case studies and extended examples</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#structure"><i class="fa fa-check"></i>Structure</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#supporting-materials"><i class="fa fa-check"></i>Supporting materials</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#changes-in-the-second-edition"><i class="fa fa-check"></i>Changes in the second edition</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-role-of-technology"><i class="fa fa-check"></i>Key role of technology</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#how-to-use-this-book"><i class="fa fa-check"></i>How to use this book</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="part"><span><b>I Part I: Introduction to Data Science</b></span></li>
+<li class="chapter" data-level="1" data-path="ch-prologue.html"><a href="ch-prologue.html"><i class="fa fa-check"></i><b>1</b> Prologue: Why data science?</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="ch-prologue.html"><a href="ch-prologue.html#what-is-data-science"><i class="fa fa-check"></i><b>1.1</b> What is data science?</a></li>
+<li class="chapter" data-level="1.2" data-path="ch-prologue.html"><a href="ch-prologue.html#case-study-the-evolution-of-sabermetrics"><i class="fa fa-check"></i><b>1.2</b> Case study: The evolution of sabermetrics</a></li>
+<li class="chapter" data-level="1.3" data-path="ch-prologue.html"><a href="ch-prologue.html#datasets"><i class="fa fa-check"></i><b>1.3</b> Datasets</a></li>
+<li class="chapter" data-level="1.4" data-path="ch-prologue.html"><a href="ch-prologue.html#intro-further"><i class="fa fa-check"></i><b>1.4</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch-vizI.html"><a href="ch-vizI.html"><i class="fa fa-check"></i><b>2</b> Data visualization</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#the-2012-federal-election-cycle"><i class="fa fa-check"></i><b>2.1</b> The 2012 federal election cycle</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="ch-vizI.html"><a href="ch-vizI.html#are-these-two-groups-different"><i class="fa fa-check"></i><b>2.1.1</b> Are these two groups different?</a></li>
+<li class="chapter" data-level="2.1.2" data-path="ch-vizI.html"><a href="ch-vizI.html#graphing-variation"><i class="fa fa-check"></i><b>2.1.2</b> Graphing variation</a></li>
+<li class="chapter" data-level="2.1.3" data-path="ch-vizI.html"><a href="ch-vizI.html#examining-relationships-among-variables"><i class="fa fa-check"></i><b>2.1.3</b> Examining relationships among variables</a></li>
+<li class="chapter" data-level="2.1.4" data-path="ch-vizI.html"><a href="ch-vizI.html#networks"><i class="fa fa-check"></i><b>2.1.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#composing-data-graphics"><i class="fa fa-check"></i><b>2.2</b> Composing data graphics</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#a-taxonomy-for-data-graphics"><i class="fa fa-check"></i><b>2.2.1</b> A taxonomy for data graphics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#sec:color"><i class="fa fa-check"></i><b>2.2.2</b> Color</a></li>
+<li class="chapter" data-level="2.2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#dissecting-data-graphics"><i class="fa fa-check"></i><b>2.2.3</b> Dissecting data graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#importance-of-data-graphics-challenger"><i class="fa fa-check"></i><b>2.3</b> Importance of data graphics: <em>Challenger</em></a></li>
+<li class="chapter" data-level="2.4" data-path="ch-vizI.html"><a href="ch-vizI.html#creating-effective-presentations"><i class="fa fa-check"></i><b>2.4</b> Creating effective presentations</a></li>
+<li class="chapter" data-level="2.5" data-path="ch-vizI.html"><a href="ch-vizI.html#the-wider-world-of-data-visualization"><i class="fa fa-check"></i><b>2.5</b> The wider world of data visualization</a></li>
+<li class="chapter" data-level="2.6" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-further"><i class="fa fa-check"></i><b>2.6</b> Further resources</a></li>
+<li class="chapter" data-level="2.7" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-exercises"><i class="fa fa-check"></i><b>2.7</b> Exercises</a></li>
+<li class="chapter" data-level="2.8" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-online-exercises"><i class="fa fa-check"></i><b>2.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch-vizII.html"><a href="ch-vizII.html"><i class="fa fa-check"></i><b>3</b> A grammar for graphics</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#a-grammar-for-data-graphics"><i class="fa fa-check"></i><b>3.1</b> A grammar for data graphics</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="ch-vizII.html"><a href="ch-vizII.html#aesthetics"><i class="fa fa-check"></i><b>3.1.1</b> Aesthetics</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ch-vizII.html"><a href="ch-vizII.html#scales"><i class="fa fa-check"></i><b>3.1.2</b> Scales</a></li>
+<li class="chapter" data-level="3.1.3" data-path="ch-vizII.html"><a href="ch-vizII.html#guides"><i class="fa fa-check"></i><b>3.1.3</b> Guides</a></li>
+<li class="chapter" data-level="3.1.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:facet"><i class="fa fa-check"></i><b>3.1.4</b> Facets</a></li>
+<li class="chapter" data-level="3.1.5" data-path="ch-vizII.html"><a href="ch-vizII.html#layers"><i class="fa fa-check"></i><b>3.1.5</b> Layers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:canonical"><i class="fa fa-check"></i><b>3.2</b> Canonical data graphics in (ref:R)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch-vizII.html"><a href="ch-vizII.html#univariate-displays"><i class="fa fa-check"></i><b>3.2.1</b> Univariate displays</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch-vizII.html"><a href="ch-vizII.html#multivariate-displays"><i class="fa fa-check"></i><b>3.2.2</b> Multivariate displays</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch-vizII.html"><a href="ch-vizII.html#maps"><i class="fa fa-check"></i><b>3.2.3</b> Maps</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:datanetwork"><i class="fa fa-check"></i><b>3.2.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:babynames"><i class="fa fa-check"></i><b>3.3</b> Extended example: Historical baby names</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#percentage-of-people-alive-today"><i class="fa fa-check"></i><b>3.3.1</b> Percentage of people alive today</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#most-common-names-for-women"><i class="fa fa-check"></i><b>3.3.2</b> Most common names for women</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-further"><i class="fa fa-check"></i><b>3.4</b> Further resources</a></li>
+<li class="chapter" data-level="3.5" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-exercises"><i class="fa fa-check"></i><b>3.5</b> Exercises</a></li>
+<li class="chapter" data-level="3.6" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-online-exercises"><i class="fa fa-check"></i><b>3.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch-dataI.html"><a href="ch-dataI.html"><i class="fa fa-check"></i><b>4</b> Data wrangling on one table</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:five_idioms"><i class="fa fa-check"></i><b>4.1</b> A grammar for data wrangling</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:pipe"><i class="fa fa-check"></i><b>4.1.1</b> <code>select()</code> and <code>filter()</code></a></li>
+<li class="chapter" data-level="4.1.2" data-path="ch-dataI.html"><a href="ch-dataI.html#mutate-and-rename"><i class="fa fa-check"></i><b>4.1.2</b> <code>mutate()</code> and <code>rename()</code></a></li>
+<li class="chapter" data-level="4.1.3" data-path="ch-dataI.html"><a href="ch-dataI.html#arrange"><i class="fa fa-check"></i><b>4.1.3</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="4.1.4" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:summarize"><i class="fa fa-check"></i><b>4.1.4</b> <code>summarize()</code> with <code>group_by()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:mets"><i class="fa fa-check"></i><b>4.2</b> Extended example: Ben’s time with the Mets</a></li>
+<li class="chapter" data-level="4.3" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-further"><i class="fa fa-check"></i><b>4.3</b> Further resources</a></li>
+<li class="chapter" data-level="4.4" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-exercises"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+<li class="chapter" data-level="4.5" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-online-exercises"><i class="fa fa-check"></i><b>4.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch-join.html"><a href="ch-join.html"><i class="fa fa-check"></i><b>5</b> Data wrangling on multiple tables</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch-join.html"><a href="ch-join.html#inner_join"><i class="fa fa-check"></i><b>5.1</b> <code>inner_join()</code></a></li>
+<li class="chapter" data-level="5.2" data-path="ch-join.html"><a href="ch-join.html#left_join"><i class="fa fa-check"></i><b>5.2</b> <code>left_join()</code></a></li>
+<li class="chapter" data-level="5.3" data-path="ch-join.html"><a href="ch-join.html#extended-example-manny-ramirez"><i class="fa fa-check"></i><b>5.3</b> Extended example: Manny Ramirez</a></li>
+<li class="chapter" data-level="5.4" data-path="ch-join.html"><a href="ch-join.html#joins-further"><i class="fa fa-check"></i><b>5.4</b> Further resources</a></li>
+<li class="chapter" data-level="5.5" data-path="ch-join.html"><a href="ch-join.html#join-exercises"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
+<li class="chapter" data-level="5.6" data-path="ch-join.html"><a href="ch-join.html#join-online-exercises"><i class="fa fa-check"></i><b>5.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch-dataII.html"><a href="ch-dataII.html"><i class="fa fa-check"></i><b>6</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch-dataII.html"><a href="ch-dataII.html#tidy-data"><i class="fa fa-check"></i><b>6.1</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="ch-dataII.html"><a href="ch-dataII.html#motivation"><i class="fa fa-check"></i><b>6.1.1</b> Motivation</a></li>
+<li class="chapter" data-level="6.1.2" data-path="ch-dataII.html"><a href="ch-dataII.html#what-are-tidy-data"><i class="fa fa-check"></i><b>6.1.2</b> What are tidy data?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="ch-dataII.html"><a href="ch-dataII.html#reshaping-data"><i class="fa fa-check"></i><b>6.2</b> Reshaping data</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-verbs-for-converting-wide-to-narrow-and-vice-versa"><i class="fa fa-check"></i><b>6.2.1</b> Data verbs for converting wide to narrow and <em>vice versa</em></a></li>
+<li class="chapter" data-level="6.2.2" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-wider"><i class="fa fa-check"></i><b>6.2.2</b> Pivoting wider</a></li>
+<li class="chapter" data-level="6.2.3" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-longer"><i class="fa fa-check"></i><b>6.2.3</b> Pivoting longer</a></li>
+<li class="chapter" data-level="6.2.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nest"><i class="fa fa-check"></i><b>6.2.4</b> List-columns</a></li>
+<li class="chapter" data-level="6.2.5" data-path="ch-dataII.html"><a href="ch-dataII.html#example-gender-neutral-names"><i class="fa fa-check"></i><b>6.2.5</b> Example: Gender-neutral names</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:naming"><i class="fa fa-check"></i><b>6.3</b> Naming conventions</a></li>
+<li class="chapter" data-level="6.4" data-path="ch-dataII.html"><a href="ch-dataII.html#data-intake"><i class="fa fa-check"></i><b>6.4</b> Data intake</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-table-friendly-formats"><i class="fa fa-check"></i><b>6.4.1</b> Data-table friendly formats</a></li>
+<li class="chapter" data-level="6.4.2" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:apis"><i class="fa fa-check"></i><b>6.4.2</b> APIs</a></li>
+<li class="chapter" data-level="6.4.3" data-path="ch-dataII.html"><a href="ch-dataII.html#cleaning-data"><i class="fa fa-check"></i><b>6.4.3</b> Cleaning data</a></li>
+<li class="chapter" data-level="6.4.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nukes"><i class="fa fa-check"></i><b>6.4.4</b> Example: Japanese nuclear reactors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-further"><i class="fa fa-check"></i><b>6.5</b> Further resources</a></li>
+<li class="chapter" data-level="6.6" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-exercises"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+<li class="chapter" data-level="6.7" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-online-exercises"><i class="fa fa-check"></i><b>6.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch-iteration.html"><a href="ch-iteration.html"><i class="fa fa-check"></i><b>7</b> Iteration</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:vectorized"><i class="fa fa-check"></i><b>7.1</b> Vectorized operations</a></li>
+<li class="chapter" data-level="7.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:scoped"><i class="fa fa-check"></i><b>7.2</b> Using <code>across()</code> with <strong>dplyr</strong> functions</a></li>
+<li class="chapter" data-level="7.3" data-path="ch-iteration.html"><a href="ch-iteration.html#appR:apply"><i class="fa fa-check"></i><b>7.3</b> The <code>map()</code> family of functions</a></li>
+<li class="chapter" data-level="7.4" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-over-a-one-dimensional-vector"><i class="fa fa-check"></i><b>7.4</b> Iterating over a one-dimensional vector</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-a-known-function"><i class="fa fa-check"></i><b>7.4.1</b> Iterating a known function</a></li>
+<li class="chapter" data-level="7.4.2" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-an-arbitrary-function"><i class="fa fa-check"></i><b>7.4.2</b> Iterating an arbitrary function</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:group-map"><i class="fa fa-check"></i><b>7.5</b> Iteration over subgroups</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:pythag"><i class="fa fa-check"></i><b>7.5.1</b> Example: Expected winning percentage</a></li>
+<li class="chapter" data-level="7.5.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:hrs"><i class="fa fa-check"></i><b>7.5.2</b> Example: Annual leaders</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="ch-iteration.html"><a href="ch-iteration.html#simulation"><i class="fa fa-check"></i><b>7.6</b> Simulation</a></li>
+<li class="chapter" data-level="7.7" data-path="ch-iteration.html"><a href="ch-iteration.html#extended-example-factors-associated-with-bmi"><i class="fa fa-check"></i><b>7.7</b> Extended example: Factors associated with BMI</a></li>
+<li class="chapter" data-level="7.8" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-further"><i class="fa fa-check"></i><b>7.8</b> Further resources</a></li>
+<li class="chapter" data-level="7.9" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-exercises"><i class="fa fa-check"></i><b>7.9</b> Exercises</a></li>
+<li class="chapter" data-level="7.10" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-online-exercises"><i class="fa fa-check"></i><b>7.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch-ethics.html"><a href="ch-ethics.html"><i class="fa fa-check"></i><b>8</b> Data science ethics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-intro"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ch-ethics.html"><a href="ch-ethics.html#truthful-falsehoods"><i class="fa fa-check"></i><b>8.2</b> Truthful falsehoods</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ch-ethics.html"><a href="ch-ethics.html#stand-your-ground"><i class="fa fa-check"></i><b>8.2.1</b> Stand your ground</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ch-ethics.html"><a href="ch-ethics.html#global-temperature"><i class="fa fa-check"></i><b>8.2.2</b> Global temperature</a></li>
+<li class="chapter" data-level="8.2.3" data-path="ch-ethics.html"><a href="ch-ethics.html#covid-19-reporting"><i class="fa fa-check"></i><b>8.2.3</b> COVID-19 reporting</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ch-ethics.html"><a href="ch-ethics.html#role-of-data-science-in-society"><i class="fa fa-check"></i><b>8.3</b> Role of data science in society</a></li>
+<li class="chapter" data-level="8.4" data-path="ch-ethics.html"><a href="ch-ethics.html#some-settings-for-professional-ethics"><i class="fa fa-check"></i><b>8.4</b> Some settings for professional ethics</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-chief-executive-officer"><i class="fa fa-check"></i><b>8.4.1</b> The chief executive officer</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination"><i class="fa fa-check"></i><b>8.4.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar"><i class="fa fa-check"></i><b>8.4.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.4.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction"><i class="fa fa-check"></i><b>8.4.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.4.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping"><i class="fa fa-check"></i><b>8.4.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.4.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis"><i class="fa fa-check"></i><b>8.4.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.4.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers"><i class="fa fa-check"></i><b>8.4.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.4.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations"><i class="fa fa-check"></i><b>8.4.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ch-ethics.html"><a href="ch-ethics.html#some-principles-to-guide-ethical-action"><i class="fa fa-check"></i><b>8.5</b> Some principles to guide ethical action</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-ceo"><i class="fa fa-check"></i><b>8.5.1</b> The CEO</a></li>
+<li class="chapter" data-level="8.5.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination-1"><i class="fa fa-check"></i><b>8.5.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.5.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar-1"><i class="fa fa-check"></i><b>8.5.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.5.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction-1"><i class="fa fa-check"></i><b>8.5.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.5.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping-1"><i class="fa fa-check"></i><b>8.5.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.5.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis-1"><i class="fa fa-check"></i><b>8.5.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.5.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers-1"><i class="fa fa-check"></i><b>8.5.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.5.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations-1"><i class="fa fa-check"></i><b>8.5.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="ch-ethics.html"><a href="ch-ethics.html#algorithmic-bias"><i class="fa fa-check"></i><b>8.6</b> Algorithmic bias</a></li>
+<li class="chapter" data-level="8.7" data-path="ch-ethics.html"><a href="ch-ethics.html#data-and-disclosure"><i class="fa fa-check"></i><b>8.7</b> Data and disclosure</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="ch-ethics.html"><a href="ch-ethics.html#reidentification-and-disclosure-avoidance"><i class="fa fa-check"></i><b>8.7.1</b> Reidentification and disclosure avoidance</a></li>
+<li class="chapter" data-level="8.7.2" data-path="ch-ethics.html"><a href="ch-ethics.html#safe-data-storage"><i class="fa fa-check"></i><b>8.7.2</b> Safe data storage</a></li>
+<li class="chapter" data-level="8.7.3" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:terms-of-use"><i class="fa fa-check"></i><b>8.7.3</b> Data scraping and terms of use</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:reproducibility"><i class="fa fa-check"></i><b>8.8</b> Reproducibility</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#example-erroneous-data-merging"><i class="fa fa-check"></i><b>8.8.1</b> Example: Erroneous data merging</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-collectively"><i class="fa fa-check"></i><b>8.9</b> Ethics, collectively</a></li>
+<li class="chapter" data-level="8.10" data-path="ch-ethics.html"><a href="ch-ethics.html#professional-guidelines-for-ethical-conduct"><i class="fa fa-check"></i><b>8.10</b> Professional guidelines for ethical conduct</a></li>
+<li class="chapter" data-level="8.11" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-further"><i class="fa fa-check"></i><b>8.11</b> Further resources</a></li>
+<li class="chapter" data-level="8.12" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-exercises"><i class="fa fa-check"></i><b>8.12</b> Exercises</a></li>
+<li class="chapter" data-level="8.13" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-online-exercises"><i class="fa fa-check"></i><b>8.13</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>II Part II: Statistics and Modeling</b></span></li>
+<li class="chapter" data-level="9" data-path="ch-foundations.html"><a href="ch-foundations.html"><i class="fa fa-check"></i><b>9</b> Statistical foundations</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch-foundations.html"><a href="ch-foundations.html#samples-and-populations"><i class="fa fa-check"></i><b>9.1</b> Samples and populations</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy-by-sampling-from-the-population"><i class="fa fa-check"></i><b>9.1.1</b> Example: Setting travel policy by sampling from the population</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="ch-foundations.html"><a href="ch-foundations.html#sample-statistics"><i class="fa fa-check"></i><b>9.2</b> Sample statistics</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:lln"><i class="fa fa-check"></i><b>9.2.1</b> The sampling distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:boot"><i class="fa fa-check"></i><b>9.3</b> The bootstrap</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy"><i class="fa fa-check"></i><b>9.3.1</b> Example: Setting travel policy</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="ch-foundations.html"><a href="ch-foundations.html#outliers"><i class="fa fa-check"></i><b>9.4</b> Outliers</a></li>
+<li class="chapter" data-level="9.5" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:gooddesign"><i class="fa fa-check"></i><b>9.5</b> Statistical models: Explaining variation</a></li>
+<li class="chapter" data-level="9.6" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:confound"><i class="fa fa-check"></i><b>9.6</b> Confounding and accounting for other factors</a></li>
+<li class="chapter" data-level="9.7" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:p-perils"><i class="fa fa-check"></i><b>9.7</b> The perils of p-values</a></li>
+<li class="chapter" data-level="9.8" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-further"><i class="fa fa-check"></i><b>9.8</b> Further resources</a></li>
+<li class="chapter" data-level="9.9" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-exercises"><i class="fa fa-check"></i><b>9.9</b> Exercises</a></li>
+<li class="chapter" data-level="9.10" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-online-exercises"><i class="fa fa-check"></i><b>9.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch-modeling.html"><a href="ch-modeling.html"><i class="fa fa-check"></i><b>10</b> Predictive modeling</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch-modeling.html"><a href="ch-modeling.html#predictive-modeling"><i class="fa fa-check"></i><b>10.1</b> Predictive modeling</a></li>
+<li class="chapter" data-level="10.2" data-path="ch-modeling.html"><a href="ch-modeling.html#simple-classification-models"><i class="fa fa-check"></i><b>10.2</b> Simple classification models</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="ch-modeling.html"><a href="ch-modeling.html#example-high-earners-in-the-1994-united-states-census"><i class="fa fa-check"></i><b>10.2.1</b> Example: High-earners in the 1994 United States Census</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="ch-modeling.html"><a href="ch-modeling.html#evaluating-models"><i class="fa fa-check"></i><b>10.3</b> Evaluating models</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:bias-variance"><i class="fa fa-check"></i><b>10.3.1</b> Bias-variance trade-off</a></li>
+<li class="chapter" data-level="10.3.2" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:cv"><i class="fa fa-check"></i><b>10.3.2</b> Cross-validation</a></li>
+<li class="chapter" data-level="10.3.3" data-path="ch-modeling.html"><a href="ch-modeling.html#confusion-matrices-and-roc-curves"><i class="fa fa-check"></i><b>10.3.3</b> Confusion matrices and ROC curves</a></li>
+<li class="chapter" data-level="10.3.4" data-path="ch-modeling.html"><a href="ch-modeling.html#measuring-prediction-error-for-quantitative-responses"><i class="fa fa-check"></i><b>10.3.4</b> Measuring prediction error for quantitative responses</a></li>
+<li class="chapter" data-level="10.3.5" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:evaluate"><i class="fa fa-check"></i><b>10.3.5</b> Example: Evaluation of income models</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:diabetes"><i class="fa fa-check"></i><b>10.4</b> Extended example: Who has diabetes?</a></li>
+<li class="chapter" data-level="10.5" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-further"><i class="fa fa-check"></i><b>10.5</b> Further resources</a></li>
+<li class="chapter" data-level="10.6" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-exercises"><i class="fa fa-check"></i><b>10.6</b> Exercises</a></li>
+<li class="chapter" data-level="10.7" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-online-exercises"><i class="fa fa-check"></i><b>10.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch-learningI.html"><a href="ch-learningI.html"><i class="fa fa-check"></i><b>11</b> Supervised learning</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch-learningI.html"><a href="ch-learningI.html#non-regression-classifiers"><i class="fa fa-check"></i><b>11.1</b> Non-regression classifiers</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="ch-learningI.html"><a href="ch-learningI.html#decision-trees"><i class="fa fa-check"></i><b>11.1.1</b> Decision trees</a></li>
+<li class="chapter" data-level="11.1.2" data-path="ch-learningI.html"><a href="ch-learningI.html#random-forests"><i class="fa fa-check"></i><b>11.1.2</b> Random forests</a></li>
+<li class="chapter" data-level="11.1.3" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:knn"><i class="fa fa-check"></i><b>11.1.3</b> Nearest neighbor</a></li>
+<li class="chapter" data-level="11.1.4" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:bayes"><i class="fa fa-check"></i><b>11.1.4</b> Naïve Bayes</a></li>
+<li class="chapter" data-level="11.1.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:neuralnet"><i class="fa fa-check"></i><b>11.1.5</b> Artificial neural networks</a></li>
+<li class="chapter" data-level="11.1.6" data-path="ch-learningI.html"><a href="ch-learningI.html#ensemble-methods"><i class="fa fa-check"></i><b>11.1.6</b> Ensemble methods</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:tuning"><i class="fa fa-check"></i><b>11.2</b> Parameter tuning</a></li>
+<li class="chapter" data-level="11.3" data-path="ch-learningI.html"><a href="ch-learningI.html#example-evaluation-of-income-models-redux"><i class="fa fa-check"></i><b>11.3</b> Example: Evaluation of income models redux</a></li>
+<li class="chapter" data-level="11.4" data-path="ch-learningI.html"><a href="ch-learningI.html#extended-example-who-has-diabetes-this-time"><i class="fa fa-check"></i><b>11.4</b> Extended example: Who has diabetes this time?</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch-learningI.html"><a href="ch-learningI.html#comparing-all-models"><i class="fa fa-check"></i><b>11.4.1</b> Comparing all models</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:regularization"><i class="fa fa-check"></i><b>11.5</b> Regularization</a></li>
+<li class="chapter" data-level="11.6" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-further"><i class="fa fa-check"></i><b>11.6</b> Further resources</a></li>
+<li class="chapter" data-level="11.7" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-exercises"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
+<li class="chapter" data-level="11.8" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-online-exercises"><i class="fa fa-check"></i><b>11.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch-learningII.html"><a href="ch-learningII.html"><i class="fa fa-check"></i><b>12</b> Unsupervised learning</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch-learningII.html"><a href="ch-learningII.html#clustering"><i class="fa fa-check"></i><b>12.1</b> Clustering</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="ch-learningII.html"><a href="ch-learningII.html#sec:hclust"><i class="fa fa-check"></i><b>12.1.1</b> Hierarchical clustering</a></li>
+<li class="chapter" data-level="12.1.2" data-path="ch-learningII.html"><a href="ch-learningII.html#k-means"><i class="fa fa-check"></i><b>12.1.2</b> <span class="math inline">\(k\)</span>-means</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="ch-learningII.html"><a href="ch-learningII.html#dimension-reduction"><i class="fa fa-check"></i><b>12.2</b> Dimension reduction</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch-learningII.html"><a href="ch-learningII.html#intuitive-approaches"><i class="fa fa-check"></i><b>12.2.1</b> Intuitive approaches</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch-learningII.html"><a href="ch-learningII.html#singular-value-decomposition"><i class="fa fa-check"></i><b>12.2.2</b> Singular value decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-further"><i class="fa fa-check"></i><b>12.3</b> Further resources</a></li>
+<li class="chapter" data-level="12.4" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-exercises"><i class="fa fa-check"></i><b>12.4</b> Exercises</a></li>
+<li class="chapter" data-level="12.5" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-online-exercises"><i class="fa fa-check"></i><b>12.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch-simulation.html"><a href="ch-simulation.html"><i class="fa fa-check"></i><b>13</b> Simulation</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch-simulation.html"><a href="ch-simulation.html#reasoning-in-reverse"><i class="fa fa-check"></i><b>13.1</b> Reasoning in reverse</a></li>
+<li class="chapter" data-level="13.2" data-path="ch-simulation.html"><a href="ch-simulation.html#extended-example-grouping-cancers"><i class="fa fa-check"></i><b>13.2</b> Extended example: Grouping cancers</a></li>
+<li class="chapter" data-level="13.3" data-path="ch-simulation.html"><a href="ch-simulation.html#randomizing-functions"><i class="fa fa-check"></i><b>13.3</b> Randomizing functions</a></li>
+<li class="chapter" data-level="13.4" data-path="ch-simulation.html"><a href="ch-simulation.html#simulating-variability"><i class="fa fa-check"></i><b>13.4</b> Simulating variability</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch-simulation.html"><a href="ch-simulation.html#the-partially-planned-rendezvous"><i class="fa fa-check"></i><b>13.4.1</b> The partially-planned rendezvous</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:jobsnum"><i class="fa fa-check"></i><b>13.4.2</b> The jobs report</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch-simulation.html"><a href="ch-simulation.html#restaurant-health-and-sanitation-grades"><i class="fa fa-check"></i><b>13.4.3</b> Restaurant health and sanitation grades</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch-simulation.html"><a href="ch-simulation.html#random-networks"><i class="fa fa-check"></i><b>13.5</b> Random networks</a></li>
+<li class="chapter" data-level="13.6" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:key-principles-random"><i class="fa fa-check"></i><b>13.6</b> Key principles of simulation</a>
+<ul>
+<li class="chapter" data-level="13.6.1" data-path="ch-simulation.html"><a href="ch-simulation.html#design"><i class="fa fa-check"></i><b>13.6.1</b> Design</a></li>
+<li class="chapter" data-level="13.6.2" data-path="ch-simulation.html"><a href="ch-simulation.html#modularity"><i class="fa fa-check"></i><b>13.6.2</b> Modularity</a></li>
+<li class="chapter" data-level="13.6.3" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:seed"><i class="fa fa-check"></i><b>13.6.3</b> Reproducibility and random number seeds</a></li>
+</ul></li>
+<li class="chapter" data-level="13.7" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-further"><i class="fa fa-check"></i><b>13.7</b> Further resources</a></li>
+<li class="chapter" data-level="13.8" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-exercises"><i class="fa fa-check"></i><b>13.8</b> Exercises</a></li>
+<li class="chapter" data-level="13.9" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-online-exercises"><i class="fa fa-check"></i><b>13.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>III Part III: Topics in Data Science</b></span></li>
+<li class="chapter" data-level="14" data-path="ch-vizIII.html"><a href="ch-vizIII.html"><i class="fa fa-check"></i><b>14</b> Dynamic and customized data graphics</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:d3"><i class="fa fa-check"></i><b>14.1</b> Rich Web content using <code>D3.js</code> and <strong>htmlwidgets</strong></a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#leaflet"><i class="fa fa-check"></i><b>14.1.1</b> Leaflet</a></li>
+<li class="chapter" data-level="14.1.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#plot.ly"><i class="fa fa-check"></i><b>14.1.2</b> Plot.ly</a></li>
+<li class="chapter" data-level="14.1.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datatables"><i class="fa fa-check"></i><b>14.1.3</b> DataTables</a></li>
+<li class="chapter" data-level="14.1.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#dygraphs"><i class="fa fa-check"></i><b>14.1.4</b> Dygraphs</a></li>
+<li class="chapter" data-level="14.1.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#streamgraphs"><i class="fa fa-check"></i><b>14.1.5</b> Streamgraphs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#animation"><i class="fa fa-check"></i><b>14.2</b> Animation</a></li>
+<li class="chapter" data-level="14.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:fleshdashboard"><i class="fa fa-check"></i><b>14.3</b> Flexdashboard</a></li>
+<li class="chapter" data-level="14.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:shiny"><i class="fa fa-check"></i><b>14.4</b> Interactive web apps with Shiny</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#example-interactive-display-of-the-beatles"><i class="fa fa-check"></i><b>14.4.1</b> Example: interactive display of the Beatles</a></li>
+<li class="chapter" data-level="14.4.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#more-on-reactive-programming"><i class="fa fa-check"></i><b>14.4.2</b> More on reactive programming</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:themes"><i class="fa fa-check"></i><b>14.5</b> Customization of <strong>ggplot2</strong> graphics</a></li>
+<li class="chapter" data-level="14.6" data-path="ch-vizIII.html"><a href="ch-vizIII.html#extended-example-hot-dog-eating"><i class="fa fa-check"></i><b>14.6</b> Extended example: Hot dog eating</a></li>
+<li class="chapter" data-level="14.7" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-further"><i class="fa fa-check"></i><b>14.7</b> Further resources</a></li>
+<li class="chapter" data-level="14.8" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-exercises"><i class="fa fa-check"></i><b>14.8</b> Exercises</a></li>
+<li class="chapter" data-level="14.9" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-online-exercises"><i class="fa fa-check"></i><b>14.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch-sql.html"><a href="ch-sql.html"><i class="fa fa-check"></i><b>15</b> Database querying using SQL</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch-sql.html"><a href="ch-sql.html#sec:dplyr-sql"><i class="fa fa-check"></i><b>15.1</b> From <strong>dplyr</strong> to SQL</a></li>
+<li class="chapter" data-level="15.2" data-path="ch-sql.html"><a href="ch-sql.html#flat-file-databases"><i class="fa fa-check"></i><b>15.2</b> Flat-file databases</a></li>
+<li class="chapter" data-level="15.3" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-universe"><i class="fa fa-check"></i><b>15.3</b> The SQL universe</a></li>
+<li class="chapter" data-level="15.4" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-data-manipulation-language"><i class="fa fa-check"></i><b>15.4</b> The SQL data manipulation language</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="ch-sql.html"><a href="ch-sql.html#select...from"><i class="fa fa-check"></i><b>15.4.1</b> <code>SELECT...FROM</code></a></li>
+<li class="chapter" data-level="15.4.2" data-path="ch-sql.html"><a href="ch-sql.html#where"><i class="fa fa-check"></i><b>15.4.2</b> <code>WHERE</code></a></li>
+<li class="chapter" data-level="15.4.3" data-path="ch-sql.html"><a href="ch-sql.html#group-by"><i class="fa fa-check"></i><b>15.4.3</b> <code>GROUP BY</code></a></li>
+<li class="chapter" data-level="15.4.4" data-path="ch-sql.html"><a href="ch-sql.html#order-by"><i class="fa fa-check"></i><b>15.4.4</b> <code>ORDER BY</code></a></li>
+<li class="chapter" data-level="15.4.5" data-path="ch-sql.html"><a href="ch-sql.html#having"><i class="fa fa-check"></i><b>15.4.5</b> <code>HAVING</code></a></li>
+<li class="chapter" data-level="15.4.6" data-path="ch-sql.html"><a href="ch-sql.html#limit"><i class="fa fa-check"></i><b>15.4.6</b> <code>LIMIT</code></a></li>
+<li class="chapter" data-level="15.4.7" data-path="ch-sql.html"><a href="ch-sql.html#join"><i class="fa fa-check"></i><b>15.4.7</b> <code>JOIN</code></a></li>
+<li class="chapter" data-level="15.4.8" data-path="ch-sql.html"><a href="ch-sql.html#union"><i class="fa fa-check"></i><b>15.4.8</b> <code>UNION</code></a></li>
+<li class="chapter" data-level="15.4.9" data-path="ch-sql.html"><a href="ch-sql.html#subqueries"><i class="fa fa-check"></i><b>15.4.9</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="ch-sql.html"><a href="ch-sql.html#sec:ft8-flights"><i class="fa fa-check"></i><b>15.5</b> Extended example: FiveThirtyEight flights</a></li>
+<li class="chapter" data-level="15.6" data-path="ch-sql.html"><a href="ch-sql.html#sql-vs.-refr"><i class="fa fa-check"></i><b>15.6</b> SQL vs. (ref:R)</a></li>
+<li class="chapter" data-level="15.7" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-further"><i class="fa fa-check"></i><b>15.7</b> Further resources</a></li>
+<li class="chapter" data-level="15.8" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-exercises"><i class="fa fa-check"></i><b>15.8</b> Exercises</a></li>
+<li class="chapter" data-level="15.9" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-online-exercises"><i class="fa fa-check"></i><b>15.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="ch-sql2.html"><a href="ch-sql2.html"><i class="fa fa-check"></i><b>16</b> Database administration</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:indices"><i class="fa fa-check"></i><b>16.1</b> Constructing efficient SQL databases</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="ch-sql2.html"><a href="ch-sql2.html#creating-new-databases"><i class="fa fa-check"></i><b>16.1.1</b> Creating new databases</a></li>
+<li class="chapter" data-level="16.1.2" data-path="ch-sql2.html"><a href="ch-sql2.html#create-table"><i class="fa fa-check"></i><b>16.1.2</b> <code>CREATE TABLE</code></a></li>
+<li class="chapter" data-level="16.1.3" data-path="ch-sql2.html"><a href="ch-sql2.html#keys"><i class="fa fa-check"></i><b>16.1.3</b> Keys</a></li>
+<li class="chapter" data-level="16.1.4" data-path="ch-sql2.html"><a href="ch-sql2.html#indices"><i class="fa fa-check"></i><b>16.1.4</b> Indices</a></li>
+<li class="chapter" data-level="16.1.5" data-path="ch-sql2.html"><a href="ch-sql2.html#query-plans"><i class="fa fa-check"></i><b>16.1.5</b> Query plans</a></li>
+<li class="chapter" data-level="16.1.6" data-path="ch-sql2.html"><a href="ch-sql2.html#partitioning"><i class="fa fa-check"></i><b>16.1.6</b> Partitioning</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-sql-data"><i class="fa fa-check"></i><b>16.2</b> Changing SQL data</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-data"><i class="fa fa-check"></i><b>16.2.1</b> Changing data</a></li>
+<li class="chapter" data-level="16.2.2" data-path="ch-sql2.html"><a href="ch-sql2.html#adding-data"><i class="fa fa-check"></i><b>16.2.2</b> Adding data</a></li>
+<li class="chapter" data-level="16.2.3" data-path="ch-sql2.html"><a href="ch-sql2.html#importing-data-from-a-file"><i class="fa fa-check"></i><b>16.2.3</b> Importing data from a file</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:toy-db"><i class="fa fa-check"></i><b>16.3</b> Extended example: Building a database</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="ch-sql2.html"><a href="ch-sql2.html#extract"><i class="fa fa-check"></i><b>16.3.1</b> Extract</a></li>
+<li class="chapter" data-level="16.3.2" data-path="ch-sql2.html"><a href="ch-sql2.html#transform"><i class="fa fa-check"></i><b>16.3.2</b> Transform</a></li>
+<li class="chapter" data-level="16.3.3" data-path="ch-sql2.html"><a href="ch-sql2.html#load-into-mysql-database"><i class="fa fa-check"></i><b>16.3.3</b> Load into MySQL database</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="ch-sql2.html"><a href="ch-sql2.html#scalability"><i class="fa fa-check"></i><b>16.4</b> Scalability</a></li>
+<li class="chapter" data-level="16.5" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-further"><i class="fa fa-check"></i><b>16.5</b> Further resources</a></li>
+<li class="chapter" data-level="16.6" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-exercises"><i class="fa fa-check"></i><b>16.6</b> Exercises</a></li>
+<li class="chapter" data-level="16.7" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-online-exercises"><i class="fa fa-check"></i><b>16.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="ch-spatial.html"><a href="ch-spatial.html"><i class="fa fa-check"></i><b>17</b> Working with geospatial data</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="ch-spatial.html"><a href="ch-spatial.html#motivation-whats-so-great-about-geospatial-data"><i class="fa fa-check"></i><b>17.1</b> Motivation: What’s so great about geospatial data?</a></li>
+<li class="chapter" data-level="17.2" data-path="ch-spatial.html"><a href="ch-spatial.html#spatial-data-structures"><i class="fa fa-check"></i><b>17.2</b> Spatial data structures</a></li>
+<li class="chapter" data-level="17.3" data-path="ch-spatial.html"><a href="ch-spatial.html#making-maps"><i class="fa fa-check"></i><b>17.3</b> Making maps</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="ch-spatial.html"><a href="ch-spatial.html#static-maps"><i class="fa fa-check"></i><b>17.3.1</b> Static maps</a></li>
+<li class="chapter" data-level="17.3.2" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:projections"><i class="fa fa-check"></i><b>17.3.2</b> Projections</a></li>
+<li class="chapter" data-level="17.3.3" data-path="ch-spatial.html"><a href="ch-spatial.html#dynamic-maps-with-leaflet"><i class="fa fa-check"></i><b>17.3.3</b> Dynamic maps with <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="ch-spatial.html"><a href="ch-spatial.html#extended-example-congressional-districts"><i class="fa fa-check"></i><b>17.4</b> Extended example: Congressional districts</a>
+<ul>
+<li class="chapter" data-level="17.4.1" data-path="ch-spatial.html"><a href="ch-spatial.html#election-results"><i class="fa fa-check"></i><b>17.4.1</b> Election results</a></li>
+<li class="chapter" data-level="17.4.2" data-path="ch-spatial.html"><a href="ch-spatial.html#congressional-districts"><i class="fa fa-check"></i><b>17.4.2</b> Congressional districts</a></li>
+<li class="chapter" data-level="17.4.3" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:sf-inner-join"><i class="fa fa-check"></i><b>17.4.3</b> Putting it all together</a></li>
+<li class="chapter" data-level="17.4.4" data-path="ch-spatial.html"><a href="ch-spatial.html#using-ggplot2"><i class="fa fa-check"></i><b>17.4.4</b> Using <code>ggplot2</code></a></li>
+<li class="chapter" data-level="17.4.5" data-path="ch-spatial.html"><a href="ch-spatial.html#using-leaflet"><i class="fa fa-check"></i><b>17.4.5</b> Using <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="ch-spatial.html"><a href="ch-spatial.html#effective-maps-how-not-to-lie"><i class="fa fa-check"></i><b>17.5</b> Effective maps: How (not) to lie</a></li>
+<li class="chapter" data-level="17.6" data-path="ch-spatial.html"><a href="ch-spatial.html#projecting-polygons"><i class="fa fa-check"></i><b>17.6</b> Projecting polygons</a></li>
+<li class="chapter" data-level="17.7" data-path="ch-spatial.html"><a href="ch-spatial.html#playing-well-with-others"><i class="fa fa-check"></i><b>17.7</b> Playing well with others</a></li>
+<li class="chapter" data-level="17.8" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialII-further"><i class="fa fa-check"></i><b>17.8</b> Further resources</a></li>
+<li class="chapter" data-level="17.9" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-exercises"><i class="fa fa-check"></i><b>17.9</b> Exercises</a></li>
+<li class="chapter" data-level="17.10" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-online-exercises"><i class="fa fa-check"></i><b>17.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="ch-spatial2.html"><a href="ch-spatial2.html"><i class="fa fa-check"></i><b>18</b> Geospatial computations</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-operations"><i class="fa fa-check"></i><b>18.1</b> Geospatial operations</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geocoding-routes-and-distances"><i class="fa fa-check"></i><b>18.1.1</b> Geocoding, routes, and distances</a></li>
+<li class="chapter" data-level="18.1.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#sec:geometric-operations"><i class="fa fa-check"></i><b>18.1.2</b> Geometric operations</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-aggregation"><i class="fa fa-check"></i><b>18.2</b> Geospatial aggregation</a></li>
+<li class="chapter" data-level="18.3" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-joins"><i class="fa fa-check"></i><b>18.3</b> Geospatial joins</a></li>
+<li class="chapter" data-level="18.4" data-path="ch-spatial2.html"><a href="ch-spatial2.html#extended-example-trail-elevations-at-macleish"><i class="fa fa-check"></i><b>18.4</b> Extended example: Trail elevations at MacLeish</a></li>
+<li class="chapter" data-level="18.5" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialI-further"><i class="fa fa-check"></i><b>18.5</b> Further resources</a></li>
+<li class="chapter" data-level="18.6" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-exercises"><i class="fa fa-check"></i><b>18.6</b> Exercises</a></li>
+<li class="chapter" data-level="18.7" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-online-exercises"><i class="fa fa-check"></i><b>18.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="ch-text.html"><a href="ch-text.html"><i class="fa fa-check"></i><b>19</b> Text as data</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="ch-text.html"><a href="ch-text.html#regular-expressions-using-macbeth"><i class="fa fa-check"></i><b>19.1</b> Regular expressions using <em>Macbeth</em></a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="ch-text.html"><a href="ch-text.html#parsing-the-text-of-the-scottish-play"><i class="fa fa-check"></i><b>19.1.1</b> Parsing the text of the <span><em>Scottish play</em></span></a></li>
+<li class="chapter" data-level="19.1.2" data-path="ch-text.html"><a href="ch-text.html#life-and-death-in-macbeth"><i class="fa fa-check"></i><b>19.1.2</b> Life and death in <em>Macbeth</em></a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="ch-text.html"><a href="ch-text.html#extended-example-analyzing-textual-data-from-arxiv.org"><i class="fa fa-check"></i><b>19.2</b> Extended example: Analyzing textual data from arXiv.org</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="ch-text.html"><a href="ch-text.html#corpora"><i class="fa fa-check"></i><b>19.2.1</b> Corpora</a></li>
+<li class="chapter" data-level="19.2.2" data-path="ch-text.html"><a href="ch-text.html#word-clouds"><i class="fa fa-check"></i><b>19.2.2</b> Word clouds</a></li>
+<li class="chapter" data-level="19.2.3" data-path="ch-text.html"><a href="ch-text.html#sentiment-analysis"><i class="fa fa-check"></i><b>19.2.3</b> Sentiment analysis</a></li>
+<li class="chapter" data-level="19.2.4" data-path="ch-text.html"><a href="ch-text.html#bigrams-and-n-grams"><i class="fa fa-check"></i><b>19.2.4</b> Bigrams and N-grams</a></li>
+<li class="chapter" data-level="19.2.5" data-path="ch-text.html"><a href="ch-text.html#document-term-matrices"><i class="fa fa-check"></i><b>19.2.5</b> Document term matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="ch-text.html"><a href="ch-text.html#ingesting-text"><i class="fa fa-check"></i><b>19.3</b> Ingesting text</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="ch-text.html"><a href="ch-text.html#example-scraping-the-songs-of-the-beatles"><i class="fa fa-check"></i><b>19.3.1</b> Example: Scraping the songs of the Beatles</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="ch-text.html"><a href="ch-text.html#text-further"><i class="fa fa-check"></i><b>19.4</b> Further resources</a></li>
+<li class="chapter" data-level="19.5" data-path="ch-text.html"><a href="ch-text.html#text-exercises"><i class="fa fa-check"></i><b>19.5</b> Exercises</a></li>
+<li class="chapter" data-level="19.6" data-path="ch-text.html"><a href="ch-text.html#text-online-exercises"><i class="fa fa-check"></i><b>19.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="ch-netsci.html"><a href="ch-netsci.html"><i class="fa fa-check"></i><b>20</b> Network science</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-intro"><i class="fa fa-check"></i><b>20.1</b> Introduction to network science</a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="ch-netsci.html"><a href="ch-netsci.html#definitions"><i class="fa fa-check"></i><b>20.1.1</b> Definitions</a></li>
+<li class="chapter" data-level="20.1.2" data-path="ch-netsci.html"><a href="ch-netsci.html#a-brief-history-of-network-science"><i class="fa fa-check"></i><b>20.1.2</b> A brief history of network science</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-six-degrees-of-kristen-stewart"><i class="fa fa-check"></i><b>20.2</b> Extended example: Six degrees of Kristen Stewart</a>
+<ul>
+<li class="chapter" data-level="20.2.1" data-path="ch-netsci.html"><a href="ch-netsci.html#sql:imdb"><i class="fa fa-check"></i><b>20.2.1</b> Collecting Hollywood data</a></li>
+<li class="chapter" data-level="20.2.2" data-path="ch-netsci.html"><a href="ch-netsci.html#building-the-hollywood-network"><i class="fa fa-check"></i><b>20.2.2</b> Building the Hollywood network</a></li>
+<li class="chapter" data-level="20.2.3" data-path="ch-netsci.html"><a href="ch-netsci.html#building-a-kristen-stewart-oracle"><i class="fa fa-check"></i><b>20.2.3</b> Building a Kristen Stewart oracle</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="ch-netsci.html"><a href="ch-netsci.html#sec:pagerank"><i class="fa fa-check"></i><b>20.3</b> PageRank</a>
+<ul>
+<li class="chapter" data-level="20.3.1" data-path="ch-netsci.html"><a href="ch-netsci.html#eigenvector-centrality"><i class="fa fa-check"></i><b>20.3.1</b> Eigenvector centrality</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-1996-mens-college-basketball"><i class="fa fa-check"></i><b>20.4</b> Extended example: 1996 men’s college basketball</a></li>
+<li class="chapter" data-level="20.5" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-further"><i class="fa fa-check"></i><b>20.5</b> Further resources</a></li>
+<li class="chapter" data-level="20.6" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-exercises"><i class="fa fa-check"></i><b>20.6</b> Exercises</a></li>
+<li class="chapter" data-level="20.7" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-online-exercises"><i class="fa fa-check"></i><b>20.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="ch-big.html"><a href="ch-big.html"><i class="fa fa-check"></i><b>21</b> Epilogue: Towards “big data”</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="ch-big.html"><a href="ch-big.html#notions-of-big-data"><i class="fa fa-check"></i><b>21.1</b> Notions of big data</a></li>
+<li class="chapter" data-level="21.2" data-path="ch-big.html"><a href="ch-big.html#tools-for-bigger-data"><i class="fa fa-check"></i><b>21.2</b> Tools for bigger data</a>
+<ul>
+<li class="chapter" data-level="21.2.1" data-path="ch-big.html"><a href="ch-big.html#data-and-memory-structures-for-big-data"><i class="fa fa-check"></i><b>21.2.1</b> Data and memory structures for big data</a></li>
+<li class="chapter" data-level="21.2.2" data-path="ch-big.html"><a href="ch-big.html#compilation"><i class="fa fa-check"></i><b>21.2.2</b> Compilation</a></li>
+<li class="chapter" data-level="21.2.3" data-path="ch-big.html"><a href="ch-big.html#parallel-and-distributed-computing"><i class="fa fa-check"></i><b>21.2.3</b> Parallel and distributed computing</a></li>
+<li class="chapter" data-level="21.2.4" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-sql"><i class="fa fa-check"></i><b>21.2.4</b> Alternatives to SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-refr"><i class="fa fa-check"></i><b>21.3</b> Alternatives to (ref:R)</a></li>
+<li class="chapter" data-level="21.4" data-path="ch-big.html"><a href="ch-big.html#closing-thoughts"><i class="fa fa-check"></i><b>21.4</b> Closing thoughts</a></li>
+<li class="chapter" data-level="21.5" data-path="ch-big.html"><a href="ch-big.html#bigdata-further"><i class="fa fa-check"></i><b>21.5</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="part"><span><b>IV Part IV: Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="ch-mdsr.html"><a href="ch-mdsr.html"><i class="fa fa-check"></i><b>A</b> Packages used in this book</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="ch-mdsr.html"><a href="ch-mdsr.html#the-mdsr-package"><i class="fa fa-check"></i><b>A.1</b> The <strong>mdsr</strong> package</a></li>
+<li class="chapter" data-level="A.2" data-path="ch-mdsr.html"><a href="ch-mdsr.html#other-packages"><i class="fa fa-check"></i><b>A.2</b> Other packages</a></li>
+<li class="chapter" data-level="A.3" data-path="ch-mdsr.html"><a href="ch-mdsr.html#pkg-further"><i class="fa fa-check"></i><b>A.3</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="ch-R.html"><a href="ch-R.html"><i class="fa fa-check"></i><b>B</b> Introduction to <code>R</code> and RStudio</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="ch-R.html"><a href="ch-R.html#appR:install"><i class="fa fa-check"></i><b>B.1</b> Installation</a>
+<ul>
+<li class="chapter" data-level="B.1.1" data-path="ch-R.html"><a href="ch-R.html#rstudio"><i class="fa fa-check"></i><b>B.1.1</b> RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="B.2" data-path="ch-R.html"><a href="ch-R.html#learning-refr"><i class="fa fa-check"></i><b>B.2</b> Learning (ref:R)</a></li>
+<li class="chapter" data-level="B.3" data-path="ch-R.html"><a href="ch-R.html#appR:objects"><i class="fa fa-check"></i><b>B.3</b> Fundamental structures and objects</a>
+<ul>
+<li class="chapter" data-level="B.3.1" data-path="ch-R.html"><a href="ch-R.html#appR:assign"><i class="fa fa-check"></i><b>B.3.1</b> Objects and vectors</a></li>
+<li class="chapter" data-level="B.3.2" data-path="ch-R.html"><a href="ch-R.html#appR:operators"><i class="fa fa-check"></i><b>B.3.2</b> Operators</a></li>
+<li class="chapter" data-level="B.3.3" data-path="ch-R.html"><a href="ch-R.html#appR:lists"><i class="fa fa-check"></i><b>B.3.3</b> Lists</a></li>
+<li class="chapter" data-level="B.3.4" data-path="ch-R.html"><a href="ch-R.html#appR:matrix"><i class="fa fa-check"></i><b>B.3.4</b> Matrices</a></li>
+<li class="chapter" data-level="B.3.5" data-path="ch-R.html"><a href="ch-R.html#appR:dataframe"><i class="fa fa-check"></i><b>B.3.5</b> Dataframes and tibbles</a></li>
+<li class="chapter" data-level="B.3.6" data-path="ch-R.html"><a href="ch-R.html#appR:attr"><i class="fa fa-check"></i><b>B.3.6</b> Attributes and classes</a></li>
+<li class="chapter" data-level="B.3.7" data-path="ch-R.html"><a href="ch-R.html#appR:options"><i class="fa fa-check"></i><b>B.3.7</b> Options</a></li>
+<li class="chapter" data-level="B.3.8" data-path="ch-R.html"><a href="ch-R.html#sec:func"><i class="fa fa-check"></i><b>B.3.8</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="ch-R.html"><a href="ch-R.html#add-ons-packages"><i class="fa fa-check"></i><b>B.4</b> Add-ons: Packages</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="ch-R.html"><a href="ch-R.html#appR:packages"><i class="fa fa-check"></i><b>B.4.1</b> Introduction to packages</a></li>
+<li class="chapter" data-level="B.4.2" data-path="ch-R.html"><a href="ch-R.html#packages-and-name-conflicts"><i class="fa fa-check"></i><b>B.4.2</b> Packages and name conflicts</a></li>
+<li class="chapter" data-level="B.4.3" data-path="ch-R.html"><a href="ch-R.html#appR:tasks"><i class="fa fa-check"></i><b>B.4.3</b> CRAN task views</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="ch-R.html"><a href="ch-R.html#appR-further"><i class="fa fa-check"></i><b>B.5</b> Further resources</a></li>
+<li class="chapter" data-level="B.6" data-path="ch-R.html"><a href="ch-R.html#appR-exercises"><i class="fa fa-check"></i><b>B.6</b> Exercises</a></li>
+<li class="chapter" data-level="B.7" data-path="ch-R.html"><a href="ch-R.html#appR-online-exercises"><i class="fa fa-check"></i><b>B.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="ch-function.html"><a href="ch-function.html"><i class="fa fa-check"></i><b>C</b> Algorithmic thinking</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-intro"><i class="fa fa-check"></i><b>C.1</b> Introduction</a></li>
+<li class="chapter" data-level="C.2" data-path="ch-function.html"><a href="ch-function.html#simple-example"><i class="fa fa-check"></i><b>C.2</b> Simple example</a></li>
+<li class="chapter" data-level="C.3" data-path="ch-function.html"><a href="ch-function.html#sec:runaverage"><i class="fa fa-check"></i><b>C.3</b> Extended example: Law of large numbers</a></li>
+<li class="chapter" data-level="C.4" data-path="ch-function.html"><a href="ch-function.html#sec:tidyeval"><i class="fa fa-check"></i><b>C.4</b> Non-standard evaluation</a></li>
+<li class="chapter" data-level="C.5" data-path="ch-function.html"><a href="ch-function.html#sec:debugging"><i class="fa fa-check"></i><b>C.5</b> Debugging and defensive coding</a></li>
+<li class="chapter" data-level="C.6" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-further"><i class="fa fa-check"></i><b>C.6</b> Further resources</a></li>
+<li class="chapter" data-level="C.7" data-path="ch-function.html"><a href="ch-function.html#algorithmic-exercises"><i class="fa fa-check"></i><b>C.7</b> Exercises</a></li>
+<li class="chapter" data-level="C.8" data-path="ch-function.html"><a href="ch-function.html#algorithmic-online-exercises"><i class="fa fa-check"></i><b>C.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="ch-reproduce.html"><a href="ch-reproduce.html"><i class="fa fa-check"></i><b>D</b> Reproducible analysis and workflow</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="ch-reproduce.html"><a href="ch-reproduce.html#scriptable-statistical-computing"><i class="fa fa-check"></i><b>D.1</b> Scriptable statistical computing</a></li>
+<li class="chapter" data-level="D.2" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-analysis-with-refr-markdown"><i class="fa fa-check"></i><b>D.2</b> Reproducible analysis with (ref:R) Markdown</a></li>
+<li class="chapter" data-level="D.3" data-path="ch-reproduce.html"><a href="ch-reproduce.html#projects-and-version-control"><i class="fa fa-check"></i><b>D.3</b> Projects and version control</a></li>
+<li class="chapter" data-level="D.4" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-further"><i class="fa fa-check"></i><b>D.4</b> Further resources</a></li>
+<li class="chapter" data-level="D.5" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-exercises"><i class="fa fa-check"></i><b>D.5</b> Exercises</a></li>
+<li class="chapter" data-level="D.6" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-online-exercises"><i class="fa fa-check"></i><b>D.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="ch-regression.html"><a href="ch-regression.html"><i class="fa fa-check"></i><b>E</b> Regression modeling</a>
+<ul>
+<li class="chapter" data-level="E.1" data-path="ch-regression.html"><a href="ch-regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>E.1</b> Simple linear regression</a>
+<ul>
+<li class="chapter" data-level="E.1.1" data-path="ch-regression.html"><a href="ch-regression.html#motivating-example-modeling-usage-of-a-rail-trail"><i class="fa fa-check"></i><b>E.1.1</b> Motivating example: Modeling usage of a rail trail</a></li>
+<li class="chapter" data-level="E.1.2" data-path="ch-regression.html"><a href="ch-regression.html#model-visualization"><i class="fa fa-check"></i><b>E.1.2</b> Model visualization</a></li>
+<li class="chapter" data-level="E.1.3" data-path="ch-regression.html"><a href="ch-regression.html#measuring-the-strength-of-fit"><i class="fa fa-check"></i><b>E.1.3</b> Measuring the strength of fit</a></li>
+<li class="chapter" data-level="E.1.4" data-path="ch-regression.html"><a href="ch-regression.html#sec:anova"><i class="fa fa-check"></i><b>E.1.4</b> Categorical explanatory variables</a></li>
+</ul></li>
+<li class="chapter" data-level="E.2" data-path="ch-regression.html"><a href="ch-regression.html#multiple-regression"><i class="fa fa-check"></i><b>E.2</b> Multiple regression</a>
+<ul>
+<li class="chapter" data-level="E.2.1" data-path="ch-regression.html"><a href="ch-regression.html#sec:indicators"><i class="fa fa-check"></i><b>E.2.1</b> Parallel slopes: Multiple regression with a categorical variable</a></li>
+<li class="chapter" data-level="E.2.2" data-path="ch-regression.html"><a href="ch-regression.html#parallel-planes-multiple-regression-with-a-second-quantitative-variable"><i class="fa fa-check"></i><b>E.2.2</b> Parallel planes: Multiple regression with a second quantitative variable</a></li>
+<li class="chapter" data-level="E.2.3" data-path="ch-regression.html"><a href="ch-regression.html#sec:interaction"><i class="fa fa-check"></i><b>E.2.3</b> Non-parallel slopes: Multiple regression with interaction</a></li>
+<li class="chapter" data-level="E.2.4" data-path="ch-regression.html"><a href="ch-regression.html#modeling-non-linear-relationships"><i class="fa fa-check"></i><b>E.2.4</b> Modeling non-linear relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="E.3" data-path="ch-regression.html"><a href="ch-regression.html#inference-for-regression"><i class="fa fa-check"></i><b>E.3</b> Inference for regression</a></li>
+<li class="chapter" data-level="E.4" data-path="ch-regression.html"><a href="ch-regression.html#assumptions-underlying-regression"><i class="fa fa-check"></i><b>E.4</b> Assumptions underlying regression</a></li>
+<li class="chapter" data-level="E.5" data-path="ch-regression.html"><a href="ch-regression.html#sec:logistic"><i class="fa fa-check"></i><b>E.5</b> Logistic regression</a></li>
+<li class="chapter" data-level="E.6" data-path="ch-regression.html"><a href="ch-regression.html#regression-further"><i class="fa fa-check"></i><b>E.6</b> Further resources</a></li>
+<li class="chapter" data-level="E.7" data-path="ch-regression.html"><a href="ch-regression.html#regression-exercises"><i class="fa fa-check"></i><b>E.7</b> Exercises</a></li>
+<li class="chapter" data-level="E.8" data-path="ch-regression.html"><a href="ch-regression.html#regression-online-exercises"><i class="fa fa-check"></i><b>E.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="F" data-path="ch-db-setup.html"><a href="ch-db-setup.html"><i class="fa fa-check"></i><b>F</b> Setting up a database server</a>
+<ul>
+<li class="chapter" data-level="F.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sqlite"><i class="fa fa-check"></i><b>F.1</b> SQLite</a></li>
+<li class="chapter" data-level="F.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#mysql"><i class="fa fa-check"></i><b>F.2</b> MySQL</a>
+<ul>
+<li class="chapter" data-level="F.2.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#installation"><i class="fa fa-check"></i><b>F.2.1</b> Installation</a></li>
+<li class="chapter" data-level="F.2.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:mysql-access"><i class="fa fa-check"></i><b>F.2.2</b> Access</a></li>
+<li class="chapter" data-level="F.2.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#running-scripts-from-the-command-line"><i class="fa fa-check"></i><b>F.2.3</b> Running scripts from the command line</a></li>
+</ul></li>
+<li class="chapter" data-level="F.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#postgresql"><i class="fa fa-check"></i><b>F.3</b> PostgreSQL</a></li>
+<li class="chapter" data-level="F.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-sql"><i class="fa fa-check"></i><b>F.4</b> Connecting to SQL</a>
+<ul>
+<li class="chapter" data-level="F.4.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#the-command-line-client"><i class="fa fa-check"></i><b>F.4.1</b> The command line client</a></li>
+<li class="chapter" data-level="F.4.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#guis"><i class="fa fa-check"></i><b>F.4.2</b> GUIs</a></li>
+<li class="chapter" data-level="F.4.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-r-sql"><i class="fa fa-check"></i><b>F.4.3</b> R and RStudio</a></li>
+<li class="chapter" data-level="F.4.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:sqlitebaby"><i class="fa fa-check"></i><b>F.4.4</b> Load into SQLite database</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="index.html">Modern Data Science with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch:iteration" class="section level1" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Iteration</h1>
+<p></p>
+<p>Calculators free human beings from having to perform arithmetic computations <em>by hand</em>. Similarly, programming languages free humans from having to perform iterative computations by re-running chunks of code, or worse, copying-and-pasting a chunk of code many times, while changing just one or two things in each chunk.</p>
+<p>
+For example, in <a href="https://en.wikipedia.org/w/index.php?search=Major%20League%20Baseball"><em>Major League Baseball</em></a> there are 30 teams, and the game has been played for over 100 years. There are a number of natural questions that we might want to ask about <em>each team</em> (e.g., which player has accrued the most hits for that team?) or about each season (e.g., which seasons had the highest levels of scoring?).
+If we can write a chunk of code that will answer these questions for a single team or a single season, then we should be able to generalize that chunk of code to work for <em>all</em> teams or seasons.
+Furthermore, we should be able to do this without having to re-type that chunk of code. In this section, we present a variety of techniques for automating these types of iterative operations.</p>
+<div id="sec:vectorized" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Vectorized operations</h2>
+<p>
+</p>
+<p>
+
+In every programming language that we can think of, there is a way to write a <a href="https://en.wikipedia.org/w/index.php?search=loop"><em>loop</em></a>. For example, you can write a <code>for()</code> loop in <strong>R</strong> the same way you can with most programming languages.
+Recall that the <code>Teams</code> data frame contains one row for each team in each MLB season.</p>
+<p>
+</p>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="ch-iteration.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb277-2"><a href="ch-iteration.html#cb277-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdsr)</span>
+<span id="cb277-3"><a href="ch-iteration.html#cb277-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
+<span id="cb277-4"><a href="ch-iteration.html#cb277-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(Teams)</span></code></pre></div>
+<pre><code> [1] &quot;yearID&quot;         &quot;lgID&quot;           &quot;teamID&quot;         &quot;franchID&quot;      
+ [5] &quot;divID&quot;          &quot;Rank&quot;           &quot;G&quot;              &quot;Ghome&quot;         
+ [9] &quot;W&quot;              &quot;L&quot;              &quot;DivWin&quot;         &quot;WCWin&quot;         
+[13] &quot;LgWin&quot;          &quot;WSWin&quot;          &quot;R&quot;              &quot;AB&quot;            
+[17] &quot;H&quot;              &quot;X2B&quot;            &quot;X3B&quot;            &quot;HR&quot;            
+[21] &quot;BB&quot;             &quot;SO&quot;             &quot;SB&quot;             &quot;CS&quot;            
+[25] &quot;HBP&quot;            &quot;SF&quot;             &quot;RA&quot;             &quot;ER&quot;            
+[29] &quot;ERA&quot;            &quot;CG&quot;             &quot;SHO&quot;            &quot;SV&quot;            
+[33] &quot;IPouts&quot;         &quot;HA&quot;             &quot;HRA&quot;            &quot;BBA&quot;           
+[37] &quot;SOA&quot;            &quot;E&quot;              &quot;DP&quot;             &quot;FP&quot;            
+[41] &quot;name&quot;           &quot;park&quot;           &quot;attendance&quot;     &quot;BPF&quot;           
+[45] &quot;PPF&quot;            &quot;teamIDBR&quot;       &quot;teamIDlahman45&quot; &quot;teamIDretro&quot;   </code></pre>
+<p>What might not be immediately obvious is that columns 15 through 40 of this data frame contain numerical data about how each team performed in that season. To see this, you can execute the <code>str()</code> command to see the <strong>str</strong>ucture of the data frame, but we suppress that output here. For data frames, a similar alternative that is a little cleaner is <code>glimpse()</code>.</p>
+<p>
+</p>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="ch-iteration.html#cb279-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(Teams)</span>
+<span id="cb279-2"><a href="ch-iteration.html#cb279-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(Teams)</span></code></pre></div>
+<p>Suppose you are interested in computing the averages of these 26 numeric columns.
+You don’t want to have to type the names of each of them, or re-type the <code>mean()</code> command 26 times.
+Seasoned programmers would identify this as a situation in which a <a href="https://en.wikipedia.org/w/index.php?search=loop"><em>loop</em></a> is a natural and efficient solution.
+A <code>for()</code> loop will iterate over the selected column indices.</p>
+<p>
+
+
+
+
+
+
+</p>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="ch-iteration.html#cb280-1" aria-hidden="true" tabindex="-1"></a>averages <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb280-2"><a href="ch-iteration.html#cb280-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">15</span><span class="sc">:</span><span class="dv">40</span>) {</span>
+<span id="cb280-3"><a href="ch-iteration.html#cb280-3" aria-hidden="true" tabindex="-1"></a>  averages[i <span class="sc">-</span> <span class="dv">14</span>] <span class="ot">&lt;-</span> <span class="fu">mean</span>(Teams[, i], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb280-4"><a href="ch-iteration.html#cb280-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb280-5"><a href="ch-iteration.html#cb280-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(averages) <span class="ot">&lt;-</span> <span class="fu">names</span>(Teams)[<span class="dv">15</span><span class="sc">:</span><span class="dv">40</span>]</span>
+<span id="cb280-6"><a href="ch-iteration.html#cb280-6" aria-hidden="true" tabindex="-1"></a>averages</span></code></pre></div>
+<pre><code>       R       AB        H      X2B      X3B       HR       BB       SO 
+ 680.496 5126.260 1339.657  228.330   45.910  104.929  473.020  755.573 
+      SB       CS      HBP       SF       RA       ER      ERA       CG 
+ 109.786   46.873   45.411   44.233  680.495  572.404    3.836   48.011 
+     SHO       SV   IPouts       HA      HRA      BBA      SOA        E 
+   9.584   24.267 4010.716 1339.434  104.929  473.212  755.050  181.732 
+      DP       FP 
+ 132.669    0.966 </code></pre>
+<p>This certainly works. However, there are a number of problematic aspects of this code (e.g., the use of multiple <a href="https://en.wikipedia.org/w/index.php?search=magic%20numbers"><em>magic numbers</em></a> like 14, 15, and 40). The use of a <code>for()</code> loop may not be ideal.
+For problems of this type, it is almost always possible (and usually preferable) to iterate without explicitly defining a loop.
+<strong>R</strong> programmers prefer to solve this type of problem by applying an operation to each element in a vector.
+This often requires only one line of code, with no appeal to indices.</p>
+<p>It is important to understand that the fundamental architecture of <strong>R</strong> is based on <em>vectors</em>. That is, in contrast to <a href="https://en.wikipedia.org/w/index.php?search=general-purpose%20programming%20languages"><em>general-purpose programming languages</em></a> like <em>C++</em> or <a href="https://en.wikipedia.org/w/index.php?search=Python"><em>Python</em></a> that distinguish between single items—like strings and integers—and arrays of those items, in <strong>R</strong> a “string” is just a character vector of length 1. There is no special kind of atomic object. Thus, if you assign a single “string” to an object, <strong>R</strong> still stores it as a vector.
+</p>
+<p>
+
+</p>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="ch-iteration.html#cb282-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="st">&quot;a string&quot;</span></span>
+<span id="cb282-2"><a href="ch-iteration.html#cb282-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(a)</span></code></pre></div>
+<pre><code>[1] &quot;character&quot;</code></pre>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="ch-iteration.html#cb284-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.vector</span>(a)</span></code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="ch-iteration.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(a)</span></code></pre></div>
+<pre><code>[1] 1</code></pre>
+<p>As a consequence of this construction, <strong>R</strong> is highly optimized for vectorized operations (see Appendix <a href="ch-R.html#ch:R">B</a> for more detailed information about <strong>R</strong> internals). Loops, by their nature, do not take advantage of this optimization. Thus, <strong>R</strong> provides several tools for performing loop-like operations without actually writing a loop. This can be a challenging conceptual hurdle for those who are used to more general-purpose programming languages.</p>
+<p>
+</p>
+<div class="rmdtip">
+<p>Try to avoid writing <code>for()</code> loops, even when it seems like the easiest solution.</p>
+</div>
+
+<p>Many functions in <strong>R</strong> are <a href="https://en.wikipedia.org/w/index.php?search=vectorized"><em>vectorized</em></a>. This means that they will perform an operation on every element of a vector by default. For example, many mathematical functions (e.g., <code>exp()</code>) work this way.</p>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="ch-iteration.html#cb288-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div>
+<pre><code>[1]  2.72  7.39 20.09</code></pre>
+<p>Note that vectorized functions like <code>exp()</code> take a vector as an input, and return a vector <em>of the same length</em> as an output.</p>
+<p>This is importantly different behavior than so-called <a href="https://en.wikipedia.org/w/index.php?search=summary%20functions"><em>summary functions</em></a>, which take a vector as an input, and return <em>a single value</em>. Summary functions (e.g., <code>mean()</code>) are commonly useful within a call to <code>summarize()</code>. Note that when we call <code>mean()</code> on a vector, it only returns a single value no matter how many elements there are in the input vector.</p>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="ch-iteration.html#cb290-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div>
+<pre><code>[1] 2</code></pre>
+<p>Other functions in <strong>R</strong> are not vectorized. They may assume an input that is a vector of length one, and fail or exhibit strange behavior if given a longer vector. For example, <code>if()</code> throws a warning if given a vector of length more than one.</p>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="ch-iteration.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>)) {</span>
+<span id="cb292-2"><a href="ch-iteration.html#cb292-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;This is a great book!&quot;</span>)</span>
+<span id="cb292-3"><a href="ch-iteration.html#cb292-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>Warning in if (c(TRUE, FALSE)) {: the condition has length &gt; 1 and only the
+first element will be used</code></pre>
+<pre><code>This is a great book!</code></pre>
+<p>As you get more comfortable with <strong>R</strong>, you will develop intuition about which functions are vectorized. If a function is vectorized, you should make use of that fact and not iterate over it. The code below shows that computing the exponential of the first 10,000 integers by appealing to <code>exp()</code> as a vectorized function is much, much faster than using <code>map_dbl()</code> to iterate over the same vector. The results are identical.</p>
+<p>
+
+
+</p>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="ch-iteration.html#cb295-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fl">1e5</span></span>
+<span id="cb295-2"><a href="ch-iteration.html#cb295-2" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
+<span id="cb295-3"><a href="ch-iteration.html#cb295-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">exp</span>(x),</span>
+<span id="cb295-4"><a href="ch-iteration.html#cb295-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(x, exp)</span>
+<span id="cb295-5"><a href="ch-iteration.html#cb295-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code># A tibble: 2 × 6
+  expression           min   median `itr/sec` mem_alloc `gc/sec`
+  &lt;bch:expr&gt;      &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
+1 exp(x)             900µs   1.59ms    652.      1.53MB     21.2
+2 map_dbl(x, exp)    135ms 135.08ms      7.40  788.62KB     29.6</code></pre>
+<div class="rmdtip">
+<p>Try to always make use of vectorized functions before iterating an operation.</p>
+</div>
+</div>
+<div id="sec:scoped" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Using <code>across()</code> with <strong>dplyr</strong> functions</h2>
+<p>The <code>mutate()</code> and <code>summarize()</code> verbs described in Chapter <a href="ch-dataI.html#ch:dataI">4</a> can take advantage of an <a href="https://en.wikipedia.org/w/index.php?search=adverb"><em>adverb</em></a> called <code>across()</code> that applies operations programmatically. In the example above, we had to observe that columns 15 through 40 of the <code>Teams</code> data frame were numeric, and hard-code those observations as magic numbers. Rather than relying on these observations to identify which variables are numeric—and therefore which variables it makes sense to compute the average of—we can use the <code>across()</code> function to do this work for us. The chunk below will compute the average values of only those variables in <code>Teams</code> that are numeric.</p>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="ch-iteration.html#cb297-1" aria-hidden="true" tabindex="-1"></a>Teams <span class="sc">%&gt;%</span></span>
+<span id="cb297-2"><a href="ch-iteration.html#cb297-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>  yearID Rank   G Ghome    W    L   R   AB    H X2B  X3B  HR  BB  SO  SB
+1   1958 4.05 150    78 74.5 74.5 680 5126 1340 228 45.9 105 473 756 110
+    CS  HBP   SF  RA  ER  ERA CG  SHO   SV IPouts   HA HRA BBA SOA   E  DP
+1 46.9 45.4 44.2 680 572 3.84 48 9.58 24.3   4011 1339 105 473 755 182 133
+     FP attendance BPF PPF
+1 0.966    1375102 100 100</code></pre>
+<p>Note that this result included several variables (e.g., <code>yearID</code>, <code>attendance</code>) that were outside of the range we defined previously.</p>
+<p>The <code>across()</code> adverb allows us to specify the set of variables that <code>summarize()</code> includes in different ways. In the example above, we used the <a href="https://en.wikipedia.org/w/index.php?search=predicate%20function"><em>predicate function</em></a> <code>is.numeric()</code> to identify the variables for which we wanted to compute the mean.
+In the following example, we compute the mean of <code>yearID</code>, a series of variables from <code>R</code> (runs scored) to <code>SF</code> (<a href="https://en.wikipedia.org/w/index.php?search=sacrifice%20flies"><em>sacrifice flies</em></a>) that apply only to offensive players, and the batting <a href="https://en.wikipedia.org/w/index.php?search=park%20factor"><em>park factor</em></a> (<code>BPF</code>). Since we are specifying these columns without the use of a predicate function, we don’t need to use <code>where()</code>.</p>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="ch-iteration.html#cb299-1" aria-hidden="true" tabindex="-1"></a>Teams <span class="sc">%&gt;%</span></span>
+<span id="cb299-2"><a href="ch-iteration.html#cb299-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">c</span>(yearID, R<span class="sc">:</span>SF, BPF), mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<pre><code>  yearID   R   AB    H X2B  X3B  HR  BB  SO  SB   CS  HBP   SF BPF
+1   1958 680 5126 1340 228 45.9 105 473 756 110 46.9 45.4 44.2 100</code></pre>
+<p>The <code>across()</code> function behaves analogously with <code>mutate()</code>.
+It provides an easy way to perform an operation on a set of variables without having to type or copy-and-paste the name of each variable.</p>
+</div>
+<div id="appR:apply" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> The <code>map()</code> family of functions</h2>
+<p></p>
+<p>More generally, to apply a function to each item in a list or vector, or the columns of a data frame<a href="ch-iteration.html#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>, use <code>map()</code> (or one of its type-specific variants). This is the main function from the <strong>purrr</strong> package. In this example, we calculate the mean of each of the statistics defined above, all at once. Compare this to the <code>for()</code> loop written above. Which is syntactically simpler? Which expresses the ideas behind the code more succinctly?</p>
+<p>
+
+
+</p>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="ch-iteration.html#cb301-1" aria-hidden="true" tabindex="-1"></a>Teams <span class="sc">%&gt;%</span> </span>
+<span id="cb301-2"><a href="ch-iteration.html#cb301-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">15</span><span class="sc">:</span><span class="dv">40</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb301-3"><a href="ch-iteration.html#cb301-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>       R       AB        H      X2B      X3B       HR       BB       SO 
+ 680.496 5126.260 1339.657  228.330   45.910  104.929  473.020  755.573 
+      SB       CS      HBP       SF       RA       ER      ERA       CG 
+ 109.786   46.873   45.411   44.233  680.495  572.404    3.836   48.011 
+     SHO       SV   IPouts       HA      HRA      BBA      SOA        E 
+   9.584   24.267 4010.716 1339.434  104.929  473.212  755.050  181.732 
+      DP       FP 
+ 132.669    0.966 </code></pre>
+<p>The first argument to <code>map_dbl()</code> is the thing that you want to do something to (in this case, a data frame). The second argument specifies the name of a function (the argument is named <code>.f</code>). Any further arguments are passed as options to <code>.f</code>. Thus, this command applies the <code>mean()</code> function to the 15th through the 40th columns of the <code>Teams</code> data frame, while removing any <code>NA</code>s that might be present in any of those columns. The use of the variant <code>map_dbl()</code> simply forces the output to be a vector of type <code>double</code>.<a href="ch-iteration.html#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a></p>
+<p>Of course, we began by taking the subset of the columns that were all <code>numeric</code> values. If you tried to take the <code>mean()</code> of a non-numeric vector, you would get a <em>warning</em> (and a value of <code>NA</code>).</p>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="ch-iteration.html#cb303-1" aria-hidden="true" tabindex="-1"></a>Teams <span class="sc">%&gt;%</span> </span>
+<span id="cb303-2"><a href="ch-iteration.html#cb303-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(teamID) <span class="sc">%&gt;%</span> </span>
+<span id="cb303-3"><a href="ch-iteration.html#cb303-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:
+returning NA</code></pre>
+<pre><code>teamID 
+    NA </code></pre>
+<p>If you can solve your problem using <code>across()</code> and/or <code>where()</code> as described in Section <a href="ch-iteration.html#sec:scoped">7.2</a>, that is probably the cleanest solution. However, we will show that the <code>map()</code> family of functions provides a much more general set of capabilities.</p>
+</div>
+<div id="iterating-over-a-one-dimensional-vector" class="section level2" number="7.4">
+<h2><span class="header-section-number">7.4</span> Iterating over a one-dimensional vector</h2>
+<div id="iterating-a-known-function" class="section level3" number="7.4.1">
+<h3><span class="header-section-number">7.4.1</span> Iterating a known function</h3>
+<p>Often you will want to apply a function to each element of a vector or list. For example, the baseball franchise now known as the <a href="https://en.wikipedia.org/w/index.php?search=Los%20Angeles%20Angels%20of%20Anaheim"><em>Los Angeles Angels of Anaheim</em></a> has gone by several names during its history.</p>
+<p>
+
+
+
+</p>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="ch-iteration.html#cb306-1" aria-hidden="true" tabindex="-1"></a>angels <span class="ot">&lt;-</span> Teams <span class="sc">%&gt;%</span> </span>
+<span id="cb306-2"><a href="ch-iteration.html#cb306-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(franchID <span class="sc">==</span> <span class="st">&quot;ANA&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb306-3"><a href="ch-iteration.html#cb306-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(teamID, name) <span class="sc">%&gt;%</span></span>
+<span id="cb306-4"><a href="ch-iteration.html#cb306-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">began =</span> <span class="fu">first</span>(yearID), <span class="at">ended =</span> <span class="fu">last</span>(yearID)) <span class="sc">%&gt;%</span> </span>
+<span id="cb306-5"><a href="ch-iteration.html#cb306-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(began)</span>
+<span id="cb306-6"><a href="ch-iteration.html#cb306-6" aria-hidden="true" tabindex="-1"></a>angels</span></code></pre></div>
+<pre><code># A tibble: 4 × 4
+# Groups:   teamID [3]
+  teamID name                          began ended
+  &lt;fct&gt;  &lt;chr&gt;                         &lt;int&gt; &lt;int&gt;
+1 LAA    Los Angeles Angels             1961  1964
+2 CAL    California Angels              1965  1996
+3 ANA    Anaheim Angels                 1997  2004
+4 LAA    Los Angeles Angels of Anaheim  2005  2020</code></pre>
+<p>
+
+
+
+The franchise began as the <a href="https://en.wikipedia.org/w/index.php?search=Los%20Angeles%20Angels"><em>Los Angeles Angels</em></a> (<code>LAA</code>) in 1961, then became the <a href="https://en.wikipedia.org/w/index.php?search=California%20Angels"><em>California Angels</em></a> (<code>CAL</code>) in 1965, the <a href="https://en.wikipedia.org/w/index.php?search=Anaheim%20Angels"><em>Anaheim Angels</em></a> (<code>ANA</code>) in 1997, before taking their current name (<code>LAA</code> again) in 2005. This situation is complicated by the fact that the <code>teamID</code> <code>LAA</code> was re-used. This sort of schizophrenic behavior is unfortunately common in many data sets.</p>
+<p>Now, suppose we want to find the length, in number of characters, of each of those team names. We could check each one manually using the function <code>nchar()</code>:</p>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="ch-iteration.html#cb308-1" aria-hidden="true" tabindex="-1"></a>angels_names <span class="ot">&lt;-</span> angels <span class="sc">%&gt;%</span></span>
+<span id="cb308-2"><a href="ch-iteration.html#cb308-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(name)</span>
+<span id="cb308-3"><a href="ch-iteration.html#cb308-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(angels_names[<span class="dv">1</span>])</span></code></pre></div>
+<pre><code>[1] 18</code></pre>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="ch-iteration.html#cb310-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(angels_names[<span class="dv">2</span>])</span></code></pre></div>
+<pre><code>[1] 17</code></pre>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="ch-iteration.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(angels_names[<span class="dv">3</span>])</span></code></pre></div>
+<pre><code>[1] 14</code></pre>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="ch-iteration.html#cb314-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(angels_names[<span class="dv">4</span>])</span></code></pre></div>
+<pre><code>[1] 29</code></pre>
+<p>But this would grow tiresome if we had many names. It would be simpler, more efficient, more elegant, and scalable to apply the function <code>nchar()</code> to each element of the vector <code>angel_names</code>. We can accomplish this using <code>map_int()</code>. <code>map_int()</code> is like <code>map()</code> or <code>map_dbl()</code>, but it always returns an <code>integer</code> vector.</p>
+<p></p>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="ch-iteration.html#cb316-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map_int</span>(angels_names, nchar)</span></code></pre></div>
+<pre><code>[1] 18 17 14 29</code></pre>
+<p>The key difference between <code>map_int()</code> and <code>map()</code> is that the former will always return an <code>integer</code> vector, whereas the latter will always return a <code>list</code>. Recall that the main difference between <code>list</code>s and <code>data.frame</code>s is that the elements (columns) of a <code>data.frame</code> have to have the same length, whereas the elements of a list are arbitrary. So while <code>map()</code> is more versatile, we usually find <code>map_int()</code> or one of the other variants to be more convenient when appropriate.</p>
+<div class="rmdtip">
+<p>It’s often helpful to use <code>map()</code> to figure out what the return type will be, and then switch to the appropriate type-specific <code>map()</code> variant.</p>
+</div>
+
+<p>This section was designed to illustrate how <code>map()</code> can be used to iterate a function over a vector of values. However, the choice of the <code>nchar()</code> function was a bit silly, because <code>nchar()</code> is already vectorized. Thus, we can use it directly!</p>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="ch-iteration.html#cb318-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(angels_names)</span></code></pre></div>
+<pre><code>[1] 18 17 14 29</code></pre>
+</div>
+<div id="iterating-an-arbitrary-function" class="section level3" number="7.4.2">
+<h3><span class="header-section-number">7.4.2</span> Iterating an arbitrary function</h3>
+<p>One of the most powerful uses of iteration is that you can apply <em>any</em> function, including a function that you have defined (see Appendix <a href="ch-function.html#ch:function">C</a> for a discussion of how to write user-defined functions). For example, suppose we want to display the top-5 seasons in terms of wins for each of the Angels teams.</p>
+<p></p>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="ch-iteration.html#cb320-1" aria-hidden="true" tabindex="-1"></a>top5 <span class="ot">&lt;-</span> <span class="cf">function</span>(data, team_name) {</span>
+<span id="cb320-2"><a href="ch-iteration.html#cb320-2" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span></span>
+<span id="cb320-3"><a href="ch-iteration.html#cb320-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(name <span class="sc">==</span> team_name) <span class="sc">%&gt;%</span></span>
+<span id="cb320-4"><a href="ch-iteration.html#cb320-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(teamID, yearID, W, L, name) <span class="sc">%&gt;%</span></span>
+<span id="cb320-5"><a href="ch-iteration.html#cb320-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(W)) <span class="sc">%&gt;%</span></span>
+<span id="cb320-6"><a href="ch-iteration.html#cb320-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb320-7"><a href="ch-iteration.html#cb320-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>We can now do this for each element of our vector with a single call to <code>map()</code>.
+Note how we named the <code>data</code> argument to ensure that the <code>team_name</code> argument was the one that accepted the value over which we iterated.</p>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="ch-iteration.html#cb321-1" aria-hidden="true" tabindex="-1"></a>angels_names <span class="sc">%&gt;%</span></span>
+<span id="cb321-2"><a href="ch-iteration.html#cb321-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(top5, <span class="at">data =</span> Teams)</span></code></pre></div>
+<pre><code>[[1]]
+  teamID yearID  W  L               name
+1    LAA   1962 86 76 Los Angeles Angels
+2    LAA   1964 82 80 Los Angeles Angels
+3    LAA   1961 70 91 Los Angeles Angels
+4    LAA   1963 70 91 Los Angeles Angels
+
+[[2]]
+  teamID yearID  W  L              name
+1    CAL   1982 93 69 California Angels
+2    CAL   1986 92 70 California Angels
+3    CAL   1989 91 71 California Angels
+4    CAL   1985 90 72 California Angels
+5    CAL   1979 88 74 California Angels
+
+[[3]]
+  teamID yearID  W  L           name
+1    ANA   2002 99 63 Anaheim Angels
+2    ANA   2004 92 70 Anaheim Angels
+3    ANA   1998 85 77 Anaheim Angels
+4    ANA   1997 84 78 Anaheim Angels
+5    ANA   2000 82 80 Anaheim Angels
+
+[[4]]
+  teamID yearID   W  L                          name
+1    LAA   2008 100 62 Los Angeles Angels of Anaheim
+2    LAA   2014  98 64 Los Angeles Angels of Anaheim
+3    LAA   2009  97 65 Los Angeles Angels of Anaheim
+4    LAA   2005  95 67 Los Angeles Angels of Anaheim
+5    LAA   2007  94 68 Los Angeles Angels of Anaheim</code></pre>
+<p>Alternatively, we can collect the results into a single data frame by using the <code>map_dfr()</code> function, which combines the data frames by row. Below, we do this and then compute the average number of wins in a top-5 season for each Angels team name. Based on these data, the Los Angeles Angels of Anaheim has been the most successful incarnation of the franchise, when judged by average performance in the best five seasons.</p>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="ch-iteration.html#cb323-1" aria-hidden="true" tabindex="-1"></a>angels_names <span class="sc">%&gt;%</span> </span>
+<span id="cb323-2"><a href="ch-iteration.html#cb323-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dfr</span>(top5, <span class="at">data =</span> Teams) <span class="sc">%&gt;%</span></span>
+<span id="cb323-3"><a href="ch-iteration.html#cb323-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(teamID, name) <span class="sc">%&gt;%</span></span>
+<span id="cb323-4"><a href="ch-iteration.html#cb323-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>(), <span class="at">mean_wins =</span> <span class="fu">mean</span>(W)) <span class="sc">%&gt;%</span></span>
+<span id="cb323-5"><a href="ch-iteration.html#cb323-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mean_wins))</span></code></pre></div>
+<pre><code># A tibble: 4 × 4
+# Groups:   teamID [3]
+  teamID name                              N mean_wins
+  &lt;fct&gt;  &lt;chr&gt;                         &lt;int&gt;     &lt;dbl&gt;
+1 LAA    Los Angeles Angels of Anaheim     5      96.8
+2 CAL    California Angels                 5      90.8
+3 ANA    Anaheim Angels                    5      88.4
+4 LAA    Los Angeles Angels                4      77  </code></pre>
+<p>Once you’ve read Chapter <a href="ch-sql.html#ch:sql">15</a>, think about how you might do this operation in SQL. It is not that easy!</p>
+</div>
+</div>
+<div id="sec:group-map" class="section level2" number="7.5">
+<h2><span class="header-section-number">7.5</span> Iteration over subgroups</h2>
+<p>
+
+</p>
+<p>In Chapter <a href="ch-dataI.html#ch:dataI">4</a>, we introduced data <em>verbs</em> that could be chained to perform very powerful data wrangling operations. These functions—which come from the <strong>dplyr</strong> package—operate on data frames and return data frames. The <code>group_modify()</code> function in <strong>purrr</strong> allows you to apply an arbitrary function that returns a data frame to the <em>groups</em> of a data frame. That is, you will first define a grouping using the <code>group_by()</code> function, and then apply a function to each of those groups. Note that this is similar to <code>map_dfr()</code>, in that you are mapping a function that returns a data frame over a collection of values, and returning a data frame. But whereas the values used in <code>map_dfr()</code> are individual elements of a vector, in <code>group_modify()</code> they are groups defined on a data frame.</p>
+<div id="sec:pythag" class="section level3" number="7.5.1">
+<h3><span class="header-section-number">7.5.1</span> Example: Expected winning percentage</h3>
+<p>
+
+
+
+
+
+As noted in Section <a href="ch-dataI.html#sec:mets">4.2</a>, one of the more enduring models in <a href="https://en.wikipedia.org/w/index.php?search=sabermetrics"><em>sabermetrics</em></a> is <a href="https://en.wikipedia.org/w/index.php?search=Bill%20James">Bill James</a>’s formula for estimating a team’s expected <a href="https://en.wikipedia.org/w/index.php?search=winning%20percentage"><em>winning percentage</em></a>, given knowledge only of the team’s runs scored and runs allowed to date (recall that the team that scores the most
+runs wins a given game). This statistic is known—unfortunately—as <a href="https://en.wikipedia.org/wiki/Pythagorean_expectation">Pythagorean Winning Percentage</a>, even though it has nothing to do with Pythagoras. The formula is simple, but non-linear:</p>
+<p><span class="math display">\[
+  \widehat{WPct} = \frac{RS^2}{RS^2 + RA^2} = \frac{1}{1 + (RA/RS)^2} \,,
+\]</span>
+where <span class="math inline">\(RS\)</span> and <span class="math inline">\(RA\)</span> are the number of runs the team has scored and allowed, respectively. If we define <span class="math inline">\(x = RS/RA\)</span> to be the team’s <em>run ratio</em>, then this is a function of one variable having the form <span class="math inline">\(f(x) = \frac{1}{1 + (1/x)^2}\)</span>.
+</p>
+<p>This model seems to fit quite well upon visual inspection—in Figure <a href="ch-iteration.html#fig:pythag">7.1</a> we show the data since 1954, along with a line representing the model. Indeed, this model has also been successful in other sports, albeit with wholly different exponents.</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+</p>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="ch-iteration.html#cb325-1" aria-hidden="true" tabindex="-1"></a>exp_wpct <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { </span>
+<span id="cb325-2"><a href="ch-iteration.html#cb325-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span>x)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb325-3"><a href="ch-iteration.html#cb325-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb325-4"><a href="ch-iteration.html#cb325-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb325-5"><a href="ch-iteration.html#cb325-5" aria-hidden="true" tabindex="-1"></a>TeamRuns <span class="ot">&lt;-</span> Teams <span class="sc">%&gt;%</span> </span>
+<span id="cb325-6"><a href="ch-iteration.html#cb325-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">&gt;=</span> <span class="dv">1954</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb325-7"><a href="ch-iteration.html#cb325-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">RS =</span> R) <span class="sc">%&gt;%</span> </span>
+<span id="cb325-8"><a href="ch-iteration.html#cb325-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">WPct =</span> W <span class="sc">/</span> (W <span class="sc">+</span> L), <span class="at">run_ratio =</span> RS<span class="sc">/</span>RA) <span class="sc">%&gt;%</span></span>
+<span id="cb325-9"><a href="ch-iteration.html#cb325-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(yearID, teamID, lgID, WPct, run_ratio)</span>
+<span id="cb325-10"><a href="ch-iteration.html#cb325-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb325-11"><a href="ch-iteration.html#cb325-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> TeamRuns, <span class="fu">aes</span>(<span class="at">x =</span> run_ratio, <span class="at">y =</span> WPct)) <span class="sc">+</span></span>
+<span id="cb325-12"><a href="ch-iteration.html#cb325-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb325-13"><a href="ch-iteration.html#cb325-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb325-14"><a href="ch-iteration.html#cb325-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb325-15"><a href="ch-iteration.html#cb325-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> exp_wpct, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb325-16"><a href="ch-iteration.html#cb325-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Ratio of Runs Scored to Runs Allowed&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb325-17"><a href="ch-iteration.html#cb325-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Winning Percentage&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:pythag"></span>
+<img src="07-iteration_files/figure-html/pythag-1.png" alt="Fit for the Pythagorean Winning Percentage model for all teams since 1954." width="100%" />
+<p class="caption">
+Figure 7.1: Fit for the Pythagorean Winning Percentage model for all teams since 1954.
+</p>
+</div>
+<p>
+However, the exponent of 2 was posited by James. One can imagine having the exponent become a parameter <span class="math inline">\(k\)</span>, and trying to find the optimal fit. Indeed, researchers have found that in baseball, the optimal value of <span class="math inline">\(k\)</span> is not 2, but something closer to 1.85 <span class="citation">(V. Wang 2006)</span>. It is easy enough for us to find the optimal value using the <code>nls()</code> function. We specify the formula of the nonlinear model, the data used to fit the model, and a starting value for the search.</p>
+<p></p>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="ch-iteration.html#cb326-1" aria-hidden="true" tabindex="-1"></a>TeamRuns <span class="sc">%&gt;%</span></span>
+<span id="cb326-2"><a href="ch-iteration.html#cb326-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nls</span>(</span>
+<span id="cb326-3"><a href="ch-iteration.html#cb326-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> WPct <span class="sc">~</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span>run_ratio)<span class="sc">^</span>k), </span>
+<span id="cb326-4"><a href="ch-iteration.html#cb326-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">start =</span> <span class="fu">list</span>(<span class="at">k =</span> <span class="dv">2</span>)</span>
+<span id="cb326-5"><a href="ch-iteration.html#cb326-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb326-6"><a href="ch-iteration.html#cb326-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>()</span></code></pre></div>
+<pre><code>   k 
+1.84 </code></pre>
+<p>Furthermore, researchers investigating this model have found that the optimal value of the exponent varies based on the era during which the model is fit.
+We can use the <code>group_modify()</code> function to do this for all decades in baseball history.
+First, we must write a short function (see Appendix <a href="ch-function.html#ch:function">C</a>) that will return a data frame containing the optimal exponent, and for good measure, the number of observations during that decade.
+
+
+
+</p>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="ch-iteration.html#cb328-1" aria-hidden="true" tabindex="-1"></a>fit_k <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb328-2"><a href="ch-iteration.html#cb328-2" aria-hidden="true" tabindex="-1"></a>  mod <span class="ot">&lt;-</span> <span class="fu">nls</span>(</span>
+<span id="cb328-3"><a href="ch-iteration.html#cb328-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> WPct <span class="sc">~</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span>run_ratio)<span class="sc">^</span>k), </span>
+<span id="cb328-4"><a href="ch-iteration.html#cb328-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> x,</span>
+<span id="cb328-5"><a href="ch-iteration.html#cb328-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">start =</span> <span class="fu">list</span>(<span class="at">k =</span> <span class="dv">2</span>)</span>
+<span id="cb328-6"><a href="ch-iteration.html#cb328-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb328-7"><a href="ch-iteration.html#cb328-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">tibble</span>(<span class="at">k =</span> <span class="fu">coef</span>(mod), <span class="at">n =</span> <span class="fu">nrow</span>(x)))</span>
+<span id="cb328-8"><a href="ch-iteration.html#cb328-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Note that this function will return the optimal value of the exponent over any time period.</p>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="ch-iteration.html#cb329-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_k</span>(TeamRuns)</span></code></pre></div>
+<pre><code># A tibble: 1 × 2
+      k     n
+  &lt;dbl&gt; &lt;int&gt;
+1  1.84  1708</code></pre>
+<p>Finally, we compute the decade for each year using <code>mutate()</code>, define the group using <code>group_by()</code>, and apply <code>fit_k()</code> to those decades. The use of the <code>~</code> tells <strong>R</strong> to interpret the expression in parentheses as a <code>formula</code>, rather than the name of a function. The <code>.x</code> is a placeholder for the data frame for a particular decade.</p>
+<p></p>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="ch-iteration.html#cb331-1" aria-hidden="true" tabindex="-1"></a>TeamRuns <span class="sc">%&gt;%</span> </span>
+<span id="cb331-2"><a href="ch-iteration.html#cb331-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">decade =</span> yearID <span class="sc">%/%</span> <span class="dv">10</span> <span class="sc">*</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb331-3"><a href="ch-iteration.html#cb331-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(decade) <span class="sc">%&gt;%</span> </span>
+<span id="cb331-4"><a href="ch-iteration.html#cb331-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_modify</span>(<span class="sc">~</span><span class="fu">fit_k</span>(.x))</span></code></pre></div>
+<pre><code># A tibble: 8 × 3
+# Groups:   decade [8]
+  decade     k     n
+   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+1   1950  1.69    96
+2   1960  1.90   198
+3   1970  1.74   246
+4   1980  1.93   260
+5   1990  1.88   278
+6   2000  1.94   300
+7   2010  1.77   300
+8   2020  1.86    30</code></pre>
+<p>Note the variation in the optimal value of <span class="math inline">\(k\)</span>. Even though the exponent is not the same in each decade, it varies within a fairly narrow range between 1.69 and 1.94.</p>
+</div>
+<div id="sec:hrs" class="section level3" number="7.5.2">
+<h3><span class="header-section-number">7.5.2</span> Example: Annual leaders</h3>
+<p>As a second example, consider the problem of identifying the team in each season that led their league in home runs.
+We can easily write a function that will, for a specific year and league, return a data frame with one row that contains the team with the most home runs.</p>
+<p>
+</p>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="ch-iteration.html#cb333-1" aria-hidden="true" tabindex="-1"></a>hr_leader <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb333-2"><a href="ch-iteration.html#cb333-2" aria-hidden="true" tabindex="-1"></a><span class="co"># x is a subset of Teams for a single year and league</span></span>
+<span id="cb333-3"><a href="ch-iteration.html#cb333-3" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">%&gt;%</span> </span>
+<span id="cb333-4"><a href="ch-iteration.html#cb333-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(teamID, HR) <span class="sc">%&gt;%</span> </span>
+<span id="cb333-5"><a href="ch-iteration.html#cb333-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(HR)) <span class="sc">%&gt;%</span> </span>
+<span id="cb333-6"><a href="ch-iteration.html#cb333-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>(<span class="dv">1</span>)</span>
+<span id="cb333-7"><a href="ch-iteration.html#cb333-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>We can verify that in 1961, the <a href="https://en.wikipedia.org/w/index.php?search=New%20York%20Yankees"><em>New York Yankees</em></a> led the <a href="https://en.wikipedia.org/w/index.php?search=American%20League"><em>American League</em></a> in home runs.
+
+
+</p>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="ch-iteration.html#cb334-1" aria-hidden="true" tabindex="-1"></a>Teams <span class="sc">%&gt;%</span> </span>
+<span id="cb334-2"><a href="ch-iteration.html#cb334-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">==</span> <span class="dv">1961</span> <span class="sc">&amp;</span> lgID <span class="sc">==</span> <span class="st">&quot;AL&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb334-3"><a href="ch-iteration.html#cb334-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hr_leader</span>()</span></code></pre></div>
+<pre><code>  teamID  HR
+1    NYA 240</code></pre>
+<p>We can use <code>group_modify()</code> to quickly find all the teams that led their league in home runs. Here, we employ the <code>.keep</code> argument so that the grouping variables appear in the computation.</p>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="ch-iteration.html#cb336-1" aria-hidden="true" tabindex="-1"></a>hr_leaders <span class="ot">&lt;-</span> Teams <span class="sc">%&gt;%</span> </span>
+<span id="cb336-2"><a href="ch-iteration.html#cb336-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID, lgID) <span class="sc">%&gt;%</span> </span>
+<span id="cb336-3"><a href="ch-iteration.html#cb336-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_modify</span>(<span class="sc">~</span><span class="fu">hr_leader</span>(.x), <span class="at">.keep =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb336-4"><a href="ch-iteration.html#cb336-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb336-5"><a href="ch-iteration.html#cb336-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(hr_leaders, <span class="dv">4</span>)</span></code></pre></div>
+<pre><code># A tibble: 4 × 4
+# Groups:   yearID, lgID [4]
+  yearID lgID  teamID    HR
+   &lt;int&gt; &lt;fct&gt; &lt;fct&gt;  &lt;int&gt;
+1   2019 AL    MIN      307
+2   2019 NL    LAN      279
+3   2020 AL    CHA       96
+4   2020 NL    LAN      118</code></pre>
+<p>In this manner, we can compute the average number of home runs hit in a season by the team that hit the most.</p>
+<p></p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="ch-iteration.html#cb338-1" aria-hidden="true" tabindex="-1"></a>hr_leaders <span class="sc">%&gt;%</span></span>
+<span id="cb338-2"><a href="ch-iteration.html#cb338-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(lgID) <span class="sc">%&gt;%</span></span>
+<span id="cb338-3"><a href="ch-iteration.html#cb338-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_hr =</span> <span class="fu">mean</span>(HR))</span></code></pre></div>
+<pre><code># A tibble: 7 × 2
+  lgID  mean_hr
+  &lt;fct&gt;   &lt;dbl&gt;
+1 AA       40.5
+2 AL      157. 
+3 FL       51  
+4 NA       13.8
+5 NL      129. 
+6 PL       66  
+7 UA       32  </code></pre>
+<p>We restrict our attention to the years since 1916, during which only the AL and NL leagues have existed.</p>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="ch-iteration.html#cb340-1" aria-hidden="true" tabindex="-1"></a>hr_leaders <span class="sc">%&gt;%</span></span>
+<span id="cb340-2"><a href="ch-iteration.html#cb340-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">&gt;=</span> <span class="dv">1916</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb340-3"><a href="ch-iteration.html#cb340-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(lgID) <span class="sc">%&gt;%</span></span>
+<span id="cb340-4"><a href="ch-iteration.html#cb340-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_hr =</span> <span class="fu">mean</span>(HR))</span></code></pre></div>
+<pre><code># A tibble: 2 × 2
+  lgID  mean_hr
+  &lt;fct&gt;   &lt;dbl&gt;
+1 AL       174.
+2 NL       161.</code></pre>
+<p>In Figure <a href="ch-iteration.html#fig:dh">7.2</a>, we show how this number has changed over time. We note that while the top HR hitting teams were comparable across the two leagues until the mid-1970s, the AL teams have dominated since their league adopted the <a href="https://en.wikipedia.org/w/index.php?search=designated%20hitter"><em>designated hitter</em></a> rule in 1973.
+</p>
+<p>
+
+
+
+
+
+
+
+</p>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="ch-iteration.html#cb342-1" aria-hidden="true" tabindex="-1"></a>hr_leaders <span class="sc">%&gt;%</span> </span>
+<span id="cb342-2"><a href="ch-iteration.html#cb342-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yearID <span class="sc">&gt;=</span> <span class="dv">1916</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb342-3"><a href="ch-iteration.html#cb342-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> yearID, <span class="at">y =</span> HR, <span class="at">color =</span> lgID)) <span class="sc">+</span> </span>
+<span id="cb342-4"><a href="ch-iteration.html#cb342-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb342-5"><a href="ch-iteration.html#cb342-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb342-6"><a href="ch-iteration.html#cb342-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb342-7"><a href="ch-iteration.html#cb342-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">1973</span>) <span class="sc">+</span> </span>
+<span id="cb342-8"><a href="ch-iteration.html#cb342-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb342-9"><a href="ch-iteration.html#cb342-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">1974</span>, <span class="at">y =</span> <span class="dv">25</span>, </span>
+<span id="cb342-10"><a href="ch-iteration.html#cb342-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&quot;AL adopts DH&quot;</span>, <span class="at">hjust =</span> <span class="st">&quot;left&quot;</span></span>
+<span id="cb342-11"><a href="ch-iteration.html#cb342-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb342-12"><a href="ch-iteration.html#cb342-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Home runs&quot;</span>, <span class="at">color =</span> <span class="st">&quot;League&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:dh"></span>
+<img src="07-iteration_files/figure-html/dh-1.png" alt="Number of home runs hit by the team with the most home runs, 1916--2019. Note how the AL has consistently bested the NL since the introduction of the designated hitter (DH) in 1973." width="100%" />
+<p class="caption">
+Figure 7.2: Number of home runs hit by the team with the most home runs, 1916–2019. Note how the AL has consistently bested the NL since the introduction of the designated hitter (DH) in 1973.
+</p>
+</div>
+</div>
+</div>
+<div id="simulation" class="section level2" number="7.6">
+<h2><span class="header-section-number">7.6</span> Simulation</h2>
+<p></p>
+<p>In the previous section, we learned how to repeat operations while iterating over the elements of a vector. It can also be useful to simply repeat an operation many times and collect the results. Obviously, if the result of the operation is <a href="https://en.wikipedia.org/w/index.php?search=deterministic"><em>deterministic</em></a> (i.e., you get the same answer every time) then this is pointless. On the other hand, if this operation involves randomness, then you won’t get the same answer every time, and understanding the distribution of values that your random operation produces can be useful.
+We will flesh out these ideas further in Chapter <a href="ch-simulation.html#ch:simulation">13</a>.</p>
+<p>For example, in our investigation into the expected winning percentage in baseball (Section <a href="ch-iteration.html#sec:pythag">7.5.1</a>), we determined that the optimal exponent fit to the 66 seasons worth of data from 1954 to 2019 was 1.84. However, we also found that if we fit this same model separately for each decade, that optimal exponent varies from 1.69 to 1.94. This gives us a rough sense of the variability in this exponent—we observed values between 1.6 and 2, which may give some insights as to plausible values for the exponent.</p>
+<p>Nevertheless, our choice to stratify by decade was somewhat arbitrary. A more natural question might be: What is the distribution of optimal exponents fit to a <em>single-season</em>’s worth of data? How confident should we be in that estimate of 1.84?</p>
+<p>We can use <code>group_modify()</code> and the function we wrote previously to compute the 66 actual values. The resulting distribution is summarized in Figure <a href="ch-iteration.html#fig:teamdens2">7.3</a>.</p>
+<p>
+</p>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="ch-iteration.html#cb343-1" aria-hidden="true" tabindex="-1"></a>k_actual <span class="ot">&lt;-</span> TeamRuns <span class="sc">%&gt;%</span> </span>
+<span id="cb343-2"><a href="ch-iteration.html#cb343-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yearID) <span class="sc">%&gt;%</span> </span>
+<span id="cb343-3"><a href="ch-iteration.html#cb343-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_modify</span>(<span class="sc">~</span><span class="fu">fit_k</span>(.x))</span>
+<span id="cb343-4"><a href="ch-iteration.html#cb343-4" aria-hidden="true" tabindex="-1"></a>k_actual <span class="sc">%&gt;%</span></span>
+<span id="cb343-5"><a href="ch-iteration.html#cb343-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb343-6"><a href="ch-iteration.html#cb343-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>(k)</span></code></pre></div>
+<pre><code>
+── Variable type: numeric ──────────────────────────────────────────────────
+  var       n    na  mean    sd    p0   p25   p50   p75  p100
+1 k        67     0  1.85 0.186  1.31  1.69  1.89  1.96  2.33</code></pre>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="ch-iteration.html#cb345-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> k_actual, <span class="fu">aes</span>(<span class="at">x =</span> k)) <span class="sc">+</span> </span>
+<span id="cb345-2"><a href="ch-iteration.html#cb345-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span> </span>
+<span id="cb345-3"><a href="ch-iteration.html#cb345-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Best fit exponent for a single season&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:teamdens2"></span>
+<img src="07-iteration_files/figure-html/teamdens2-1.png" alt="Distribution of best-fitting exponent across single seasons from 1954--2019." width="100%" />
+<p class="caption">
+Figure 7.3: Distribution of best-fitting exponent across single seasons from 1954–2019.
+</p>
+</div>
+<p>Since we only have 67 samples, we might obtain a better understanding of the sampling distribution of the mean <span class="math inline">\(k\)</span> by <a href="https://en.wikipedia.org/w/index.php?search=resampling"><em>resampling</em></a>—sampling with replacement—from these 67 values. (This is a statistical technique known as the <a href="https://en.wikipedia.org/w/index.php?search=bootstrap"><em>bootstrap</em></a>, which we describe further in Chapter <a href="ch-foundations.html#ch:foundations">9</a>.) A simple way to do this is by mapping a sampling expression over an index of values. That is, we define <code>n</code> to be the number of iterations we want to perform, write an expression to compute the mean of a single resample, and then use <code>map_dbl()</code> to perform the iterations.</p>
+<p>
+
+
+
+
+</p>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="ch-iteration.html#cb346-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb346-2"><a href="ch-iteration.html#cb346-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb346-3"><a href="ch-iteration.html#cb346-3" aria-hidden="true" tabindex="-1"></a>bstrap <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>n <span class="sc">%&gt;%</span></span>
+<span id="cb346-4"><a href="ch-iteration.html#cb346-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(</span>
+<span id="cb346-5"><a href="ch-iteration.html#cb346-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>k_actual <span class="sc">%&gt;%</span></span>
+<span id="cb346-6"><a href="ch-iteration.html#cb346-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pull</span>(k) <span class="sc">%&gt;%</span></span>
+<span id="cb346-7"><a href="ch-iteration.html#cb346-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sample</span>(<span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb346-8"><a href="ch-iteration.html#cb346-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mean</span>()</span>
+<span id="cb346-9"><a href="ch-iteration.html#cb346-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb346-10"><a href="ch-iteration.html#cb346-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb346-11"><a href="ch-iteration.html#cb346-11" aria-hidden="true" tabindex="-1"></a>civals <span class="ot">&lt;-</span> bstrap <span class="sc">%&gt;%</span></span>
+<span id="cb346-12"><a href="ch-iteration.html#cb346-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">quantile</span>(<span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, .<span class="dv">975</span>))</span>
+<span id="cb346-13"><a href="ch-iteration.html#cb346-13" aria-hidden="true" tabindex="-1"></a>civals</span></code></pre></div>
+<pre><code> 2.5% 97.5% 
+ 1.80  1.89 </code></pre>
+<p>
+</p>
+<p>After repeating the resampling 10,000 times, we found that 95% of the resampled exponents were between 1.8 and 1.889, with our original estimate of 1.84 lying somewhere near the center of that distribution. This distribution, along the boundaries of the middle 95%, is depicted in Figure <a href="ch-iteration.html#fig:bdensplot">7.4</a>.</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="ch-iteration.html#cb348-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">enframe</span>(bstrap, <span class="at">value =</span> <span class="st">&quot;k&quot;</span>), <span class="fu">aes</span>(<span class="at">x =</span> k)) <span class="sc">+</span> </span>
+<span id="cb348-2"><a href="ch-iteration.html#cb348-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span> </span>
+<span id="cb348-3"><a href="ch-iteration.html#cb348-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Distribution of resampled means&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb348-4"><a href="ch-iteration.html#cb348-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(</span>
+<span id="cb348-5"><a href="ch-iteration.html#cb348-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">enframe</span>(civals), <span class="fu">aes</span>(<span class="at">xintercept =</span> value), </span>
+<span id="cb348-6"><a href="ch-iteration.html#cb348-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="dv">3</span></span>
+<span id="cb348-7"><a href="ch-iteration.html#cb348-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="figure"><span id="fig:bdensplot"></span>
+<img src="07-iteration_files/figure-html/bdensplot-1.png" alt="Bootstrap distribution of mean optimal Pythagorean exponent." width="100%" />
+<p class="caption">
+Figure 7.4: Bootstrap distribution of mean optimal Pythagorean exponent.
+</p>
+</div>
+</div>
+<div id="extended-example-factors-associated-with-bmi" class="section level2" number="7.7">
+<h2><span class="header-section-number">7.7</span> Extended example: Factors associated with BMI</h2>
+<p><a href="https://en.wikipedia.org/w/index.php?search=Body%20Mass%20Index"><em>Body Mass Index</em></a> (BMI) is a common measure of a person’s size, expressed as a ratio of their body’s mass to the square of their height. What factors are associated with high BMI?</p>
+<p>For answers, we turn to survey data collected by the <a href="https://www.cdc.gov/nchs/index.htm">National Center for Health Statistics (NCHS)</a> and packaged as the <a href="https://en.wikipedia.org/w/index.php?search=National%20Health%20and%20Nutrition%20Examination%20Survey"><em>National Health and Nutrition Examination Survey</em></a> (NHANES). These data available in <strong>R</strong> through the <strong>NHANES</strong> package.</p>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="ch-iteration.html#cb349-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span></code></pre></div>
+<p>
+
+An exhaustive approach to understanding the relationship between BMI and some of the other variables is complicated by the fact that there are 75 potential explanatory varibles for any model for BMI. In Chapter <a href="ch-learningI.html#ch:learningI">11</a>, we develop several modeling techniques that might be useful for this purpose, but here, we focus on examining the <a href="https://en.wikipedia.org/w/index.php?search=bivariate"><em>bivariate</em></a> relationships between BMI and the other explanatory variables.
+For example, we might start by simply producing a bivariate scatterplot between BMI and age, and adding a <a href="https://en.wikipedia.org/w/index.php?search=local%20regression"><em>local regression</em></a> line to show the general trend. Figure <a href="ch-iteration.html#fig:nhanes-age">7.5</a> shows the result.</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="ch-iteration.html#cb350-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(NHANES, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> BMI)) <span class="sc">+</span></span>
+<span id="cb350-2"><a href="ch-iteration.html#cb350-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb350-3"><a href="ch-iteration.html#cb350-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code></pre></div>
+<div class="figure"><span id="fig:nhanes-age"></span>
+<img src="07-iteration_files/figure-html/nhanes-age-1.png" alt="Relationship between body mass index (BMI) and age among participants in the NHANES study." width="100%" />
+<p class="caption">
+Figure 7.5: Relationship between body mass index (BMI) and age among participants in the <strong>NHANES</strong> study.
+</p>
+</div>
+
+<p>How can we programmatically produce an analogous image for <em>all</em> of the variables in <strong>NHANES</strong>?
+First, we’ll write a function that takes the name of a variable as an input, and returns the plot.
+Second, we’ll define a set of variables, and use <code>map()</code> to iterate our function over that list.</p>
+<p>The following function will take a data set, and an argument called <code>x_var</code> that will be the name of a variable.
+It produces a slightly jazzed-up version of Figure <a href="ch-iteration.html#fig:nhanes-age">7.5</a> that contains variable-specific titles, as well as information about the source.</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="ch-iteration.html#cb351-1" aria-hidden="true" tabindex="-1"></a>bmi_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(.data, x_var) {</span>
+<span id="cb351-2"><a href="ch-iteration.html#cb351-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(.data, <span class="fu">aes</span>(<span class="at">y =</span> BMI)) <span class="sc">+</span></span>
+<span id="cb351-3"><a href="ch-iteration.html#cb351-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes_string</span>(<span class="at">x =</span> x_var) <span class="sc">+</span> </span>
+<span id="cb351-4"><a href="ch-iteration.html#cb351-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> </span>
+<span id="cb351-5"><a href="ch-iteration.html#cb351-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>() <span class="sc">+</span> </span>
+<span id="cb351-6"><a href="ch-iteration.html#cb351-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb351-7"><a href="ch-iteration.html#cb351-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">&quot;BMI by&quot;</span>, x_var),</span>
+<span id="cb351-8"><a href="ch-iteration.html#cb351-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="st">&quot;NHANES&quot;</span>,</span>
+<span id="cb351-9"><a href="ch-iteration.html#cb351-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">&quot;US National Center for Health Statistics (NCHS)&quot;</span></span>
+<span id="cb351-10"><a href="ch-iteration.html#cb351-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb351-11"><a href="ch-iteration.html#cb351-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The use of the <code>aes_string()</code> function is necessary for <strong>ggplot2</strong> to understand that we want to bind the <code>x</code> aesthetic to the variable whose name is stored in the <code>x_var</code> object, and not a variable that is named <code>x_var</code>!<a href="ch-iteration.html#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a></p>
+<p>We can then call our function on a specific variable.</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="ch-iteration.html#cb352-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bmi_plot</span>(NHANES, <span class="st">&quot;Age&quot;</span>)</span></code></pre></div>
+<p>Or, we can specify a set of variables and then <code>map()</code> over that set. Since <code>map()</code> always returns a list, and a list of plots is not that useful, we use the <code>wrap_plots()</code> function from the <strong>patchwork</strong> package to combine the resulting list of plots into one image.</p>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="ch-iteration.html#cb353-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;Age&quot;</span>, <span class="st">&quot;HHIncomeMid&quot;</span>, <span class="st">&quot;PhysActiveDays&quot;</span>, </span>
+<span id="cb353-2"><a href="ch-iteration.html#cb353-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;TVHrsDay&quot;</span>, <span class="st">&quot;AlcoholDay&quot;</span>, <span class="st">&quot;Pulse&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb353-3"><a href="ch-iteration.html#cb353-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(bmi_plot, <span class="at">.data =</span> NHANES) <span class="sc">%&gt;%</span></span>
+<span id="cb353-4"><a href="ch-iteration.html#cb353-4" aria-hidden="true" tabindex="-1"></a>  patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(<span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:patchwork"></span>
+<img src="07-iteration_files/figure-html/patchwork-1.png" alt="Relationship between body mass index (BMI) and a series of other variables, for participants in the NHANES study." width="100%" />
+<p class="caption">
+Figure 7.6: Relationship between body mass index (BMI) and a series of other variables, for participants in the <strong>NHANES</strong> study.
+</p>
+</div>
+
+<p>Figure <a href="ch-iteration.html#fig:patchwork">7.6</a> displays the results for six variables.
+We won’t show the results of our ultimate goal to produce all 75 plots here, but you can try it for yourself by using the <code>names()</code> function to retrieve the full list of variable names.
+Or, you could use <code>across()</code> to retrieve only those variables that meet a certain condition.</p>
+</div>
+<div id="iteration-further" class="section level2" number="7.8">
+<h2><span class="header-section-number">7.8</span> Further resources</h2>
+<p>The <a href="https://adv-r.hadley.nz/functionals.html">chapter</a> on <a href="https://en.wikipedia.org/w/index.php?search=functionals"><em>functionals</em></a> in <span class="citation">H. Wickham (2019)</span> is the definitive source for understanding <strong>purrr</strong>. The name “functionals” reflects the use of a programming paradigm called <a href="https://en.wikipedia.org/w/index.php?search=functional%20programming"><em>functional programming</em></a>.</p>
+<p>For those who are already familiar with the <code>*apply()</code> family of functions popular in base R, <a href="https://en.wikipedia.org/w/index.php?search=Jenny%20Bryan">Jenny Bryan</a> wrote <a href="https://jennybc.github.io/purrr-tutorial/bk01_base-functions.html">a helpful tutorial</a> that maps these functions to their <strong>purrr</strong> equivalents.</p>
+<p>The <strong>rlang</strong> package lays the groundwork for <a href="https://en.wikipedia.org/w/index.php?search=tidy%20evaluation"><em>tidy evaluation</em></a>, which allows you to work programmatically with unquoted variable names. The <a href="https://dplyr.tidyverse.org/articles/programming.html">programming with <code>dplyr</code> vignette</a> is the best place to start learning about tidy evaluation.
+Section <a href="ch-function.html#sec:tidyeval">C.4</a> provides a brief introduction to the principles.</p>
+</div>
+<div id="iteration-exercises" class="section level2" number="7.9">
+<h2><span class="header-section-number">7.9</span> Exercises</h2>
+<p><strong>Problem 1 (Easy)</strong>: Use the <code>HELPrct</code> data from the <code>mosaicData</code> to calculate the mean of all numeric variables (be sure to exclude missing values).</p>
+<p><strong>Problem 2 (Easy)</strong>: Suppose you want to visit airports in Boston (<code>BOS</code>), New York (<code>JFK</code>, <code>LGA</code>), San Francisco (<code>SFO</code>), Chicago (<code>ORD</code>, <code>MDW</code>), and Los Angeles (<code>LAX</code>). You have data about flight delays in a <code>tibble</code> called <code>flights</code>. You have written a pipeline that, for any given airport code (e.g., <code>LGA</code>), will return a <code>tibble</code> with two columns, the airport code, and the average arrival delay time.</p>
+<p>Suggest a workflow that would be most efficient for computing the average arrival delay time for all seven airports.</p>
+<p><strong>Problem 3 (Medium)</strong>: Use the <code>purrr::map()</code> function and the <code>HELPrct</code> data frame from the <code>mosaicData</code> package to fit a regression model predicting <code>cesd</code> as a function of <code>age</code> separately for each of the levels of the <code>substance</code> variable. Generate a table of results (estimates and confidence intervals) for the slope parameter for each level of the grouping variable.</p>
+<p><strong>Problem 4 (Medium)</strong>: The team IDs corresponding to Brooklyn baseball teams from the <code>Teams</code> data frame from the <code>Lahman</code> package are listed below. Use <code>map_int()</code> to find the number of seasons in which each of those teams played by calling a function called <code>count_seasons</code>.</p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="ch-iteration.html#cb354-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
+<span id="cb354-2"><a href="ch-iteration.html#cb354-2" aria-hidden="true" tabindex="-1"></a>bk_teams <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;BR1&quot;</span>, <span class="st">&quot;BR2&quot;</span>, <span class="st">&quot;BR3&quot;</span>, <span class="st">&quot;BR4&quot;</span>, <span class="st">&quot;BRO&quot;</span>, <span class="st">&quot;BRP&quot;</span>, <span class="st">&quot;BRF&quot;</span>)</span></code></pre></div>
+<p><strong>Problem 5 (Medium)</strong>: Use data from the <code>NHANES</code> package to create a set of scatterplots of <code>Pulse</code> as a function of <code>Age</code>, <code>BMI</code>, <code>TVHrsDay</code>, and <code>BPSysAve</code> to create a figure like the last one in the chapter.
+Be sure to create appropriate annotations (source, survey name, variables being displayed).
+What do you conclude?</p>
+<p><strong>Problem 6 (Hard)</strong>: Use the <code>group_modify()</code> function and the <code>Lahman</code> data to replicate one of the baseball records plots (<a href="http://tinyurl.com/nytimes-records" class="uri">http://tinyurl.com/nytimes-records</a>) from the <em>The New York Times</em>.</p>
+</div>
+<div id="iteration-online-exercises" class="section level2" number="7.10">
+<h2><span class="header-section-number">7.10</span> Supplementary exercises</h2>
+<p>Available at <a href="ch-iteration.html#iteration-online-exercises" class="uri">https://mdsr-book.github.io/mdsr2e/ch-iteration.html#iteration-online-exercises</a></p>
+<p>No exercises found</p>
+<hr />
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="12">
+<li id="fn12"><p>This works because a data frame is stored as a <code>list</code> of vectors of the same length. When you supply a data frame as the first argument to <code>map()</code>, you are giving <code>map()</code> a list of vectors, and it iterates a function over that list.<a href="ch-iteration.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<li id="fn13"><p>The plain function <code>map()</code> will always return a list.<a href="ch-iteration.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p>Note that we use the quoted variable names here. To get this to work with unquoted variable names, see the <a href="https://dplyr.tidyverse.org/articles/programming.html">Programming with <code>dplyr</code> vignette</a>.<a href="ch-iteration.html#fnref14" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch-dataII.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch-ethics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="book_assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/07-iteration.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["mdsr2e.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

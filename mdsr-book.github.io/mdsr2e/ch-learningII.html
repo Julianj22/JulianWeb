@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 12 Unsupervised learning | Modern Data Science with R</title>
+  <meta name="description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 12 Unsupervised learning | Modern Data Science with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://mdsr-book.github.io/mdsr2e/" />
+  <meta property="og:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+  <meta property="og:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="github-repo" content="mdsr-book/mdsr2e" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 12 Unsupervised learning | Modern Data Science with R" />
+  
+  <meta name="twitter:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="twitter:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+
+<meta name="author" content="Benjamin S. Baumer, Daniel T. Kaplan, and Nicholas J. Horton" />
+
+
+<meta name="date" content="2021-07-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch-learningI.html"/>
+<link rel="next" href="ch-simulation.html"/>
+<script src="book_assets/header-attrs-2.9/header-attrs.js"></script>
+<script src="book_assets/jquery-3.5.1/jquery.min.js"></script>
+<link href="book_assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="book_assets/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="book_assets/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="book_assets/kePrint-0.0.1/kePrint.js"></script>
+<link href="book_assets/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="book_assets/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="book_assets/bsTable-3.3.7/bootstrapTable.js"></script>
+<script src="book_assets/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="book_assets/plotly-binding-4.9.4.1/plotly.js"></script>
+<script src="book_assets/typedarray-0.1/typedarray.min.js"></script>
+<link href="book_assets/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="book_assets/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="book_assets/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="book_assets/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<link href="book_assets/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="book_assets/datatables-binding-0.18/datatables.js"></script>
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="book_assets/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="book_assets/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="book_assets/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="book_assets/dygraphs-1.1.1/shapes.js"></script>
+<script src="book_assets/moment-2.8.4/moment.js"></script>
+<script src="book_assets/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="book_assets/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="book_assets/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<script src="book_assets/d3-3.5.3/d3.min.js"></script>
+<link href="book_assets/colorbrewer-1/colorbrewer.css" rel="stylesheet" />
+<script src="book_assets/colorbrewer-1/colorbrewer.js"></script>
+<link href="book_assets/streamgraph-1/streamgraph.css" rel="stylesheet" />
+<script src="book_assets/streamgraph-binding-0.9.0/streamgraph.js"></script>
+<link href="book_assets/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-1.3.1/leaflet.js"></script>
+<link href="book_assets/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="book_assets/proj4-2.6.2/proj4.min.js"></script>
+<script src="book_assets/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="book_assets/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-binding-2.0.4.1/leaflet.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html">Modern Data Science with R, 2nd edition</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#nd-edition"><i class="fa fa-check"></i>2nd edition</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#note-about-erroneous-black-and-white-printing"><i class="fa fa-check"></i>Note about erroneous black-and-white printing!</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#cover"><i class="fa fa-check"></i>Cover</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#st-edition"><i class="fa fa-check"></i>1st edition</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#copyright"><i class="fa fa-check"></i>Copyright</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#background-and-motivation"><i class="fa fa-check"></i>Background and motivation</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#intended-audience"><i class="fa fa-check"></i>Intended audience</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-features-of-this-book"><i class="fa fa-check"></i>Key features of this book</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#focus-on-case-studies-and-extended-examples"><i class="fa fa-check"></i>Focus on case studies and extended examples</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#structure"><i class="fa fa-check"></i>Structure</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#supporting-materials"><i class="fa fa-check"></i>Supporting materials</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#changes-in-the-second-edition"><i class="fa fa-check"></i>Changes in the second edition</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-role-of-technology"><i class="fa fa-check"></i>Key role of technology</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#how-to-use-this-book"><i class="fa fa-check"></i>How to use this book</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="part"><span><b>I Part I: Introduction to Data Science</b></span></li>
+<li class="chapter" data-level="1" data-path="ch-prologue.html"><a href="ch-prologue.html"><i class="fa fa-check"></i><b>1</b> Prologue: Why data science?</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="ch-prologue.html"><a href="ch-prologue.html#what-is-data-science"><i class="fa fa-check"></i><b>1.1</b> What is data science?</a></li>
+<li class="chapter" data-level="1.2" data-path="ch-prologue.html"><a href="ch-prologue.html#case-study-the-evolution-of-sabermetrics"><i class="fa fa-check"></i><b>1.2</b> Case study: The evolution of sabermetrics</a></li>
+<li class="chapter" data-level="1.3" data-path="ch-prologue.html"><a href="ch-prologue.html#datasets"><i class="fa fa-check"></i><b>1.3</b> Datasets</a></li>
+<li class="chapter" data-level="1.4" data-path="ch-prologue.html"><a href="ch-prologue.html#intro-further"><i class="fa fa-check"></i><b>1.4</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch-vizI.html"><a href="ch-vizI.html"><i class="fa fa-check"></i><b>2</b> Data visualization</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#the-2012-federal-election-cycle"><i class="fa fa-check"></i><b>2.1</b> The 2012 federal election cycle</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="ch-vizI.html"><a href="ch-vizI.html#are-these-two-groups-different"><i class="fa fa-check"></i><b>2.1.1</b> Are these two groups different?</a></li>
+<li class="chapter" data-level="2.1.2" data-path="ch-vizI.html"><a href="ch-vizI.html#graphing-variation"><i class="fa fa-check"></i><b>2.1.2</b> Graphing variation</a></li>
+<li class="chapter" data-level="2.1.3" data-path="ch-vizI.html"><a href="ch-vizI.html#examining-relationships-among-variables"><i class="fa fa-check"></i><b>2.1.3</b> Examining relationships among variables</a></li>
+<li class="chapter" data-level="2.1.4" data-path="ch-vizI.html"><a href="ch-vizI.html#networks"><i class="fa fa-check"></i><b>2.1.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#composing-data-graphics"><i class="fa fa-check"></i><b>2.2</b> Composing data graphics</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#a-taxonomy-for-data-graphics"><i class="fa fa-check"></i><b>2.2.1</b> A taxonomy for data graphics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#sec:color"><i class="fa fa-check"></i><b>2.2.2</b> Color</a></li>
+<li class="chapter" data-level="2.2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#dissecting-data-graphics"><i class="fa fa-check"></i><b>2.2.3</b> Dissecting data graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#importance-of-data-graphics-challenger"><i class="fa fa-check"></i><b>2.3</b> Importance of data graphics: <em>Challenger</em></a></li>
+<li class="chapter" data-level="2.4" data-path="ch-vizI.html"><a href="ch-vizI.html#creating-effective-presentations"><i class="fa fa-check"></i><b>2.4</b> Creating effective presentations</a></li>
+<li class="chapter" data-level="2.5" data-path="ch-vizI.html"><a href="ch-vizI.html#the-wider-world-of-data-visualization"><i class="fa fa-check"></i><b>2.5</b> The wider world of data visualization</a></li>
+<li class="chapter" data-level="2.6" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-further"><i class="fa fa-check"></i><b>2.6</b> Further resources</a></li>
+<li class="chapter" data-level="2.7" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-exercises"><i class="fa fa-check"></i><b>2.7</b> Exercises</a></li>
+<li class="chapter" data-level="2.8" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-online-exercises"><i class="fa fa-check"></i><b>2.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch-vizII.html"><a href="ch-vizII.html"><i class="fa fa-check"></i><b>3</b> A grammar for graphics</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#a-grammar-for-data-graphics"><i class="fa fa-check"></i><b>3.1</b> A grammar for data graphics</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="ch-vizII.html"><a href="ch-vizII.html#aesthetics"><i class="fa fa-check"></i><b>3.1.1</b> Aesthetics</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ch-vizII.html"><a href="ch-vizII.html#scales"><i class="fa fa-check"></i><b>3.1.2</b> Scales</a></li>
+<li class="chapter" data-level="3.1.3" data-path="ch-vizII.html"><a href="ch-vizII.html#guides"><i class="fa fa-check"></i><b>3.1.3</b> Guides</a></li>
+<li class="chapter" data-level="3.1.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:facet"><i class="fa fa-check"></i><b>3.1.4</b> Facets</a></li>
+<li class="chapter" data-level="3.1.5" data-path="ch-vizII.html"><a href="ch-vizII.html#layers"><i class="fa fa-check"></i><b>3.1.5</b> Layers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:canonical"><i class="fa fa-check"></i><b>3.2</b> Canonical data graphics in (ref:R)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch-vizII.html"><a href="ch-vizII.html#univariate-displays"><i class="fa fa-check"></i><b>3.2.1</b> Univariate displays</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch-vizII.html"><a href="ch-vizII.html#multivariate-displays"><i class="fa fa-check"></i><b>3.2.2</b> Multivariate displays</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch-vizII.html"><a href="ch-vizII.html#maps"><i class="fa fa-check"></i><b>3.2.3</b> Maps</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:datanetwork"><i class="fa fa-check"></i><b>3.2.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:babynames"><i class="fa fa-check"></i><b>3.3</b> Extended example: Historical baby names</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#percentage-of-people-alive-today"><i class="fa fa-check"></i><b>3.3.1</b> Percentage of people alive today</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#most-common-names-for-women"><i class="fa fa-check"></i><b>3.3.2</b> Most common names for women</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-further"><i class="fa fa-check"></i><b>3.4</b> Further resources</a></li>
+<li class="chapter" data-level="3.5" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-exercises"><i class="fa fa-check"></i><b>3.5</b> Exercises</a></li>
+<li class="chapter" data-level="3.6" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-online-exercises"><i class="fa fa-check"></i><b>3.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch-dataI.html"><a href="ch-dataI.html"><i class="fa fa-check"></i><b>4</b> Data wrangling on one table</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:five_idioms"><i class="fa fa-check"></i><b>4.1</b> A grammar for data wrangling</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:pipe"><i class="fa fa-check"></i><b>4.1.1</b> <code>select()</code> and <code>filter()</code></a></li>
+<li class="chapter" data-level="4.1.2" data-path="ch-dataI.html"><a href="ch-dataI.html#mutate-and-rename"><i class="fa fa-check"></i><b>4.1.2</b> <code>mutate()</code> and <code>rename()</code></a></li>
+<li class="chapter" data-level="4.1.3" data-path="ch-dataI.html"><a href="ch-dataI.html#arrange"><i class="fa fa-check"></i><b>4.1.3</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="4.1.4" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:summarize"><i class="fa fa-check"></i><b>4.1.4</b> <code>summarize()</code> with <code>group_by()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:mets"><i class="fa fa-check"></i><b>4.2</b> Extended example: Ben’s time with the Mets</a></li>
+<li class="chapter" data-level="4.3" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-further"><i class="fa fa-check"></i><b>4.3</b> Further resources</a></li>
+<li class="chapter" data-level="4.4" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-exercises"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+<li class="chapter" data-level="4.5" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-online-exercises"><i class="fa fa-check"></i><b>4.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch-join.html"><a href="ch-join.html"><i class="fa fa-check"></i><b>5</b> Data wrangling on multiple tables</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch-join.html"><a href="ch-join.html#inner_join"><i class="fa fa-check"></i><b>5.1</b> <code>inner_join()</code></a></li>
+<li class="chapter" data-level="5.2" data-path="ch-join.html"><a href="ch-join.html#left_join"><i class="fa fa-check"></i><b>5.2</b> <code>left_join()</code></a></li>
+<li class="chapter" data-level="5.3" data-path="ch-join.html"><a href="ch-join.html#extended-example-manny-ramirez"><i class="fa fa-check"></i><b>5.3</b> Extended example: Manny Ramirez</a></li>
+<li class="chapter" data-level="5.4" data-path="ch-join.html"><a href="ch-join.html#joins-further"><i class="fa fa-check"></i><b>5.4</b> Further resources</a></li>
+<li class="chapter" data-level="5.5" data-path="ch-join.html"><a href="ch-join.html#join-exercises"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
+<li class="chapter" data-level="5.6" data-path="ch-join.html"><a href="ch-join.html#join-online-exercises"><i class="fa fa-check"></i><b>5.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch-dataII.html"><a href="ch-dataII.html"><i class="fa fa-check"></i><b>6</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch-dataII.html"><a href="ch-dataII.html#tidy-data"><i class="fa fa-check"></i><b>6.1</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="ch-dataII.html"><a href="ch-dataII.html#motivation"><i class="fa fa-check"></i><b>6.1.1</b> Motivation</a></li>
+<li class="chapter" data-level="6.1.2" data-path="ch-dataII.html"><a href="ch-dataII.html#what-are-tidy-data"><i class="fa fa-check"></i><b>6.1.2</b> What are tidy data?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="ch-dataII.html"><a href="ch-dataII.html#reshaping-data"><i class="fa fa-check"></i><b>6.2</b> Reshaping data</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-verbs-for-converting-wide-to-narrow-and-vice-versa"><i class="fa fa-check"></i><b>6.2.1</b> Data verbs for converting wide to narrow and <em>vice versa</em></a></li>
+<li class="chapter" data-level="6.2.2" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-wider"><i class="fa fa-check"></i><b>6.2.2</b> Pivoting wider</a></li>
+<li class="chapter" data-level="6.2.3" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-longer"><i class="fa fa-check"></i><b>6.2.3</b> Pivoting longer</a></li>
+<li class="chapter" data-level="6.2.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nest"><i class="fa fa-check"></i><b>6.2.4</b> List-columns</a></li>
+<li class="chapter" data-level="6.2.5" data-path="ch-dataII.html"><a href="ch-dataII.html#example-gender-neutral-names"><i class="fa fa-check"></i><b>6.2.5</b> Example: Gender-neutral names</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:naming"><i class="fa fa-check"></i><b>6.3</b> Naming conventions</a></li>
+<li class="chapter" data-level="6.4" data-path="ch-dataII.html"><a href="ch-dataII.html#data-intake"><i class="fa fa-check"></i><b>6.4</b> Data intake</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-table-friendly-formats"><i class="fa fa-check"></i><b>6.4.1</b> Data-table friendly formats</a></li>
+<li class="chapter" data-level="6.4.2" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:apis"><i class="fa fa-check"></i><b>6.4.2</b> APIs</a></li>
+<li class="chapter" data-level="6.4.3" data-path="ch-dataII.html"><a href="ch-dataII.html#cleaning-data"><i class="fa fa-check"></i><b>6.4.3</b> Cleaning data</a></li>
+<li class="chapter" data-level="6.4.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nukes"><i class="fa fa-check"></i><b>6.4.4</b> Example: Japanese nuclear reactors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-further"><i class="fa fa-check"></i><b>6.5</b> Further resources</a></li>
+<li class="chapter" data-level="6.6" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-exercises"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+<li class="chapter" data-level="6.7" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-online-exercises"><i class="fa fa-check"></i><b>6.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch-iteration.html"><a href="ch-iteration.html"><i class="fa fa-check"></i><b>7</b> Iteration</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:vectorized"><i class="fa fa-check"></i><b>7.1</b> Vectorized operations</a></li>
+<li class="chapter" data-level="7.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:scoped"><i class="fa fa-check"></i><b>7.2</b> Using <code>across()</code> with <strong>dplyr</strong> functions</a></li>
+<li class="chapter" data-level="7.3" data-path="ch-iteration.html"><a href="ch-iteration.html#appR:apply"><i class="fa fa-check"></i><b>7.3</b> The <code>map()</code> family of functions</a></li>
+<li class="chapter" data-level="7.4" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-over-a-one-dimensional-vector"><i class="fa fa-check"></i><b>7.4</b> Iterating over a one-dimensional vector</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-a-known-function"><i class="fa fa-check"></i><b>7.4.1</b> Iterating a known function</a></li>
+<li class="chapter" data-level="7.4.2" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-an-arbitrary-function"><i class="fa fa-check"></i><b>7.4.2</b> Iterating an arbitrary function</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:group-map"><i class="fa fa-check"></i><b>7.5</b> Iteration over subgroups</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:pythag"><i class="fa fa-check"></i><b>7.5.1</b> Example: Expected winning percentage</a></li>
+<li class="chapter" data-level="7.5.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:hrs"><i class="fa fa-check"></i><b>7.5.2</b> Example: Annual leaders</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="ch-iteration.html"><a href="ch-iteration.html#simulation"><i class="fa fa-check"></i><b>7.6</b> Simulation</a></li>
+<li class="chapter" data-level="7.7" data-path="ch-iteration.html"><a href="ch-iteration.html#extended-example-factors-associated-with-bmi"><i class="fa fa-check"></i><b>7.7</b> Extended example: Factors associated with BMI</a></li>
+<li class="chapter" data-level="7.8" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-further"><i class="fa fa-check"></i><b>7.8</b> Further resources</a></li>
+<li class="chapter" data-level="7.9" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-exercises"><i class="fa fa-check"></i><b>7.9</b> Exercises</a></li>
+<li class="chapter" data-level="7.10" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-online-exercises"><i class="fa fa-check"></i><b>7.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch-ethics.html"><a href="ch-ethics.html"><i class="fa fa-check"></i><b>8</b> Data science ethics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-intro"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ch-ethics.html"><a href="ch-ethics.html#truthful-falsehoods"><i class="fa fa-check"></i><b>8.2</b> Truthful falsehoods</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ch-ethics.html"><a href="ch-ethics.html#stand-your-ground"><i class="fa fa-check"></i><b>8.2.1</b> Stand your ground</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ch-ethics.html"><a href="ch-ethics.html#global-temperature"><i class="fa fa-check"></i><b>8.2.2</b> Global temperature</a></li>
+<li class="chapter" data-level="8.2.3" data-path="ch-ethics.html"><a href="ch-ethics.html#covid-19-reporting"><i class="fa fa-check"></i><b>8.2.3</b> COVID-19 reporting</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ch-ethics.html"><a href="ch-ethics.html#role-of-data-science-in-society"><i class="fa fa-check"></i><b>8.3</b> Role of data science in society</a></li>
+<li class="chapter" data-level="8.4" data-path="ch-ethics.html"><a href="ch-ethics.html#some-settings-for-professional-ethics"><i class="fa fa-check"></i><b>8.4</b> Some settings for professional ethics</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-chief-executive-officer"><i class="fa fa-check"></i><b>8.4.1</b> The chief executive officer</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination"><i class="fa fa-check"></i><b>8.4.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar"><i class="fa fa-check"></i><b>8.4.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.4.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction"><i class="fa fa-check"></i><b>8.4.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.4.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping"><i class="fa fa-check"></i><b>8.4.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.4.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis"><i class="fa fa-check"></i><b>8.4.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.4.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers"><i class="fa fa-check"></i><b>8.4.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.4.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations"><i class="fa fa-check"></i><b>8.4.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ch-ethics.html"><a href="ch-ethics.html#some-principles-to-guide-ethical-action"><i class="fa fa-check"></i><b>8.5</b> Some principles to guide ethical action</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-ceo"><i class="fa fa-check"></i><b>8.5.1</b> The CEO</a></li>
+<li class="chapter" data-level="8.5.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination-1"><i class="fa fa-check"></i><b>8.5.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.5.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar-1"><i class="fa fa-check"></i><b>8.5.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.5.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction-1"><i class="fa fa-check"></i><b>8.5.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.5.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping-1"><i class="fa fa-check"></i><b>8.5.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.5.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis-1"><i class="fa fa-check"></i><b>8.5.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.5.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers-1"><i class="fa fa-check"></i><b>8.5.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.5.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations-1"><i class="fa fa-check"></i><b>8.5.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="ch-ethics.html"><a href="ch-ethics.html#algorithmic-bias"><i class="fa fa-check"></i><b>8.6</b> Algorithmic bias</a></li>
+<li class="chapter" data-level="8.7" data-path="ch-ethics.html"><a href="ch-ethics.html#data-and-disclosure"><i class="fa fa-check"></i><b>8.7</b> Data and disclosure</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="ch-ethics.html"><a href="ch-ethics.html#reidentification-and-disclosure-avoidance"><i class="fa fa-check"></i><b>8.7.1</b> Reidentification and disclosure avoidance</a></li>
+<li class="chapter" data-level="8.7.2" data-path="ch-ethics.html"><a href="ch-ethics.html#safe-data-storage"><i class="fa fa-check"></i><b>8.7.2</b> Safe data storage</a></li>
+<li class="chapter" data-level="8.7.3" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:terms-of-use"><i class="fa fa-check"></i><b>8.7.3</b> Data scraping and terms of use</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:reproducibility"><i class="fa fa-check"></i><b>8.8</b> Reproducibility</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#example-erroneous-data-merging"><i class="fa fa-check"></i><b>8.8.1</b> Example: Erroneous data merging</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-collectively"><i class="fa fa-check"></i><b>8.9</b> Ethics, collectively</a></li>
+<li class="chapter" data-level="8.10" data-path="ch-ethics.html"><a href="ch-ethics.html#professional-guidelines-for-ethical-conduct"><i class="fa fa-check"></i><b>8.10</b> Professional guidelines for ethical conduct</a></li>
+<li class="chapter" data-level="8.11" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-further"><i class="fa fa-check"></i><b>8.11</b> Further resources</a></li>
+<li class="chapter" data-level="8.12" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-exercises"><i class="fa fa-check"></i><b>8.12</b> Exercises</a></li>
+<li class="chapter" data-level="8.13" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-online-exercises"><i class="fa fa-check"></i><b>8.13</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>II Part II: Statistics and Modeling</b></span></li>
+<li class="chapter" data-level="9" data-path="ch-foundations.html"><a href="ch-foundations.html"><i class="fa fa-check"></i><b>9</b> Statistical foundations</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch-foundations.html"><a href="ch-foundations.html#samples-and-populations"><i class="fa fa-check"></i><b>9.1</b> Samples and populations</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy-by-sampling-from-the-population"><i class="fa fa-check"></i><b>9.1.1</b> Example: Setting travel policy by sampling from the population</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="ch-foundations.html"><a href="ch-foundations.html#sample-statistics"><i class="fa fa-check"></i><b>9.2</b> Sample statistics</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:lln"><i class="fa fa-check"></i><b>9.2.1</b> The sampling distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:boot"><i class="fa fa-check"></i><b>9.3</b> The bootstrap</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy"><i class="fa fa-check"></i><b>9.3.1</b> Example: Setting travel policy</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="ch-foundations.html"><a href="ch-foundations.html#outliers"><i class="fa fa-check"></i><b>9.4</b> Outliers</a></li>
+<li class="chapter" data-level="9.5" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:gooddesign"><i class="fa fa-check"></i><b>9.5</b> Statistical models: Explaining variation</a></li>
+<li class="chapter" data-level="9.6" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:confound"><i class="fa fa-check"></i><b>9.6</b> Confounding and accounting for other factors</a></li>
+<li class="chapter" data-level="9.7" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:p-perils"><i class="fa fa-check"></i><b>9.7</b> The perils of p-values</a></li>
+<li class="chapter" data-level="9.8" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-further"><i class="fa fa-check"></i><b>9.8</b> Further resources</a></li>
+<li class="chapter" data-level="9.9" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-exercises"><i class="fa fa-check"></i><b>9.9</b> Exercises</a></li>
+<li class="chapter" data-level="9.10" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-online-exercises"><i class="fa fa-check"></i><b>9.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch-modeling.html"><a href="ch-modeling.html"><i class="fa fa-check"></i><b>10</b> Predictive modeling</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch-modeling.html"><a href="ch-modeling.html#predictive-modeling"><i class="fa fa-check"></i><b>10.1</b> Predictive modeling</a></li>
+<li class="chapter" data-level="10.2" data-path="ch-modeling.html"><a href="ch-modeling.html#simple-classification-models"><i class="fa fa-check"></i><b>10.2</b> Simple classification models</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="ch-modeling.html"><a href="ch-modeling.html#example-high-earners-in-the-1994-united-states-census"><i class="fa fa-check"></i><b>10.2.1</b> Example: High-earners in the 1994 United States Census</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="ch-modeling.html"><a href="ch-modeling.html#evaluating-models"><i class="fa fa-check"></i><b>10.3</b> Evaluating models</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:bias-variance"><i class="fa fa-check"></i><b>10.3.1</b> Bias-variance trade-off</a></li>
+<li class="chapter" data-level="10.3.2" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:cv"><i class="fa fa-check"></i><b>10.3.2</b> Cross-validation</a></li>
+<li class="chapter" data-level="10.3.3" data-path="ch-modeling.html"><a href="ch-modeling.html#confusion-matrices-and-roc-curves"><i class="fa fa-check"></i><b>10.3.3</b> Confusion matrices and ROC curves</a></li>
+<li class="chapter" data-level="10.3.4" data-path="ch-modeling.html"><a href="ch-modeling.html#measuring-prediction-error-for-quantitative-responses"><i class="fa fa-check"></i><b>10.3.4</b> Measuring prediction error for quantitative responses</a></li>
+<li class="chapter" data-level="10.3.5" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:evaluate"><i class="fa fa-check"></i><b>10.3.5</b> Example: Evaluation of income models</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:diabetes"><i class="fa fa-check"></i><b>10.4</b> Extended example: Who has diabetes?</a></li>
+<li class="chapter" data-level="10.5" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-further"><i class="fa fa-check"></i><b>10.5</b> Further resources</a></li>
+<li class="chapter" data-level="10.6" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-exercises"><i class="fa fa-check"></i><b>10.6</b> Exercises</a></li>
+<li class="chapter" data-level="10.7" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-online-exercises"><i class="fa fa-check"></i><b>10.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch-learningI.html"><a href="ch-learningI.html"><i class="fa fa-check"></i><b>11</b> Supervised learning</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch-learningI.html"><a href="ch-learningI.html#non-regression-classifiers"><i class="fa fa-check"></i><b>11.1</b> Non-regression classifiers</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="ch-learningI.html"><a href="ch-learningI.html#decision-trees"><i class="fa fa-check"></i><b>11.1.1</b> Decision trees</a></li>
+<li class="chapter" data-level="11.1.2" data-path="ch-learningI.html"><a href="ch-learningI.html#random-forests"><i class="fa fa-check"></i><b>11.1.2</b> Random forests</a></li>
+<li class="chapter" data-level="11.1.3" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:knn"><i class="fa fa-check"></i><b>11.1.3</b> Nearest neighbor</a></li>
+<li class="chapter" data-level="11.1.4" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:bayes"><i class="fa fa-check"></i><b>11.1.4</b> Naïve Bayes</a></li>
+<li class="chapter" data-level="11.1.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:neuralnet"><i class="fa fa-check"></i><b>11.1.5</b> Artificial neural networks</a></li>
+<li class="chapter" data-level="11.1.6" data-path="ch-learningI.html"><a href="ch-learningI.html#ensemble-methods"><i class="fa fa-check"></i><b>11.1.6</b> Ensemble methods</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:tuning"><i class="fa fa-check"></i><b>11.2</b> Parameter tuning</a></li>
+<li class="chapter" data-level="11.3" data-path="ch-learningI.html"><a href="ch-learningI.html#example-evaluation-of-income-models-redux"><i class="fa fa-check"></i><b>11.3</b> Example: Evaluation of income models redux</a></li>
+<li class="chapter" data-level="11.4" data-path="ch-learningI.html"><a href="ch-learningI.html#extended-example-who-has-diabetes-this-time"><i class="fa fa-check"></i><b>11.4</b> Extended example: Who has diabetes this time?</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch-learningI.html"><a href="ch-learningI.html#comparing-all-models"><i class="fa fa-check"></i><b>11.4.1</b> Comparing all models</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:regularization"><i class="fa fa-check"></i><b>11.5</b> Regularization</a></li>
+<li class="chapter" data-level="11.6" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-further"><i class="fa fa-check"></i><b>11.6</b> Further resources</a></li>
+<li class="chapter" data-level="11.7" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-exercises"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
+<li class="chapter" data-level="11.8" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-online-exercises"><i class="fa fa-check"></i><b>11.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch-learningII.html"><a href="ch-learningII.html"><i class="fa fa-check"></i><b>12</b> Unsupervised learning</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch-learningII.html"><a href="ch-learningII.html#clustering"><i class="fa fa-check"></i><b>12.1</b> Clustering</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="ch-learningII.html"><a href="ch-learningII.html#sec:hclust"><i class="fa fa-check"></i><b>12.1.1</b> Hierarchical clustering</a></li>
+<li class="chapter" data-level="12.1.2" data-path="ch-learningII.html"><a href="ch-learningII.html#k-means"><i class="fa fa-check"></i><b>12.1.2</b> <span class="math inline">\(k\)</span>-means</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="ch-learningII.html"><a href="ch-learningII.html#dimension-reduction"><i class="fa fa-check"></i><b>12.2</b> Dimension reduction</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch-learningII.html"><a href="ch-learningII.html#intuitive-approaches"><i class="fa fa-check"></i><b>12.2.1</b> Intuitive approaches</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch-learningII.html"><a href="ch-learningII.html#singular-value-decomposition"><i class="fa fa-check"></i><b>12.2.2</b> Singular value decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-further"><i class="fa fa-check"></i><b>12.3</b> Further resources</a></li>
+<li class="chapter" data-level="12.4" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-exercises"><i class="fa fa-check"></i><b>12.4</b> Exercises</a></li>
+<li class="chapter" data-level="12.5" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-online-exercises"><i class="fa fa-check"></i><b>12.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch-simulation.html"><a href="ch-simulation.html"><i class="fa fa-check"></i><b>13</b> Simulation</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch-simulation.html"><a href="ch-simulation.html#reasoning-in-reverse"><i class="fa fa-check"></i><b>13.1</b> Reasoning in reverse</a></li>
+<li class="chapter" data-level="13.2" data-path="ch-simulation.html"><a href="ch-simulation.html#extended-example-grouping-cancers"><i class="fa fa-check"></i><b>13.2</b> Extended example: Grouping cancers</a></li>
+<li class="chapter" data-level="13.3" data-path="ch-simulation.html"><a href="ch-simulation.html#randomizing-functions"><i class="fa fa-check"></i><b>13.3</b> Randomizing functions</a></li>
+<li class="chapter" data-level="13.4" data-path="ch-simulation.html"><a href="ch-simulation.html#simulating-variability"><i class="fa fa-check"></i><b>13.4</b> Simulating variability</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch-simulation.html"><a href="ch-simulation.html#the-partially-planned-rendezvous"><i class="fa fa-check"></i><b>13.4.1</b> The partially-planned rendezvous</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:jobsnum"><i class="fa fa-check"></i><b>13.4.2</b> The jobs report</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch-simulation.html"><a href="ch-simulation.html#restaurant-health-and-sanitation-grades"><i class="fa fa-check"></i><b>13.4.3</b> Restaurant health and sanitation grades</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch-simulation.html"><a href="ch-simulation.html#random-networks"><i class="fa fa-check"></i><b>13.5</b> Random networks</a></li>
+<li class="chapter" data-level="13.6" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:key-principles-random"><i class="fa fa-check"></i><b>13.6</b> Key principles of simulation</a>
+<ul>
+<li class="chapter" data-level="13.6.1" data-path="ch-simulation.html"><a href="ch-simulation.html#design"><i class="fa fa-check"></i><b>13.6.1</b> Design</a></li>
+<li class="chapter" data-level="13.6.2" data-path="ch-simulation.html"><a href="ch-simulation.html#modularity"><i class="fa fa-check"></i><b>13.6.2</b> Modularity</a></li>
+<li class="chapter" data-level="13.6.3" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:seed"><i class="fa fa-check"></i><b>13.6.3</b> Reproducibility and random number seeds</a></li>
+</ul></li>
+<li class="chapter" data-level="13.7" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-further"><i class="fa fa-check"></i><b>13.7</b> Further resources</a></li>
+<li class="chapter" data-level="13.8" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-exercises"><i class="fa fa-check"></i><b>13.8</b> Exercises</a></li>
+<li class="chapter" data-level="13.9" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-online-exercises"><i class="fa fa-check"></i><b>13.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>III Part III: Topics in Data Science</b></span></li>
+<li class="chapter" data-level="14" data-path="ch-vizIII.html"><a href="ch-vizIII.html"><i class="fa fa-check"></i><b>14</b> Dynamic and customized data graphics</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:d3"><i class="fa fa-check"></i><b>14.1</b> Rich Web content using <code>D3.js</code> and <strong>htmlwidgets</strong></a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#leaflet"><i class="fa fa-check"></i><b>14.1.1</b> Leaflet</a></li>
+<li class="chapter" data-level="14.1.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#plot.ly"><i class="fa fa-check"></i><b>14.1.2</b> Plot.ly</a></li>
+<li class="chapter" data-level="14.1.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datatables"><i class="fa fa-check"></i><b>14.1.3</b> DataTables</a></li>
+<li class="chapter" data-level="14.1.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#dygraphs"><i class="fa fa-check"></i><b>14.1.4</b> Dygraphs</a></li>
+<li class="chapter" data-level="14.1.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#streamgraphs"><i class="fa fa-check"></i><b>14.1.5</b> Streamgraphs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#animation"><i class="fa fa-check"></i><b>14.2</b> Animation</a></li>
+<li class="chapter" data-level="14.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:fleshdashboard"><i class="fa fa-check"></i><b>14.3</b> Flexdashboard</a></li>
+<li class="chapter" data-level="14.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:shiny"><i class="fa fa-check"></i><b>14.4</b> Interactive web apps with Shiny</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#example-interactive-display-of-the-beatles"><i class="fa fa-check"></i><b>14.4.1</b> Example: interactive display of the Beatles</a></li>
+<li class="chapter" data-level="14.4.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#more-on-reactive-programming"><i class="fa fa-check"></i><b>14.4.2</b> More on reactive programming</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:themes"><i class="fa fa-check"></i><b>14.5</b> Customization of <strong>ggplot2</strong> graphics</a></li>
+<li class="chapter" data-level="14.6" data-path="ch-vizIII.html"><a href="ch-vizIII.html#extended-example-hot-dog-eating"><i class="fa fa-check"></i><b>14.6</b> Extended example: Hot dog eating</a></li>
+<li class="chapter" data-level="14.7" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-further"><i class="fa fa-check"></i><b>14.7</b> Further resources</a></li>
+<li class="chapter" data-level="14.8" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-exercises"><i class="fa fa-check"></i><b>14.8</b> Exercises</a></li>
+<li class="chapter" data-level="14.9" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-online-exercises"><i class="fa fa-check"></i><b>14.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch-sql.html"><a href="ch-sql.html"><i class="fa fa-check"></i><b>15</b> Database querying using SQL</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch-sql.html"><a href="ch-sql.html#sec:dplyr-sql"><i class="fa fa-check"></i><b>15.1</b> From <strong>dplyr</strong> to SQL</a></li>
+<li class="chapter" data-level="15.2" data-path="ch-sql.html"><a href="ch-sql.html#flat-file-databases"><i class="fa fa-check"></i><b>15.2</b> Flat-file databases</a></li>
+<li class="chapter" data-level="15.3" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-universe"><i class="fa fa-check"></i><b>15.3</b> The SQL universe</a></li>
+<li class="chapter" data-level="15.4" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-data-manipulation-language"><i class="fa fa-check"></i><b>15.4</b> The SQL data manipulation language</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="ch-sql.html"><a href="ch-sql.html#select...from"><i class="fa fa-check"></i><b>15.4.1</b> <code>SELECT...FROM</code></a></li>
+<li class="chapter" data-level="15.4.2" data-path="ch-sql.html"><a href="ch-sql.html#where"><i class="fa fa-check"></i><b>15.4.2</b> <code>WHERE</code></a></li>
+<li class="chapter" data-level="15.4.3" data-path="ch-sql.html"><a href="ch-sql.html#group-by"><i class="fa fa-check"></i><b>15.4.3</b> <code>GROUP BY</code></a></li>
+<li class="chapter" data-level="15.4.4" data-path="ch-sql.html"><a href="ch-sql.html#order-by"><i class="fa fa-check"></i><b>15.4.4</b> <code>ORDER BY</code></a></li>
+<li class="chapter" data-level="15.4.5" data-path="ch-sql.html"><a href="ch-sql.html#having"><i class="fa fa-check"></i><b>15.4.5</b> <code>HAVING</code></a></li>
+<li class="chapter" data-level="15.4.6" data-path="ch-sql.html"><a href="ch-sql.html#limit"><i class="fa fa-check"></i><b>15.4.6</b> <code>LIMIT</code></a></li>
+<li class="chapter" data-level="15.4.7" data-path="ch-sql.html"><a href="ch-sql.html#join"><i class="fa fa-check"></i><b>15.4.7</b> <code>JOIN</code></a></li>
+<li class="chapter" data-level="15.4.8" data-path="ch-sql.html"><a href="ch-sql.html#union"><i class="fa fa-check"></i><b>15.4.8</b> <code>UNION</code></a></li>
+<li class="chapter" data-level="15.4.9" data-path="ch-sql.html"><a href="ch-sql.html#subqueries"><i class="fa fa-check"></i><b>15.4.9</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="ch-sql.html"><a href="ch-sql.html#sec:ft8-flights"><i class="fa fa-check"></i><b>15.5</b> Extended example: FiveThirtyEight flights</a></li>
+<li class="chapter" data-level="15.6" data-path="ch-sql.html"><a href="ch-sql.html#sql-vs.-refr"><i class="fa fa-check"></i><b>15.6</b> SQL vs. (ref:R)</a></li>
+<li class="chapter" data-level="15.7" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-further"><i class="fa fa-check"></i><b>15.7</b> Further resources</a></li>
+<li class="chapter" data-level="15.8" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-exercises"><i class="fa fa-check"></i><b>15.8</b> Exercises</a></li>
+<li class="chapter" data-level="15.9" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-online-exercises"><i class="fa fa-check"></i><b>15.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="ch-sql2.html"><a href="ch-sql2.html"><i class="fa fa-check"></i><b>16</b> Database administration</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:indices"><i class="fa fa-check"></i><b>16.1</b> Constructing efficient SQL databases</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="ch-sql2.html"><a href="ch-sql2.html#creating-new-databases"><i class="fa fa-check"></i><b>16.1.1</b> Creating new databases</a></li>
+<li class="chapter" data-level="16.1.2" data-path="ch-sql2.html"><a href="ch-sql2.html#create-table"><i class="fa fa-check"></i><b>16.1.2</b> <code>CREATE TABLE</code></a></li>
+<li class="chapter" data-level="16.1.3" data-path="ch-sql2.html"><a href="ch-sql2.html#keys"><i class="fa fa-check"></i><b>16.1.3</b> Keys</a></li>
+<li class="chapter" data-level="16.1.4" data-path="ch-sql2.html"><a href="ch-sql2.html#indices"><i class="fa fa-check"></i><b>16.1.4</b> Indices</a></li>
+<li class="chapter" data-level="16.1.5" data-path="ch-sql2.html"><a href="ch-sql2.html#query-plans"><i class="fa fa-check"></i><b>16.1.5</b> Query plans</a></li>
+<li class="chapter" data-level="16.1.6" data-path="ch-sql2.html"><a href="ch-sql2.html#partitioning"><i class="fa fa-check"></i><b>16.1.6</b> Partitioning</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-sql-data"><i class="fa fa-check"></i><b>16.2</b> Changing SQL data</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-data"><i class="fa fa-check"></i><b>16.2.1</b> Changing data</a></li>
+<li class="chapter" data-level="16.2.2" data-path="ch-sql2.html"><a href="ch-sql2.html#adding-data"><i class="fa fa-check"></i><b>16.2.2</b> Adding data</a></li>
+<li class="chapter" data-level="16.2.3" data-path="ch-sql2.html"><a href="ch-sql2.html#importing-data-from-a-file"><i class="fa fa-check"></i><b>16.2.3</b> Importing data from a file</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:toy-db"><i class="fa fa-check"></i><b>16.3</b> Extended example: Building a database</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="ch-sql2.html"><a href="ch-sql2.html#extract"><i class="fa fa-check"></i><b>16.3.1</b> Extract</a></li>
+<li class="chapter" data-level="16.3.2" data-path="ch-sql2.html"><a href="ch-sql2.html#transform"><i class="fa fa-check"></i><b>16.3.2</b> Transform</a></li>
+<li class="chapter" data-level="16.3.3" data-path="ch-sql2.html"><a href="ch-sql2.html#load-into-mysql-database"><i class="fa fa-check"></i><b>16.3.3</b> Load into MySQL database</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="ch-sql2.html"><a href="ch-sql2.html#scalability"><i class="fa fa-check"></i><b>16.4</b> Scalability</a></li>
+<li class="chapter" data-level="16.5" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-further"><i class="fa fa-check"></i><b>16.5</b> Further resources</a></li>
+<li class="chapter" data-level="16.6" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-exercises"><i class="fa fa-check"></i><b>16.6</b> Exercises</a></li>
+<li class="chapter" data-level="16.7" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-online-exercises"><i class="fa fa-check"></i><b>16.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="ch-spatial.html"><a href="ch-spatial.html"><i class="fa fa-check"></i><b>17</b> Working with geospatial data</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="ch-spatial.html"><a href="ch-spatial.html#motivation-whats-so-great-about-geospatial-data"><i class="fa fa-check"></i><b>17.1</b> Motivation: What’s so great about geospatial data?</a></li>
+<li class="chapter" data-level="17.2" data-path="ch-spatial.html"><a href="ch-spatial.html#spatial-data-structures"><i class="fa fa-check"></i><b>17.2</b> Spatial data structures</a></li>
+<li class="chapter" data-level="17.3" data-path="ch-spatial.html"><a href="ch-spatial.html#making-maps"><i class="fa fa-check"></i><b>17.3</b> Making maps</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="ch-spatial.html"><a href="ch-spatial.html#static-maps"><i class="fa fa-check"></i><b>17.3.1</b> Static maps</a></li>
+<li class="chapter" data-level="17.3.2" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:projections"><i class="fa fa-check"></i><b>17.3.2</b> Projections</a></li>
+<li class="chapter" data-level="17.3.3" data-path="ch-spatial.html"><a href="ch-spatial.html#dynamic-maps-with-leaflet"><i class="fa fa-check"></i><b>17.3.3</b> Dynamic maps with <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="ch-spatial.html"><a href="ch-spatial.html#extended-example-congressional-districts"><i class="fa fa-check"></i><b>17.4</b> Extended example: Congressional districts</a>
+<ul>
+<li class="chapter" data-level="17.4.1" data-path="ch-spatial.html"><a href="ch-spatial.html#election-results"><i class="fa fa-check"></i><b>17.4.1</b> Election results</a></li>
+<li class="chapter" data-level="17.4.2" data-path="ch-spatial.html"><a href="ch-spatial.html#congressional-districts"><i class="fa fa-check"></i><b>17.4.2</b> Congressional districts</a></li>
+<li class="chapter" data-level="17.4.3" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:sf-inner-join"><i class="fa fa-check"></i><b>17.4.3</b> Putting it all together</a></li>
+<li class="chapter" data-level="17.4.4" data-path="ch-spatial.html"><a href="ch-spatial.html#using-ggplot2"><i class="fa fa-check"></i><b>17.4.4</b> Using <code>ggplot2</code></a></li>
+<li class="chapter" data-level="17.4.5" data-path="ch-spatial.html"><a href="ch-spatial.html#using-leaflet"><i class="fa fa-check"></i><b>17.4.5</b> Using <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="ch-spatial.html"><a href="ch-spatial.html#effective-maps-how-not-to-lie"><i class="fa fa-check"></i><b>17.5</b> Effective maps: How (not) to lie</a></li>
+<li class="chapter" data-level="17.6" data-path="ch-spatial.html"><a href="ch-spatial.html#projecting-polygons"><i class="fa fa-check"></i><b>17.6</b> Projecting polygons</a></li>
+<li class="chapter" data-level="17.7" data-path="ch-spatial.html"><a href="ch-spatial.html#playing-well-with-others"><i class="fa fa-check"></i><b>17.7</b> Playing well with others</a></li>
+<li class="chapter" data-level="17.8" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialII-further"><i class="fa fa-check"></i><b>17.8</b> Further resources</a></li>
+<li class="chapter" data-level="17.9" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-exercises"><i class="fa fa-check"></i><b>17.9</b> Exercises</a></li>
+<li class="chapter" data-level="17.10" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-online-exercises"><i class="fa fa-check"></i><b>17.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="ch-spatial2.html"><a href="ch-spatial2.html"><i class="fa fa-check"></i><b>18</b> Geospatial computations</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-operations"><i class="fa fa-check"></i><b>18.1</b> Geospatial operations</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geocoding-routes-and-distances"><i class="fa fa-check"></i><b>18.1.1</b> Geocoding, routes, and distances</a></li>
+<li class="chapter" data-level="18.1.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#sec:geometric-operations"><i class="fa fa-check"></i><b>18.1.2</b> Geometric operations</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-aggregation"><i class="fa fa-check"></i><b>18.2</b> Geospatial aggregation</a></li>
+<li class="chapter" data-level="18.3" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-joins"><i class="fa fa-check"></i><b>18.3</b> Geospatial joins</a></li>
+<li class="chapter" data-level="18.4" data-path="ch-spatial2.html"><a href="ch-spatial2.html#extended-example-trail-elevations-at-macleish"><i class="fa fa-check"></i><b>18.4</b> Extended example: Trail elevations at MacLeish</a></li>
+<li class="chapter" data-level="18.5" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialI-further"><i class="fa fa-check"></i><b>18.5</b> Further resources</a></li>
+<li class="chapter" data-level="18.6" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-exercises"><i class="fa fa-check"></i><b>18.6</b> Exercises</a></li>
+<li class="chapter" data-level="18.7" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-online-exercises"><i class="fa fa-check"></i><b>18.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="ch-text.html"><a href="ch-text.html"><i class="fa fa-check"></i><b>19</b> Text as data</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="ch-text.html"><a href="ch-text.html#regular-expressions-using-macbeth"><i class="fa fa-check"></i><b>19.1</b> Regular expressions using <em>Macbeth</em></a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="ch-text.html"><a href="ch-text.html#parsing-the-text-of-the-scottish-play"><i class="fa fa-check"></i><b>19.1.1</b> Parsing the text of the <span><em>Scottish play</em></span></a></li>
+<li class="chapter" data-level="19.1.2" data-path="ch-text.html"><a href="ch-text.html#life-and-death-in-macbeth"><i class="fa fa-check"></i><b>19.1.2</b> Life and death in <em>Macbeth</em></a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="ch-text.html"><a href="ch-text.html#extended-example-analyzing-textual-data-from-arxiv.org"><i class="fa fa-check"></i><b>19.2</b> Extended example: Analyzing textual data from arXiv.org</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="ch-text.html"><a href="ch-text.html#corpora"><i class="fa fa-check"></i><b>19.2.1</b> Corpora</a></li>
+<li class="chapter" data-level="19.2.2" data-path="ch-text.html"><a href="ch-text.html#word-clouds"><i class="fa fa-check"></i><b>19.2.2</b> Word clouds</a></li>
+<li class="chapter" data-level="19.2.3" data-path="ch-text.html"><a href="ch-text.html#sentiment-analysis"><i class="fa fa-check"></i><b>19.2.3</b> Sentiment analysis</a></li>
+<li class="chapter" data-level="19.2.4" data-path="ch-text.html"><a href="ch-text.html#bigrams-and-n-grams"><i class="fa fa-check"></i><b>19.2.4</b> Bigrams and N-grams</a></li>
+<li class="chapter" data-level="19.2.5" data-path="ch-text.html"><a href="ch-text.html#document-term-matrices"><i class="fa fa-check"></i><b>19.2.5</b> Document term matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="ch-text.html"><a href="ch-text.html#ingesting-text"><i class="fa fa-check"></i><b>19.3</b> Ingesting text</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="ch-text.html"><a href="ch-text.html#example-scraping-the-songs-of-the-beatles"><i class="fa fa-check"></i><b>19.3.1</b> Example: Scraping the songs of the Beatles</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="ch-text.html"><a href="ch-text.html#text-further"><i class="fa fa-check"></i><b>19.4</b> Further resources</a></li>
+<li class="chapter" data-level="19.5" data-path="ch-text.html"><a href="ch-text.html#text-exercises"><i class="fa fa-check"></i><b>19.5</b> Exercises</a></li>
+<li class="chapter" data-level="19.6" data-path="ch-text.html"><a href="ch-text.html#text-online-exercises"><i class="fa fa-check"></i><b>19.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="ch-netsci.html"><a href="ch-netsci.html"><i class="fa fa-check"></i><b>20</b> Network science</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-intro"><i class="fa fa-check"></i><b>20.1</b> Introduction to network science</a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="ch-netsci.html"><a href="ch-netsci.html#definitions"><i class="fa fa-check"></i><b>20.1.1</b> Definitions</a></li>
+<li class="chapter" data-level="20.1.2" data-path="ch-netsci.html"><a href="ch-netsci.html#a-brief-history-of-network-science"><i class="fa fa-check"></i><b>20.1.2</b> A brief history of network science</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-six-degrees-of-kristen-stewart"><i class="fa fa-check"></i><b>20.2</b> Extended example: Six degrees of Kristen Stewart</a>
+<ul>
+<li class="chapter" data-level="20.2.1" data-path="ch-netsci.html"><a href="ch-netsci.html#sql:imdb"><i class="fa fa-check"></i><b>20.2.1</b> Collecting Hollywood data</a></li>
+<li class="chapter" data-level="20.2.2" data-path="ch-netsci.html"><a href="ch-netsci.html#building-the-hollywood-network"><i class="fa fa-check"></i><b>20.2.2</b> Building the Hollywood network</a></li>
+<li class="chapter" data-level="20.2.3" data-path="ch-netsci.html"><a href="ch-netsci.html#building-a-kristen-stewart-oracle"><i class="fa fa-check"></i><b>20.2.3</b> Building a Kristen Stewart oracle</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="ch-netsci.html"><a href="ch-netsci.html#sec:pagerank"><i class="fa fa-check"></i><b>20.3</b> PageRank</a>
+<ul>
+<li class="chapter" data-level="20.3.1" data-path="ch-netsci.html"><a href="ch-netsci.html#eigenvector-centrality"><i class="fa fa-check"></i><b>20.3.1</b> Eigenvector centrality</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-1996-mens-college-basketball"><i class="fa fa-check"></i><b>20.4</b> Extended example: 1996 men’s college basketball</a></li>
+<li class="chapter" data-level="20.5" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-further"><i class="fa fa-check"></i><b>20.5</b> Further resources</a></li>
+<li class="chapter" data-level="20.6" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-exercises"><i class="fa fa-check"></i><b>20.6</b> Exercises</a></li>
+<li class="chapter" data-level="20.7" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-online-exercises"><i class="fa fa-check"></i><b>20.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="ch-big.html"><a href="ch-big.html"><i class="fa fa-check"></i><b>21</b> Epilogue: Towards “big data”</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="ch-big.html"><a href="ch-big.html#notions-of-big-data"><i class="fa fa-check"></i><b>21.1</b> Notions of big data</a></li>
+<li class="chapter" data-level="21.2" data-path="ch-big.html"><a href="ch-big.html#tools-for-bigger-data"><i class="fa fa-check"></i><b>21.2</b> Tools for bigger data</a>
+<ul>
+<li class="chapter" data-level="21.2.1" data-path="ch-big.html"><a href="ch-big.html#data-and-memory-structures-for-big-data"><i class="fa fa-check"></i><b>21.2.1</b> Data and memory structures for big data</a></li>
+<li class="chapter" data-level="21.2.2" data-path="ch-big.html"><a href="ch-big.html#compilation"><i class="fa fa-check"></i><b>21.2.2</b> Compilation</a></li>
+<li class="chapter" data-level="21.2.3" data-path="ch-big.html"><a href="ch-big.html#parallel-and-distributed-computing"><i class="fa fa-check"></i><b>21.2.3</b> Parallel and distributed computing</a></li>
+<li class="chapter" data-level="21.2.4" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-sql"><i class="fa fa-check"></i><b>21.2.4</b> Alternatives to SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-refr"><i class="fa fa-check"></i><b>21.3</b> Alternatives to (ref:R)</a></li>
+<li class="chapter" data-level="21.4" data-path="ch-big.html"><a href="ch-big.html#closing-thoughts"><i class="fa fa-check"></i><b>21.4</b> Closing thoughts</a></li>
+<li class="chapter" data-level="21.5" data-path="ch-big.html"><a href="ch-big.html#bigdata-further"><i class="fa fa-check"></i><b>21.5</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="part"><span><b>IV Part IV: Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="ch-mdsr.html"><a href="ch-mdsr.html"><i class="fa fa-check"></i><b>A</b> Packages used in this book</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="ch-mdsr.html"><a href="ch-mdsr.html#the-mdsr-package"><i class="fa fa-check"></i><b>A.1</b> The <strong>mdsr</strong> package</a></li>
+<li class="chapter" data-level="A.2" data-path="ch-mdsr.html"><a href="ch-mdsr.html#other-packages"><i class="fa fa-check"></i><b>A.2</b> Other packages</a></li>
+<li class="chapter" data-level="A.3" data-path="ch-mdsr.html"><a href="ch-mdsr.html#pkg-further"><i class="fa fa-check"></i><b>A.3</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="ch-R.html"><a href="ch-R.html"><i class="fa fa-check"></i><b>B</b> Introduction to <code>R</code> and RStudio</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="ch-R.html"><a href="ch-R.html#appR:install"><i class="fa fa-check"></i><b>B.1</b> Installation</a>
+<ul>
+<li class="chapter" data-level="B.1.1" data-path="ch-R.html"><a href="ch-R.html#rstudio"><i class="fa fa-check"></i><b>B.1.1</b> RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="B.2" data-path="ch-R.html"><a href="ch-R.html#learning-refr"><i class="fa fa-check"></i><b>B.2</b> Learning (ref:R)</a></li>
+<li class="chapter" data-level="B.3" data-path="ch-R.html"><a href="ch-R.html#appR:objects"><i class="fa fa-check"></i><b>B.3</b> Fundamental structures and objects</a>
+<ul>
+<li class="chapter" data-level="B.3.1" data-path="ch-R.html"><a href="ch-R.html#appR:assign"><i class="fa fa-check"></i><b>B.3.1</b> Objects and vectors</a></li>
+<li class="chapter" data-level="B.3.2" data-path="ch-R.html"><a href="ch-R.html#appR:operators"><i class="fa fa-check"></i><b>B.3.2</b> Operators</a></li>
+<li class="chapter" data-level="B.3.3" data-path="ch-R.html"><a href="ch-R.html#appR:lists"><i class="fa fa-check"></i><b>B.3.3</b> Lists</a></li>
+<li class="chapter" data-level="B.3.4" data-path="ch-R.html"><a href="ch-R.html#appR:matrix"><i class="fa fa-check"></i><b>B.3.4</b> Matrices</a></li>
+<li class="chapter" data-level="B.3.5" data-path="ch-R.html"><a href="ch-R.html#appR:dataframe"><i class="fa fa-check"></i><b>B.3.5</b> Dataframes and tibbles</a></li>
+<li class="chapter" data-level="B.3.6" data-path="ch-R.html"><a href="ch-R.html#appR:attr"><i class="fa fa-check"></i><b>B.3.6</b> Attributes and classes</a></li>
+<li class="chapter" data-level="B.3.7" data-path="ch-R.html"><a href="ch-R.html#appR:options"><i class="fa fa-check"></i><b>B.3.7</b> Options</a></li>
+<li class="chapter" data-level="B.3.8" data-path="ch-R.html"><a href="ch-R.html#sec:func"><i class="fa fa-check"></i><b>B.3.8</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="ch-R.html"><a href="ch-R.html#add-ons-packages"><i class="fa fa-check"></i><b>B.4</b> Add-ons: Packages</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="ch-R.html"><a href="ch-R.html#appR:packages"><i class="fa fa-check"></i><b>B.4.1</b> Introduction to packages</a></li>
+<li class="chapter" data-level="B.4.2" data-path="ch-R.html"><a href="ch-R.html#packages-and-name-conflicts"><i class="fa fa-check"></i><b>B.4.2</b> Packages and name conflicts</a></li>
+<li class="chapter" data-level="B.4.3" data-path="ch-R.html"><a href="ch-R.html#appR:tasks"><i class="fa fa-check"></i><b>B.4.3</b> CRAN task views</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="ch-R.html"><a href="ch-R.html#appR-further"><i class="fa fa-check"></i><b>B.5</b> Further resources</a></li>
+<li class="chapter" data-level="B.6" data-path="ch-R.html"><a href="ch-R.html#appR-exercises"><i class="fa fa-check"></i><b>B.6</b> Exercises</a></li>
+<li class="chapter" data-level="B.7" data-path="ch-R.html"><a href="ch-R.html#appR-online-exercises"><i class="fa fa-check"></i><b>B.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="ch-function.html"><a href="ch-function.html"><i class="fa fa-check"></i><b>C</b> Algorithmic thinking</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-intro"><i class="fa fa-check"></i><b>C.1</b> Introduction</a></li>
+<li class="chapter" data-level="C.2" data-path="ch-function.html"><a href="ch-function.html#simple-example"><i class="fa fa-check"></i><b>C.2</b> Simple example</a></li>
+<li class="chapter" data-level="C.3" data-path="ch-function.html"><a href="ch-function.html#sec:runaverage"><i class="fa fa-check"></i><b>C.3</b> Extended example: Law of large numbers</a></li>
+<li class="chapter" data-level="C.4" data-path="ch-function.html"><a href="ch-function.html#sec:tidyeval"><i class="fa fa-check"></i><b>C.4</b> Non-standard evaluation</a></li>
+<li class="chapter" data-level="C.5" data-path="ch-function.html"><a href="ch-function.html#sec:debugging"><i class="fa fa-check"></i><b>C.5</b> Debugging and defensive coding</a></li>
+<li class="chapter" data-level="C.6" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-further"><i class="fa fa-check"></i><b>C.6</b> Further resources</a></li>
+<li class="chapter" data-level="C.7" data-path="ch-function.html"><a href="ch-function.html#algorithmic-exercises"><i class="fa fa-check"></i><b>C.7</b> Exercises</a></li>
+<li class="chapter" data-level="C.8" data-path="ch-function.html"><a href="ch-function.html#algorithmic-online-exercises"><i class="fa fa-check"></i><b>C.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="ch-reproduce.html"><a href="ch-reproduce.html"><i class="fa fa-check"></i><b>D</b> Reproducible analysis and workflow</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="ch-reproduce.html"><a href="ch-reproduce.html#scriptable-statistical-computing"><i class="fa fa-check"></i><b>D.1</b> Scriptable statistical computing</a></li>
+<li class="chapter" data-level="D.2" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-analysis-with-refr-markdown"><i class="fa fa-check"></i><b>D.2</b> Reproducible analysis with (ref:R) Markdown</a></li>
+<li class="chapter" data-level="D.3" data-path="ch-reproduce.html"><a href="ch-reproduce.html#projects-and-version-control"><i class="fa fa-check"></i><b>D.3</b> Projects and version control</a></li>
+<li class="chapter" data-level="D.4" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-further"><i class="fa fa-check"></i><b>D.4</b> Further resources</a></li>
+<li class="chapter" data-level="D.5" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-exercises"><i class="fa fa-check"></i><b>D.5</b> Exercises</a></li>
+<li class="chapter" data-level="D.6" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-online-exercises"><i class="fa fa-check"></i><b>D.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="ch-regression.html"><a href="ch-regression.html"><i class="fa fa-check"></i><b>E</b> Regression modeling</a>
+<ul>
+<li class="chapter" data-level="E.1" data-path="ch-regression.html"><a href="ch-regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>E.1</b> Simple linear regression</a>
+<ul>
+<li class="chapter" data-level="E.1.1" data-path="ch-regression.html"><a href="ch-regression.html#motivating-example-modeling-usage-of-a-rail-trail"><i class="fa fa-check"></i><b>E.1.1</b> Motivating example: Modeling usage of a rail trail</a></li>
+<li class="chapter" data-level="E.1.2" data-path="ch-regression.html"><a href="ch-regression.html#model-visualization"><i class="fa fa-check"></i><b>E.1.2</b> Model visualization</a></li>
+<li class="chapter" data-level="E.1.3" data-path="ch-regression.html"><a href="ch-regression.html#measuring-the-strength-of-fit"><i class="fa fa-check"></i><b>E.1.3</b> Measuring the strength of fit</a></li>
+<li class="chapter" data-level="E.1.4" data-path="ch-regression.html"><a href="ch-regression.html#sec:anova"><i class="fa fa-check"></i><b>E.1.4</b> Categorical explanatory variables</a></li>
+</ul></li>
+<li class="chapter" data-level="E.2" data-path="ch-regression.html"><a href="ch-regression.html#multiple-regression"><i class="fa fa-check"></i><b>E.2</b> Multiple regression</a>
+<ul>
+<li class="chapter" data-level="E.2.1" data-path="ch-regression.html"><a href="ch-regression.html#sec:indicators"><i class="fa fa-check"></i><b>E.2.1</b> Parallel slopes: Multiple regression with a categorical variable</a></li>
+<li class="chapter" data-level="E.2.2" data-path="ch-regression.html"><a href="ch-regression.html#parallel-planes-multiple-regression-with-a-second-quantitative-variable"><i class="fa fa-check"></i><b>E.2.2</b> Parallel planes: Multiple regression with a second quantitative variable</a></li>
+<li class="chapter" data-level="E.2.3" data-path="ch-regression.html"><a href="ch-regression.html#sec:interaction"><i class="fa fa-check"></i><b>E.2.3</b> Non-parallel slopes: Multiple regression with interaction</a></li>
+<li class="chapter" data-level="E.2.4" data-path="ch-regression.html"><a href="ch-regression.html#modeling-non-linear-relationships"><i class="fa fa-check"></i><b>E.2.4</b> Modeling non-linear relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="E.3" data-path="ch-regression.html"><a href="ch-regression.html#inference-for-regression"><i class="fa fa-check"></i><b>E.3</b> Inference for regression</a></li>
+<li class="chapter" data-level="E.4" data-path="ch-regression.html"><a href="ch-regression.html#assumptions-underlying-regression"><i class="fa fa-check"></i><b>E.4</b> Assumptions underlying regression</a></li>
+<li class="chapter" data-level="E.5" data-path="ch-regression.html"><a href="ch-regression.html#sec:logistic"><i class="fa fa-check"></i><b>E.5</b> Logistic regression</a></li>
+<li class="chapter" data-level="E.6" data-path="ch-regression.html"><a href="ch-regression.html#regression-further"><i class="fa fa-check"></i><b>E.6</b> Further resources</a></li>
+<li class="chapter" data-level="E.7" data-path="ch-regression.html"><a href="ch-regression.html#regression-exercises"><i class="fa fa-check"></i><b>E.7</b> Exercises</a></li>
+<li class="chapter" data-level="E.8" data-path="ch-regression.html"><a href="ch-regression.html#regression-online-exercises"><i class="fa fa-check"></i><b>E.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="F" data-path="ch-db-setup.html"><a href="ch-db-setup.html"><i class="fa fa-check"></i><b>F</b> Setting up a database server</a>
+<ul>
+<li class="chapter" data-level="F.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sqlite"><i class="fa fa-check"></i><b>F.1</b> SQLite</a></li>
+<li class="chapter" data-level="F.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#mysql"><i class="fa fa-check"></i><b>F.2</b> MySQL</a>
+<ul>
+<li class="chapter" data-level="F.2.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#installation"><i class="fa fa-check"></i><b>F.2.1</b> Installation</a></li>
+<li class="chapter" data-level="F.2.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:mysql-access"><i class="fa fa-check"></i><b>F.2.2</b> Access</a></li>
+<li class="chapter" data-level="F.2.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#running-scripts-from-the-command-line"><i class="fa fa-check"></i><b>F.2.3</b> Running scripts from the command line</a></li>
+</ul></li>
+<li class="chapter" data-level="F.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#postgresql"><i class="fa fa-check"></i><b>F.3</b> PostgreSQL</a></li>
+<li class="chapter" data-level="F.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-sql"><i class="fa fa-check"></i><b>F.4</b> Connecting to SQL</a>
+<ul>
+<li class="chapter" data-level="F.4.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#the-command-line-client"><i class="fa fa-check"></i><b>F.4.1</b> The command line client</a></li>
+<li class="chapter" data-level="F.4.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#guis"><i class="fa fa-check"></i><b>F.4.2</b> GUIs</a></li>
+<li class="chapter" data-level="F.4.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-r-sql"><i class="fa fa-check"></i><b>F.4.3</b> R and RStudio</a></li>
+<li class="chapter" data-level="F.4.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:sqlitebaby"><i class="fa fa-check"></i><b>F.4.4</b> Load into SQLite database</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="index.html">Modern Data Science with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch:learningII" class="section level1" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Unsupervised learning</h1>
+<p>
+
+
+
+
+
+
+</p>
+<p>
+
+In the previous chapter, we explored models for learning about a response variable <span class="math inline">\(y\)</span> from a set of explanatory variables <span class="math inline">\(\mathbf{X}\)</span>. This process is called <a href="https://en.wikipedia.org/w/index.php?search=supervised%20learning"><em>supervised learning</em></a> because the response variable provides not just a clear goal for the modeling (to improve predictions about future <span class="math inline">\(y\)</span>’s), but also a guide (sometimes called the “ground truth”). In this chapter, we explore techniques in <a href="https://en.wikipedia.org/w/index.php?search=unsupervised%20learning"><em>unsupervised learning</em></a>, where there is no response variable <span class="math inline">\(y\)</span>. Here, we simply have a set of observations <span class="math inline">\(\mathbf{X}\)</span>, and we want to understand the relationships among them.
+
+</p>
+<div id="clustering" class="section level2" number="12.1">
+<h2><span class="header-section-number">12.1</span> Clustering</h2>
+<p></p>
+<p>Figure <a href="ch-learningII.html#fig:evolution-mammals">12.1</a> shows an evolutionary tree of mammals.
+We humans (<a href="http://en.wikipedia.org/wiki/Hominidae">hominidae</a>) are on the far left of the tree.
+The numbers at the branch points are estimates of how long ago—in millions of years—the branches separated.
+According to the diagram, rodents and primates diverged about 90 million years ago.</p>
+<!--% https://commons.wikimedia.org/wiki/File:An_evolutionary_tree_of_mammals.jpeg-->
+<div class="figure"><span id="fig:evolution-mammals"></span>
+<img src="gfx/evolutionary-tree.jpeg" alt="An evolutionary tree for mammals. Reprinted with permission under Creative Commons Attribution 2.0 Generic. No changes were made to this image. Source: Graphodatsky, Trifonov, and Stanyon (2011)" width="100%" />
+<p class="caption">
+Figure 12.1: An evolutionary tree for mammals. Reprinted with permission under <a href="https://creativecommons.org/licenses/by/2.0/">Creative Commons Attribution 2.0 Generic</a>. No changes were made to this image. Source: <span class="citation">Graphodatsky, Trifonov, and Stanyon (2011)</span>
+</p>
+</div>
+
+<p>
+
+
+How do evolutionary biologists construct a tree like this? They study various traits of different kinds of mammals. Two mammals that have similar traits are deemed closely related. Animals with dissimilar traits are distantly related. By combining all of this information about the proximity of species, biologists can propose these kinds of evolutionary trees.</p>
+<p>
+
+
+A tree—sometimes called a <a href="https://en.wikipedia.org/w/index.php?search=dendrogram"><em>dendrogram</em></a>—is an attractive organizing structure for relationships. Evolutionary biologists imagine that at each branch point there was an actual animal whose descendants split into groups that developed in different directions. In evolutionary biology, the inferences about branches come from comparing existing creatures to one another (as well as creatures from the fossil record). Creatures with similar traits are in nearby branches while creatures with different traits are in faraway branches. It takes considerable expertise in anatomy and morphology to know which similarities and differences are important. Note, however, that there is no outcome variable—just a construction of what is closely related or distantly related.</p>
+<p>
+Trees can describe degrees of similarity between different things, regardless of how those relationships came to be. If you have a set of objects or cases, and you can measure how similar any two of the objects are, you can construct a tree. The tree may or may not reflect some deeper relationship among the objects, but it often provides a simple way to visualize relationships.</p>
+<div id="sec:hclust" class="section level3" number="12.1.1">
+<h3><span class="header-section-number">12.1.1</span> Hierarchical clustering</h3>
+<p>
+</p>
+<p>When the description of an object consists of a set of numerical variables (none of which is a <a href="https://en.wikipedia.org/w/index.php?search=response%20variable"><em>response variable</em></a>), there are two main steps in constructing a tree to describe the relationship among the cases in the data:</p>
+<ol style="list-style-type: decimal">
+<li>Represent each case as a point in a Cartesian space.</li>
+<li>Make branching decisions based on how close together points or clouds of points are.</li>
+</ol>
+<p>
+
+
+
+
+
+
+To illustrate, consider the unsupervised learning process of identifying different types of cars. The <a href="https://en.wikipedia.org/w/index.php?search=United%20States%20Department%20of%20Energy"><em>United States Department of Energy</em></a> maintains <a href="https://www.fueleconomy.gov/feg/download.shtml">automobile characteristics for thousands of cars</a>: miles per gallon, engine size, number of cylinders, number of gears, etc. Please see <a href="https://www.fueleconomy.gov/feg/pdfs/guides/FEG2016.pdf">their guide</a> for more information.<a href="ch-learningII.html#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a> Here, we download a ZIP file from their website that contains fuel economy rating for the 2016 model year.</p>
+<p>
+</p>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="ch-learningII.html#cb582-1" aria-hidden="true" tabindex="-1"></a>src <span class="ot">&lt;-</span> <span class="st">&quot;https://www.fueleconomy.gov/feg/epadata/16data.zip&quot;</span></span>
+<span id="cb582-2"><a href="ch-learningII.html#cb582-2" aria-hidden="true" tabindex="-1"></a>lcl <span class="ot">&lt;-</span> usethis<span class="sc">::</span><span class="fu">use_zip</span>(src)</span></code></pre></div>
+<p>
+Next, we use the <strong>readxl</strong> package to read this file into <strong>R</strong>, clean up some of the resulting variable names, select a small subset of the variables, and filter for distinct models of <a href="https://en.wikipedia.org/w/index.php?search=Toyota"><em>Toyota</em></a> vehicles. The resulting data set contains information about 75 different models that Toyota produces.</p>
+<p>
+
+
+
+
+
+
+
+
+</p>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="ch-learningII.html#cb583-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb583-2"><a href="ch-learningII.html#cb583-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdsr)</span>
+<span id="cb583-3"><a href="ch-learningII.html#cb583-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb583-4"><a href="ch-learningII.html#cb583-4" aria-hidden="true" tabindex="-1"></a>filename <span class="ot">&lt;-</span> fs<span class="sc">::</span><span class="fu">dir_ls</span>(<span class="st">&quot;data&quot;</span>, <span class="at">regexp =</span> <span class="st">&quot;public</span><span class="sc">\\</span><span class="st">.xlsx&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb583-5"><a href="ch-learningII.html#cb583-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">1</span>)</span>
+<span id="cb583-6"><a href="ch-learningII.html#cb583-6" aria-hidden="true" tabindex="-1"></a>cars <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(filename) <span class="sc">%&gt;%</span> </span>
+<span id="cb583-7"><a href="ch-learningII.html#cb583-7" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb583-8"><a href="ch-learningII.html#cb583-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb583-9"><a href="ch-learningII.html#cb583-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">make =</span> mfr_name, </span>
+<span id="cb583-10"><a href="ch-learningII.html#cb583-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> carline, </span>
+<span id="cb583-11"><a href="ch-learningII.html#cb583-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">displacement =</span> eng_displ,</span>
+<span id="cb583-12"><a href="ch-learningII.html#cb583-12" aria-hidden="true" tabindex="-1"></a>    number_cyl,</span>
+<span id="cb583-13"><a href="ch-learningII.html#cb583-13" aria-hidden="true" tabindex="-1"></a>    number_gears,</span>
+<span id="cb583-14"><a href="ch-learningII.html#cb583-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">city_mpg =</span> city_fe_guide_conventional_fuel,</span>
+<span id="cb583-15"><a href="ch-learningII.html#cb583-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">hwy_mpg =</span> hwy_fe_guide_conventional_fuel</span>
+<span id="cb583-16"><a href="ch-learningII.html#cb583-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb583-17"><a href="ch-learningII.html#cb583-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(model, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb583-18"><a href="ch-learningII.html#cb583-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(make <span class="sc">==</span> <span class="st">&quot;Toyota&quot;</span>)</span>
+<span id="cb583-19"><a href="ch-learningII.html#cb583-19" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(cars)</span></code></pre></div>
+<pre><code>Rows: 75
+Columns: 7
+$ make         &lt;chr&gt; &quot;Toyota&quot;, &quot;Toyota&quot;, &quot;Toyota&quot;, &quot;Toyota&quot;, &quot;Toyota&quot;, &quot;To…
+$ model        &lt;chr&gt; &quot;FR-S&quot;, &quot;RC 200t&quot;, &quot;RC 300 AWD&quot;, &quot;RC 350&quot;, &quot;RC 350 AW…
+$ displacement &lt;dbl&gt; 2.0, 2.0, 3.5, 3.5, 3.5, 5.0, 1.5, 1.8, 5.0, 2.0, 3.5…
+$ number_cyl   &lt;dbl&gt; 4, 4, 6, 6, 6, 8, 4, 4, 8, 4, 6, 6, 6, 4, 4, 4, 4, 6,…
+$ number_gears &lt;dbl&gt; 6, 8, 6, 8, 6, 8, 6, 1, 8, 8, 6, 8, 6, 6, 1, 4, 6, 6,…
+$ city_mpg     &lt;dbl&gt; 25, 22, 19, 19, 19, 16, 33, 43, 16, 22, 19, 19, 19, 2…
+$ hwy_mpg      &lt;dbl&gt; 34, 32, 26, 28, 26, 25, 42, 40, 24, 33, 26, 28, 26, 3…</code></pre>
+<p>
+As a large automaker, Toyota has a diverse lineup of cars, trucks, SUVs, and hybrid vehicles. Can we use unsupervised learning to categorize these vehicles in a sensible way with only the data we have been given?</p>
+<p>
+For an individual quantitative variable, it is easy to measure how far apart any two cars are: Take the difference between the numerical values. The different variables are, however, on different scales and in different units. For example, <code>gears</code> ranges only from 1 to 8, while <code>city_mpg</code> goes from 13 to 58. This means that some decision needs to be made about rescaling the variables so that the differences along each variable reasonably reflect how different the respective cars are. There is more than one way to do this, and in fact, there is no universally “best” solution—the best solution will always depend on the data and your domain expertise. The <code>dist()</code> function takes a simple and pragmatic point of view: Each variable is equally important.<a href="ch-learningII.html#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a></p>
+<p>The output of <code>dist()</code> gives the <a href="https://en.wikipedia.org/w/index.php?search=distance"><em>distance</em></a> from each individual car to every other car.</p>
+<p>
+
+</p>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="ch-learningII.html#cb585-1" aria-hidden="true" tabindex="-1"></a>car_diffs <span class="ot">&lt;-</span> cars <span class="sc">%&gt;%</span></span>
+<span id="cb585-2"><a href="ch-learningII.html#cb585-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_to_rownames</span>(<span class="at">var =</span> <span class="st">&quot;model&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb585-3"><a href="ch-learningII.html#cb585-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dist</span>()</span>
+<span id="cb585-4"><a href="ch-learningII.html#cb585-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(car_diffs)</span></code></pre></div>
+<pre><code> &#39;dist&#39; num [1:2775] 4.52 11.29 9.93 11.29 15.14 ...
+ - attr(*, &quot;Size&quot;)= int 75
+ - attr(*, &quot;Labels&quot;)= chr [1:75] &quot;FR-S&quot; &quot;RC 200t&quot; &quot;RC 300 AWD&quot; &quot;RC 350&quot; ...
+ - attr(*, &quot;Diag&quot;)= logi FALSE
+ - attr(*, &quot;Upper&quot;)= logi FALSE
+ - attr(*, &quot;method&quot;)= chr &quot;euclidean&quot;
+ - attr(*, &quot;call&quot;)= language dist(x = .)</code></pre>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="ch-learningII.html#cb587-1" aria-hidden="true" tabindex="-1"></a>car_mat <span class="ot">&lt;-</span> car_diffs <span class="sc">%&gt;%</span> </span>
+<span id="cb587-2"><a href="ch-learningII.html#cb587-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>()</span>
+<span id="cb587-3"><a href="ch-learningII.html#cb587-3" aria-hidden="true" tabindex="-1"></a>car_mat[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>] <span class="sc">%&gt;%</span> </span>
+<span id="cb587-4"><a href="ch-learningII.html#cb587-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>            FR-S RC 200t RC 300 AWD RC 350 RC 350 AWD  RC F
+FR-S        0.00    4.52      11.29   9.93      11.29 15.14
+RC 200t     4.52    0.00       8.14   6.12       8.14 11.49
+RC 300 AWD 11.29    8.14       0.00   3.10       0.00  4.93
+RC 350      9.93    6.12       3.10   0.00       3.10  5.39
+RC 350 AWD 11.29    8.14       0.00   3.10       0.00  4.93
+RC F       15.14   11.49       4.93   5.39       4.93  0.00</code></pre>
+<p>
+
+
+
+
+
+
+
+This point-to-point distance matrix is analogous to the tables that used to be printed on road maps giving the distance from one city to another, like Figure <a href="ch-learningII.html#fig:city-distances">12.2</a>, which states that it is 1,095 miles from Atlanta to Boston, or 715 miles from Atlanta to Chicago.
+Notice that the distances are symmetric: It is the same distance from Boston to Los Angeles as from Los Angeles to Boston (3,036 miles, according to the table).</p>
+<div class="figure"><span id="fig:city-distances"></span>
+<img src="gfx/City_Distances.png" alt="Distances between some U.S. cities." width="100%" />
+<p class="caption">
+Figure 12.2: Distances between some U.S. cities.
+</p>
+</div>
+<p>Knowing the distances between the cities is not the same thing as knowing their locations. But the set of mutual distances is enough information to reconstruct the relative positions of the cities.</p>
+<p>
+Cities, of course, lie on the surface of the earth. That need not be true for the “distance” between automobile types. Even so, the set of mutual distances provides information equivalent to knowing the relative positions of these cars in a <span class="math inline">\(p\)</span>-dimensional space. This can be used to construct branches between nearby items, then to connect those branches, and so on until an entire tree has been constructed. The process is called <a href="https://en.wikipedia.org/w/index.php?search=hierarchical%20clustering"><em>hierarchical clustering</em></a>. Figure <a href="ch-learningII.html#fig:cars-tree">12.3</a> shows a tree constructed by hierarchical clustering that relates Toyota car models to one another.
+
+
+</p>
+<p></p>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="ch-learningII.html#cb589-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
+<span id="cb589-2"><a href="ch-learningII.html#cb589-2" aria-hidden="true" tabindex="-1"></a>car_diffs <span class="sc">%&gt;%</span> </span>
+<span id="cb589-3"><a href="ch-learningII.html#cb589-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hclust</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb589-4"><a href="ch-learningII.html#cb589-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.phylo</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb589-5"><a href="ch-learningII.html#cb589-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">label.offset =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:cars-tree"></span>
+<img src="12-learningII_files/figure-html/cars-tree-1.png" alt="A dendrogram constructed by hierarchical clustering from car-to-car distances implied by the Toyota fuel economy data." width="60%" />
+<p class="caption">
+Figure 12.3: A dendrogram constructed by hierarchical clustering from car-to-car distances implied by the Toyota fuel economy data.
+</p>
+</div>
+<p>There are many ways to graph such trees, but here we have borrowed from biology by graphing these cars as a <a href="https://en.wikipedia.org/wiki/Phylogenetic_tree">phylogenetic tree</a>, similar to Figure <a href="ch-learningII.html#fig:evolution-mammals">12.1</a>.
+Careful inspection of Figure <a href="ch-learningII.html#fig:cars-tree">12.3</a> reveals some interesting insights. The first branch in the tree is evidently between hybrid vehicles and all others. This makes sense, since hybrid vehicles use a fundamentally different type of power to achieve considerably better fuel economy. Moreover, the first branch among conventional cars divides large trucks and SUVs (e.g., Sienna, Tacoma, Sequoia, Tundra, Land Cruiser) from smaller cars and cross-over SUVs (e.g., Camry, Corolla, Yaris, RAV4). We are confident that the gearheads in the readership will identify even more subtle logic to this clustering. One could imagine that this type of analysis might help a car-buyer or marketing executive quickly decipher what might otherwise be a bewildering product line.
+
+</p>
+</div>
+<div id="k-means" class="section level3" number="12.1.2">
+<h3><span class="header-section-number">12.1.2</span> <span class="math inline">\(k\)</span>-means</h3>
+<p></p>
+<p>Another way to group similar cases is to assign each case to one of several distinct groups, but without constructing a hierarchy. The output is not a tree but a choice of group to which each case belongs. (There can be more detail than this; for instance, a probability for each specific case that it belongs to each group.) This is like classification except that here there is no response variable. Thus, the definition of the groups must be inferred implicitly from the data.</p>
+<p>
+As an example, consider the cities of the world (in <code>world_cities</code>). Cities can be different and similar in many ways: population, age structure, public transportation and roads, building space per person, etc. The choice of <a href="https://en.wikipedia.org/w/index.php?search=features"><em>features</em></a> (or variables) depends on the purpose you have for making the grouping.</p>
+<p>Our purpose is to show you that clustering via machine learning can actually identify genuine patterns in the data. We will choose features that are utterly familiar: the latitude and longitude of each city.</p>
+<p>You already know about the location of cities. They are on land. And you know about the organization of land on earth: most land falls in one of the large clusters called continents. But the <code>world_cities</code> data doesn’t have any notion of continents. Perhaps it is possible that this feature, which you long ago internalized, can be learned by a computer that has never even taken grade-school geography.</p>
+<p>For simplicity, consider the 4,000 biggest cities in the world and their longitudes and latitudes.
+
+</p>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="ch-learningII.html#cb590-1" aria-hidden="true" tabindex="-1"></a>big_cities <span class="ot">&lt;-</span> world_cities <span class="sc">%&gt;%</span> </span>
+<span id="cb590-2"><a href="ch-learningII.html#cb590-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(population)) <span class="sc">%&gt;%</span></span>
+<span id="cb590-3"><a href="ch-learningII.html#cb590-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">4000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb590-4"><a href="ch-learningII.html#cb590-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(longitude, latitude)</span>
+<span id="cb590-5"><a href="ch-learningII.html#cb590-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(big_cities)</span></code></pre></div>
+<pre><code>Rows: 4,000
+Columns: 2
+$ longitude &lt;dbl&gt; 121.46, 28.95, -58.38, 72.88, -99.13, 116.40, 67.01, 117…
+$ latitude  &lt;dbl&gt; 31.22, 41.01, -34.61, 19.07, 19.43, 39.91, 24.86, 39.14,…</code></pre>
+<p>Note that in these data, there is no ancillary information—not even the name of the city. However, the <em><span class="math inline">\(k\)</span>-means</em> clustering algorithm will separate these 4,000 points—each of which is located in a two-dimensional plane—into <span class="math inline">\(k\)</span> clusters based on their locations alone.</p>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="ch-learningII.html#cb592-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">15</span>)</span>
+<span id="cb592-2"><a href="ch-learningII.html#cb592-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mclust)</span>
+<span id="cb592-3"><a href="ch-learningII.html#cb592-3" aria-hidden="true" tabindex="-1"></a>city_clusts <span class="ot">&lt;-</span> big_cities <span class="sc">%&gt;%</span> </span>
+<span id="cb592-4"><a href="ch-learningII.html#cb592-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kmeans</span>(<span class="at">centers =</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb592-5"><a href="ch-learningII.html#cb592-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fitted</span>(<span class="st">&quot;classes&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb592-6"><a href="ch-learningII.html#cb592-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.character</span>()</span>
+<span id="cb592-7"><a href="ch-learningII.html#cb592-7" aria-hidden="true" tabindex="-1"></a>big_cities <span class="ot">&lt;-</span> big_cities <span class="sc">%&gt;%</span> </span>
+<span id="cb592-8"><a href="ch-learningII.html#cb592-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cluster =</span> city_clusts)</span>
+<span id="cb592-9"><a href="ch-learningII.html#cb592-9" aria-hidden="true" tabindex="-1"></a>big_cities <span class="sc">%&gt;%</span> </span>
+<span id="cb592-10"><a href="ch-learningII.html#cb592-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude)) <span class="sc">+</span></span>
+<span id="cb592-11"><a href="ch-learningII.html#cb592-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> cluster), <span class="at">alpha =</span> <span class="fl">0.5</span>)  <span class="sc">+</span> </span>
+<span id="cb592-12"><a href="ch-learningII.html#cb592-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set2&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:cluster-cities"></span>
+<img src="12-learningII_files/figure-html/cluster-cities-1.png" alt="The world's 4,000 largest cities, clustered by the 6-means clustering algorithm." width="100%" />
+<p class="caption">
+Figure 12.4: The world’s 4,000 largest cities, clustered by the 6-means clustering algorithm.
+</p>
+</div>
+<p>
+As shown in Figure <a href="ch-learningII.html#fig:cluster-cities">12.4</a>, the clustering algorithm seems to have identified the continents. North and South America are clearly distinguished, as is most of Africa. The cities in North Africa are matched to Europe, but this is consistent with history, given the European influence in places like Morocco, Tunisia, and Egypt.
+Similarly, while the cluster for Europe extends into what is called Asia, the distinction between Europe and Asia is essentially historic, not geographic.
+Note that to the algorithm, there is little difference between oceans and deserts—both represent large areas where no big cities exist.</p>
+</div>
+</div>
+<div id="dimension-reduction" class="section level2" number="12.2">
+<h2><span class="header-section-number">12.2</span> Dimension reduction</h2>
+<p>
+</p>
+<p>Often, a variable carries little information that is relevant to the task at hand. Even for variables that are informative, there can be redundancy or near duplication of variables. That is, two or more variables are giving essentially the same information—they have similar patterns across the cases.</p>
+<p>Such irrelevant or redundant variables make it harder to learn from data. The irrelevant variables are simply noise that obscures actual patterns. Similarly, when two or more variables are redundant, the differences between them may represent random noise. Furthermore, for some machine learning algorithms, a large number of variables <span class="math inline">\(p\)</span> will present computational challenges.
+It is usually helpful to remove irrelevant or redundant variables so that they—and the noise they carry—don’t obscure the patterns that machine learning algorithms could identify.</p>
+<p>
+
+
+
+
+For example, consider votes in a parliament or congress.
+Specifically, we will explore the Scottish Parliament in 2008.<a href="ch-learningII.html#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>
+Legislators often vote together in pre-organized blocs, and thus the pattern of “ayes” and “nays” on particular ballots may indicate which members are affiliated (i.e., members of the same political party). To test this idea, you might try clustering the members by their voting record.
+</p>
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:scot-votes-small">Table 12.1: </span>Sample voting records data from the Scottish Parliament.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:right;">
+S1M-1
+</th>
+<th style="text-align:right;">
+S1M-4.1
+</th>
+<th style="text-align:right;">
+S1M-4.3
+</th>
+<th style="text-align:right;">
+S1M-4
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 15em; ">
+Canavan, Dennis
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+-1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 15em; ">
+Aitken, Bill
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+-1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 15em; ">
+Davidson, Mr David
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 15em; ">
+Douglas Hamilton, Lord James
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 15em; ">
+Fergusson, Alex
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 15em; ">
+Fraser, Murdo
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 15em; ">
+Gallie, Phil
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+-1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 15em; ">
+Goldie, Annabel
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 15em; ">
+Harding, Mr Keith
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 15em; ">
+Johnston, Nick
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+-1
+</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="ch-learningII.html#tab:scot-votes-small">12.1</a> shows a small part of the voting record. The names of the members of parliament are the cases. Each ballot—identified by a file number such as —is a variable. A <code>1</code> means an “aye” vote, <code>-1</code> is “nay,” and <code>0</code> is an abstention. There are <span class="math inline">\(n=134\)</span> members and <span class="math inline">\(p=773\)</span> ballots—note that in this data set <span class="math inline">\(p\)</span> far exceeds <span class="math inline">\(n\)</span>. It is impractical to show all of the more than 100,000 votes in a table, but there are only 3 possible votes, so displaying the table as an image (as in Figure <a href="ch-learningII.html#fig:ballot-grid">12.5</a>) works well.</p>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="ch-learningII.html#cb593-1" aria-hidden="true" tabindex="-1"></a>Votes <span class="sc">%&gt;%</span> </span>
+<span id="cb593-2"><a href="ch-learningII.html#cb593-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Vote =</span> <span class="fu">factor</span>(vote, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Nay&quot;</span>, <span class="st">&quot;Abstain&quot;</span>, <span class="st">&quot;Aye&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb593-3"><a href="ch-learningII.html#cb593-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill, <span class="at">y =</span> name, <span class="at">fill =</span> Vote)) <span class="sc">+</span></span>
+<span id="cb593-4"><a href="ch-learningII.html#cb593-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tile</span>() <span class="sc">+</span> </span>
+<span id="cb593-5"><a href="ch-learningII.html#cb593-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;Ballot&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb593-6"><a href="ch-learningII.html#cb593-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;Member of Parliament&quot;</span>) <span class="sc">+</span></span>
+<span id="cb593-7"><a href="ch-learningII.html#cb593-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;darkgray&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;goldenrod&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb593-8"><a href="ch-learningII.html#cb593-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>, <span class="at">labels =</span> <span class="cn">NULL</span>) <span class="sc">+</span> </span>
+<span id="cb593-9"><a href="ch-learningII.html#cb593-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_discrete</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>, <span class="at">labels =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:ballot-grid"></span>
+<img src="12-learningII_files/figure-html/ballot-grid-1.png" alt="Visualization of the Scottish Parliament votes." width="100%" />
+<p class="caption">
+Figure 12.5: Visualization of the Scottish Parliament votes.
+</p>
+</div>
+<p>
+
+
+
+
+
+Figure <a href="ch-learningII.html#fig:ballot-grid">12.5</a> is a <span class="math inline">\(134 \times 773\)</span> grid in which each cell is color-coded based on one member of Parliament’s vote on one ballot. It is hard to see much of a pattern here, although you may notice the Scottish <a href="https://en.wikipedia.org/wiki/Tartan">tartan</a> structure. The tartan pattern provides an indication to experts that the matrix can be approximated by a matrix of low-rank.</p>
+<div id="intuitive-approaches" class="section level3" number="12.2.1">
+<h3><span class="header-section-number">12.2.1</span> Intuitive approaches</h3>
+<p>
+As a start, Figure <a href="ch-learningII.html#fig:two-ballots">12.6</a> shows the ballot values for all of the members of parliament for just two arbitrarily selected ballots. To give a better idea of the point count
+at each position, the values are jittered by adding some random noise. The red dots are the actual positions. Each point is one member of parliament. Similarly aligned members are grouped together at one of the nine possibilities marked in red: (Aye, Nay), (Aye, Abstain), (Aye, Aye), and so on through to (Nay, Nay). In these two ballots, eight of the nine possibilities are populated. Does this mean that there are eight clusters of members?</p>
+<p>
+</p>
+<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="ch-learningII.html#cb594-1" aria-hidden="true" tabindex="-1"></a>Votes <span class="sc">%&gt;%</span> </span>
+<span id="cb594-2"><a href="ch-learningII.html#cb594-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(bill <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;S1M-240.2&quot;</span>, <span class="st">&quot;S1M-639.1&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb594-3"><a href="ch-learningII.html#cb594-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> bill, <span class="at">values_from =</span> vote) <span class="sc">%&gt;%</span></span>
+<span id="cb594-4"><a href="ch-learningII.html#cb594-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">S1M-240.2</span><span class="st">`</span>, <span class="at">y =</span> <span class="st">`</span><span class="at">S1M-639.1</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb594-5"><a href="ch-learningII.html#cb594-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(</span>
+<span id="cb594-6"><a href="ch-learningII.html#cb594-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">alpha =</span> <span class="fl">0.7</span>, </span>
+<span id="cb594-7"><a href="ch-learningII.html#cb594-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="fl">0.1</span>)</span>
+<span id="cb594-8"><a href="ch-learningII.html#cb594-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb594-9"><a href="ch-learningII.html#cb594-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.01</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span> )</span></code></pre></div>
+<div class="figure"><span id="fig:two-ballots"></span>
+<img src="12-learningII_files/figure-html/two-ballots-1.png" alt="Scottish Parliament votes for two ballots." width="100%" />
+<p class="caption">
+Figure 12.6: Scottish Parliament votes for two ballots.
+</p>
+</div>
+<!--%Positions of members of parliament on two ballot indices made up by the sum of groups of ballots.-->
+<p>Intuition suggests that it would be better to use <em>all</em> of the ballots, rather than just two. In Figure <a href="ch-learningII.html#fig:many-ballots">12.7</a>, the first 387 ballots (half) have been added together, as have the remaining ballots. Figure <a href="ch-learningII.html#fig:many-ballots">12.7</a> suggests that there might be two clusters of members who are aligned with each other. Using all of the data seems to give more information than using just two ballots.</p>
+<p>
+
+</p>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="ch-learningII.html#cb595-1" aria-hidden="true" tabindex="-1"></a>Votes <span class="sc">%&gt;%</span></span>
+<span id="cb595-2"><a href="ch-learningII.html#cb595-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb595-3"><a href="ch-learningII.html#cb595-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">set_num =</span> <span class="fu">as.numeric</span>(<span class="fu">factor</span>(bill)), </span>
+<span id="cb595-4"><a href="ch-learningII.html#cb595-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">set =</span> <span class="fu">ifelse</span>(</span>
+<span id="cb595-5"><a href="ch-learningII.html#cb595-5" aria-hidden="true" tabindex="-1"></a>      set_num <span class="sc">&lt;</span> <span class="fu">max</span>(set_num) <span class="sc">/</span> <span class="dv">2</span>, <span class="st">&quot;First_Half&quot;</span>, <span class="st">&quot;Second_Half&quot;</span></span>
+<span id="cb595-6"><a href="ch-learningII.html#cb595-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb595-7"><a href="ch-learningII.html#cb595-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb595-8"><a href="ch-learningII.html#cb595-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name, set) <span class="sc">%&gt;%</span> </span>
+<span id="cb595-9"><a href="ch-learningII.html#cb595-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Ayes =</span> <span class="fu">sum</span>(vote)) <span class="sc">%&gt;%</span></span>
+<span id="cb595-10"><a href="ch-learningII.html#cb595-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> set, <span class="at">values_from =</span> Ayes) <span class="sc">%&gt;%</span></span>
+<span id="cb595-11"><a href="ch-learningII.html#cb595-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> First_Half, <span class="at">y =</span> Second_Half)) <span class="sc">+</span> </span>
+<span id="cb595-12"><a href="ch-learningII.html#cb595-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:many-ballots"></span>
+<img src="12-learningII_files/figure-html/many-ballots-1.png" alt="Scatterplot showing the correlation between Scottish Parliament votes in two arbitrary collections of ballots." width="100%" />
+<p class="caption">
+Figure 12.7: Scatterplot showing the correlation between Scottish Parliament votes in two arbitrary collections of ballots.
+</p>
+</div>
+</div>
+<div id="singular-value-decomposition" class="section level3" number="12.2.2">
+<h3><span class="header-section-number">12.2.2</span> Singular value decomposition</h3>
+<p>
+
+
+
+
+
+
+You may ask why the choice was made to add up the first half of the ballots as <span class="math inline">\(x\)</span> and the remaining ballots as <span class="math inline">\(y\)</span>. Perhaps there is a better choice to display the underlying patterns. Perhaps we can think of a way to add up the ballots in a more meaningful way.</p>
+<p>In fact, there is a mathematical approach to finding the <em>best</em> approximation to the ballot–voter matrix using simple matrices, called <a href="https://en.wikipedia.org/w/index.php?search=singular%20value%20decomposition"><em>singular value decomposition</em></a> (SVD). (The statistical dimension reduction technique of <a href="https://en.wikipedia.org/w/index.php?search=principal%20component%20analysis"><em>principal component analysis</em></a> (PCA) can be accomplished using SVD.) The mathematics of SVD draw on a knowledge of matrix algebra, but the operation itself is accessible to anyone.
+Geometrically, SVD (or PCA) amounts to a rotation of the coordinate axes so that more of the variability can be explained using just a few variables.
+Figure <a href="ch-learningII.html#fig:ballot-PCA">12.8</a> shows the position of each member on the two principal components that explain the most variability.</p>
+<p>
+</p>
+<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="ch-learningII.html#cb596-1" aria-hidden="true" tabindex="-1"></a>Votes_wide <span class="ot">&lt;-</span> Votes <span class="sc">%&gt;%</span></span>
+<span id="cb596-2"><a href="ch-learningII.html#cb596-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> bill, <span class="at">values_from =</span> vote)</span>
+<span id="cb596-3"><a href="ch-learningII.html#cb596-3" aria-hidden="true" tabindex="-1"></a>vote_svd <span class="ot">&lt;-</span> Votes_wide <span class="sc">%&gt;%</span> </span>
+<span id="cb596-4"><a href="ch-learningII.html#cb596-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>name) <span class="sc">%&gt;%</span> </span>
+<span id="cb596-5"><a href="ch-learningII.html#cb596-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">svd</span>()</span>
+<span id="cb596-6"><a href="ch-learningII.html#cb596-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb596-7"><a href="ch-learningII.html#cb596-7" aria-hidden="true" tabindex="-1"></a>num_clusters <span class="ot">&lt;-</span> <span class="dv">5</span>   <span class="co"># desired number of clusters</span></span>
+<span id="cb596-8"><a href="ch-learningII.html#cb596-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb596-9"><a href="ch-learningII.html#cb596-9" aria-hidden="true" tabindex="-1"></a>vote_svd_tidy <span class="ot">&lt;-</span> vote_svd <span class="sc">%&gt;%</span></span>
+<span id="cb596-10"><a href="ch-learningII.html#cb596-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>(<span class="at">matrix =</span> <span class="st">&quot;u&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb596-11"><a href="ch-learningII.html#cb596-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PC <span class="sc">&lt;</span> num_clusters) <span class="sc">%&gt;%</span></span>
+<span id="cb596-12"><a href="ch-learningII.html#cb596-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PC =</span> <span class="fu">paste0</span>(<span class="st">&quot;pc_&quot;</span>, PC)) <span class="sc">%&gt;%</span></span>
+<span id="cb596-13"><a href="ch-learningII.html#cb596-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> PC, <span class="at">values_from =</span> value) <span class="sc">%&gt;%</span></span>
+<span id="cb596-14"><a href="ch-learningII.html#cb596-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>row)</span>
+<span id="cb596-15"><a href="ch-learningII.html#cb596-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb596-16"><a href="ch-learningII.html#cb596-16" aria-hidden="true" tabindex="-1"></a>clusts <span class="ot">&lt;-</span> vote_svd_tidy <span class="sc">%&gt;%</span> </span>
+<span id="cb596-17"><a href="ch-learningII.html#cb596-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kmeans</span>(<span class="at">centers =</span> num_clusters)</span>
+<span id="cb596-18"><a href="ch-learningII.html#cb596-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb596-19"><a href="ch-learningII.html#cb596-19" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(clusts)</span></code></pre></div>
+<pre><code># A tibble: 5 × 7
+     pc_1    pc_2   pc_3     pc_4  size withinss cluster
+    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt; &lt;fct&gt;  
+1 -0.0529  0.142  0.0840  0.0260     26   0.0118 1      
+2  0.0851  0.0367 0.0257 -0.182      20   0.160  2      
+3 -0.0435  0.109  0.0630 -0.0218     10   0.0160 3      
+4 -0.0306 -0.116  0.183  -0.00962    20   0.0459 4      
+5  0.106   0.0206 0.0323  0.0456     58   0.112  5      </code></pre>
+<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="ch-learningII.html#cb598-1" aria-hidden="true" tabindex="-1"></a>voters <span class="ot">&lt;-</span> clusts <span class="sc">%&gt;%</span></span>
+<span id="cb598-2"><a href="ch-learningII.html#cb598-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(vote_svd_tidy)</span>
+<span id="cb598-3"><a href="ch-learningII.html#cb598-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb598-4"><a href="ch-learningII.html#cb598-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> voters, <span class="fu">aes</span>(<span class="at">x =</span> pc_1, <span class="at">y =</span> pc_2)) <span class="sc">+</span></span>
+<span id="cb598-5"><a href="ch-learningII.html#cb598-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">shape =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">7</span>) <span class="sc">+</span> </span>
+<span id="cb598-6"><a href="ch-learningII.html#cb598-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">5</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="fu">aes</span>(<span class="at">color =</span> .cluster)) <span class="sc">+</span></span>
+<span id="cb598-7"><a href="ch-learningII.html#cb598-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Best Vector from SVD&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb598-8"><a href="ch-learningII.html#cb598-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Second Best Vector from SVD&quot;</span>) <span class="sc">+</span></span>
+<span id="cb598-9"><a href="ch-learningII.html#cb598-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Political Positions of Members of Parliament&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb598-10"><a href="ch-learningII.html#cb598-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set2&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:ballot-PCA"></span>
+<img src="12-learningII_files/figure-html/ballot-PCA-1.png" alt="Clustering members of Scottish Parliament based on SVD along the members." width="100%" />
+<p class="caption">
+Figure 12.8: Clustering members of Scottish Parliament based on SVD along the members.
+</p>
+</div>
+<p>Figure <a href="ch-learningII.html#fig:ballot-PCA">12.8</a> shows, at a glance, that there are three main clusters.
+The red circle marks the <em>average</em> member. The three clusters move away from average in different directions.
+There are several members whose position is in-between the average and the cluster to which they are closest.
+These clusters may reveal the alignment of Scottish members of parliament according to party affiliation and voting history.</p>
+<p>For a graphic, one is limited to using two variables for position.
+Clustering, however, can be based on many more variables. Using more SVD sums may allow the three clusters to be split up further.
+The color in Figure <a href="ch-learningII.html#fig:ballot-PCA">12.8</a> above shows the result of asking for five clusters using the five best SVD sums.
+The confusion matrix below compares the actual party of each member to the cluster memberships.
+</p>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="ch-learningII.html#cb599-1" aria-hidden="true" tabindex="-1"></a>voters <span class="ot">&lt;-</span> voters <span class="sc">%&gt;%</span> </span>
+<span id="cb599-2"><a href="ch-learningII.html#cb599-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> Votes_wide<span class="sc">$</span>name) <span class="sc">%&gt;%</span></span>
+<span id="cb599-3"><a href="ch-learningII.html#cb599-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(Parties, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span> <span class="ot">=</span> <span class="st">&quot;name&quot;</span>))</span>
+<span id="cb599-4"><a href="ch-learningII.html#cb599-4" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">tally</span>(party <span class="sc">~</span> .cluster, <span class="at">data =</span> voters)</span></code></pre></div>
+<pre><code>                                          .cluster
+party                                       1  2  3  4  5
+  Member for Falkirk West                   0  1  0  0  0
+  Scottish Conservative and Unionist Party  0  0  0 20  0
+  Scottish Green Party                      0  1  0  0  0
+  Scottish Labour                           0  1  0  0 57
+  Scottish Liberal Democrats                0 16  0  0  1
+  Scottish National Party                  26  0 10  0  0
+  Scottish Socialist Party                  0  1  0  0  0</code></pre>
+<p>
+
+
+
+
+
+
+How well did the clustering algorithm do?
+The party affiliation of each member of parliament is known, even though it wasn’t used in finding the clusters.
+Cluster 1 consists of most of the members of the <a href="https://en.wikipedia.org/w/index.php?search=Scottish%20National%20Party"><em>Scottish National Party</em></a> (SNP).
+Cluster 2 includes a number of individuals plus all but one of the <a href="https://en.wikipedia.org/w/index.php?search=Scottish%20Liberal%20Democrats"><em>Scottish Liberal Democrats</em></a>.
+Cluster 3 picks up the remaining 10 members of the SNP.
+Cluster 4 includes all of the members of the <a href="https://en.wikipedia.org/w/index.php?search=Scottish%20Conservative%20and%20Unionist%20Party"><em>Scottish Conservative and Unionist Party</em></a>, while Cluster 5 accounts for all but one member of the <a href="https://en.wikipedia.org/w/index.php?search=Scottish%20Labour"><em>Scottish Labour</em></a> party.
+For most parties, the large majority of members were placed into a unique cluster for that party with a small smattering of other like-voting colleagues.
+In other words, the technique has identified correctly nearly all of the members of the four different parties with significant representation (i.e., Conservative and Unionist, Labour, Liberal Democrats, and National).</p>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="ch-learningII.html#cb601-1" aria-hidden="true" tabindex="-1"></a>ballots <span class="ot">&lt;-</span> vote_svd <span class="sc">%&gt;%</span></span>
+<span id="cb601-2"><a href="ch-learningII.html#cb601-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>(<span class="at">matrix =</span> <span class="st">&quot;v&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb601-3"><a href="ch-learningII.html#cb601-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PC <span class="sc">&lt;</span> num_clusters) <span class="sc">%&gt;%</span></span>
+<span id="cb601-4"><a href="ch-learningII.html#cb601-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">PC =</span> <span class="fu">paste0</span>(<span class="st">&quot;pc_&quot;</span>, PC)) <span class="sc">%&gt;%</span></span>
+<span id="cb601-5"><a href="ch-learningII.html#cb601-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> PC, <span class="at">values_from =</span> value) <span class="sc">%&gt;%</span></span>
+<span id="cb601-6"><a href="ch-learningII.html#cb601-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>column)</span>
+<span id="cb601-7"><a href="ch-learningII.html#cb601-7" aria-hidden="true" tabindex="-1"></a>clust_ballots <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(ballots, <span class="at">centers =</span> num_clusters)</span>
+<span id="cb601-8"><a href="ch-learningII.html#cb601-8" aria-hidden="true" tabindex="-1"></a>ballots <span class="ot">&lt;-</span> clust_ballots <span class="sc">%&gt;%</span> </span>
+<span id="cb601-9"><a href="ch-learningII.html#cb601-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(ballots) <span class="sc">%&gt;%</span></span>
+<span id="cb601-10"><a href="ch-learningII.html#cb601-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bill =</span> <span class="fu">names</span>(<span class="fu">select</span>(Votes_wide, <span class="sc">-</span>name)))</span></code></pre></div>
+<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="ch-learningII.html#cb602-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ballots, <span class="fu">aes</span>(<span class="at">x =</span> pc_1, <span class="at">y =</span> pc_2)) <span class="sc">+</span></span>
+<span id="cb602-2"><a href="ch-learningII.html#cb602-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">shape =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">7</span>) <span class="sc">+</span> </span>
+<span id="cb602-3"><a href="ch-learningII.html#cb602-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">5</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="fu">aes</span>(<span class="at">color =</span> .cluster)) <span class="sc">+</span></span>
+<span id="cb602-4"><a href="ch-learningII.html#cb602-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Best Vector from SVD&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb602-5"><a href="ch-learningII.html#cb602-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Second Best Vector from SVD&quot;</span>) <span class="sc">+</span></span>
+<span id="cb602-6"><a href="ch-learningII.html#cb602-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Influential Ballots&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb602-7"><a href="ch-learningII.html#cb602-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set2&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:issue-clusters"></span>
+<img src="12-learningII_files/figure-html/issue-clusters-1.png" alt="Clustering of Scottish Parliament ballots based on SVD along the ballots." width="100%" />
+<p class="caption">
+Figure 12.9: Clustering of Scottish Parliament ballots based on SVD along the ballots.
+</p>
+</div>
+<p>There is more information to be extracted from the ballot data.
+Just as there are clusters of political positions, there are clusters of ballots that might correspond to such factors as social effect, economic effect, etc.
+Figure <a href="ch-learningII.html#fig:issue-clusters">12.9</a> shows the position of ballots, using the first two principal components.</p>
+<p>
+
+
+
+
+
+
+There are obvious clusters in this figure. Still, interpretation can be tricky. Remember that, on each issue, there are both “aye” and “nay” votes. This accounts for the symmetry of the dots around the center (indicated in red). The opposing dots along each angle from the center might be interpreted in terms of <em>socially liberal</em> versus <em>socially conservative</em> and <em>economically liberal</em> versus <em>economically conservative</em>. Deciding which is which likely involves reading the bill itself, as well as a nuanced understanding of Scottish politics.</p>
+<p>Finally, the principal components can be used to rearrange members of parliament and separately rearrange ballots while maintaining each person’s vote.
+This amounts simply to re-ordering the members in a way other than alphabetical and similarly with the ballots.
+Such a transformation can bring dramatic clarity to the appearance of the data—as shown in Figure <a href="ch-learningII.html#fig:SVD-ballots">12.10</a>—where the large, nearly equally sized, and opposing voting blocs of the two major political parties (the National and Labour parties) become obvious.
+Alliances among the smaller political parties muddy the waters on the lower half of Figure <a href="ch-learningII.html#fig:SVD-ballots">12.10</a>.</p>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="ch-learningII.html#cb603-1" aria-hidden="true" tabindex="-1"></a>Votes_svd <span class="ot">&lt;-</span> Votes <span class="sc">%&gt;%</span></span>
+<span id="cb603-2"><a href="ch-learningII.html#cb603-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Vote =</span> <span class="fu">factor</span>(vote, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Nay&quot;</span>, <span class="st">&quot;Abstain&quot;</span>, <span class="st">&quot;Aye&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb603-3"><a href="ch-learningII.html#cb603-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(ballots, <span class="at">by =</span> <span class="st">&quot;bill&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb603-4"><a href="ch-learningII.html#cb603-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(voters, <span class="at">by =</span> <span class="st">&quot;name&quot;</span>)</span>
+<span id="cb603-5"><a href="ch-learningII.html#cb603-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb603-6"><a href="ch-learningII.html#cb603-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> Votes_svd, </span>
+<span id="cb603-7"><a href="ch-learningII.html#cb603-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(bill, pc_1.x), <span class="at">y =</span> <span class="fu">reorder</span>(name, pc_1.y), <span class="at">fill =</span> Vote)) <span class="sc">+</span></span>
+<span id="cb603-8"><a href="ch-learningII.html#cb603-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span> </span>
+<span id="cb603-9"><a href="ch-learningII.html#cb603-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Ballot&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb603-10"><a href="ch-learningII.html#cb603-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Member of Parliament&quot;</span>) <span class="sc">+</span></span>
+<span id="cb603-11"><a href="ch-learningII.html#cb603-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;darkgray&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;goldenrod&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb603-12"><a href="ch-learningII.html#cb603-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>, <span class="at">labels =</span> <span class="cn">NULL</span>) <span class="sc">+</span> </span>
+<span id="cb603-13"><a href="ch-learningII.html#cb603-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>, <span class="at">labels =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:SVD-ballots"></span>
+<img src="12-learningII_files/figure-html/SVD-ballots-1.png" alt="Illustration of the Scottish Parliament votes when ordered by the primary vector of the SVD." width="100%" />
+<p class="caption">
+Figure 12.10: Illustration of the Scottish Parliament votes when ordered by the primary vector of the SVD.
+</p>
+</div>
+<p>
+
+The person represented by the top row in Figure <a href="ch-learningII.html#fig:SVD-ballots">12.10</a> is <a href="https://en.wikipedia.org/w/index.php?search=Nicola%20Sturgeon">Nicola Sturgeon</a>, the leader of the Scottish National Party.
+Along the primary vector identified by our SVD, she is the most extreme voter.
+According to Wikipedia, the National Party belongs to a “<a href="https://en.wikipedia.org/wiki/Scottish_National_Party#Party_ideology">mainstream European social democratic tradition</a>.”</p>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="ch-learningII.html#cb604-1" aria-hidden="true" tabindex="-1"></a>Votes_svd <span class="sc">%&gt;%</span> </span>
+<span id="cb604-2"><a href="ch-learningII.html#cb604-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(pc_1.y) <span class="sc">%&gt;%</span> </span>
+<span id="cb604-3"><a href="ch-learningII.html#cb604-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">1</span>)</span></code></pre></div>
+<pre><code>   bill             name vote Vote   pc_1.x   pc_2.x pc_3.x  pc_4.x
+1 S1M-1 Sturgeon, Nicola    1  Aye -0.00391 -0.00167 0.0498 -0.0734
+  .cluster.x pc_1.y pc_2.y pc_3.y pc_4.y .cluster.y                   party
+1          4 -0.059  0.153 0.0832 0.0396          1 Scottish National Party</code></pre>
+<p>
+
+Conversely, the person at the bottom of Figure <a href="ch-learningII.html#fig:SVD-ballots">12.10</a> is <a href="https://en.wikipedia.org/w/index.php?search=Paul%20Martin">Paul Martin</a>, a member of the Scottish Labour Party. It is easy to see in Figure <a href="ch-learningII.html#fig:SVD-ballots">12.10</a> that Martin opposed Sturgeon on most ballot votes.</p>
+<p></p>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="ch-learningII.html#cb606-1" aria-hidden="true" tabindex="-1"></a>Votes_svd <span class="sc">%&gt;%</span> </span>
+<span id="cb606-2"><a href="ch-learningII.html#cb606-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(pc_1.y) <span class="sc">%&gt;%</span> </span>
+<span id="cb606-3"><a href="ch-learningII.html#cb606-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tail</span>(<span class="dv">1</span>)</span></code></pre></div>
+<pre><code>           bill         name vote Vote pc_1.x   pc_2.x pc_3.x  pc_4.x
+103582 S1M-4064 Martin, Paul    1  Aye 0.0322 -0.00484 0.0653 -0.0317
+       .cluster.x pc_1.y pc_2.y pc_3.y pc_4.y .cluster.y           party
+103582          4  0.126 0.0267 0.0425  0.056          5 Scottish Labour</code></pre>
+<p>
+The beauty of Figure <a href="ch-learningII.html#fig:SVD-ballots">12.10</a> is that it brings profound order to the chaos apparent in Figure <a href="ch-learningII.html#fig:ballot-grid">12.5</a>.
+This was accomplished by simply ordering the rows (members of Parliament) and the columns (ballots) in a sensible way.
+In this case, the ordering was determined by the primary vector identified by the SVD of the voting matrix.
+This is yet another example of how machine learning techniques can identify meaningful patterns in data, but human beings are required to bring domain knowledge to bear on the problem in order to extract meaningful contextual understanding.</p>
+</div>
+</div>
+<div id="learningII-further" class="section level2" number="12.3">
+<h2><span class="header-section-number">12.3</span> Further resources</h2>
+<p>
+
+
+
+The machine learning and phylogenetics CRAN task views provide guidance on functionality within <strong>R</strong>.
+Readers interested in learning more about unsupervised learning are encouraged to consult <span class="citation">G. James et al. (2013)</span> or <span class="citation">Hastie, Tibshirani, and Friedman (2009)</span>. <span class="citation">Kuiper and Sklar (2012)</span> includes an accessible treatment of <a href="https://en.wikipedia.org/w/index.php?search=principal%20component%20analysis"><em>principal component analysis</em></a>.
+
+</p>
+</div>
+<div id="learningII-exercises" class="section level2" number="12.4">
+<h2><span class="header-section-number">12.4</span> Exercises</h2>
+<p><strong>Problem 1 (Medium)</strong>: Re-fit the <span class="math inline">\(k\)</span>–means algorithm on the <code>BigCities</code> data with a different value of <span class="math inline">\(k\)</span> (i.e., not six). Experiment with different values of <span class="math inline">\(k\)</span> and report on the sensitivity of the algorithm to changes in this parameter.</p>
+<p><strong>Problem 2 (Medium)</strong>: Carry out and interpret a clustering of vehicles from another manufacturer using the
+approach outlined in the first section of the chapter.</p>
+<p><strong>Problem 3 (Medium)</strong>: Perform the clustering on <em>pitchers</em> who have been elected to the Hall of Fame using the <code>Pitching</code> dataset in the <code>Lahman</code> package. Use wins (<code>W</code>), strikeouts (<code>SO</code>), and saves (<code>SV</code>) as criteria.</p>
+<p><strong>Problem 4 (Medium)</strong>: Consider the <span class="math inline">\(k\)</span>-means clustering algorithm applied to the <code>BigCities</code> data.
+Would you expect to obtain different results if the location coordinates were <em>projected</em> (see the “Working with spatial data” chapter)?</p>
+<p><strong>Problem 5 (Hard)</strong>: Use the College Scorecard Data from the <code>CollegeScorecard</code> package to cluster educational institutions using the techniques described in this chapter. Be sure to include variables related to student debt, number of students, graduation rate, and selectivity.</p>
+<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="ch-learningII.html#cb608-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;Amherst-Statistics/CollegeScorecard&quot;)</span></span></code></pre></div>
+<p><strong>Problem 6 (Hard)</strong>: Baseball players are voted into the Hall of Fame by the members of the Baseball Writers of America Association. Quantitative criteria are used by the voters, but they are also allowed wide discretion. The following code identifies the position players who have been elected to the Hall of Fame and tabulates a few basic statistics, including their number of career hits (<code>H</code>), home runs (<code>HR</code>}), and stolen bases (<code>SB</code>).</p>
+<ol style="list-style-type: lower-alpha">
+<li>Use the <code>kmeans</code> function to perform a cluster analysis on these players. Describe the properties that seem common to each cluster.</li>
+</ol>
+<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="ch-learningII.html#cb609-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdsr)</span>
+<span id="cb609-2"><a href="ch-learningII.html#cb609-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Lahman)</span>
+<span id="cb609-3"><a href="ch-learningII.html#cb609-3" aria-hidden="true" tabindex="-1"></a>hof <span class="ot">&lt;-</span> Batting <span class="sc">%&gt;%</span></span>
+<span id="cb609-4"><a href="ch-learningII.html#cb609-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(playerID) <span class="sc">%&gt;%</span></span>
+<span id="cb609-5"><a href="ch-learningII.html#cb609-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(HallOfFame, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;playerID&quot;</span> <span class="ot">=</span> <span class="st">&quot;playerID&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb609-6"><a href="ch-learningII.html#cb609-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(inducted <span class="sc">==</span> <span class="st">&quot;Y&quot;</span> <span class="sc">&amp;</span> votedBy <span class="sc">==</span> <span class="st">&quot;BBWAA&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb609-7"><a href="ch-learningII.html#cb609-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">tH =</span> <span class="fu">sum</span>(H), <span class="at">tHR =</span> <span class="fu">sum</span>(HR), <span class="at">tRBI =</span> <span class="fu">sum</span>(RBI), <span class="at">tSB =</span> <span class="fu">sum</span>(SB)) <span class="sc">%&gt;%</span></span>
+<span id="cb609-8"><a href="ch-learningII.html#cb609-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tH <span class="sc">&gt;</span> <span class="dv">1000</span>)</span></code></pre></div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Building on the previous exercise, compute new statistics and run the clustering algorithm again. Can you produce clusters that you think are more pure? Justify your choices.</li>
+</ol>
+<p><strong>Problem 7 (Hard)</strong>: Project the <code>world_cities</code> coordinates using the Gall-Peters projection and run the <span class="math inline">\(k\)</span>-means algorithm again. Are the resulting clusters importantly different from those identified in the chapter?</p>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="ch-learningII.html#cb610-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb610-2"><a href="ch-learningII.html#cb610-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdsr)</span>
+<span id="cb610-3"><a href="ch-learningII.html#cb610-3" aria-hidden="true" tabindex="-1"></a>big_cities <span class="ot">&lt;-</span> world_cities <span class="sc">%&gt;%</span></span>
+<span id="cb610-4"><a href="ch-learningII.html#cb610-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(population)) <span class="sc">%&gt;%</span></span>
+<span id="cb610-5"><a href="ch-learningII.html#cb610-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">4000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb610-6"><a href="ch-learningII.html#cb610-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(longitude, latitude)</span></code></pre></div>
+</div>
+<div id="learningII-online-exercises" class="section level2" number="12.5">
+<h2><span class="header-section-number">12.5</span> Supplementary exercises</h2>
+<p>Available at <a href="ch-learningII.html#learningII-online-exercises" class="uri">https://mdsr-book.github.io/mdsr2e/ch-learningII.html#learningII-online-exercises</a></p>
+<p>No exercises found</p>
+<hr />
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="20">
+<li id="fn20"><p><a href="https://www.fueleconomy.gov/feg/pdfs/guides/FEG2016.pdf" class="uri">https://www.fueleconomy.gov/feg/pdfs/guides/FEG2016.pdf</a><a href="ch-learningII.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p>The default distance metric used by <code>dist()</code> is the Euclidean distance. Recall that we discussed this in Chapter <a href="ch-learningI.html#ch:learningI">11</a> in our explanation of <span class="math inline">\(k\)</span>-nearest-neighbor methods.
+<a href="ch-learningII.html#fnref21" class="footnote-back">↩︎</a></p></li>
+<li id="fn22"><p>The Scottish Parliament example was constructed by then-student <a href="https://en.wikipedia.org/w/index.php?search=Caroline%20Ettinger">Caroline Ettinger</a> and her faculty advisor, <a href="https://en.wikipedia.org/w/index.php?search=Andrew%20Beveridge">Andrew Beveridge</a>, at <a href="https://en.wikipedia.org/w/index.php?search=Macalester%20College"><em>Macalester College</em></a>, and presented in Ms. Ettinger’s senior capstone thesis.<a href="ch-learningII.html#fnref22" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch-learningI.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch-simulation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="book_assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/12-learningII.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["mdsr2e.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

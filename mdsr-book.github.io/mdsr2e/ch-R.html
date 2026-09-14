@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>B Introduction to R and RStudio | Modern Data Science with R</title>
+  <meta name="description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="B Introduction to R and RStudio | Modern Data Science with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://mdsr-book.github.io/mdsr2e/" />
+  <meta property="og:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+  <meta property="og:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="github-repo" content="mdsr-book/mdsr2e" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="B Introduction to R and RStudio | Modern Data Science with R" />
+  
+  <meta name="twitter:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="twitter:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+
+<meta name="author" content="Benjamin S. Baumer, Daniel T. Kaplan, and Nicholas J. Horton" />
+
+
+<meta name="date" content="2021-07-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch-mdsr.html"/>
+<link rel="next" href="ch-function.html"/>
+<script src="book_assets/header-attrs-2.9/header-attrs.js"></script>
+<script src="book_assets/jquery-3.5.1/jquery.min.js"></script>
+<link href="book_assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="book_assets/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="book_assets/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="book_assets/kePrint-0.0.1/kePrint.js"></script>
+<link href="book_assets/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="book_assets/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="book_assets/bsTable-3.3.7/bootstrapTable.js"></script>
+<script src="book_assets/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="book_assets/plotly-binding-4.9.4.1/plotly.js"></script>
+<script src="book_assets/typedarray-0.1/typedarray.min.js"></script>
+<link href="book_assets/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="book_assets/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="book_assets/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="book_assets/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<link href="book_assets/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="book_assets/datatables-binding-0.18/datatables.js"></script>
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="book_assets/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="book_assets/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="book_assets/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="book_assets/dygraphs-1.1.1/shapes.js"></script>
+<script src="book_assets/moment-2.8.4/moment.js"></script>
+<script src="book_assets/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="book_assets/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="book_assets/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<script src="book_assets/d3-3.5.3/d3.min.js"></script>
+<link href="book_assets/colorbrewer-1/colorbrewer.css" rel="stylesheet" />
+<script src="book_assets/colorbrewer-1/colorbrewer.js"></script>
+<link href="book_assets/streamgraph-1/streamgraph.css" rel="stylesheet" />
+<script src="book_assets/streamgraph-binding-0.9.0/streamgraph.js"></script>
+<link href="book_assets/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-1.3.1/leaflet.js"></script>
+<link href="book_assets/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="book_assets/proj4-2.6.2/proj4.min.js"></script>
+<script src="book_assets/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="book_assets/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-binding-2.0.4.1/leaflet.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html">Modern Data Science with R, 2nd edition</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#nd-edition"><i class="fa fa-check"></i>2nd edition</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#note-about-erroneous-black-and-white-printing"><i class="fa fa-check"></i>Note about erroneous black-and-white printing!</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#cover"><i class="fa fa-check"></i>Cover</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#st-edition"><i class="fa fa-check"></i>1st edition</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#copyright"><i class="fa fa-check"></i>Copyright</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#background-and-motivation"><i class="fa fa-check"></i>Background and motivation</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#intended-audience"><i class="fa fa-check"></i>Intended audience</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-features-of-this-book"><i class="fa fa-check"></i>Key features of this book</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#focus-on-case-studies-and-extended-examples"><i class="fa fa-check"></i>Focus on case studies and extended examples</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#structure"><i class="fa fa-check"></i>Structure</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#supporting-materials"><i class="fa fa-check"></i>Supporting materials</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#changes-in-the-second-edition"><i class="fa fa-check"></i>Changes in the second edition</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-role-of-technology"><i class="fa fa-check"></i>Key role of technology</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#how-to-use-this-book"><i class="fa fa-check"></i>How to use this book</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="part"><span><b>I Part I: Introduction to Data Science</b></span></li>
+<li class="chapter" data-level="1" data-path="ch-prologue.html"><a href="ch-prologue.html"><i class="fa fa-check"></i><b>1</b> Prologue: Why data science?</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="ch-prologue.html"><a href="ch-prologue.html#what-is-data-science"><i class="fa fa-check"></i><b>1.1</b> What is data science?</a></li>
+<li class="chapter" data-level="1.2" data-path="ch-prologue.html"><a href="ch-prologue.html#case-study-the-evolution-of-sabermetrics"><i class="fa fa-check"></i><b>1.2</b> Case study: The evolution of sabermetrics</a></li>
+<li class="chapter" data-level="1.3" data-path="ch-prologue.html"><a href="ch-prologue.html#datasets"><i class="fa fa-check"></i><b>1.3</b> Datasets</a></li>
+<li class="chapter" data-level="1.4" data-path="ch-prologue.html"><a href="ch-prologue.html#intro-further"><i class="fa fa-check"></i><b>1.4</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch-vizI.html"><a href="ch-vizI.html"><i class="fa fa-check"></i><b>2</b> Data visualization</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#the-2012-federal-election-cycle"><i class="fa fa-check"></i><b>2.1</b> The 2012 federal election cycle</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="ch-vizI.html"><a href="ch-vizI.html#are-these-two-groups-different"><i class="fa fa-check"></i><b>2.1.1</b> Are these two groups different?</a></li>
+<li class="chapter" data-level="2.1.2" data-path="ch-vizI.html"><a href="ch-vizI.html#graphing-variation"><i class="fa fa-check"></i><b>2.1.2</b> Graphing variation</a></li>
+<li class="chapter" data-level="2.1.3" data-path="ch-vizI.html"><a href="ch-vizI.html#examining-relationships-among-variables"><i class="fa fa-check"></i><b>2.1.3</b> Examining relationships among variables</a></li>
+<li class="chapter" data-level="2.1.4" data-path="ch-vizI.html"><a href="ch-vizI.html#networks"><i class="fa fa-check"></i><b>2.1.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#composing-data-graphics"><i class="fa fa-check"></i><b>2.2</b> Composing data graphics</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#a-taxonomy-for-data-graphics"><i class="fa fa-check"></i><b>2.2.1</b> A taxonomy for data graphics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#sec:color"><i class="fa fa-check"></i><b>2.2.2</b> Color</a></li>
+<li class="chapter" data-level="2.2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#dissecting-data-graphics"><i class="fa fa-check"></i><b>2.2.3</b> Dissecting data graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#importance-of-data-graphics-challenger"><i class="fa fa-check"></i><b>2.3</b> Importance of data graphics: <em>Challenger</em></a></li>
+<li class="chapter" data-level="2.4" data-path="ch-vizI.html"><a href="ch-vizI.html#creating-effective-presentations"><i class="fa fa-check"></i><b>2.4</b> Creating effective presentations</a></li>
+<li class="chapter" data-level="2.5" data-path="ch-vizI.html"><a href="ch-vizI.html#the-wider-world-of-data-visualization"><i class="fa fa-check"></i><b>2.5</b> The wider world of data visualization</a></li>
+<li class="chapter" data-level="2.6" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-further"><i class="fa fa-check"></i><b>2.6</b> Further resources</a></li>
+<li class="chapter" data-level="2.7" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-exercises"><i class="fa fa-check"></i><b>2.7</b> Exercises</a></li>
+<li class="chapter" data-level="2.8" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-online-exercises"><i class="fa fa-check"></i><b>2.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch-vizII.html"><a href="ch-vizII.html"><i class="fa fa-check"></i><b>3</b> A grammar for graphics</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#a-grammar-for-data-graphics"><i class="fa fa-check"></i><b>3.1</b> A grammar for data graphics</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="ch-vizII.html"><a href="ch-vizII.html#aesthetics"><i class="fa fa-check"></i><b>3.1.1</b> Aesthetics</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ch-vizII.html"><a href="ch-vizII.html#scales"><i class="fa fa-check"></i><b>3.1.2</b> Scales</a></li>
+<li class="chapter" data-level="3.1.3" data-path="ch-vizII.html"><a href="ch-vizII.html#guides"><i class="fa fa-check"></i><b>3.1.3</b> Guides</a></li>
+<li class="chapter" data-level="3.1.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:facet"><i class="fa fa-check"></i><b>3.1.4</b> Facets</a></li>
+<li class="chapter" data-level="3.1.5" data-path="ch-vizII.html"><a href="ch-vizII.html#layers"><i class="fa fa-check"></i><b>3.1.5</b> Layers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:canonical"><i class="fa fa-check"></i><b>3.2</b> Canonical data graphics in (ref:R)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch-vizII.html"><a href="ch-vizII.html#univariate-displays"><i class="fa fa-check"></i><b>3.2.1</b> Univariate displays</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch-vizII.html"><a href="ch-vizII.html#multivariate-displays"><i class="fa fa-check"></i><b>3.2.2</b> Multivariate displays</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch-vizII.html"><a href="ch-vizII.html#maps"><i class="fa fa-check"></i><b>3.2.3</b> Maps</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:datanetwork"><i class="fa fa-check"></i><b>3.2.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:babynames"><i class="fa fa-check"></i><b>3.3</b> Extended example: Historical baby names</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#percentage-of-people-alive-today"><i class="fa fa-check"></i><b>3.3.1</b> Percentage of people alive today</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#most-common-names-for-women"><i class="fa fa-check"></i><b>3.3.2</b> Most common names for women</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-further"><i class="fa fa-check"></i><b>3.4</b> Further resources</a></li>
+<li class="chapter" data-level="3.5" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-exercises"><i class="fa fa-check"></i><b>3.5</b> Exercises</a></li>
+<li class="chapter" data-level="3.6" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-online-exercises"><i class="fa fa-check"></i><b>3.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch-dataI.html"><a href="ch-dataI.html"><i class="fa fa-check"></i><b>4</b> Data wrangling on one table</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:five_idioms"><i class="fa fa-check"></i><b>4.1</b> A grammar for data wrangling</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:pipe"><i class="fa fa-check"></i><b>4.1.1</b> <code>select()</code> and <code>filter()</code></a></li>
+<li class="chapter" data-level="4.1.2" data-path="ch-dataI.html"><a href="ch-dataI.html#mutate-and-rename"><i class="fa fa-check"></i><b>4.1.2</b> <code>mutate()</code> and <code>rename()</code></a></li>
+<li class="chapter" data-level="4.1.3" data-path="ch-dataI.html"><a href="ch-dataI.html#arrange"><i class="fa fa-check"></i><b>4.1.3</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="4.1.4" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:summarize"><i class="fa fa-check"></i><b>4.1.4</b> <code>summarize()</code> with <code>group_by()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:mets"><i class="fa fa-check"></i><b>4.2</b> Extended example: Ben’s time with the Mets</a></li>
+<li class="chapter" data-level="4.3" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-further"><i class="fa fa-check"></i><b>4.3</b> Further resources</a></li>
+<li class="chapter" data-level="4.4" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-exercises"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+<li class="chapter" data-level="4.5" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-online-exercises"><i class="fa fa-check"></i><b>4.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch-join.html"><a href="ch-join.html"><i class="fa fa-check"></i><b>5</b> Data wrangling on multiple tables</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch-join.html"><a href="ch-join.html#inner_join"><i class="fa fa-check"></i><b>5.1</b> <code>inner_join()</code></a></li>
+<li class="chapter" data-level="5.2" data-path="ch-join.html"><a href="ch-join.html#left_join"><i class="fa fa-check"></i><b>5.2</b> <code>left_join()</code></a></li>
+<li class="chapter" data-level="5.3" data-path="ch-join.html"><a href="ch-join.html#extended-example-manny-ramirez"><i class="fa fa-check"></i><b>5.3</b> Extended example: Manny Ramirez</a></li>
+<li class="chapter" data-level="5.4" data-path="ch-join.html"><a href="ch-join.html#joins-further"><i class="fa fa-check"></i><b>5.4</b> Further resources</a></li>
+<li class="chapter" data-level="5.5" data-path="ch-join.html"><a href="ch-join.html#join-exercises"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
+<li class="chapter" data-level="5.6" data-path="ch-join.html"><a href="ch-join.html#join-online-exercises"><i class="fa fa-check"></i><b>5.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch-dataII.html"><a href="ch-dataII.html"><i class="fa fa-check"></i><b>6</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch-dataII.html"><a href="ch-dataII.html#tidy-data"><i class="fa fa-check"></i><b>6.1</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="ch-dataII.html"><a href="ch-dataII.html#motivation"><i class="fa fa-check"></i><b>6.1.1</b> Motivation</a></li>
+<li class="chapter" data-level="6.1.2" data-path="ch-dataII.html"><a href="ch-dataII.html#what-are-tidy-data"><i class="fa fa-check"></i><b>6.1.2</b> What are tidy data?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="ch-dataII.html"><a href="ch-dataII.html#reshaping-data"><i class="fa fa-check"></i><b>6.2</b> Reshaping data</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-verbs-for-converting-wide-to-narrow-and-vice-versa"><i class="fa fa-check"></i><b>6.2.1</b> Data verbs for converting wide to narrow and <em>vice versa</em></a></li>
+<li class="chapter" data-level="6.2.2" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-wider"><i class="fa fa-check"></i><b>6.2.2</b> Pivoting wider</a></li>
+<li class="chapter" data-level="6.2.3" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-longer"><i class="fa fa-check"></i><b>6.2.3</b> Pivoting longer</a></li>
+<li class="chapter" data-level="6.2.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nest"><i class="fa fa-check"></i><b>6.2.4</b> List-columns</a></li>
+<li class="chapter" data-level="6.2.5" data-path="ch-dataII.html"><a href="ch-dataII.html#example-gender-neutral-names"><i class="fa fa-check"></i><b>6.2.5</b> Example: Gender-neutral names</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:naming"><i class="fa fa-check"></i><b>6.3</b> Naming conventions</a></li>
+<li class="chapter" data-level="6.4" data-path="ch-dataII.html"><a href="ch-dataII.html#data-intake"><i class="fa fa-check"></i><b>6.4</b> Data intake</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-table-friendly-formats"><i class="fa fa-check"></i><b>6.4.1</b> Data-table friendly formats</a></li>
+<li class="chapter" data-level="6.4.2" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:apis"><i class="fa fa-check"></i><b>6.4.2</b> APIs</a></li>
+<li class="chapter" data-level="6.4.3" data-path="ch-dataII.html"><a href="ch-dataII.html#cleaning-data"><i class="fa fa-check"></i><b>6.4.3</b> Cleaning data</a></li>
+<li class="chapter" data-level="6.4.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nukes"><i class="fa fa-check"></i><b>6.4.4</b> Example: Japanese nuclear reactors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-further"><i class="fa fa-check"></i><b>6.5</b> Further resources</a></li>
+<li class="chapter" data-level="6.6" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-exercises"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+<li class="chapter" data-level="6.7" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-online-exercises"><i class="fa fa-check"></i><b>6.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch-iteration.html"><a href="ch-iteration.html"><i class="fa fa-check"></i><b>7</b> Iteration</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:vectorized"><i class="fa fa-check"></i><b>7.1</b> Vectorized operations</a></li>
+<li class="chapter" data-level="7.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:scoped"><i class="fa fa-check"></i><b>7.2</b> Using <code>across()</code> with <strong>dplyr</strong> functions</a></li>
+<li class="chapter" data-level="7.3" data-path="ch-iteration.html"><a href="ch-iteration.html#appR:apply"><i class="fa fa-check"></i><b>7.3</b> The <code>map()</code> family of functions</a></li>
+<li class="chapter" data-level="7.4" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-over-a-one-dimensional-vector"><i class="fa fa-check"></i><b>7.4</b> Iterating over a one-dimensional vector</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-a-known-function"><i class="fa fa-check"></i><b>7.4.1</b> Iterating a known function</a></li>
+<li class="chapter" data-level="7.4.2" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-an-arbitrary-function"><i class="fa fa-check"></i><b>7.4.2</b> Iterating an arbitrary function</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:group-map"><i class="fa fa-check"></i><b>7.5</b> Iteration over subgroups</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:pythag"><i class="fa fa-check"></i><b>7.5.1</b> Example: Expected winning percentage</a></li>
+<li class="chapter" data-level="7.5.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:hrs"><i class="fa fa-check"></i><b>7.5.2</b> Example: Annual leaders</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="ch-iteration.html"><a href="ch-iteration.html#simulation"><i class="fa fa-check"></i><b>7.6</b> Simulation</a></li>
+<li class="chapter" data-level="7.7" data-path="ch-iteration.html"><a href="ch-iteration.html#extended-example-factors-associated-with-bmi"><i class="fa fa-check"></i><b>7.7</b> Extended example: Factors associated with BMI</a></li>
+<li class="chapter" data-level="7.8" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-further"><i class="fa fa-check"></i><b>7.8</b> Further resources</a></li>
+<li class="chapter" data-level="7.9" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-exercises"><i class="fa fa-check"></i><b>7.9</b> Exercises</a></li>
+<li class="chapter" data-level="7.10" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-online-exercises"><i class="fa fa-check"></i><b>7.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch-ethics.html"><a href="ch-ethics.html"><i class="fa fa-check"></i><b>8</b> Data science ethics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-intro"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ch-ethics.html"><a href="ch-ethics.html#truthful-falsehoods"><i class="fa fa-check"></i><b>8.2</b> Truthful falsehoods</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ch-ethics.html"><a href="ch-ethics.html#stand-your-ground"><i class="fa fa-check"></i><b>8.2.1</b> Stand your ground</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ch-ethics.html"><a href="ch-ethics.html#global-temperature"><i class="fa fa-check"></i><b>8.2.2</b> Global temperature</a></li>
+<li class="chapter" data-level="8.2.3" data-path="ch-ethics.html"><a href="ch-ethics.html#covid-19-reporting"><i class="fa fa-check"></i><b>8.2.3</b> COVID-19 reporting</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ch-ethics.html"><a href="ch-ethics.html#role-of-data-science-in-society"><i class="fa fa-check"></i><b>8.3</b> Role of data science in society</a></li>
+<li class="chapter" data-level="8.4" data-path="ch-ethics.html"><a href="ch-ethics.html#some-settings-for-professional-ethics"><i class="fa fa-check"></i><b>8.4</b> Some settings for professional ethics</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-chief-executive-officer"><i class="fa fa-check"></i><b>8.4.1</b> The chief executive officer</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination"><i class="fa fa-check"></i><b>8.4.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar"><i class="fa fa-check"></i><b>8.4.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.4.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction"><i class="fa fa-check"></i><b>8.4.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.4.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping"><i class="fa fa-check"></i><b>8.4.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.4.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis"><i class="fa fa-check"></i><b>8.4.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.4.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers"><i class="fa fa-check"></i><b>8.4.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.4.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations"><i class="fa fa-check"></i><b>8.4.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ch-ethics.html"><a href="ch-ethics.html#some-principles-to-guide-ethical-action"><i class="fa fa-check"></i><b>8.5</b> Some principles to guide ethical action</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-ceo"><i class="fa fa-check"></i><b>8.5.1</b> The CEO</a></li>
+<li class="chapter" data-level="8.5.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination-1"><i class="fa fa-check"></i><b>8.5.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.5.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar-1"><i class="fa fa-check"></i><b>8.5.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.5.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction-1"><i class="fa fa-check"></i><b>8.5.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.5.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping-1"><i class="fa fa-check"></i><b>8.5.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.5.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis-1"><i class="fa fa-check"></i><b>8.5.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.5.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers-1"><i class="fa fa-check"></i><b>8.5.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.5.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations-1"><i class="fa fa-check"></i><b>8.5.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="ch-ethics.html"><a href="ch-ethics.html#algorithmic-bias"><i class="fa fa-check"></i><b>8.6</b> Algorithmic bias</a></li>
+<li class="chapter" data-level="8.7" data-path="ch-ethics.html"><a href="ch-ethics.html#data-and-disclosure"><i class="fa fa-check"></i><b>8.7</b> Data and disclosure</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="ch-ethics.html"><a href="ch-ethics.html#reidentification-and-disclosure-avoidance"><i class="fa fa-check"></i><b>8.7.1</b> Reidentification and disclosure avoidance</a></li>
+<li class="chapter" data-level="8.7.2" data-path="ch-ethics.html"><a href="ch-ethics.html#safe-data-storage"><i class="fa fa-check"></i><b>8.7.2</b> Safe data storage</a></li>
+<li class="chapter" data-level="8.7.3" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:terms-of-use"><i class="fa fa-check"></i><b>8.7.3</b> Data scraping and terms of use</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:reproducibility"><i class="fa fa-check"></i><b>8.8</b> Reproducibility</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#example-erroneous-data-merging"><i class="fa fa-check"></i><b>8.8.1</b> Example: Erroneous data merging</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-collectively"><i class="fa fa-check"></i><b>8.9</b> Ethics, collectively</a></li>
+<li class="chapter" data-level="8.10" data-path="ch-ethics.html"><a href="ch-ethics.html#professional-guidelines-for-ethical-conduct"><i class="fa fa-check"></i><b>8.10</b> Professional guidelines for ethical conduct</a></li>
+<li class="chapter" data-level="8.11" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-further"><i class="fa fa-check"></i><b>8.11</b> Further resources</a></li>
+<li class="chapter" data-level="8.12" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-exercises"><i class="fa fa-check"></i><b>8.12</b> Exercises</a></li>
+<li class="chapter" data-level="8.13" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-online-exercises"><i class="fa fa-check"></i><b>8.13</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>II Part II: Statistics and Modeling</b></span></li>
+<li class="chapter" data-level="9" data-path="ch-foundations.html"><a href="ch-foundations.html"><i class="fa fa-check"></i><b>9</b> Statistical foundations</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch-foundations.html"><a href="ch-foundations.html#samples-and-populations"><i class="fa fa-check"></i><b>9.1</b> Samples and populations</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy-by-sampling-from-the-population"><i class="fa fa-check"></i><b>9.1.1</b> Example: Setting travel policy by sampling from the population</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="ch-foundations.html"><a href="ch-foundations.html#sample-statistics"><i class="fa fa-check"></i><b>9.2</b> Sample statistics</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:lln"><i class="fa fa-check"></i><b>9.2.1</b> The sampling distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:boot"><i class="fa fa-check"></i><b>9.3</b> The bootstrap</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy"><i class="fa fa-check"></i><b>9.3.1</b> Example: Setting travel policy</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="ch-foundations.html"><a href="ch-foundations.html#outliers"><i class="fa fa-check"></i><b>9.4</b> Outliers</a></li>
+<li class="chapter" data-level="9.5" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:gooddesign"><i class="fa fa-check"></i><b>9.5</b> Statistical models: Explaining variation</a></li>
+<li class="chapter" data-level="9.6" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:confound"><i class="fa fa-check"></i><b>9.6</b> Confounding and accounting for other factors</a></li>
+<li class="chapter" data-level="9.7" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:p-perils"><i class="fa fa-check"></i><b>9.7</b> The perils of p-values</a></li>
+<li class="chapter" data-level="9.8" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-further"><i class="fa fa-check"></i><b>9.8</b> Further resources</a></li>
+<li class="chapter" data-level="9.9" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-exercises"><i class="fa fa-check"></i><b>9.9</b> Exercises</a></li>
+<li class="chapter" data-level="9.10" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-online-exercises"><i class="fa fa-check"></i><b>9.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch-modeling.html"><a href="ch-modeling.html"><i class="fa fa-check"></i><b>10</b> Predictive modeling</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch-modeling.html"><a href="ch-modeling.html#predictive-modeling"><i class="fa fa-check"></i><b>10.1</b> Predictive modeling</a></li>
+<li class="chapter" data-level="10.2" data-path="ch-modeling.html"><a href="ch-modeling.html#simple-classification-models"><i class="fa fa-check"></i><b>10.2</b> Simple classification models</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="ch-modeling.html"><a href="ch-modeling.html#example-high-earners-in-the-1994-united-states-census"><i class="fa fa-check"></i><b>10.2.1</b> Example: High-earners in the 1994 United States Census</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="ch-modeling.html"><a href="ch-modeling.html#evaluating-models"><i class="fa fa-check"></i><b>10.3</b> Evaluating models</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:bias-variance"><i class="fa fa-check"></i><b>10.3.1</b> Bias-variance trade-off</a></li>
+<li class="chapter" data-level="10.3.2" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:cv"><i class="fa fa-check"></i><b>10.3.2</b> Cross-validation</a></li>
+<li class="chapter" data-level="10.3.3" data-path="ch-modeling.html"><a href="ch-modeling.html#confusion-matrices-and-roc-curves"><i class="fa fa-check"></i><b>10.3.3</b> Confusion matrices and ROC curves</a></li>
+<li class="chapter" data-level="10.3.4" data-path="ch-modeling.html"><a href="ch-modeling.html#measuring-prediction-error-for-quantitative-responses"><i class="fa fa-check"></i><b>10.3.4</b> Measuring prediction error for quantitative responses</a></li>
+<li class="chapter" data-level="10.3.5" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:evaluate"><i class="fa fa-check"></i><b>10.3.5</b> Example: Evaluation of income models</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:diabetes"><i class="fa fa-check"></i><b>10.4</b> Extended example: Who has diabetes?</a></li>
+<li class="chapter" data-level="10.5" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-further"><i class="fa fa-check"></i><b>10.5</b> Further resources</a></li>
+<li class="chapter" data-level="10.6" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-exercises"><i class="fa fa-check"></i><b>10.6</b> Exercises</a></li>
+<li class="chapter" data-level="10.7" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-online-exercises"><i class="fa fa-check"></i><b>10.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch-learningI.html"><a href="ch-learningI.html"><i class="fa fa-check"></i><b>11</b> Supervised learning</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch-learningI.html"><a href="ch-learningI.html#non-regression-classifiers"><i class="fa fa-check"></i><b>11.1</b> Non-regression classifiers</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="ch-learningI.html"><a href="ch-learningI.html#decision-trees"><i class="fa fa-check"></i><b>11.1.1</b> Decision trees</a></li>
+<li class="chapter" data-level="11.1.2" data-path="ch-learningI.html"><a href="ch-learningI.html#random-forests"><i class="fa fa-check"></i><b>11.1.2</b> Random forests</a></li>
+<li class="chapter" data-level="11.1.3" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:knn"><i class="fa fa-check"></i><b>11.1.3</b> Nearest neighbor</a></li>
+<li class="chapter" data-level="11.1.4" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:bayes"><i class="fa fa-check"></i><b>11.1.4</b> Naïve Bayes</a></li>
+<li class="chapter" data-level="11.1.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:neuralnet"><i class="fa fa-check"></i><b>11.1.5</b> Artificial neural networks</a></li>
+<li class="chapter" data-level="11.1.6" data-path="ch-learningI.html"><a href="ch-learningI.html#ensemble-methods"><i class="fa fa-check"></i><b>11.1.6</b> Ensemble methods</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:tuning"><i class="fa fa-check"></i><b>11.2</b> Parameter tuning</a></li>
+<li class="chapter" data-level="11.3" data-path="ch-learningI.html"><a href="ch-learningI.html#example-evaluation-of-income-models-redux"><i class="fa fa-check"></i><b>11.3</b> Example: Evaluation of income models redux</a></li>
+<li class="chapter" data-level="11.4" data-path="ch-learningI.html"><a href="ch-learningI.html#extended-example-who-has-diabetes-this-time"><i class="fa fa-check"></i><b>11.4</b> Extended example: Who has diabetes this time?</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch-learningI.html"><a href="ch-learningI.html#comparing-all-models"><i class="fa fa-check"></i><b>11.4.1</b> Comparing all models</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:regularization"><i class="fa fa-check"></i><b>11.5</b> Regularization</a></li>
+<li class="chapter" data-level="11.6" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-further"><i class="fa fa-check"></i><b>11.6</b> Further resources</a></li>
+<li class="chapter" data-level="11.7" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-exercises"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
+<li class="chapter" data-level="11.8" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-online-exercises"><i class="fa fa-check"></i><b>11.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch-learningII.html"><a href="ch-learningII.html"><i class="fa fa-check"></i><b>12</b> Unsupervised learning</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch-learningII.html"><a href="ch-learningII.html#clustering"><i class="fa fa-check"></i><b>12.1</b> Clustering</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="ch-learningII.html"><a href="ch-learningII.html#sec:hclust"><i class="fa fa-check"></i><b>12.1.1</b> Hierarchical clustering</a></li>
+<li class="chapter" data-level="12.1.2" data-path="ch-learningII.html"><a href="ch-learningII.html#k-means"><i class="fa fa-check"></i><b>12.1.2</b> <span class="math inline">\(k\)</span>-means</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="ch-learningII.html"><a href="ch-learningII.html#dimension-reduction"><i class="fa fa-check"></i><b>12.2</b> Dimension reduction</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch-learningII.html"><a href="ch-learningII.html#intuitive-approaches"><i class="fa fa-check"></i><b>12.2.1</b> Intuitive approaches</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch-learningII.html"><a href="ch-learningII.html#singular-value-decomposition"><i class="fa fa-check"></i><b>12.2.2</b> Singular value decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-further"><i class="fa fa-check"></i><b>12.3</b> Further resources</a></li>
+<li class="chapter" data-level="12.4" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-exercises"><i class="fa fa-check"></i><b>12.4</b> Exercises</a></li>
+<li class="chapter" data-level="12.5" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-online-exercises"><i class="fa fa-check"></i><b>12.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch-simulation.html"><a href="ch-simulation.html"><i class="fa fa-check"></i><b>13</b> Simulation</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch-simulation.html"><a href="ch-simulation.html#reasoning-in-reverse"><i class="fa fa-check"></i><b>13.1</b> Reasoning in reverse</a></li>
+<li class="chapter" data-level="13.2" data-path="ch-simulation.html"><a href="ch-simulation.html#extended-example-grouping-cancers"><i class="fa fa-check"></i><b>13.2</b> Extended example: Grouping cancers</a></li>
+<li class="chapter" data-level="13.3" data-path="ch-simulation.html"><a href="ch-simulation.html#randomizing-functions"><i class="fa fa-check"></i><b>13.3</b> Randomizing functions</a></li>
+<li class="chapter" data-level="13.4" data-path="ch-simulation.html"><a href="ch-simulation.html#simulating-variability"><i class="fa fa-check"></i><b>13.4</b> Simulating variability</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch-simulation.html"><a href="ch-simulation.html#the-partially-planned-rendezvous"><i class="fa fa-check"></i><b>13.4.1</b> The partially-planned rendezvous</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:jobsnum"><i class="fa fa-check"></i><b>13.4.2</b> The jobs report</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch-simulation.html"><a href="ch-simulation.html#restaurant-health-and-sanitation-grades"><i class="fa fa-check"></i><b>13.4.3</b> Restaurant health and sanitation grades</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch-simulation.html"><a href="ch-simulation.html#random-networks"><i class="fa fa-check"></i><b>13.5</b> Random networks</a></li>
+<li class="chapter" data-level="13.6" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:key-principles-random"><i class="fa fa-check"></i><b>13.6</b> Key principles of simulation</a>
+<ul>
+<li class="chapter" data-level="13.6.1" data-path="ch-simulation.html"><a href="ch-simulation.html#design"><i class="fa fa-check"></i><b>13.6.1</b> Design</a></li>
+<li class="chapter" data-level="13.6.2" data-path="ch-simulation.html"><a href="ch-simulation.html#modularity"><i class="fa fa-check"></i><b>13.6.2</b> Modularity</a></li>
+<li class="chapter" data-level="13.6.3" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:seed"><i class="fa fa-check"></i><b>13.6.3</b> Reproducibility and random number seeds</a></li>
+</ul></li>
+<li class="chapter" data-level="13.7" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-further"><i class="fa fa-check"></i><b>13.7</b> Further resources</a></li>
+<li class="chapter" data-level="13.8" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-exercises"><i class="fa fa-check"></i><b>13.8</b> Exercises</a></li>
+<li class="chapter" data-level="13.9" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-online-exercises"><i class="fa fa-check"></i><b>13.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>III Part III: Topics in Data Science</b></span></li>
+<li class="chapter" data-level="14" data-path="ch-vizIII.html"><a href="ch-vizIII.html"><i class="fa fa-check"></i><b>14</b> Dynamic and customized data graphics</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:d3"><i class="fa fa-check"></i><b>14.1</b> Rich Web content using <code>D3.js</code> and <strong>htmlwidgets</strong></a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#leaflet"><i class="fa fa-check"></i><b>14.1.1</b> Leaflet</a></li>
+<li class="chapter" data-level="14.1.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#plot.ly"><i class="fa fa-check"></i><b>14.1.2</b> Plot.ly</a></li>
+<li class="chapter" data-level="14.1.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datatables"><i class="fa fa-check"></i><b>14.1.3</b> DataTables</a></li>
+<li class="chapter" data-level="14.1.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#dygraphs"><i class="fa fa-check"></i><b>14.1.4</b> Dygraphs</a></li>
+<li class="chapter" data-level="14.1.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#streamgraphs"><i class="fa fa-check"></i><b>14.1.5</b> Streamgraphs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#animation"><i class="fa fa-check"></i><b>14.2</b> Animation</a></li>
+<li class="chapter" data-level="14.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:fleshdashboard"><i class="fa fa-check"></i><b>14.3</b> Flexdashboard</a></li>
+<li class="chapter" data-level="14.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:shiny"><i class="fa fa-check"></i><b>14.4</b> Interactive web apps with Shiny</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#example-interactive-display-of-the-beatles"><i class="fa fa-check"></i><b>14.4.1</b> Example: interactive display of the Beatles</a></li>
+<li class="chapter" data-level="14.4.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#more-on-reactive-programming"><i class="fa fa-check"></i><b>14.4.2</b> More on reactive programming</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:themes"><i class="fa fa-check"></i><b>14.5</b> Customization of <strong>ggplot2</strong> graphics</a></li>
+<li class="chapter" data-level="14.6" data-path="ch-vizIII.html"><a href="ch-vizIII.html#extended-example-hot-dog-eating"><i class="fa fa-check"></i><b>14.6</b> Extended example: Hot dog eating</a></li>
+<li class="chapter" data-level="14.7" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-further"><i class="fa fa-check"></i><b>14.7</b> Further resources</a></li>
+<li class="chapter" data-level="14.8" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-exercises"><i class="fa fa-check"></i><b>14.8</b> Exercises</a></li>
+<li class="chapter" data-level="14.9" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-online-exercises"><i class="fa fa-check"></i><b>14.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch-sql.html"><a href="ch-sql.html"><i class="fa fa-check"></i><b>15</b> Database querying using SQL</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch-sql.html"><a href="ch-sql.html#sec:dplyr-sql"><i class="fa fa-check"></i><b>15.1</b> From <strong>dplyr</strong> to SQL</a></li>
+<li class="chapter" data-level="15.2" data-path="ch-sql.html"><a href="ch-sql.html#flat-file-databases"><i class="fa fa-check"></i><b>15.2</b> Flat-file databases</a></li>
+<li class="chapter" data-level="15.3" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-universe"><i class="fa fa-check"></i><b>15.3</b> The SQL universe</a></li>
+<li class="chapter" data-level="15.4" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-data-manipulation-language"><i class="fa fa-check"></i><b>15.4</b> The SQL data manipulation language</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="ch-sql.html"><a href="ch-sql.html#select...from"><i class="fa fa-check"></i><b>15.4.1</b> <code>SELECT...FROM</code></a></li>
+<li class="chapter" data-level="15.4.2" data-path="ch-sql.html"><a href="ch-sql.html#where"><i class="fa fa-check"></i><b>15.4.2</b> <code>WHERE</code></a></li>
+<li class="chapter" data-level="15.4.3" data-path="ch-sql.html"><a href="ch-sql.html#group-by"><i class="fa fa-check"></i><b>15.4.3</b> <code>GROUP BY</code></a></li>
+<li class="chapter" data-level="15.4.4" data-path="ch-sql.html"><a href="ch-sql.html#order-by"><i class="fa fa-check"></i><b>15.4.4</b> <code>ORDER BY</code></a></li>
+<li class="chapter" data-level="15.4.5" data-path="ch-sql.html"><a href="ch-sql.html#having"><i class="fa fa-check"></i><b>15.4.5</b> <code>HAVING</code></a></li>
+<li class="chapter" data-level="15.4.6" data-path="ch-sql.html"><a href="ch-sql.html#limit"><i class="fa fa-check"></i><b>15.4.6</b> <code>LIMIT</code></a></li>
+<li class="chapter" data-level="15.4.7" data-path="ch-sql.html"><a href="ch-sql.html#join"><i class="fa fa-check"></i><b>15.4.7</b> <code>JOIN</code></a></li>
+<li class="chapter" data-level="15.4.8" data-path="ch-sql.html"><a href="ch-sql.html#union"><i class="fa fa-check"></i><b>15.4.8</b> <code>UNION</code></a></li>
+<li class="chapter" data-level="15.4.9" data-path="ch-sql.html"><a href="ch-sql.html#subqueries"><i class="fa fa-check"></i><b>15.4.9</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="ch-sql.html"><a href="ch-sql.html#sec:ft8-flights"><i class="fa fa-check"></i><b>15.5</b> Extended example: FiveThirtyEight flights</a></li>
+<li class="chapter" data-level="15.6" data-path="ch-sql.html"><a href="ch-sql.html#sql-vs.-refr"><i class="fa fa-check"></i><b>15.6</b> SQL vs. (ref:R)</a></li>
+<li class="chapter" data-level="15.7" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-further"><i class="fa fa-check"></i><b>15.7</b> Further resources</a></li>
+<li class="chapter" data-level="15.8" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-exercises"><i class="fa fa-check"></i><b>15.8</b> Exercises</a></li>
+<li class="chapter" data-level="15.9" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-online-exercises"><i class="fa fa-check"></i><b>15.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="ch-sql2.html"><a href="ch-sql2.html"><i class="fa fa-check"></i><b>16</b> Database administration</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:indices"><i class="fa fa-check"></i><b>16.1</b> Constructing efficient SQL databases</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="ch-sql2.html"><a href="ch-sql2.html#creating-new-databases"><i class="fa fa-check"></i><b>16.1.1</b> Creating new databases</a></li>
+<li class="chapter" data-level="16.1.2" data-path="ch-sql2.html"><a href="ch-sql2.html#create-table"><i class="fa fa-check"></i><b>16.1.2</b> <code>CREATE TABLE</code></a></li>
+<li class="chapter" data-level="16.1.3" data-path="ch-sql2.html"><a href="ch-sql2.html#keys"><i class="fa fa-check"></i><b>16.1.3</b> Keys</a></li>
+<li class="chapter" data-level="16.1.4" data-path="ch-sql2.html"><a href="ch-sql2.html#indices"><i class="fa fa-check"></i><b>16.1.4</b> Indices</a></li>
+<li class="chapter" data-level="16.1.5" data-path="ch-sql2.html"><a href="ch-sql2.html#query-plans"><i class="fa fa-check"></i><b>16.1.5</b> Query plans</a></li>
+<li class="chapter" data-level="16.1.6" data-path="ch-sql2.html"><a href="ch-sql2.html#partitioning"><i class="fa fa-check"></i><b>16.1.6</b> Partitioning</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-sql-data"><i class="fa fa-check"></i><b>16.2</b> Changing SQL data</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-data"><i class="fa fa-check"></i><b>16.2.1</b> Changing data</a></li>
+<li class="chapter" data-level="16.2.2" data-path="ch-sql2.html"><a href="ch-sql2.html#adding-data"><i class="fa fa-check"></i><b>16.2.2</b> Adding data</a></li>
+<li class="chapter" data-level="16.2.3" data-path="ch-sql2.html"><a href="ch-sql2.html#importing-data-from-a-file"><i class="fa fa-check"></i><b>16.2.3</b> Importing data from a file</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:toy-db"><i class="fa fa-check"></i><b>16.3</b> Extended example: Building a database</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="ch-sql2.html"><a href="ch-sql2.html#extract"><i class="fa fa-check"></i><b>16.3.1</b> Extract</a></li>
+<li class="chapter" data-level="16.3.2" data-path="ch-sql2.html"><a href="ch-sql2.html#transform"><i class="fa fa-check"></i><b>16.3.2</b> Transform</a></li>
+<li class="chapter" data-level="16.3.3" data-path="ch-sql2.html"><a href="ch-sql2.html#load-into-mysql-database"><i class="fa fa-check"></i><b>16.3.3</b> Load into MySQL database</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="ch-sql2.html"><a href="ch-sql2.html#scalability"><i class="fa fa-check"></i><b>16.4</b> Scalability</a></li>
+<li class="chapter" data-level="16.5" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-further"><i class="fa fa-check"></i><b>16.5</b> Further resources</a></li>
+<li class="chapter" data-level="16.6" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-exercises"><i class="fa fa-check"></i><b>16.6</b> Exercises</a></li>
+<li class="chapter" data-level="16.7" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-online-exercises"><i class="fa fa-check"></i><b>16.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="ch-spatial.html"><a href="ch-spatial.html"><i class="fa fa-check"></i><b>17</b> Working with geospatial data</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="ch-spatial.html"><a href="ch-spatial.html#motivation-whats-so-great-about-geospatial-data"><i class="fa fa-check"></i><b>17.1</b> Motivation: What’s so great about geospatial data?</a></li>
+<li class="chapter" data-level="17.2" data-path="ch-spatial.html"><a href="ch-spatial.html#spatial-data-structures"><i class="fa fa-check"></i><b>17.2</b> Spatial data structures</a></li>
+<li class="chapter" data-level="17.3" data-path="ch-spatial.html"><a href="ch-spatial.html#making-maps"><i class="fa fa-check"></i><b>17.3</b> Making maps</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="ch-spatial.html"><a href="ch-spatial.html#static-maps"><i class="fa fa-check"></i><b>17.3.1</b> Static maps</a></li>
+<li class="chapter" data-level="17.3.2" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:projections"><i class="fa fa-check"></i><b>17.3.2</b> Projections</a></li>
+<li class="chapter" data-level="17.3.3" data-path="ch-spatial.html"><a href="ch-spatial.html#dynamic-maps-with-leaflet"><i class="fa fa-check"></i><b>17.3.3</b> Dynamic maps with <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="ch-spatial.html"><a href="ch-spatial.html#extended-example-congressional-districts"><i class="fa fa-check"></i><b>17.4</b> Extended example: Congressional districts</a>
+<ul>
+<li class="chapter" data-level="17.4.1" data-path="ch-spatial.html"><a href="ch-spatial.html#election-results"><i class="fa fa-check"></i><b>17.4.1</b> Election results</a></li>
+<li class="chapter" data-level="17.4.2" data-path="ch-spatial.html"><a href="ch-spatial.html#congressional-districts"><i class="fa fa-check"></i><b>17.4.2</b> Congressional districts</a></li>
+<li class="chapter" data-level="17.4.3" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:sf-inner-join"><i class="fa fa-check"></i><b>17.4.3</b> Putting it all together</a></li>
+<li class="chapter" data-level="17.4.4" data-path="ch-spatial.html"><a href="ch-spatial.html#using-ggplot2"><i class="fa fa-check"></i><b>17.4.4</b> Using <code>ggplot2</code></a></li>
+<li class="chapter" data-level="17.4.5" data-path="ch-spatial.html"><a href="ch-spatial.html#using-leaflet"><i class="fa fa-check"></i><b>17.4.5</b> Using <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="ch-spatial.html"><a href="ch-spatial.html#effective-maps-how-not-to-lie"><i class="fa fa-check"></i><b>17.5</b> Effective maps: How (not) to lie</a></li>
+<li class="chapter" data-level="17.6" data-path="ch-spatial.html"><a href="ch-spatial.html#projecting-polygons"><i class="fa fa-check"></i><b>17.6</b> Projecting polygons</a></li>
+<li class="chapter" data-level="17.7" data-path="ch-spatial.html"><a href="ch-spatial.html#playing-well-with-others"><i class="fa fa-check"></i><b>17.7</b> Playing well with others</a></li>
+<li class="chapter" data-level="17.8" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialII-further"><i class="fa fa-check"></i><b>17.8</b> Further resources</a></li>
+<li class="chapter" data-level="17.9" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-exercises"><i class="fa fa-check"></i><b>17.9</b> Exercises</a></li>
+<li class="chapter" data-level="17.10" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-online-exercises"><i class="fa fa-check"></i><b>17.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="ch-spatial2.html"><a href="ch-spatial2.html"><i class="fa fa-check"></i><b>18</b> Geospatial computations</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-operations"><i class="fa fa-check"></i><b>18.1</b> Geospatial operations</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geocoding-routes-and-distances"><i class="fa fa-check"></i><b>18.1.1</b> Geocoding, routes, and distances</a></li>
+<li class="chapter" data-level="18.1.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#sec:geometric-operations"><i class="fa fa-check"></i><b>18.1.2</b> Geometric operations</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-aggregation"><i class="fa fa-check"></i><b>18.2</b> Geospatial aggregation</a></li>
+<li class="chapter" data-level="18.3" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-joins"><i class="fa fa-check"></i><b>18.3</b> Geospatial joins</a></li>
+<li class="chapter" data-level="18.4" data-path="ch-spatial2.html"><a href="ch-spatial2.html#extended-example-trail-elevations-at-macleish"><i class="fa fa-check"></i><b>18.4</b> Extended example: Trail elevations at MacLeish</a></li>
+<li class="chapter" data-level="18.5" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialI-further"><i class="fa fa-check"></i><b>18.5</b> Further resources</a></li>
+<li class="chapter" data-level="18.6" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-exercises"><i class="fa fa-check"></i><b>18.6</b> Exercises</a></li>
+<li class="chapter" data-level="18.7" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-online-exercises"><i class="fa fa-check"></i><b>18.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="ch-text.html"><a href="ch-text.html"><i class="fa fa-check"></i><b>19</b> Text as data</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="ch-text.html"><a href="ch-text.html#regular-expressions-using-macbeth"><i class="fa fa-check"></i><b>19.1</b> Regular expressions using <em>Macbeth</em></a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="ch-text.html"><a href="ch-text.html#parsing-the-text-of-the-scottish-play"><i class="fa fa-check"></i><b>19.1.1</b> Parsing the text of the <span><em>Scottish play</em></span></a></li>
+<li class="chapter" data-level="19.1.2" data-path="ch-text.html"><a href="ch-text.html#life-and-death-in-macbeth"><i class="fa fa-check"></i><b>19.1.2</b> Life and death in <em>Macbeth</em></a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="ch-text.html"><a href="ch-text.html#extended-example-analyzing-textual-data-from-arxiv.org"><i class="fa fa-check"></i><b>19.2</b> Extended example: Analyzing textual data from arXiv.org</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="ch-text.html"><a href="ch-text.html#corpora"><i class="fa fa-check"></i><b>19.2.1</b> Corpora</a></li>
+<li class="chapter" data-level="19.2.2" data-path="ch-text.html"><a href="ch-text.html#word-clouds"><i class="fa fa-check"></i><b>19.2.2</b> Word clouds</a></li>
+<li class="chapter" data-level="19.2.3" data-path="ch-text.html"><a href="ch-text.html#sentiment-analysis"><i class="fa fa-check"></i><b>19.2.3</b> Sentiment analysis</a></li>
+<li class="chapter" data-level="19.2.4" data-path="ch-text.html"><a href="ch-text.html#bigrams-and-n-grams"><i class="fa fa-check"></i><b>19.2.4</b> Bigrams and N-grams</a></li>
+<li class="chapter" data-level="19.2.5" data-path="ch-text.html"><a href="ch-text.html#document-term-matrices"><i class="fa fa-check"></i><b>19.2.5</b> Document term matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="ch-text.html"><a href="ch-text.html#ingesting-text"><i class="fa fa-check"></i><b>19.3</b> Ingesting text</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="ch-text.html"><a href="ch-text.html#example-scraping-the-songs-of-the-beatles"><i class="fa fa-check"></i><b>19.3.1</b> Example: Scraping the songs of the Beatles</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="ch-text.html"><a href="ch-text.html#text-further"><i class="fa fa-check"></i><b>19.4</b> Further resources</a></li>
+<li class="chapter" data-level="19.5" data-path="ch-text.html"><a href="ch-text.html#text-exercises"><i class="fa fa-check"></i><b>19.5</b> Exercises</a></li>
+<li class="chapter" data-level="19.6" data-path="ch-text.html"><a href="ch-text.html#text-online-exercises"><i class="fa fa-check"></i><b>19.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="ch-netsci.html"><a href="ch-netsci.html"><i class="fa fa-check"></i><b>20</b> Network science</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-intro"><i class="fa fa-check"></i><b>20.1</b> Introduction to network science</a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="ch-netsci.html"><a href="ch-netsci.html#definitions"><i class="fa fa-check"></i><b>20.1.1</b> Definitions</a></li>
+<li class="chapter" data-level="20.1.2" data-path="ch-netsci.html"><a href="ch-netsci.html#a-brief-history-of-network-science"><i class="fa fa-check"></i><b>20.1.2</b> A brief history of network science</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-six-degrees-of-kristen-stewart"><i class="fa fa-check"></i><b>20.2</b> Extended example: Six degrees of Kristen Stewart</a>
+<ul>
+<li class="chapter" data-level="20.2.1" data-path="ch-netsci.html"><a href="ch-netsci.html#sql:imdb"><i class="fa fa-check"></i><b>20.2.1</b> Collecting Hollywood data</a></li>
+<li class="chapter" data-level="20.2.2" data-path="ch-netsci.html"><a href="ch-netsci.html#building-the-hollywood-network"><i class="fa fa-check"></i><b>20.2.2</b> Building the Hollywood network</a></li>
+<li class="chapter" data-level="20.2.3" data-path="ch-netsci.html"><a href="ch-netsci.html#building-a-kristen-stewart-oracle"><i class="fa fa-check"></i><b>20.2.3</b> Building a Kristen Stewart oracle</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="ch-netsci.html"><a href="ch-netsci.html#sec:pagerank"><i class="fa fa-check"></i><b>20.3</b> PageRank</a>
+<ul>
+<li class="chapter" data-level="20.3.1" data-path="ch-netsci.html"><a href="ch-netsci.html#eigenvector-centrality"><i class="fa fa-check"></i><b>20.3.1</b> Eigenvector centrality</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-1996-mens-college-basketball"><i class="fa fa-check"></i><b>20.4</b> Extended example: 1996 men’s college basketball</a></li>
+<li class="chapter" data-level="20.5" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-further"><i class="fa fa-check"></i><b>20.5</b> Further resources</a></li>
+<li class="chapter" data-level="20.6" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-exercises"><i class="fa fa-check"></i><b>20.6</b> Exercises</a></li>
+<li class="chapter" data-level="20.7" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-online-exercises"><i class="fa fa-check"></i><b>20.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="ch-big.html"><a href="ch-big.html"><i class="fa fa-check"></i><b>21</b> Epilogue: Towards “big data”</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="ch-big.html"><a href="ch-big.html#notions-of-big-data"><i class="fa fa-check"></i><b>21.1</b> Notions of big data</a></li>
+<li class="chapter" data-level="21.2" data-path="ch-big.html"><a href="ch-big.html#tools-for-bigger-data"><i class="fa fa-check"></i><b>21.2</b> Tools for bigger data</a>
+<ul>
+<li class="chapter" data-level="21.2.1" data-path="ch-big.html"><a href="ch-big.html#data-and-memory-structures-for-big-data"><i class="fa fa-check"></i><b>21.2.1</b> Data and memory structures for big data</a></li>
+<li class="chapter" data-level="21.2.2" data-path="ch-big.html"><a href="ch-big.html#compilation"><i class="fa fa-check"></i><b>21.2.2</b> Compilation</a></li>
+<li class="chapter" data-level="21.2.3" data-path="ch-big.html"><a href="ch-big.html#parallel-and-distributed-computing"><i class="fa fa-check"></i><b>21.2.3</b> Parallel and distributed computing</a></li>
+<li class="chapter" data-level="21.2.4" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-sql"><i class="fa fa-check"></i><b>21.2.4</b> Alternatives to SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-refr"><i class="fa fa-check"></i><b>21.3</b> Alternatives to (ref:R)</a></li>
+<li class="chapter" data-level="21.4" data-path="ch-big.html"><a href="ch-big.html#closing-thoughts"><i class="fa fa-check"></i><b>21.4</b> Closing thoughts</a></li>
+<li class="chapter" data-level="21.5" data-path="ch-big.html"><a href="ch-big.html#bigdata-further"><i class="fa fa-check"></i><b>21.5</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="part"><span><b>IV Part IV: Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="ch-mdsr.html"><a href="ch-mdsr.html"><i class="fa fa-check"></i><b>A</b> Packages used in this book</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="ch-mdsr.html"><a href="ch-mdsr.html#the-mdsr-package"><i class="fa fa-check"></i><b>A.1</b> The <strong>mdsr</strong> package</a></li>
+<li class="chapter" data-level="A.2" data-path="ch-mdsr.html"><a href="ch-mdsr.html#other-packages"><i class="fa fa-check"></i><b>A.2</b> Other packages</a></li>
+<li class="chapter" data-level="A.3" data-path="ch-mdsr.html"><a href="ch-mdsr.html#pkg-further"><i class="fa fa-check"></i><b>A.3</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="ch-R.html"><a href="ch-R.html"><i class="fa fa-check"></i><b>B</b> Introduction to <code>R</code> and RStudio</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="ch-R.html"><a href="ch-R.html#appR:install"><i class="fa fa-check"></i><b>B.1</b> Installation</a>
+<ul>
+<li class="chapter" data-level="B.1.1" data-path="ch-R.html"><a href="ch-R.html#rstudio"><i class="fa fa-check"></i><b>B.1.1</b> RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="B.2" data-path="ch-R.html"><a href="ch-R.html#learning-refr"><i class="fa fa-check"></i><b>B.2</b> Learning (ref:R)</a></li>
+<li class="chapter" data-level="B.3" data-path="ch-R.html"><a href="ch-R.html#appR:objects"><i class="fa fa-check"></i><b>B.3</b> Fundamental structures and objects</a>
+<ul>
+<li class="chapter" data-level="B.3.1" data-path="ch-R.html"><a href="ch-R.html#appR:assign"><i class="fa fa-check"></i><b>B.3.1</b> Objects and vectors</a></li>
+<li class="chapter" data-level="B.3.2" data-path="ch-R.html"><a href="ch-R.html#appR:operators"><i class="fa fa-check"></i><b>B.3.2</b> Operators</a></li>
+<li class="chapter" data-level="B.3.3" data-path="ch-R.html"><a href="ch-R.html#appR:lists"><i class="fa fa-check"></i><b>B.3.3</b> Lists</a></li>
+<li class="chapter" data-level="B.3.4" data-path="ch-R.html"><a href="ch-R.html#appR:matrix"><i class="fa fa-check"></i><b>B.3.4</b> Matrices</a></li>
+<li class="chapter" data-level="B.3.5" data-path="ch-R.html"><a href="ch-R.html#appR:dataframe"><i class="fa fa-check"></i><b>B.3.5</b> Dataframes and tibbles</a></li>
+<li class="chapter" data-level="B.3.6" data-path="ch-R.html"><a href="ch-R.html#appR:attr"><i class="fa fa-check"></i><b>B.3.6</b> Attributes and classes</a></li>
+<li class="chapter" data-level="B.3.7" data-path="ch-R.html"><a href="ch-R.html#appR:options"><i class="fa fa-check"></i><b>B.3.7</b> Options</a></li>
+<li class="chapter" data-level="B.3.8" data-path="ch-R.html"><a href="ch-R.html#sec:func"><i class="fa fa-check"></i><b>B.3.8</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="ch-R.html"><a href="ch-R.html#add-ons-packages"><i class="fa fa-check"></i><b>B.4</b> Add-ons: Packages</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="ch-R.html"><a href="ch-R.html#appR:packages"><i class="fa fa-check"></i><b>B.4.1</b> Introduction to packages</a></li>
+<li class="chapter" data-level="B.4.2" data-path="ch-R.html"><a href="ch-R.html#packages-and-name-conflicts"><i class="fa fa-check"></i><b>B.4.2</b> Packages and name conflicts</a></li>
+<li class="chapter" data-level="B.4.3" data-path="ch-R.html"><a href="ch-R.html#appR:tasks"><i class="fa fa-check"></i><b>B.4.3</b> CRAN task views</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="ch-R.html"><a href="ch-R.html#appR-further"><i class="fa fa-check"></i><b>B.5</b> Further resources</a></li>
+<li class="chapter" data-level="B.6" data-path="ch-R.html"><a href="ch-R.html#appR-exercises"><i class="fa fa-check"></i><b>B.6</b> Exercises</a></li>
+<li class="chapter" data-level="B.7" data-path="ch-R.html"><a href="ch-R.html#appR-online-exercises"><i class="fa fa-check"></i><b>B.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="ch-function.html"><a href="ch-function.html"><i class="fa fa-check"></i><b>C</b> Algorithmic thinking</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-intro"><i class="fa fa-check"></i><b>C.1</b> Introduction</a></li>
+<li class="chapter" data-level="C.2" data-path="ch-function.html"><a href="ch-function.html#simple-example"><i class="fa fa-check"></i><b>C.2</b> Simple example</a></li>
+<li class="chapter" data-level="C.3" data-path="ch-function.html"><a href="ch-function.html#sec:runaverage"><i class="fa fa-check"></i><b>C.3</b> Extended example: Law of large numbers</a></li>
+<li class="chapter" data-level="C.4" data-path="ch-function.html"><a href="ch-function.html#sec:tidyeval"><i class="fa fa-check"></i><b>C.4</b> Non-standard evaluation</a></li>
+<li class="chapter" data-level="C.5" data-path="ch-function.html"><a href="ch-function.html#sec:debugging"><i class="fa fa-check"></i><b>C.5</b> Debugging and defensive coding</a></li>
+<li class="chapter" data-level="C.6" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-further"><i class="fa fa-check"></i><b>C.6</b> Further resources</a></li>
+<li class="chapter" data-level="C.7" data-path="ch-function.html"><a href="ch-function.html#algorithmic-exercises"><i class="fa fa-check"></i><b>C.7</b> Exercises</a></li>
+<li class="chapter" data-level="C.8" data-path="ch-function.html"><a href="ch-function.html#algorithmic-online-exercises"><i class="fa fa-check"></i><b>C.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="ch-reproduce.html"><a href="ch-reproduce.html"><i class="fa fa-check"></i><b>D</b> Reproducible analysis and workflow</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="ch-reproduce.html"><a href="ch-reproduce.html#scriptable-statistical-computing"><i class="fa fa-check"></i><b>D.1</b> Scriptable statistical computing</a></li>
+<li class="chapter" data-level="D.2" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-analysis-with-refr-markdown"><i class="fa fa-check"></i><b>D.2</b> Reproducible analysis with (ref:R) Markdown</a></li>
+<li class="chapter" data-level="D.3" data-path="ch-reproduce.html"><a href="ch-reproduce.html#projects-and-version-control"><i class="fa fa-check"></i><b>D.3</b> Projects and version control</a></li>
+<li class="chapter" data-level="D.4" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-further"><i class="fa fa-check"></i><b>D.4</b> Further resources</a></li>
+<li class="chapter" data-level="D.5" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-exercises"><i class="fa fa-check"></i><b>D.5</b> Exercises</a></li>
+<li class="chapter" data-level="D.6" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-online-exercises"><i class="fa fa-check"></i><b>D.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="ch-regression.html"><a href="ch-regression.html"><i class="fa fa-check"></i><b>E</b> Regression modeling</a>
+<ul>
+<li class="chapter" data-level="E.1" data-path="ch-regression.html"><a href="ch-regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>E.1</b> Simple linear regression</a>
+<ul>
+<li class="chapter" data-level="E.1.1" data-path="ch-regression.html"><a href="ch-regression.html#motivating-example-modeling-usage-of-a-rail-trail"><i class="fa fa-check"></i><b>E.1.1</b> Motivating example: Modeling usage of a rail trail</a></li>
+<li class="chapter" data-level="E.1.2" data-path="ch-regression.html"><a href="ch-regression.html#model-visualization"><i class="fa fa-check"></i><b>E.1.2</b> Model visualization</a></li>
+<li class="chapter" data-level="E.1.3" data-path="ch-regression.html"><a href="ch-regression.html#measuring-the-strength-of-fit"><i class="fa fa-check"></i><b>E.1.3</b> Measuring the strength of fit</a></li>
+<li class="chapter" data-level="E.1.4" data-path="ch-regression.html"><a href="ch-regression.html#sec:anova"><i class="fa fa-check"></i><b>E.1.4</b> Categorical explanatory variables</a></li>
+</ul></li>
+<li class="chapter" data-level="E.2" data-path="ch-regression.html"><a href="ch-regression.html#multiple-regression"><i class="fa fa-check"></i><b>E.2</b> Multiple regression</a>
+<ul>
+<li class="chapter" data-level="E.2.1" data-path="ch-regression.html"><a href="ch-regression.html#sec:indicators"><i class="fa fa-check"></i><b>E.2.1</b> Parallel slopes: Multiple regression with a categorical variable</a></li>
+<li class="chapter" data-level="E.2.2" data-path="ch-regression.html"><a href="ch-regression.html#parallel-planes-multiple-regression-with-a-second-quantitative-variable"><i class="fa fa-check"></i><b>E.2.2</b> Parallel planes: Multiple regression with a second quantitative variable</a></li>
+<li class="chapter" data-level="E.2.3" data-path="ch-regression.html"><a href="ch-regression.html#sec:interaction"><i class="fa fa-check"></i><b>E.2.3</b> Non-parallel slopes: Multiple regression with interaction</a></li>
+<li class="chapter" data-level="E.2.4" data-path="ch-regression.html"><a href="ch-regression.html#modeling-non-linear-relationships"><i class="fa fa-check"></i><b>E.2.4</b> Modeling non-linear relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="E.3" data-path="ch-regression.html"><a href="ch-regression.html#inference-for-regression"><i class="fa fa-check"></i><b>E.3</b> Inference for regression</a></li>
+<li class="chapter" data-level="E.4" data-path="ch-regression.html"><a href="ch-regression.html#assumptions-underlying-regression"><i class="fa fa-check"></i><b>E.4</b> Assumptions underlying regression</a></li>
+<li class="chapter" data-level="E.5" data-path="ch-regression.html"><a href="ch-regression.html#sec:logistic"><i class="fa fa-check"></i><b>E.5</b> Logistic regression</a></li>
+<li class="chapter" data-level="E.6" data-path="ch-regression.html"><a href="ch-regression.html#regression-further"><i class="fa fa-check"></i><b>E.6</b> Further resources</a></li>
+<li class="chapter" data-level="E.7" data-path="ch-regression.html"><a href="ch-regression.html#regression-exercises"><i class="fa fa-check"></i><b>E.7</b> Exercises</a></li>
+<li class="chapter" data-level="E.8" data-path="ch-regression.html"><a href="ch-regression.html#regression-online-exercises"><i class="fa fa-check"></i><b>E.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="F" data-path="ch-db-setup.html"><a href="ch-db-setup.html"><i class="fa fa-check"></i><b>F</b> Setting up a database server</a>
+<ul>
+<li class="chapter" data-level="F.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sqlite"><i class="fa fa-check"></i><b>F.1</b> SQLite</a></li>
+<li class="chapter" data-level="F.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#mysql"><i class="fa fa-check"></i><b>F.2</b> MySQL</a>
+<ul>
+<li class="chapter" data-level="F.2.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#installation"><i class="fa fa-check"></i><b>F.2.1</b> Installation</a></li>
+<li class="chapter" data-level="F.2.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:mysql-access"><i class="fa fa-check"></i><b>F.2.2</b> Access</a></li>
+<li class="chapter" data-level="F.2.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#running-scripts-from-the-command-line"><i class="fa fa-check"></i><b>F.2.3</b> Running scripts from the command line</a></li>
+</ul></li>
+<li class="chapter" data-level="F.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#postgresql"><i class="fa fa-check"></i><b>F.3</b> PostgreSQL</a></li>
+<li class="chapter" data-level="F.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-sql"><i class="fa fa-check"></i><b>F.4</b> Connecting to SQL</a>
+<ul>
+<li class="chapter" data-level="F.4.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#the-command-line-client"><i class="fa fa-check"></i><b>F.4.1</b> The command line client</a></li>
+<li class="chapter" data-level="F.4.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#guis"><i class="fa fa-check"></i><b>F.4.2</b> GUIs</a></li>
+<li class="chapter" data-level="F.4.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-r-sql"><i class="fa fa-check"></i><b>F.4.3</b> R and RStudio</a></li>
+<li class="chapter" data-level="F.4.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:sqlitebaby"><i class="fa fa-check"></i><b>F.4.4</b> Load into SQLite database</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="index.html">Modern Data Science with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch:R" class="section level1" number="23">
+<h1><span class="header-section-number">B</span> Introduction to <code>R</code> and RStudio</h1>
+<p>
+
+
+</p>
+<p>
+This chapter provides a (brief) introduction to <strong>R</strong> and <strong>RStudio</strong>.
+The <strong>R</strong> language is a free, open-source software environment for statistical computing and graphics <span class="citation">(Ihaka and Gentleman 1996; R Core Team 2020)</span>.
+<strong>RStudio</strong> is
+
+
+an open-source integrated development environment (IDE) for <strong>R</strong> that adds many features and productivity tools for <strong>R</strong> <span class="citation">(RStudio 2020)</span>.
+This chapter includes a short history, installation information, a sample session, background on fundamental structures and actions, information about help and documentation, and other important topics.</p>
+<p>The <strong>R</strong> Foundation for Statistical Computing
+
+
+holds and administers the copyright of the <strong>R</strong> software and documentation. <strong>R</strong> is available under the terms of the Free Software Foundation’s GNU General Public License in source code form.</p>
+<p>
+
+
+
+
+
+
+<strong>RStudio</strong> facilitates use of <strong>R</strong> by integrating <strong>R</strong> help and documentation, providing a workspace browser and data viewer, and supporting syntax highlighting, code completion, and
+smart indentation.
+Support for reproducible analysis is made available with the <strong>knitr</strong> package and <strong>R</strong> Markdown (see Appendix <a href="ch-reproduce.html#ch:reproduce">D</a>).
+It facilitates the creation of dynamic <a href="https://en.wikipedia.org/w/index.php?search=web%20applications"><em>web applications</em></a> using Shiny (see Chapter <a href="ch-vizIII.html#sec:shiny">14.4</a>).
+It also provides support for multiple projects as well as an interface to source code control systems such as GitHub.
+It has become the default interface for many <strong>R</strong> users, and is our recommended environment for analysis.
+
+
+
+
+</p>
+<p><strong>RStudio</strong> is available as a client (standalone) for Windows, Mac OS X, and Linux. There is also a server version.
+Commercial products and support are available in addition to the open-source offerings (see <a href="http://www.rstudio.com/ide" class="uri">http://www.rstudio.com/ide</a> for details).
+</p>
+<p>
+
+
+
+
+
+
+
+The first versions of <strong>R</strong> were written by <a href="https://en.wikipedia.org/w/index.php?search=Ross%20Ihaka">Ross Ihaka</a> and <a href="https://en.wikipedia.org/w/index.php?search=Robert%20Gentleman">Robert Gentleman</a> at the <a href="https://en.wikipedia.org/w/index.php?search=University%20of%20Auckland"><em>University of Auckland</em></a>, New Zealand, while current development is coordinated by the <strong>R</strong> Development Core Team,
+
+a group of international volunteers.</p>
+<p>The <strong>R</strong> language is quite similar to the S language, a flexible and extensible statistical environment originally developed in the 1980s at
+AT&amp;T Bell Labs (now Alcatel–Lucent).</p>
+<div id="appR:install" class="section level2" number="23.1">
+<h2><span class="header-section-number">B.1</span> Installation</h2>
+<p>New users are encouraged to download and install <strong>R</strong> from the
+Comprehensive <strong>R</strong> Archive Network (CRAN, <a href="http://www.r-project.org" class="uri">http://www.r-project.org</a>) and install <strong>RStudio</strong>
+from <a href="http://www.rstudio.com/download" class="uri">http://www.rstudio.com/download</a>.
+The sample session in the appendix of the <em>Introduction to R</em> documentation,
+also available from CRAN, is recommended reading.</p>
+<p>
+</p>
+<p>
+
+The home page for the <strong>R</strong> project, located at <a href="http://r-project.org" class="uri">http://r-project.org</a>, is the best starting place for information about the software.
+It includes links to CRAN, which features pre-compiled binaries as well as source code for <strong>R</strong>, add-on packages, documentation (including manuals,
+frequently asked questions, and the <strong>R</strong> newsletter) as well as general background information.
+Mirrored CRAN sites with identical copies of these files exist all around the world.
+Updates to <strong>R</strong> and packages are regularly posted on CRAN.<br />
+
+</p>
+<div id="rstudio" class="section level3" number="23.1.1">
+<h3><span class="header-section-number">B.1.1</span> RStudio</h3>
+<p>
+</p>
+<p><strong>RStudio</strong> for Mac OS X, Windows, or Linux can be downloaded
+from <a href="https://rstudio.com/products/rstudio" class="uri">https://rstudio.com/products/rstudio</a>.
+<strong>RStudio</strong> requires <strong>R</strong> to be installed on the local machine.
+A server version
+(accessible from Web browsers) is also available for download.
+Documentation of the advanced features is available on the <strong>RStudio</strong> website.</p>
+</div>
+</div>
+<div id="learning-refr" class="section level2" number="23.2">
+<h2><span class="header-section-number">B.2</span> Learning <strong>R</strong></h2>
+<p>
+
+
+
+The <strong>R</strong> environment features extensive online documentation, though it can sometimes be challenging to comprehend. Each command has an associated help file that describes
+usage, lists arguments, provides details of actions, gives references, lists other related functions, and includes examples of its use. The help system is invoked using either the <code>?</code> or <code>help()</code> commands.</p>
+<div class="sourceCode" id="cb1213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1213-1"><a href="ch-R.html#cb1213-1" aria-hidden="true" tabindex="-1"></a>?<span class="cf">function</span></span>
+<span id="cb1213-2"><a href="ch-R.html#cb1213-2" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="cf">function</span>)</span></code></pre></div>
+<p>
+where <code>function</code> is the name of the function of interest. (Alternatively, the <code>Help</code> tab in <strong>RStudio</strong> can be used to access the help system.)</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Some commands (e.g., <code>if</code>) are reserved, so <code>?if</code> will not generate the desired documentation.
+Running <code>?"if"</code> will work (see also <code>?Reserved</code> and <code>?Control</code>). Other reserved words include <code>else</code>, <code>repeat</code>, <code>while</code>, <code>function</code>, <code>for</code>, <code>in</code>, <code>next</code>, <code>break</code>, <code>TRUE</code>, <code>FALSE</code>, <code>NULL</code>, <code>Inf</code>, <code>NaN</code>, and <code>NA</code>.</p>
+<p>
+The <code>RSiteSearch()</code> function will search for key words or phrases in many places (including the search engine at <a href="http://search.r-project.org" class="uri">http://search.r-project.org</a>).
+
+The <a href="http://rseek.org">RSeek.org</a> site can also be helpful in finding more information and examples.
+Examples of many functions are available using the <code>example()</code> function.</p>
+<p>
+</p>
+<div class="sourceCode" id="cb1214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1214-1"><a href="ch-R.html#cb1214-1" aria-hidden="true" tabindex="-1"></a><span class="fu">example</span>(mean)</span></code></pre></div>
+<p>
+
+</p>
+<p>Other useful resources are <code>help.start()</code>, which provides a set of online manuals, and <code>help.search()</code>, which can be used to look up entries by description. The <code>apropos()</code> command returns any functions in the current search list that match a given pattern (which facilitates searching for a function based on what it does, as opposed to its name).</p>
+<p>
+
+Other resources for help available from CRAN include the <strong>R</strong> help mailing list.
+The <a href="http://stackoverflow.com/questions/tagged/r">StackOverflow site</a> for <strong>R</strong> provides a series of questions and answers for common questions that are tagged as being related to <strong>R</strong>.
+New users are also encouraged to read the <strong>R</strong> FAQ (frequently asked questions) list.
+<strong>RStudio</strong> provides a <a href="http://www.rstudio.com/resources/training/online-learning">curated guide</a> to resources for learning <strong>R</strong> and its extensions.
+
+
+
+
+
+</p>
+</div>
+<div id="appR:objects" class="section level2" number="23.3">
+<h2><span class="header-section-number">B.3</span> Fundamental structures and objects</h2>
+<p>
+
+</p>
+<p>Here we provide a brief introduction to <strong>R</strong> data structures.</p>
+<div id="appR:assign" class="section level3" number="23.3.1">
+<h3><span class="header-section-number">B.3.1</span> Objects and vectors</h3>
+<p>
+
+
+
+
+
+
+
+Almost everything in <strong>R</strong> is an object, which may be initially confusing to a new user.
+An object is simply something stored in <strong>R</strong>’s memory. Common objects include vectors, matrices, arrays, factors, data frames (akin to data sets in other systems), lists, and functions.
+The basic variable structure is a vector.
+Vectors (and other objects) are created using the <code>&lt;-</code> or <code>=</code> assignment operators (which assign the evaluated expression on the right-hand side of the operator to the object name on the left-hand side).</p>
+<div class="sourceCode" id="cb1215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1215-1"><a href="ch-R.html#cb1215-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">13</span>, <span class="sc">-</span><span class="dv">4</span>, <span class="dv">8</span>) <span class="co"># preferred</span></span>
+<span id="cb1215-2"><a href="ch-R.html#cb1215-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span>  <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">13</span>, <span class="sc">-</span><span class="dv">4</span>, <span class="dv">8</span>)  <span class="co"># equivalent</span></span></code></pre></div>
+<p>The above code creates a vector of length 6 using the <code>c()</code> function to concatenate scalars.
+The <code>=</code> operator is used in other contexts for the specification of arguments to functions. Other assignment operators exist, as well as the <code>assign()</code> function (see <code>help("&lt;-")</code> for more information).
+The <code>exists()</code> function conveys whether an object exists in the workspace, and the <code>rm()</code> command removes it.
+In <strong>RStudio</strong>, the “Environment” tab shows the names (and values) of all objects that exist in the current workspace.
+
+
+
+
+
+</p>
+<p>
+
+
+<!--\index{R}{[ operator}-->
+<!--\index{R}{sum()}--></p>
+<p>Since vector operations are so fundamental in <strong>R</strong>, it is important to be able to access (or index) elements within these vectors.
+Many different ways of
+indexing vectors are available. Here, we introduce several of these using the <code>x</code> as created above. The command <code>x[2]</code> returns the second element of <code>x</code> (the scalar 7), and <code>x[c(2, 4)]</code> returns the vector <span class="math inline">\((7, 13)\)</span>. The expressions <code>x[c(TRUE, TRUE, TRUE, TRUE, TRUE, FALSE)]</code>, <code>x[1:5]</code> and <code>x[-6]</code> all return a vector consisting of the first 5 elements in <code>x</code> (the last specifies all elements except the 6th).</p>
+<div class="sourceCode" id="cb1216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1216-1"><a href="ch-R.html#cb1216-1" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>[1] 7</code></pre>
+<div class="sourceCode" id="cb1218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1218-1"><a href="ch-R.html#cb1218-1" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>)]</span></code></pre></div>
+<pre><code>[1]  7 13</code></pre>
+<div class="sourceCode" id="cb1220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1220-1"><a href="ch-R.html#cb1220-1" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)]</span></code></pre></div>
+<pre><code>[1]  5  7  9 13 -4</code></pre>
+<div class="sourceCode" id="cb1222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1222-1"><a href="ch-R.html#cb1222-1" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>[1]  5  7  9 13 -4</code></pre>
+<div class="sourceCode" id="cb1224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1224-1"><a href="ch-R.html#cb1224-1" aria-hidden="true" tabindex="-1"></a>x[<span class="sc">-</span><span class="dv">6</span>]</span></code></pre></div>
+<pre><code>[1]  5  7  9 13 -4</code></pre>
+<p>Vectors are <a href="https://en.wikipedia.org/w/index.php?search=recycled"><em>recycled</em></a> if needed; for example, when comparing each of the elements of a vector to a scalar.
+</p>
+<div class="sourceCode" id="cb1226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1226-1"><a href="ch-R.html#cb1226-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&gt;</span> <span class="dv">8</span></span></code></pre></div>
+<pre><code>[1] FALSE FALSE  TRUE  TRUE FALSE FALSE</code></pre>
+<p>
+
+
+
+</p>
+<p>The above expression demonstrates the use of comparison operators (see <code>?Comparison</code>).
+Only the third and fourth elements of <code>x</code> are greater than 8.
+The function returns a logical value of either <code>TRUE</code> or <code>FALSE</code> (see <code>?Logic</code>).</p>
+<p>
+
+
+</p>
+<p>A count of elements meeting the condition can be generated using the <code>sum()</code> function.
+Other comparison operators include <code>==</code> (equal), <code>&gt;=</code> (greater than or equal), <code>&lt;=</code> (less than or equal and <code>!=</code> (not equal).
+Care needs to be taken in the comparison using <code>==</code> if noninteger values are present (see <code>all.equal()</code>).</p>
+<div class="sourceCode" id="cb1228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1228-1"><a href="ch-R.html#cb1228-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x <span class="sc">&gt;</span> <span class="dv">8</span>)</span></code></pre></div>
+<pre><code>[1] 2</code></pre>
+</div>
+<div id="appR:operators" class="section level3" number="23.3.2">
+<h3><span class="header-section-number">B.3.2</span> Operators</h3>
+<p>There are many operators defined in <strong>R</strong> to carry out a variety of tasks.
+Many of these were demonstrated in the sample session (assignment,
+arithmetic) and previous examples (comparison).
+<!--\index{R}{+ operator}-->
+
+
+<!--\index{R}{- operator}-->
+<!--\index{R}{/ operator}-->
+<!--\index{R}{* operator}-->
+<!--\index{R}{^ operator@$\hat{}$ operator}-->
+<!--\index{R}{%% operator@%% operator}-->
+<!--\index{R}{&/& operator@&/& operator}-->
+
+Arithmetic operations include <code>+</code>,
+<code>-</code>, <code>*</code>, <code>/</code>, <code>^</code> (exponentiation), <code>%%</code> (modulus), and <code>%/%</code> (integer division). More information about operators can be found using the help system (e.g., <code>?"+"</code>). Background information on
+other operators and precedence rules can be found using <code>help(Syntax)</code>.</p>
+<p>
+
+
+
+<!--\index{R}{& operator@& operator}-->
+
+
+
+Boolean operations (OR, AND, NOT, and XOR) are supported using the <code>|</code>, <code>||</code>, <code>&amp;</code>, <code>!</code> operators and the <code>xor()</code> function.
+The <code>|</code> is an “or” operator that operates on each element of a vector,
+while the <code>||</code> is another “or” operator that stops evaluation the first time that the result is true (see <code>?Logic</code>).</p>
+</div>
+<div id="appR:lists" class="section level3" number="23.3.3">
+<h3><span class="header-section-number">B.3.3</span> Lists</h3>
+<p>
+
+
+
+<!--\index{R}{[[ operator}-->
+Lists in <strong>R</strong> are very general objects that can contain other objects of arbitrary types. List members can be named, or referenced using numeric indices (using the <code>[[</code> operator).</p>
+<div class="sourceCode" id="cb1230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1230-1"><a href="ch-R.html#cb1230-1" aria-hidden="true" tabindex="-1"></a>newlist <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">first =</span> <span class="st">&quot;hello&quot;</span>, <span class="at">second =</span> <span class="dv">42</span>, <span class="at">Bob =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1230-2"><a href="ch-R.html#cb1230-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.list</span>(newlist)</span></code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+<div class="sourceCode" id="cb1232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1232-1"><a href="ch-R.html#cb1232-1" aria-hidden="true" tabindex="-1"></a>newlist</span></code></pre></div>
+<pre><code>$first
+[1] &quot;hello&quot;
+
+$second
+[1] 42
+
+$Bob
+[1] TRUE</code></pre>
+<div class="sourceCode" id="cb1234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1234-1"><a href="ch-R.html#cb1234-1" aria-hidden="true" tabindex="-1"></a>newlist[[<span class="dv">2</span>]]</span></code></pre></div>
+<pre><code>[1] 42</code></pre>
+<div class="sourceCode" id="cb1236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1236-1"><a href="ch-R.html#cb1236-1" aria-hidden="true" tabindex="-1"></a>newlist<span class="sc">$</span>Bob</span></code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+<p>
+
+
+
+</p>
+<p>The <code>unlist()</code> function flattens (makes a vector out of) the elements in a list (see also <code>relist()</code>).
+Note that unlisted objects are coerced to a common type (in this case <code>character</code>).</p>
+<div class="sourceCode" id="cb1238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1238-1"><a href="ch-R.html#cb1238-1" aria-hidden="true" tabindex="-1"></a>unlisted <span class="ot">&lt;-</span> <span class="fu">unlist</span>(newlist)</span>
+<span id="cb1238-2"><a href="ch-R.html#cb1238-2" aria-hidden="true" tabindex="-1"></a>unlisted</span></code></pre></div>
+<pre><code>  first  second     Bob 
+&quot;hello&quot;    &quot;42&quot;  &quot;TRUE&quot; </code></pre>
+</div>
+<div id="appR:matrix" class="section level3" number="23.3.4">
+<h3><span class="header-section-number">B.3.4</span> Matrices</h3>
+<p>
+Matrices are like two-dimensional vectors: rectangular objects where all entries have the same type.
+We can create a <span class="math inline">\(2 \times 3\)</span> matrix, display it, and test for its type.</p>
+<p>
+
+</p>
+<div class="sourceCode" id="cb1240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1240-1"><a href="ch-R.html#cb1240-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(x, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb1240-2"><a href="ch-R.html#cb1240-2" aria-hidden="true" tabindex="-1"></a>A</span></code></pre></div>
+<pre><code>     [,1] [,2] [,3]
+[1,]    5    9   -4
+[2,]    7   13    8</code></pre>
+<div class="sourceCode" id="cb1242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1242-1"><a href="ch-R.html#cb1242-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.matrix</span>(A)    <span class="co"># is A a matrix?</span></span></code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+<div class="sourceCode" id="cb1244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1244-1"><a href="ch-R.html#cb1244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.vector</span>(A)</span></code></pre></div>
+<pre><code>[1] FALSE</code></pre>
+<div class="sourceCode" id="cb1246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1246-1"><a href="ch-R.html#cb1246-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.matrix</span>(x)</span></code></pre></div>
+<pre><code>[1] FALSE</code></pre>
+<!--\index{R}{# operator@# operator}-->
+<p>
+
+Note that comments are supported within <strong>R</strong> (any input given after a <code>#</code> character is ignored).</p>
+<p>Indexing for matrices is done in a similar fashion as for vectors, albeit with a second dimension (denoted by a comma).
+</p>
+<div class="sourceCode" id="cb1248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1248-1"><a href="ch-R.html#cb1248-1" aria-hidden="true" tabindex="-1"></a>A[<span class="dv">2</span>, <span class="dv">3</span>]</span></code></pre></div>
+<pre><code>[1] 8</code></pre>
+<div class="sourceCode" id="cb1250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1250-1"><a href="ch-R.html#cb1250-1" aria-hidden="true" tabindex="-1"></a>A[, <span class="dv">1</span>]</span></code></pre></div>
+<pre><code>[1] 5 7</code></pre>
+<div class="sourceCode" id="cb1252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1252-1"><a href="ch-R.html#cb1252-1" aria-hidden="true" tabindex="-1"></a>A[<span class="dv">1</span>, ]</span></code></pre></div>
+<pre><code>[1]  5  9 -4</code></pre>
+</div>
+<div id="appR:dataframe" class="section level3" number="23.3.5">
+<h3><span class="header-section-number">B.3.5</span> Dataframes and tibbles</h3>
+<p>
+
+
+
+
+
+Data sets are often stored in a <code>data.frame</code>, which is a special type of <code>list</code> that is more general than a <code>matrix</code>.
+This rectangular object, similar to a data table in other systems, can be thought of as a two-dimensional array with columns of vectors of the same length, but of possibly different types (as opposed to a matrix, which consists of vectors of the <em>same</em> type; or a list, whose elements needn’t be of the same length).
+The function <code>read_csv()</code> in the <strong>readr</strong> package returns a <code>data.frame</code> object.</p>
+<p>A simple
+<code>data.frame</code>
+can be created using the <code>data.frame()</code> command.
+Variables can be accessed using the <code>$</code> operator, as shown below (see also <code>help(Extract)</code>).
+In addition, operations can be performed by column (e.g., calculation of sample statistics).
+We can check to see if an object is a <code>data.frame</code> with <code>is.data.frame()</code>.
+
+</p>
+<div class="sourceCode" id="cb1254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1254-1"><a href="ch-R.html#cb1254-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">11</span>, <span class="fu">length</span>(x))</span>
+<span id="cb1254-2"><a href="ch-R.html#cb1254-2" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
+<pre><code>[1] 11 11 11 11 11 11</code></pre>
+<div class="sourceCode" id="cb1256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1256-1"><a href="ch-R.html#cb1256-1" aria-hidden="true" tabindex="-1"></a>ds <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x, y)</span>
+<span id="cb1256-2"><a href="ch-R.html#cb1256-2" aria-hidden="true" tabindex="-1"></a>ds</span></code></pre></div>
+<pre><code>   x  y
+1  5 11
+2  7 11
+3  9 11
+4 13 11
+5 -4 11
+6  8 11</code></pre>
+<div class="sourceCode" id="cb1258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1258-1"><a href="ch-R.html#cb1258-1" aria-hidden="true" tabindex="-1"></a>ds<span class="sc">$</span>x[<span class="dv">3</span>]</span></code></pre></div>
+<pre><code>[1] 9</code></pre>
+<div class="sourceCode" id="cb1260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1260-1"><a href="ch-R.html#cb1260-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.data.frame</span>(ds)</span></code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+<p>Tibbles are a form of simple data frames (a modern interpretation) that are described as “lazy and surly” (<a href="https://tibble.tidyverse.org" class="uri">https://tibble.tidyverse.org</a>). They support multiple data technologies (e.g., SQL databases), make more explicit their assumptions, and have an enhanced print method (so that output doesn’t scroll so much).
+Many packages in the <strong>tidyverse</strong> create tibbles by default.
+
+
+</p>
+<div class="sourceCode" id="cb1262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1262-1"><a href="ch-R.html#cb1262-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(ds)</span>
+<span id="cb1262-2"><a href="ch-R.html#cb1262-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.data.frame</span>(tbl)</span></code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+<div class="sourceCode" id="cb1264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1264-1"><a href="ch-R.html#cb1264-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is_tibble</span>(ds)</span></code></pre></div>
+<pre><code>[1] FALSE</code></pre>
+<div class="sourceCode" id="cb1266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1266-1"><a href="ch-R.html#cb1266-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is_tibble</span>(tbl)</span></code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+<p>The use of <code>data.frame()</code> differs from the use of <code>cbind()</code>, which yields a <code>matrix</code> object (unless it is given data frames as inputs).</p>
+<p>
+
+
+
+</p>
+<div class="sourceCode" id="cb1268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1268-1"><a href="ch-R.html#cb1268-1" aria-hidden="true" tabindex="-1"></a>newmat <span class="ot">&lt;-</span> <span class="fu">cbind</span>(x, y)</span>
+<span id="cb1268-2"><a href="ch-R.html#cb1268-2" aria-hidden="true" tabindex="-1"></a>newmat</span></code></pre></div>
+<pre><code>      x  y
+[1,]  5 11
+[2,]  7 11
+[3,]  9 11
+[4,] 13 11
+[5,] -4 11
+[6,]  8 11</code></pre>
+<div class="sourceCode" id="cb1270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1270-1"><a href="ch-R.html#cb1270-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.data.frame</span>(newmat)</span></code></pre></div>
+<pre><code>[1] FALSE</code></pre>
+<div class="sourceCode" id="cb1272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1272-1"><a href="ch-R.html#cb1272-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.matrix</span>(newmat)</span></code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Data frames are created from matrices using <code>as.data.frame()</code>, while matrices
+are constructed from data frames using <code>as.matrix()</code>.</p>
+<p>Although we strongly discourage its use, data frames can be attached to the workspace using the <code>attach()</code> command.
+The Tidyverse <strong>R</strong> Style guide (<a href="https://style.tidyverse.org" class="uri">https://style.tidyverse.org</a>) provides similar advice.
+Name conflicts are a common problem with <code>attach()</code> (see <code>conflicts()</code>, which reports on objects that exist with the same name in two or more places on the search path).</p>
+<p>
+
+The <code>search()</code> function lists attached packages and objects.
+To avoid cluttering and confusing the name-space, the command <code>detach()</code> should be used once a data frame or package is no longer needed.</p>
+<p>A number of <strong>R</strong> functions include a <code>data</code> argument to specify a data frame as a local environment.
+For functions without a <code>data</code> option, the <code>with()</code> and <code>within()</code> commands can be used to simplify reference to an object within a data frame without attaching.</p>
+</div>
+<div id="appR:attr" class="section level3" number="23.3.6">
+<h3><span class="header-section-number">B.3.6</span> Attributes and classes</h3>
+<p>
+
+Many objects have a set of associated attributes (such as names of variables, dimensions, or classes) that can be displayed or sometimes changed.
+For example, we can find the dimension of the matrix defined earlier.
+</p>
+<div class="sourceCode" id="cb1274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1274-1"><a href="ch-R.html#cb1274-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(A)</span></code></pre></div>
+<pre><code>$dim
+[1] 2 3</code></pre>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+Other types of objects within <strong>R</strong> include <code>list</code>s (ordered objects that are not necessarily rectangular), regression models (objects of class <code>lm</code>), and formulae (e.g., <code>y ~ x1 + x2</code>). <strong>R</strong> supports <a href="https://en.wikipedia.org/w/index.php?search=object-oriented%20programming"><em>object-oriented programming</em></a> (see <code>help(UseMethod)</code>).
+As a result, objects in <strong>R</strong> have an associated <a href="https://en.wikipedia.org/w/index.php?search=class"><em>class</em></a> attribute, which
+changes the default behavior for some operations on that object.
+Many functions (called <a href="https://en.wikipedia.org/w/index.php?search=generics"><em>generics</em></a>) have special capabilities when applied to objects of a particular class.
+For example, when <code>summary()</code> is applied to an <code>lm</code> object, the <code>summary.lm()</code> function is called.
+Conversely, <code>summary.aov()</code> is called when an <code>aov</code> object is given as argument.
+These class-specific implementations of generic functions are called <a href="https://en.wikipedia.org/w/index.php?search=methods"><em>methods</em></a>.</p>
+<p>The <code>class()</code> function returns the classes to which an object belongs, while the <code>methods()</code> function displays all of the classes supported by a generic function.</p>
+<div class="sourceCode" id="cb1276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1276-1"><a href="ch-R.html#cb1276-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">methods</span>(summary))</span></code></pre></div>
+<pre><code>[1] &quot;summary,ANY-method&quot;             &quot;summary,DBIObject-method&quot;      
+[3] &quot;summary,MySQLConnection-method&quot; &quot;summary,MySQLDriver-method&quot;    
+[5] &quot;summary,MySQLResult-method&quot;     &quot;summary.aov&quot;                   </code></pre>
+<p>Objects in <strong>R</strong> can belong to multiple classes, although those classes need not be nested. As noted above, generic functions are <a href="https://en.wikipedia.org/w/index.php?search=dispatched"><em>dispatched</em></a> according the class attribute of each object.
+Thus, in the example below we create the <code>tbl</code> object, which belongs to multiple classes.
+When the <code>print()</code> function is called on <code>tbl</code>, <strong>R</strong> looks for a method called <code>print.tbl_df()</code>.
+If no such method is found, <strong>R</strong> looks for a method called <code>print.tbl()</code>.
+If no such method is found, <strong>R</strong> looks for a method called <code>print.data.frame()</code>. This process continues until a suitable method is found. If there is none, then <code>print.default()</code> is called.</p>
+<div class="sourceCode" id="cb1278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1278-1"><a href="ch-R.html#cb1278-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(ds)</span>
+<span id="cb1278-2"><a href="ch-R.html#cb1278-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(tbl)</span></code></pre></div>
+<pre><code>[1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<div class="sourceCode" id="cb1280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1280-1"><a href="ch-R.html#cb1280-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tbl)</span></code></pre></div>
+<pre><code># A tibble: 6 × 2
+      x     y
+  &lt;dbl&gt; &lt;dbl&gt;
+1     5    11
+2     7    11
+3     9    11
+4    13    11
+5    -4    11
+6     8    11</code></pre>
+<div class="sourceCode" id="cb1282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1282-1"><a href="ch-R.html#cb1282-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print.data.frame</span>(tbl)</span></code></pre></div>
+<pre><code>   x  y
+1  5 11
+2  7 11
+3  9 11
+4 13 11
+5 -4 11
+6  8 11</code></pre>
+<div class="sourceCode" id="cb1284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1284-1"><a href="ch-R.html#cb1284-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print.default</span>(tbl)</span></code></pre></div>
+<pre><code>$x
+[1]  5  7  9 13 -4  8
+
+$y
+[1] 11 11 11 11 11 11
+
+attr(,&quot;class&quot;)
+[1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<p>
+
+
+There are a number of functions that assist with learning about an object in <strong>R</strong>. The <code>attributes()</code> command displays the attributes associated with an object. The <code>typeof()</code> function provides information about the underlying data structure of objects (e.g., logical, integer, double, complex, character, and list).
+The <code>str()</code> function displays the structure of an object, and the <code>mode()</code> function displays its storage mode. For data frames, the <code>glimpse()</code> function provides a useful summary of each variable.</p>
+<p>A few quick notes on specific types of objects are worth relating here:</p>
+<ul>
+<li>A vector is a one-dimensional array of items of the same data type. There are <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types">six basic data types</a> that a vector can contain: <code>logical</code>, <code>character</code>, <code>integer</code>, <code>double</code>, <code>complex</code>, and <code>raw</code>. Vectors have a <code>length()</code> but not a <code>dim()</code>. Vectors can have—but needn’t have—<code>names()</code>.</li>
+<li>A <code>factor</code> is a special type of vector for categorical data. A factor has <code>level()</code>s. We change the reference level of a factor with <code>relevel()</code>. Factors are stored internally as integers that correspond to the id’s of the factor levels.</li>
+</ul>
+<div class="rmdtip">
+<p>Factors can be problematic and their use is discouraged since they can complicate some aspects of data wrangling. A number of <strong>R</strong> developers have encouraged the use of the <code>stringsAsFactors = FALSE</code> option.</p>
+</div>
+<ul>
+<li>A <code>matrix</code> is a two-dimensional array of items of the same data type. A matrix has a <code>length()</code> that is equal to <code>nrow()</code> times <code>ncol()</code>, or the product of <code>dim()</code>.</li>
+<li>A <code>data.frame</code> is a <code>list</code> of vectors of the same length. This is like a matrix, except that columns can be of different data types. Data frames always have <code>names()</code> and often have <code>row.names()</code>.</li>
+</ul>
+<div class="rmdtip">
+<p>Do not confuse a <code>factor</code> with a <code>character</code> vector.</p>
+</div>
+<p>Note that data sets typically have class <code>data.frame</code> but are of type <code>list</code>. This is because, as noted above, <strong>R</strong> stores data frames as special types of lists—a list of several vectors having the same length, but possibly having different types.</p>
+<div class="sourceCode" id="cb1286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1286-1"><a href="ch-R.html#cb1286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(mtcars)</span></code></pre></div>
+<pre><code>[1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode" id="cb1288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1288-1"><a href="ch-R.html#cb1288-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(mtcars)</span></code></pre></div>
+<pre><code>[1] &quot;list&quot;</code></pre>
+<div class="rmdtip">
+<p>If you ever get confused when working with data frames and matrices, remember that a <code>data.frame</code> is a <code>list</code> (that can accommodate multiple types of objects), whereas a <code>matrix</code> is more like a <code>vector</code> (in that it can only support one type of object).</p>
+</div>
+</div>
+<div id="appR:options" class="section level3" number="23.3.7">
+<h3><span class="header-section-number">B.3.7</span> Options</h3>
+<p>
+
+The <code>options()</code> function in <strong>R</strong> can be used to change various default behaviors. For example, the <code>digits</code> argument controls the number of digits to display in output.<br />
+The current options are returned when <code>options()</code> is called, to allow them to be restored. The command <code>help(options)</code> lists all of the settable options.</p>
+</div>
+<div id="sec:func" class="section level3" number="23.3.8">
+<h3><span class="header-section-number">B.3.8</span> Functions</h3>
+<p>
+</p>
+<p>Fundamental actions within <strong>R</strong> are carried out by calling <a href="https://en.wikipedia.org/w/index.php?search=functions"><em>functions</em></a> (either built-in or user defined—see Appendix <a href="ch-function.html#ch:function">C</a> for guidance on the latter).
+Multiple <a href="https://en.wikipedia.org/w/index.php?search=arguments"><em>arguments</em></a> may be given, separated by commas.
+The function carries out operations using the provided arguments
+and returns values (an object such as a vector or list) that are displayed (by default) or which can be saved by assignment to an object.</p>
+<div class="rmdtip">
+<p>It’s a good idea to name arguments to functions.
+This practice minimizes errors assigning unnamed arguments to options and makes code more readable.</p>
+</div>
+<p>As an example, the <code>quantile()</code> function takes a numeric vector and returns the minimum, 25th percentile,
+median, 75th percentile, and maximum of the values in that vector.
+However, if an optional vector of quantiles is given, those quantiles are calculated instead.</p>
+<div class="sourceCode" id="cb1290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1290-1"><a href="ch-R.html#cb1290-1" aria-hidden="true" tabindex="-1"></a>vals <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>) <span class="co"># generate 1000 standard normal random variables</span></span>
+<span id="cb1290-2"><a href="ch-R.html#cb1290-2" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(vals)</span></code></pre></div>
+<pre><code>    0%    25%    50%    75%   100% 
+-3.520 -0.675  0.012  0.737  3.352 </code></pre>
+<div class="sourceCode" id="cb1292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1292-1"><a href="ch-R.html#cb1292-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(vals, <span class="fu">c</span>(.<span class="dv">025</span>, .<span class="dv">975</span>))</span></code></pre></div>
+<pre><code> 2.5% 97.5% 
+-2.00  1.98 </code></pre>
+<div class="sourceCode" id="cb1294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1294-1"><a href="ch-R.html#cb1294-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return values can be saved for later use.</span></span>
+<span id="cb1294-2"><a href="ch-R.html#cb1294-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">quantile</span>(vals, <span class="fu">c</span>(.<span class="dv">025</span>, .<span class="dv">975</span>))</span>
+<span id="cb1294-3"><a href="ch-R.html#cb1294-3" aria-hidden="true" tabindex="-1"></a>res[<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>2.5% 
+  -2 </code></pre>
+<p>Arguments (options) are available for most functions.
+The documentation specifies the default action if named arguments are not specified.
+If not named, the arguments are provided to the function in order specified in the function call.</p>
+<p>For the <code>quantile()</code> function, there is a <code>type</code> argument that allows specification of one of nine algorithms for calculating quantiles.<br />
+
+</p>
+<div class="sourceCode" id="cb1296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1296-1"><a href="ch-R.html#cb1296-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">quantile</span>(vals, <span class="at">probs =</span> <span class="fu">c</span>(.<span class="dv">025</span>, .<span class="dv">975</span>), <span class="at">type =</span> <span class="dv">3</span>)</span>
+<span id="cb1296-2"><a href="ch-R.html#cb1296-2" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
+<pre><code> 2.5% 97.5% 
+-2.02  1.98 </code></pre>
+<p>
+Some functions allow a variable number of arguments.
+An example is the
+
+
+<code>paste()</code> function.
+The calling sequence is described in the documentation as follows.</p>
+<div class="sourceCode" id="cb1298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1298-1"><a href="ch-R.html#cb1298-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(..., <span class="at">sep =</span> <span class="st">&quot; &quot;</span>, <span class="at">collapse =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<p>
+To override the default behavior of a space being added between
+elements output by <code>paste()</code>, the user can specify a different
+value for <code>sep</code>.</p>
+</div>
+</div>
+<div id="add-ons-packages" class="section level2" number="23.4">
+<h2><span class="header-section-number">B.4</span> Add-ons: Packages</h2>
+<div id="appR:packages" class="section level3" number="23.4.1">
+<h3><span class="header-section-number">B.4.1</span> Introduction to packages</h3>
+<p>
+
+
+
+
+
+Additional functionality in <strong>R</strong> is added through packages, which consist of
+functions, data sets, examples, vignettes, and help files that can be downloaded from CRAN.
+The function <code>install.packages()</code> can be used to download and install packages.
+Alternatively, <strong>RStudio</strong> provides an easy-to-use <code>Packages</code> tab to install and load packages.</p>
+<p>Throughout the book, we assume that the <strong>tidyverse</strong> and <strong>mdsr</strong> packages are loaded.
+In many cases, additional add-on packages (see Appendix <a href="ch-mdsr.html#ch:mdsr">A</a>) need to be installed prior to running the examples in this book.</p>
+<p>Packages that are not on CRAN can be installed using the <code>install_github()</code> function in the <strong>remotes</strong> package.</p>
+<div class="sourceCode" id="cb1299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1299-1"><a href="ch-R.html#cb1299-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;mdsr&quot;</span>)    <span class="co"># CRAN version</span></span>
+<span id="cb1299-2"><a href="ch-R.html#cb1299-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;mdsr-book/mdsr&quot;</span>)    <span class="co"># development version</span></span></code></pre></div>
+<p>
+
+
+
+
+
+The <code>library()</code> function will load an installed package.<br />
+For example, to install and load Frank Harrell’s <code>Hmisc()</code> package, two commands are needed:</p>
+<div class="sourceCode" id="cb1300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1300-1"><a href="ch-R.html#cb1300-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;Hmisc&quot;</span>)</span>
+<span id="cb1300-2"><a href="ch-R.html#cb1300-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span></code></pre></div>
+<p>
+If a package is not installed, running the <code>library()</code> command will yield an
+error.
+Here we try to load the <strong>xaringanthemer</strong> package (which has not been installed):</p>
+<p></p>
+<div class="sourceCode" id="cb1301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1301-1"><a href="ch-R.html#cb1301-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">library</span>(xaringanthemer)</span>
+<span id="cb1301-2"><a href="ch-R.html#cb1301-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">library</span>(xaringanthemer) <span class="sc">:</span> there is no package called <span class="st">&#39;xaringanthemer&#39;</span></span></code></pre></div>
+<p>
+To rectify the problem, we install the package from CRAN.</p>
+<p></p>
+<div class="sourceCode" id="cb1302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1302-1"><a href="ch-R.html#cb1302-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">install.packages</span>(<span class="st">&quot;xaringanthemer&quot;</span>)</span>
+<span id="cb1302-2"><a href="ch-R.html#cb1302-2" aria-hidden="true" tabindex="-1"></a>trying URL <span class="st">&#39;https://cloud.r-project.org/src/contrib/xaringanthemer_0.3.0.tar.gz&#39;</span></span>
+<span id="cb1302-3"><a href="ch-R.html#cb1302-3" aria-hidden="true" tabindex="-1"></a>Content type <span class="st">&#39;application/x-gzip&#39;</span> length <span class="dv">1362643</span> <span class="fu">bytes</span> (<span class="fl">1.3</span> MB)</span>
+<span id="cb1302-4"><a href="ch-R.html#cb1302-4" aria-hidden="true" tabindex="-1"></a><span class="sc">==</span><span class="er">================================================</span></span>
+<span id="cb1302-5"><a href="ch-R.html#cb1302-5" aria-hidden="true" tabindex="-1"></a>downloaded <span class="fl">1.3</span> Mb</span></code></pre></div>
+<div class="sourceCode" id="cb1303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1303-1"><a href="ch-R.html#cb1303-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xaringanthemer)</span></code></pre></div>
+<p>
+The <code>require()</code> function will test whether a package is available—this will load the library if it is installed, and generate a warning message if it is not (as opposed to <code>library()</code>, which will return an error).</p>
+<p>
+
+
+The names of all variables within a given data set (or more generally for sub-objects within an object) are provided by the <code>names()</code> command.
+The names of all objects defined within an <strong>R</strong> session can be generated using the <code>objects()</code> and <code>ls()</code> commands, which return a vector of character strings.
+<strong>RStudio</strong> includes an <code>Environment</code> tab that lists all the objects in the current environment.
+
+
+
+</p>
+<p>
+
+
+
+The <code>print()</code> and <code>summary()</code> functions return the object or summaries of that object, respectively.
+Running <code>print(object)</code> at the command line is equivalent to just entering
+the name of the object, i.e., <code>object</code>.</p>
+</div>
+<div id="packages-and-name-conflicts" class="section level3" number="23.4.2">
+<h3><span class="header-section-number">B.4.2</span> Packages and name conflicts</h3>
+<p>
+
+
+
+
+</p>
+<p>
+
+
+Different package authors may choose the same name for functions that
+exist within base <strong>R</strong> (or within other packages). This will cause the other
+function or object to be <a href="https://en.wikipedia.org/w/index.php?search=masked"><em>masked</em></a>. This can sometimes lead to confusion, when the expected version of a function is not the one that is called.
+The <code>find()</code> function can be used to determine where in the environment (workspace) a given object can be found.</p>
+<div class="sourceCode" id="cb1304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1304-1"><a href="ch-R.html#cb1304-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span>(<span class="st">&quot;mean&quot;</span>)</span></code></pre></div>
+<pre><code>[1] &quot;package:base&quot;</code></pre>
+<p>
+
+
+<!--\index{R}{:: operator}-->
+Sometimes it is desirable to remove a package from the workspace.
+For example, a package might define a function with the same name as an existing function.
+Packages can be detached using the syntax <code>detach(package:PKGNAME)</code>,
+where <code>PKGNAME</code> is the name of the package.
+Objects with the same name that appear in multiple places in the environment can be accessed using the <code>location::objectname</code> syntax.
+As an example, to access the <code>mean()</code> function from the <strong>base</strong> package, the user would specify <code>base::mean()</code> instead of <code>mean()</code>.
+It is sometimes preferable to reference a function or object in this way rather than loading the package.</p>
+<p>
+
+
+As an example where this might be useful, there are functions in the
+<strong>base</strong> and <strong>Hmisc</strong> packages called <code>units()</code>. The find
+command would display both (in the order in which they would be accessed).</p>
+<div class="sourceCode" id="cb1306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1306-1"><a href="ch-R.html#cb1306-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb1306-2"><a href="ch-R.html#cb1306-2" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span>(<span class="st">&quot;units&quot;</span>)</span></code></pre></div>
+<pre><code>[1] &quot;package:Hmisc&quot; &quot;package:base&quot; </code></pre>
+<!--\index{R}{:: operator}-->
+<p>
+When the <strong>Hmisc</strong> package is loaded, the <code>units()</code> function from the <strong>base</strong> package is masked and would not be used by default.
+To specify that the version of the function from the <strong>base</strong> package should be used,
+prefix the function with the package name followed by two colons: <code>base::units()</code>.
+The <code>conflicts()</code> function
+reports on objects that exist with the same name in two or more places on the search path.</p>
+<p>
+
+
+
+
+
+Running the command <code>library(help = "PKGNAME")</code>
+will display information about an installed package.
+Alternatively, the <code>Packages</code> tab in <strong>RStudio</strong> can be used to list, install, and update packages.</p>
+<p>
+
+
+The <code>session_info()</code> function from the <strong>sessioninfo</strong> package provides improved reporting version information about <strong>R</strong> as well as details of loaded packages.</p>
+<div class="sourceCode" id="cb1308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1308-1"><a href="ch-R.html#cb1308-1" aria-hidden="true" tabindex="-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>()</span></code></pre></div>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 4.1.0 (2021-05-18)
+ os       Ubuntu 20.04.2 LTS          
+ system   x86_64, linux-gnu           
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ ctype    en_US.UTF-8                 
+ tz       America/New_York            
+ date     2021-07-28                  
+
+─ Packages ───────────────────────────────────────────────────────────────
+ package        * version date       lib source        
+ assertthat       0.2.1   2019-03-21 [1] CRAN (R 4.1.0)
+ backports        1.2.1   2020-12-09 [1] CRAN (R 4.1.0)
+ base64enc        0.1-3   2015-07-28 [1] CRAN (R 4.1.0)
+ bookdown         0.22    2021-04-22 [1] CRAN (R 4.1.0)
+ broom            0.7.8   2021-06-24 [1] CRAN (R 4.1.0)
+ bslib            0.2.5.1 2021-05-18 [1] CRAN (R 4.1.0)
+ cellranger       1.1.0   2016-07-27 [1] CRAN (R 4.1.0)
+ checkmate        2.0.0   2020-02-06 [1] CRAN (R 4.1.0)
+ cli              3.0.1   2021-07-17 [1] CRAN (R 4.1.0)
+ cluster          2.1.2   2021-04-17 [4] CRAN (R 4.0.5)
+ colorspace       2.0-2   2021-06-24 [1] CRAN (R 4.1.0)
+ crayon           1.4.1   2021-02-08 [1] CRAN (R 4.1.0)
+ data.table       1.14.0  2021-02-21 [1] CRAN (R 4.1.0)
+ DBI            * 1.1.1   2021-01-15 [1] CRAN (R 4.1.0)
+ dbplyr           2.1.1   2021-04-06 [1] CRAN (R 4.1.0)
+ digest           0.6.27  2020-10-24 [1] CRAN (R 4.1.0)
+ dplyr          * 1.0.7   2021-06-18 [1] CRAN (R 4.1.0)
+ ellipsis         0.3.2   2021-04-29 [1] CRAN (R 4.1.0)
+ evaluate         0.14    2019-05-28 [1] CRAN (R 4.1.0)
+ fansi            0.5.0   2021-05-25 [1] CRAN (R 4.1.0)
+ forcats        * 0.5.1   2021-01-27 [1] CRAN (R 4.1.0)
+ foreign          0.8-81  2020-12-22 [4] CRAN (R 4.0.3)
+ Formula        * 1.2-4   2020-10-16 [1] CRAN (R 4.1.0)
+ fs               1.5.0   2020-07-31 [1] CRAN (R 4.1.0)
+ generics         0.1.0   2020-10-31 [1] CRAN (R 4.1.0)
+ ggplot2        * 3.3.5   2021-06-25 [1] CRAN (R 4.1.0)
+ glue             1.4.2   2020-08-27 [1] CRAN (R 4.1.0)
+ gridExtra        2.3     2017-09-09 [1] CRAN (R 4.1.0)
+ gtable           0.3.0   2019-03-25 [1] CRAN (R 4.1.0)
+ haven            2.4.1   2021-04-23 [1] CRAN (R 4.1.0)
+ Hmisc            4.5-0   2021-02-28 [1] CRAN (R 4.1.0)
+ hms              1.1.0   2021-05-17 [1] CRAN (R 4.1.0)
+ htmlTable        2.2.1   2021-05-18 [1] CRAN (R 4.1.0)
+ htmltools        0.5.1.1 2021-01-22 [1] CRAN (R 4.1.0)
+ htmlwidgets      1.5.3   2020-12-10 [1] CRAN (R 4.1.0)
+ httr             1.4.2   2020-07-20 [1] CRAN (R 4.1.0)
+ jpeg             0.1-9   2021-07-24 [1] CRAN (R 4.1.0)
+ jquerylib        0.1.4   2021-04-26 [1] CRAN (R 4.1.0)
+ jsonlite         1.7.2   2020-12-09 [1] CRAN (R 4.1.0)
+ knitr            1.33    2021-04-24 [1] CRAN (R 4.1.0)
+ lattice        * 0.20-44 2021-05-02 [4] CRAN (R 4.1.0)
+ latticeExtra     0.6-29  2019-12-19 [1] CRAN (R 4.1.0)
+ lifecycle        1.0.0   2021-02-15 [1] CRAN (R 4.1.0)
+ lubridate        1.7.10  2021-02-26 [1] CRAN (R 4.1.0)
+ magrittr         2.0.1   2020-11-17 [1] CRAN (R 4.1.0)
+ Matrix           1.3-4   2021-06-01 [4] CRAN (R 4.1.0)
+ mdsr           * 0.2.5   2021-03-29 [1] CRAN (R 4.1.0)
+ modelr           0.1.8   2020-05-19 [1] CRAN (R 4.1.0)
+ mosaicData     * 0.20.2  2021-01-16 [1] CRAN (R 4.1.0)
+ munsell          0.5.0   2018-06-12 [1] CRAN (R 4.1.0)
+ nnet             7.3-16  2021-05-03 [4] CRAN (R 4.0.5)
+ pillar           1.6.1   2021-05-16 [1] CRAN (R 4.1.0)
+ pkgconfig        2.0.3   2019-09-22 [1] CRAN (R 4.1.0)
+ png              0.1-7   2013-12-03 [1] CRAN (R 4.1.0)
+ purrr          * 0.3.4   2020-04-17 [1] CRAN (R 4.1.0)
+ R6               2.5.0   2020-10-28 [1] CRAN (R 4.1.0)
+ RColorBrewer     1.1-2   2014-12-07 [1] CRAN (R 4.1.0)
+ Rcpp             1.0.7   2021-07-07 [1] CRAN (R 4.1.0)
+ readr          * 2.0.0   2021-07-20 [1] CRAN (R 4.1.0)
+ readxl           1.3.1   2019-03-13 [1] CRAN (R 4.1.0)
+ repr             1.1.3   2021-01-21 [1] CRAN (R 4.1.0)
+ reprex           2.0.0   2021-04-02 [1] CRAN (R 4.1.0)
+ rlang            0.4.11  2021-04-30 [1] CRAN (R 4.1.0)
+ rmarkdown        2.9     2021-06-15 [1] CRAN (R 4.1.0)
+ RMySQL           0.10.22 2021-06-22 [1] CRAN (R 4.1.0)
+ rpart            4.1-15  2019-04-12 [4] CRAN (R 4.0.0)
+ rstudioapi       0.13    2020-11-12 [1] CRAN (R 4.1.0)
+ rvest            1.0.1   2021-07-26 [1] CRAN (R 4.1.0)
+ sass             0.4.0   2021-05-12 [1] CRAN (R 4.1.0)
+ scales           1.1.1   2020-05-11 [1] CRAN (R 4.1.0)
+ sessioninfo      1.1.1   2018-11-05 [1] CRAN (R 4.1.0)
+ skimr            2.1.3   2021-03-07 [1] CRAN (R 4.1.0)
+ stringi          1.7.3   2021-07-16 [1] CRAN (R 4.1.0)
+ stringr        * 1.4.0   2019-02-10 [1] CRAN (R 4.1.0)
+ survival       * 3.2-11  2021-04-26 [4] CRAN (R 4.0.5)
+ tibble         * 3.1.3   2021-07-23 [1] CRAN (R 4.1.0)
+ tidyr          * 1.1.3   2021-03-03 [1] CRAN (R 4.1.0)
+ tidyselect       1.1.1   2021-04-30 [1] CRAN (R 4.1.0)
+ tidyverse      * 1.3.1   2021-04-15 [1] CRAN (R 4.1.0)
+ tzdb             0.1.2   2021-07-20 [1] CRAN (R 4.1.0)
+ utf8             1.2.2   2021-07-24 [1] CRAN (R 4.1.0)
+ vctrs            0.3.8   2021-04-29 [1] CRAN (R 4.1.0)
+ withr            2.4.2   2021-04-18 [1] CRAN (R 4.1.0)
+ xaringanthemer * 0.4.0   2021-06-24 [1] CRAN (R 4.1.0)
+ xfun             0.24    2021-06-15 [1] CRAN (R 4.1.0)
+ xml2             1.3.2   2020-04-23 [1] CRAN (R 4.1.0)
+ yaml             2.2.1   2020-02-01 [1] CRAN (R 4.1.0)
+
+[1] /home/bbaumer/R/x86_64-pc-linux-gnu-library/4.1
+[2] /usr/local/lib/R/site-library
+[3] /usr/lib/R/site-library
+[4] /usr/lib/R/library</code></pre>
+<p>
+The <code>update.packages()</code> function should be run periodically to ensure that packages are up-to-date
+
+</p>
+<p>As of December 2020, there were more than 16,800 packages available from CRAN.
+This represents a tremendous investment of time and code by many developers <span class="citation">(Fox 2009)</span>.
+While each of these has met a minimal standard for inclusion, it is important to keep in mind that packages in <strong>R</strong> are created by individuals or small groups, and not endorsed by the <strong>R</strong> core group. As a result, they do not necessarily undergo the same level of testing and quality assurance that the core <strong>R</strong> system does.</p>
+</div>
+<div id="appR:tasks" class="section level3" number="23.4.3">
+<h3><span class="header-section-number">B.4.3</span> CRAN task views</h3>
+<p>
+
+
+
+
+
+</p>
+<p>The <a href="http://cran.r-project.org/web/views">“Task Views” on CRAN</a> are
+a very useful resource for finding packages. These are curated
+listings of relevant packages within a particular application area
+(such as multivariate statistics, psychometrics, or survival analysis).
+Table <a href="ch-R.html#tab:cran">B.1</a> displays the task views available as of July 2021.</p>
+<table>
+<caption><span id="tab:cran">Table B.1: </span>A complete list of CRAN task views.</caption>
+<colgroup>
+<col width="56%" />
+<col width="43%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Task View</th>
+<th align="left">Subject</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/Bayesian.html">Bayesian</a></td>
+<td align="left">Bayesian Inference</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/ChemPhys.html">ChemPhys</a></td>
+<td align="left">Chemometrics and Computational Physics</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/ClinicalTrials.html">ClinicalTrials</a></td>
+<td align="left">Clinical Trial Design, Monitoring, and Analysis</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/Cluster.html">Cluster</a></td>
+<td align="left">Cluster Analysis and Finite Mixture Models</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/Databases.html">Databases</a></td>
+<td align="left">Databases with R</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/DifferentialEquations.html">DifferentialEquations</a></td>
+<td align="left">Differential Equations</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/Distributions.html">Distributions</a></td>
+<td align="left">Probability Distributions</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/Econometrics.html">Econometrics</a></td>
+<td align="left">Econometrics</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/Environmetrics.html">Environmetrics</a></td>
+<td align="left">Analysis of Ecological and Environmental Data</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/ExperimentalDesign.html">ExperimentalDesign</a></td>
+<td align="left">Design of Experiments (DoE) and Analysis of Experimental Data</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/ExtremeValue.html">ExtremeValue</a></td>
+<td align="left">Extreme Value Analysis</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/Finance.html">Finance</a></td>
+<td align="left">Empirical Finance</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/FunctionalData.html">FunctionalData</a></td>
+<td align="left">Functional Data Analysis</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/Genetics.html">Genetics</a></td>
+<td align="left">Statistical Genetics</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/gR.html">gR</a></td>
+<td align="left">gRaphical Models in R</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/Graphics.html">Graphics</a></td>
+<td align="left">Graphic Displays and Dynamic Graphics and Graphic Devices and Visualization</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/HighPerformanceComputing.html">HighPerformanceComputing</a></td>
+<td align="left">High-Performance and Parallel Computing with R</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/Hydrology.html">Hydrology</a></td>
+<td align="left">Hydrological Data and Modeling</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/MachineLearning.html">MachineLearning</a></td>
+<td align="left">Machine Learning and Statistical Learning</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/MedicalImaging.html">MedicalImaging</a></td>
+<td align="left">Medical Image Analysis</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/MetaAnalysis.html">MetaAnalysis</a></td>
+<td align="left">Meta-Analysis</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/MissingData.html">MissingData</a></td>
+<td align="left">Missing Data</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/ModelDeployment.html">ModelDeployment</a></td>
+<td align="left">Model Deployment with R</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/Multivariate.html">Multivariate</a></td>
+<td align="left">Multivariate Statistics</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/NaturalLanguageProcessing.html">NaturalLanguageProcessing</a></td>
+<td align="left">Natural Language Processing</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/NumericalMathematics.html">NumericalMathematics</a></td>
+<td align="left">Numerical Mathematics</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/OfficialStatistics.html">OfficialStatistics</a></td>
+<td align="left">Official Statistics and Survey Methodology</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/Optimization.html">Optimization</a></td>
+<td align="left">Optimization and Mathematical Programming</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/Pharmacokinetics.html">Pharmacokinetics</a></td>
+<td align="left">Analysis of Pharmacokinetic Data</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/Phylogenetics.html">Phylogenetics</a></td>
+<td align="left">Phylogenetics, Especially Comparative Methods</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/Psychometrics.html">Psychometrics</a></td>
+<td align="left">Psychometric Models and Methods</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/ReproducibleResearch.html">ReproducibleResearch</a></td>
+<td align="left">Reproducible Research</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/Robust.html">Robust</a></td>
+<td align="left">Robust Statistical Methods</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/SocialSciences.html">SocialSciences</a></td>
+<td align="left">Statistics for the Social Sciences</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/Spatial.html">Spatial</a></td>
+<td align="left">Analysis of Spatial Data</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/SpatioTemporal.html">SpatioTemporal</a></td>
+<td align="left">Handling and Analyzing Spatio-Temporal Data</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/Survival.html">Survival</a></td>
+<td align="left">Survival Analysis</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/TeachingStatistics.html">TeachingStatistics</a></td>
+<td align="left">Teaching Statistics</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/TimeSeries.html">TimeSeries</a></td>
+<td align="left">Time Series Analysis</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://cran.r-project.org/web/views/Tracking.html">Tracking</a></td>
+<td align="left">Processing and Analysis of Tracking Data</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://cran.r-project.org/web/views/WebTechnologies.html">WebTechnologies</a></td>
+<td align="left">Web Technologies and Services</td>
+</tr>
+</tbody>
+</table>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+</div>
+</div>
+<div id="appR-further" class="section level2" number="23.5">
+<h2><span class="header-section-number">B.5</span> Further resources</h2>
+<p>
+
+
+
+
+<a href="https://adv-r.hadley.nz"><em>Advanced R</em></a> is an excellent source for learning more about how <strong>R</strong> works <span class="citation">(H. Wickham 2019)</span>.
+Extensive resources and documentation about <strong>R</strong> can be found at the Comprehensive R Archive Network (CRAN).</p>
+<p>
+The <strong>forcats</strong> package, included in the <strong>tidyverse</strong>, is designed to facilitate data wrangling with factors.</p>
+<p>More information regarding tibbles can be found at <a href="https://tibble.tidyverse.org" class="uri">https://tibble.tidyverse.org</a>.</p>
+<p>JupyterLab and <a href="https://jupyter.org/hub">JupyterHub</a> are alternative environments that support analysis via sophisticated notebooks for multiple languages including Julia, Python, and <strong>R</strong>.</p>
+</div>
+<div id="appR-exercises" class="section level2" number="23.6">
+<h2><span class="header-section-number">B.6</span> Exercises</h2>
+<p><strong>Problem 1 (Easy)</strong>: The following code chunk throws an error.</p>
+<div class="sourceCode" id="cb1310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1310-1"><a href="ch-R.html#cb1310-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span></span>
+<span id="cb1310-2"><a href="ch-R.html#cb1310-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mpg, cyl)</span></code></pre></div>
+<pre><code>                     mpg cyl
+Mazda RX4           21.0   6
+Mazda RX4 Wag       21.0   6
+Datsun 710          22.8   4
+Hornet 4 Drive      21.4   6
+Hornet Sportabout   18.7   8
+Valiant             18.1   6
+Duster 360          14.3   8
+Merc 240D           24.4   4
+Merc 230            22.8   4
+Merc 280            19.2   6
+Merc 280C           17.8   6
+Merc 450SE          16.4   8
+Merc 450SL          17.3   8
+Merc 450SLC         15.2   8
+Cadillac Fleetwood  10.4   8
+Lincoln Continental 10.4   8
+Chrysler Imperial   14.7   8
+Fiat 128            32.4   4
+Honda Civic         30.4   4
+Toyota Corolla      33.9   4
+Toyota Corona       21.5   4
+Dodge Challenger    15.5   8
+AMC Javelin         15.2   8
+Camaro Z28          13.3   8
+Pontiac Firebird    19.2   8
+Fiat X1-9           27.3   4
+Porsche 914-2       26.0   4
+Lotus Europa        30.4   4
+Ford Pantera L      15.8   8
+Ferrari Dino        19.7   6
+Maserati Bora       15.0   8
+Volvo 142E          21.4   4</code></pre>
+<p>What is the problem?</p>
+<p><strong>Problem 2 (Easy)</strong>: Which of these kinds of names should be wrapped with quotation marks when used in R?</p>
+<ul>
+<li>function name</li>
+<li>file name</li>
+<li>the name of an argument in a named argument</li>
+<li>object name</li>
+</ul>
+<p><strong>Problem 3 (Easy)</strong>: A user has typed the following commands into the RStudio console.</p>
+<div class="sourceCode" id="cb1312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1312-1"><a href="ch-R.html#cb1312-1" aria-hidden="true" tabindex="-1"></a>obj1 <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb1312-2"><a href="ch-R.html#cb1312-2" aria-hidden="true" tabindex="-1"></a>obj2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>)</span>
+<span id="cb1312-3"><a href="ch-R.html#cb1312-3" aria-hidden="true" tabindex="-1"></a>obj3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb1312-4"><a href="ch-R.html#cb1312-4" aria-hidden="true" tabindex="-1"></a>obj4 <span class="ot">&lt;-</span> <span class="dv">42</span></span></code></pre></div>
+<p>What values are returned by the following commands?</p>
+<div class="sourceCode" id="cb1313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1313-1"><a href="ch-R.html#cb1313-1" aria-hidden="true" tabindex="-1"></a>obj1 <span class="sc">*</span> <span class="dv">10</span></span>
+<span id="cb1313-2"><a href="ch-R.html#cb1313-2" aria-hidden="true" tabindex="-1"></a>obj1[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb1313-3"><a href="ch-R.html#cb1313-3" aria-hidden="true" tabindex="-1"></a>obj1[<span class="sc">-</span><span class="dv">3</span>]</span>
+<span id="cb1313-4"><a href="ch-R.html#cb1313-4" aria-hidden="true" tabindex="-1"></a>obj1 <span class="sc">+</span> obj2</span>
+<span id="cb1313-5"><a href="ch-R.html#cb1313-5" aria-hidden="true" tabindex="-1"></a>obj1 <span class="sc">*</span> obj3</span>
+<span id="cb1313-6"><a href="ch-R.html#cb1313-6" aria-hidden="true" tabindex="-1"></a>obj1 <span class="sc">+</span> obj4</span>
+<span id="cb1313-7"><a href="ch-R.html#cb1313-7" aria-hidden="true" tabindex="-1"></a>obj2 <span class="sc">+</span> obj3</span>
+<span id="cb1313-8"><a href="ch-R.html#cb1313-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(obj2)</span>
+<span id="cb1313-9"><a href="ch-R.html#cb1313-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(obj3)</span></code></pre></div>
+<p><strong>Problem 4 (Easy)</strong>: A user has typed the following commands into the RStudio console:</p>
+<div class="sourceCode" id="cb1314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1314-1"><a href="ch-R.html#cb1314-1" aria-hidden="true" tabindex="-1"></a>mylist <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x1 =</span> <span class="st">&quot;sally&quot;</span>, <span class="at">x2 =</span> <span class="dv">42</span>, <span class="at">x3 =</span> <span class="cn">FALSE</span>, <span class="at">x4 =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code></pre></div>
+<p>What values do each of the following commands return?</p>
+<div class="sourceCode" id="cb1315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1315-1"><a href="ch-R.html#cb1315-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.list</span>(mylist)</span>
+<span id="cb1315-2"><a href="ch-R.html#cb1315-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mylist)</span>
+<span id="cb1315-3"><a href="ch-R.html#cb1315-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(mylist)</span>
+<span id="cb1315-4"><a href="ch-R.html#cb1315-4" aria-hidden="true" tabindex="-1"></a>mylist[[<span class="dv">2</span>]]</span>
+<span id="cb1315-5"><a href="ch-R.html#cb1315-5" aria-hidden="true" tabindex="-1"></a>mylist[[<span class="st">&quot;x1&quot;</span>]]</span>
+<span id="cb1315-6"><a href="ch-R.html#cb1315-6" aria-hidden="true" tabindex="-1"></a>mylist<span class="sc">$</span>x2</span>
+<span id="cb1315-7"><a href="ch-R.html#cb1315-7" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(mylist[[<span class="st">&quot;x4&quot;</span>]])</span>
+<span id="cb1315-8"><a href="ch-R.html#cb1315-8" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(mylist)</span>
+<span id="cb1315-9"><a href="ch-R.html#cb1315-9" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(mylist)</span>
+<span id="cb1315-10"><a href="ch-R.html#cb1315-10" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(mylist[[<span class="dv">4</span>]])</span>
+<span id="cb1315-11"><a href="ch-R.html#cb1315-11" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(mylist[[<span class="dv">3</span>]])</span></code></pre></div>
+<p><strong>Problem 5 (Easy)</strong>: What’s wrong with this statement?</p>
+<div class="sourceCode" id="cb1316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1316-1"><a href="ch-R.html#cb1316-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(NHANES, package <span class="ot">&lt;-</span> <span class="st">&quot;NHANES&quot;</span>)</span></code></pre></div>
+<p><strong>Problem 6 (Easy)</strong>: Consult the documentation for <code>CPS85</code> in the <code>mosaicData</code> package to determine the meaning of CPS.</p>
+<p><strong>Problem 7 (Easy)</strong>: The following code chunk throws an error. Why?</p>
+<div class="sourceCode" id="cb1317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1317-1"><a href="ch-R.html#cb1317-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1317-2"><a href="ch-R.html#cb1317-2" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span></span>
+<span id="cb1317-3"><a href="ch-R.html#cb1317-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(cylinders <span class="sc">==</span> <span class="dv">4</span>)</span></code></pre></div>
+<pre><code>Error: Problem with `filter()` input `..1`.
+ℹ Input `..1` is `cylinders == 4`.
+x object &#39;cylinders&#39; not found</code></pre>
+<p>What is the problem?</p>
+<p><strong>Problem 8 (Easy)</strong>: The <code>date</code> function returns an indication of the current time and date. What arguments does <code>date</code> take? What kind of object is the result from <code>date</code>? What kind of object is the result from <code>Sys.time</code>?</p>
+<p><strong>Problem 9 (Easy)</strong>: A user has typed the following commands into the RStudio console.</p>
+<div class="sourceCode" id="cb1319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1319-1"><a href="ch-R.html#cb1319-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">15</span>)</span>
+<span id="cb1319-2"><a href="ch-R.html#cb1319-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb1319-3"><a href="ch-R.html#cb1319-3" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;happy&quot;</span>, <span class="st">&quot;sad&quot;</span>)</span></code></pre></div>
+<p>What do each of the following commands return? Describe the class of the object as well as its value.</p>
+<div class="sourceCode" id="cb1320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1320-1"><a href="ch-R.html#cb1320-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(a, b, c)</span>
+<span id="cb1320-2"><a href="ch-R.html#cb1320-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(a, b)</span>
+<span id="cb1320-3"><a href="ch-R.html#cb1320-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(a, b)</span>
+<span id="cb1320-4"><a href="ch-R.html#cb1320-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(a, b, c)</span>
+<span id="cb1320-5"><a href="ch-R.html#cb1320-5" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(a, b, c)[[<span class="dv">2</span>]]</span></code></pre></div>
+<p><strong>Problem 10 (Easy)</strong>: For each of the following assignment statements, describe the error (or note why it does not generate an error).</p>
+<div class="sourceCode" id="cb1321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1321-1"><a href="ch-R.html#cb1321-1" aria-hidden="true" tabindex="-1"></a>result1 <span class="ot">&lt;-</span> sqrt <span class="dv">10</span></span>
+<span id="cb1321-2"><a href="ch-R.html#cb1321-2" aria-hidden="true" tabindex="-1"></a>result2 <span class="ot">&lt;-</span><span class="sc">-</span> <span class="st">&quot;Hello to you!&quot;</span></span>
+<span id="cb1321-3"><a href="ch-R.html#cb1321-3" aria-hidden="true" tabindex="-1"></a>3result <span class="ot">&lt;-</span> <span class="st">&quot;Hello to you&quot;</span></span>
+<span id="cb1321-4"><a href="ch-R.html#cb1321-4" aria-hidden="true" tabindex="-1"></a>result4 <span class="ot">&lt;-</span> <span class="st">&quot;Hello to you</span></span>
+<span id="cb1321-5"><a href="ch-R.html#cb1321-5" aria-hidden="true" tabindex="-1"></a><span class="st">result5 &lt;- date()</span></span></code></pre></div>
+<p><strong>Problem 11 (Easy)</strong>: The following code chunk throws an error.</p>
+<div class="sourceCode" id="cb1322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1322-1"><a href="ch-R.html#cb1322-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1322-2"><a href="ch-R.html#cb1322-2" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span></span>
+<span id="cb1322-3"><a href="ch-R.html#cb1322-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="at">cyl =</span> <span class="dv">4</span>)</span></code></pre></div>
+<pre><code>Error: Problem with `filter()` input `..1`.
+x Input `..1` is named.
+ℹ This usually means that you&#39;ve used `=` instead of `==`.
+ℹ Did you mean `cyl == 4`?</code></pre>
+<p>The error suggests that you need to use <code>==</code> inside of <code>filter()</code>. Why?</p>
+<p><strong>Problem 12 (Medium)</strong>: The following code undertakes some data analysis using the HELP (Health Evaluation and Linkage to Primary Care) trial.</p>
+<div class="sourceCode" id="cb1324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1324-1"><a href="ch-R.html#cb1324-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb1324-2"><a href="ch-R.html#cb1324-2" aria-hidden="true" tabindex="-1"></a>ds <span class="ot">&lt;-</span></span>
+<span id="cb1324-3"><a href="ch-R.html#cb1324-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv</span>(<span class="st">&quot;http://nhorton.people.amherst.edu/r2/datasets/helpmiss.csv&quot;</span>)</span>
+<span id="cb1324-4"><a href="ch-R.html#cb1324-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(<span class="fu">group_by</span>(</span>
+<span id="cb1324-5"><a href="ch-R.html#cb1324-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">filter</span>(<span class="fu">mutate</span>(ds,</span>
+<span id="cb1324-6"><a href="ch-R.html#cb1324-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex =</span> <span class="fu">ifelse</span>(female <span class="sc">==</span> <span class="dv">1</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;M&quot;</span>)</span>
+<span id="cb1324-7"><a href="ch-R.html#cb1324-7" aria-hidden="true" tabindex="-1"></a>  ), <span class="sc">!</span><span class="fu">is.na</span>(pcs)), age, pcs, sex),</span>
+<span id="cb1324-8"><a href="ch-R.html#cb1324-8" aria-hidden="true" tabindex="-1"></a>  sex</span>
+<span id="cb1324-9"><a href="ch-R.html#cb1324-9" aria-hidden="true" tabindex="-1"></a>), <span class="at">meanage =</span> <span class="fu">mean</span>(age), <span class="at">meanpcs =</span> <span class="fu">mean</span>(pcs), <span class="at">n =</span> <span class="fu">n</span>())</span></code></pre></div>
+<p>Describe in words what computations are being done.
+Using the pipe notation, translate this code into a more readable version.</p>
+<p><strong>Problem 13 (Medium)</strong>: The following concepts should have some meaning to you: package, function, command, argument, assignment, object, object name, data frame, named argument, quoted character string.</p>
+<p>Construct an example of R commands
+that make use of at least four of these. Label which part of your example R command corresponds to each.</p>
+</div>
+<div id="appR-online-exercises" class="section level2" number="23.7">
+<h2><span class="header-section-number">B.7</span> Supplementary exercises</h2>
+<p>Available at <a href="https://mdsr-book.github.io/mdsr2e/appR.html#datavizI-online-exercises" class="uri">https://mdsr-book.github.io/mdsr2e/appR.html#datavizI-online-exercises</a></p>
+<p>No exercises found</p>
+<hr />
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch-mdsr.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch-function.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="book_assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/B-appR.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["mdsr2e.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

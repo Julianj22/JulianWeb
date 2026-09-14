@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>E Regression modeling | Modern Data Science with R</title>
+  <meta name="description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="E Regression modeling | Modern Data Science with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://mdsr-book.github.io/mdsr2e/" />
+  <meta property="og:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+  <meta property="og:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="github-repo" content="mdsr-book/mdsr2e" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="E Regression modeling | Modern Data Science with R" />
+  
+  <meta name="twitter:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="twitter:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+
+<meta name="author" content="Benjamin S. Baumer, Daniel T. Kaplan, and Nicholas J. Horton" />
+
+
+<meta name="date" content="2021-07-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch-reproduce.html"/>
+<link rel="next" href="ch-db-setup.html"/>
+<script src="book_assets/header-attrs-2.9/header-attrs.js"></script>
+<script src="book_assets/jquery-3.5.1/jquery.min.js"></script>
+<link href="book_assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="book_assets/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="book_assets/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="book_assets/kePrint-0.0.1/kePrint.js"></script>
+<link href="book_assets/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="book_assets/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="book_assets/bsTable-3.3.7/bootstrapTable.js"></script>
+<script src="book_assets/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="book_assets/plotly-binding-4.9.4.1/plotly.js"></script>
+<script src="book_assets/typedarray-0.1/typedarray.min.js"></script>
+<link href="book_assets/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="book_assets/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="book_assets/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="book_assets/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<link href="book_assets/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="book_assets/datatables-binding-0.18/datatables.js"></script>
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="book_assets/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="book_assets/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="book_assets/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="book_assets/dygraphs-1.1.1/shapes.js"></script>
+<script src="book_assets/moment-2.8.4/moment.js"></script>
+<script src="book_assets/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="book_assets/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="book_assets/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<script src="book_assets/d3-3.5.3/d3.min.js"></script>
+<link href="book_assets/colorbrewer-1/colorbrewer.css" rel="stylesheet" />
+<script src="book_assets/colorbrewer-1/colorbrewer.js"></script>
+<link href="book_assets/streamgraph-1/streamgraph.css" rel="stylesheet" />
+<script src="book_assets/streamgraph-binding-0.9.0/streamgraph.js"></script>
+<link href="book_assets/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-1.3.1/leaflet.js"></script>
+<link href="book_assets/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="book_assets/proj4-2.6.2/proj4.min.js"></script>
+<script src="book_assets/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="book_assets/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-binding-2.0.4.1/leaflet.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html">Modern Data Science with R, 2nd edition</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#nd-edition"><i class="fa fa-check"></i>2nd edition</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#note-about-erroneous-black-and-white-printing"><i class="fa fa-check"></i>Note about erroneous black-and-white printing!</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#cover"><i class="fa fa-check"></i>Cover</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#st-edition"><i class="fa fa-check"></i>1st edition</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#copyright"><i class="fa fa-check"></i>Copyright</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#background-and-motivation"><i class="fa fa-check"></i>Background and motivation</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#intended-audience"><i class="fa fa-check"></i>Intended audience</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-features-of-this-book"><i class="fa fa-check"></i>Key features of this book</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#focus-on-case-studies-and-extended-examples"><i class="fa fa-check"></i>Focus on case studies and extended examples</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#structure"><i class="fa fa-check"></i>Structure</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#supporting-materials"><i class="fa fa-check"></i>Supporting materials</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#changes-in-the-second-edition"><i class="fa fa-check"></i>Changes in the second edition</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-role-of-technology"><i class="fa fa-check"></i>Key role of technology</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#how-to-use-this-book"><i class="fa fa-check"></i>How to use this book</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="part"><span><b>I Part I: Introduction to Data Science</b></span></li>
+<li class="chapter" data-level="1" data-path="ch-prologue.html"><a href="ch-prologue.html"><i class="fa fa-check"></i><b>1</b> Prologue: Why data science?</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="ch-prologue.html"><a href="ch-prologue.html#what-is-data-science"><i class="fa fa-check"></i><b>1.1</b> What is data science?</a></li>
+<li class="chapter" data-level="1.2" data-path="ch-prologue.html"><a href="ch-prologue.html#case-study-the-evolution-of-sabermetrics"><i class="fa fa-check"></i><b>1.2</b> Case study: The evolution of sabermetrics</a></li>
+<li class="chapter" data-level="1.3" data-path="ch-prologue.html"><a href="ch-prologue.html#datasets"><i class="fa fa-check"></i><b>1.3</b> Datasets</a></li>
+<li class="chapter" data-level="1.4" data-path="ch-prologue.html"><a href="ch-prologue.html#intro-further"><i class="fa fa-check"></i><b>1.4</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch-vizI.html"><a href="ch-vizI.html"><i class="fa fa-check"></i><b>2</b> Data visualization</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#the-2012-federal-election-cycle"><i class="fa fa-check"></i><b>2.1</b> The 2012 federal election cycle</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="ch-vizI.html"><a href="ch-vizI.html#are-these-two-groups-different"><i class="fa fa-check"></i><b>2.1.1</b> Are these two groups different?</a></li>
+<li class="chapter" data-level="2.1.2" data-path="ch-vizI.html"><a href="ch-vizI.html#graphing-variation"><i class="fa fa-check"></i><b>2.1.2</b> Graphing variation</a></li>
+<li class="chapter" data-level="2.1.3" data-path="ch-vizI.html"><a href="ch-vizI.html#examining-relationships-among-variables"><i class="fa fa-check"></i><b>2.1.3</b> Examining relationships among variables</a></li>
+<li class="chapter" data-level="2.1.4" data-path="ch-vizI.html"><a href="ch-vizI.html#networks"><i class="fa fa-check"></i><b>2.1.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#composing-data-graphics"><i class="fa fa-check"></i><b>2.2</b> Composing data graphics</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#a-taxonomy-for-data-graphics"><i class="fa fa-check"></i><b>2.2.1</b> A taxonomy for data graphics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#sec:color"><i class="fa fa-check"></i><b>2.2.2</b> Color</a></li>
+<li class="chapter" data-level="2.2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#dissecting-data-graphics"><i class="fa fa-check"></i><b>2.2.3</b> Dissecting data graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#importance-of-data-graphics-challenger"><i class="fa fa-check"></i><b>2.3</b> Importance of data graphics: <em>Challenger</em></a></li>
+<li class="chapter" data-level="2.4" data-path="ch-vizI.html"><a href="ch-vizI.html#creating-effective-presentations"><i class="fa fa-check"></i><b>2.4</b> Creating effective presentations</a></li>
+<li class="chapter" data-level="2.5" data-path="ch-vizI.html"><a href="ch-vizI.html#the-wider-world-of-data-visualization"><i class="fa fa-check"></i><b>2.5</b> The wider world of data visualization</a></li>
+<li class="chapter" data-level="2.6" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-further"><i class="fa fa-check"></i><b>2.6</b> Further resources</a></li>
+<li class="chapter" data-level="2.7" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-exercises"><i class="fa fa-check"></i><b>2.7</b> Exercises</a></li>
+<li class="chapter" data-level="2.8" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-online-exercises"><i class="fa fa-check"></i><b>2.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch-vizII.html"><a href="ch-vizII.html"><i class="fa fa-check"></i><b>3</b> A grammar for graphics</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#a-grammar-for-data-graphics"><i class="fa fa-check"></i><b>3.1</b> A grammar for data graphics</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="ch-vizII.html"><a href="ch-vizII.html#aesthetics"><i class="fa fa-check"></i><b>3.1.1</b> Aesthetics</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ch-vizII.html"><a href="ch-vizII.html#scales"><i class="fa fa-check"></i><b>3.1.2</b> Scales</a></li>
+<li class="chapter" data-level="3.1.3" data-path="ch-vizII.html"><a href="ch-vizII.html#guides"><i class="fa fa-check"></i><b>3.1.3</b> Guides</a></li>
+<li class="chapter" data-level="3.1.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:facet"><i class="fa fa-check"></i><b>3.1.4</b> Facets</a></li>
+<li class="chapter" data-level="3.1.5" data-path="ch-vizII.html"><a href="ch-vizII.html#layers"><i class="fa fa-check"></i><b>3.1.5</b> Layers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:canonical"><i class="fa fa-check"></i><b>3.2</b> Canonical data graphics in (ref:R)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch-vizII.html"><a href="ch-vizII.html#univariate-displays"><i class="fa fa-check"></i><b>3.2.1</b> Univariate displays</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch-vizII.html"><a href="ch-vizII.html#multivariate-displays"><i class="fa fa-check"></i><b>3.2.2</b> Multivariate displays</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch-vizII.html"><a href="ch-vizII.html#maps"><i class="fa fa-check"></i><b>3.2.3</b> Maps</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:datanetwork"><i class="fa fa-check"></i><b>3.2.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:babynames"><i class="fa fa-check"></i><b>3.3</b> Extended example: Historical baby names</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#percentage-of-people-alive-today"><i class="fa fa-check"></i><b>3.3.1</b> Percentage of people alive today</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#most-common-names-for-women"><i class="fa fa-check"></i><b>3.3.2</b> Most common names for women</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-further"><i class="fa fa-check"></i><b>3.4</b> Further resources</a></li>
+<li class="chapter" data-level="3.5" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-exercises"><i class="fa fa-check"></i><b>3.5</b> Exercises</a></li>
+<li class="chapter" data-level="3.6" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-online-exercises"><i class="fa fa-check"></i><b>3.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch-dataI.html"><a href="ch-dataI.html"><i class="fa fa-check"></i><b>4</b> Data wrangling on one table</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:five_idioms"><i class="fa fa-check"></i><b>4.1</b> A grammar for data wrangling</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:pipe"><i class="fa fa-check"></i><b>4.1.1</b> <code>select()</code> and <code>filter()</code></a></li>
+<li class="chapter" data-level="4.1.2" data-path="ch-dataI.html"><a href="ch-dataI.html#mutate-and-rename"><i class="fa fa-check"></i><b>4.1.2</b> <code>mutate()</code> and <code>rename()</code></a></li>
+<li class="chapter" data-level="4.1.3" data-path="ch-dataI.html"><a href="ch-dataI.html#arrange"><i class="fa fa-check"></i><b>4.1.3</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="4.1.4" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:summarize"><i class="fa fa-check"></i><b>4.1.4</b> <code>summarize()</code> with <code>group_by()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:mets"><i class="fa fa-check"></i><b>4.2</b> Extended example: Ben’s time with the Mets</a></li>
+<li class="chapter" data-level="4.3" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-further"><i class="fa fa-check"></i><b>4.3</b> Further resources</a></li>
+<li class="chapter" data-level="4.4" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-exercises"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+<li class="chapter" data-level="4.5" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-online-exercises"><i class="fa fa-check"></i><b>4.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch-join.html"><a href="ch-join.html"><i class="fa fa-check"></i><b>5</b> Data wrangling on multiple tables</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch-join.html"><a href="ch-join.html#inner_join"><i class="fa fa-check"></i><b>5.1</b> <code>inner_join()</code></a></li>
+<li class="chapter" data-level="5.2" data-path="ch-join.html"><a href="ch-join.html#left_join"><i class="fa fa-check"></i><b>5.2</b> <code>left_join()</code></a></li>
+<li class="chapter" data-level="5.3" data-path="ch-join.html"><a href="ch-join.html#extended-example-manny-ramirez"><i class="fa fa-check"></i><b>5.3</b> Extended example: Manny Ramirez</a></li>
+<li class="chapter" data-level="5.4" data-path="ch-join.html"><a href="ch-join.html#joins-further"><i class="fa fa-check"></i><b>5.4</b> Further resources</a></li>
+<li class="chapter" data-level="5.5" data-path="ch-join.html"><a href="ch-join.html#join-exercises"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
+<li class="chapter" data-level="5.6" data-path="ch-join.html"><a href="ch-join.html#join-online-exercises"><i class="fa fa-check"></i><b>5.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch-dataII.html"><a href="ch-dataII.html"><i class="fa fa-check"></i><b>6</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch-dataII.html"><a href="ch-dataII.html#tidy-data"><i class="fa fa-check"></i><b>6.1</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="ch-dataII.html"><a href="ch-dataII.html#motivation"><i class="fa fa-check"></i><b>6.1.1</b> Motivation</a></li>
+<li class="chapter" data-level="6.1.2" data-path="ch-dataII.html"><a href="ch-dataII.html#what-are-tidy-data"><i class="fa fa-check"></i><b>6.1.2</b> What are tidy data?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="ch-dataII.html"><a href="ch-dataII.html#reshaping-data"><i class="fa fa-check"></i><b>6.2</b> Reshaping data</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-verbs-for-converting-wide-to-narrow-and-vice-versa"><i class="fa fa-check"></i><b>6.2.1</b> Data verbs for converting wide to narrow and <em>vice versa</em></a></li>
+<li class="chapter" data-level="6.2.2" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-wider"><i class="fa fa-check"></i><b>6.2.2</b> Pivoting wider</a></li>
+<li class="chapter" data-level="6.2.3" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-longer"><i class="fa fa-check"></i><b>6.2.3</b> Pivoting longer</a></li>
+<li class="chapter" data-level="6.2.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nest"><i class="fa fa-check"></i><b>6.2.4</b> List-columns</a></li>
+<li class="chapter" data-level="6.2.5" data-path="ch-dataII.html"><a href="ch-dataII.html#example-gender-neutral-names"><i class="fa fa-check"></i><b>6.2.5</b> Example: Gender-neutral names</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:naming"><i class="fa fa-check"></i><b>6.3</b> Naming conventions</a></li>
+<li class="chapter" data-level="6.4" data-path="ch-dataII.html"><a href="ch-dataII.html#data-intake"><i class="fa fa-check"></i><b>6.4</b> Data intake</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-table-friendly-formats"><i class="fa fa-check"></i><b>6.4.1</b> Data-table friendly formats</a></li>
+<li class="chapter" data-level="6.4.2" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:apis"><i class="fa fa-check"></i><b>6.4.2</b> APIs</a></li>
+<li class="chapter" data-level="6.4.3" data-path="ch-dataII.html"><a href="ch-dataII.html#cleaning-data"><i class="fa fa-check"></i><b>6.4.3</b> Cleaning data</a></li>
+<li class="chapter" data-level="6.4.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nukes"><i class="fa fa-check"></i><b>6.4.4</b> Example: Japanese nuclear reactors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-further"><i class="fa fa-check"></i><b>6.5</b> Further resources</a></li>
+<li class="chapter" data-level="6.6" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-exercises"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+<li class="chapter" data-level="6.7" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-online-exercises"><i class="fa fa-check"></i><b>6.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch-iteration.html"><a href="ch-iteration.html"><i class="fa fa-check"></i><b>7</b> Iteration</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:vectorized"><i class="fa fa-check"></i><b>7.1</b> Vectorized operations</a></li>
+<li class="chapter" data-level="7.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:scoped"><i class="fa fa-check"></i><b>7.2</b> Using <code>across()</code> with <strong>dplyr</strong> functions</a></li>
+<li class="chapter" data-level="7.3" data-path="ch-iteration.html"><a href="ch-iteration.html#appR:apply"><i class="fa fa-check"></i><b>7.3</b> The <code>map()</code> family of functions</a></li>
+<li class="chapter" data-level="7.4" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-over-a-one-dimensional-vector"><i class="fa fa-check"></i><b>7.4</b> Iterating over a one-dimensional vector</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-a-known-function"><i class="fa fa-check"></i><b>7.4.1</b> Iterating a known function</a></li>
+<li class="chapter" data-level="7.4.2" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-an-arbitrary-function"><i class="fa fa-check"></i><b>7.4.2</b> Iterating an arbitrary function</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:group-map"><i class="fa fa-check"></i><b>7.5</b> Iteration over subgroups</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:pythag"><i class="fa fa-check"></i><b>7.5.1</b> Example: Expected winning percentage</a></li>
+<li class="chapter" data-level="7.5.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:hrs"><i class="fa fa-check"></i><b>7.5.2</b> Example: Annual leaders</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="ch-iteration.html"><a href="ch-iteration.html#simulation"><i class="fa fa-check"></i><b>7.6</b> Simulation</a></li>
+<li class="chapter" data-level="7.7" data-path="ch-iteration.html"><a href="ch-iteration.html#extended-example-factors-associated-with-bmi"><i class="fa fa-check"></i><b>7.7</b> Extended example: Factors associated with BMI</a></li>
+<li class="chapter" data-level="7.8" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-further"><i class="fa fa-check"></i><b>7.8</b> Further resources</a></li>
+<li class="chapter" data-level="7.9" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-exercises"><i class="fa fa-check"></i><b>7.9</b> Exercises</a></li>
+<li class="chapter" data-level="7.10" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-online-exercises"><i class="fa fa-check"></i><b>7.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch-ethics.html"><a href="ch-ethics.html"><i class="fa fa-check"></i><b>8</b> Data science ethics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-intro"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ch-ethics.html"><a href="ch-ethics.html#truthful-falsehoods"><i class="fa fa-check"></i><b>8.2</b> Truthful falsehoods</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ch-ethics.html"><a href="ch-ethics.html#stand-your-ground"><i class="fa fa-check"></i><b>8.2.1</b> Stand your ground</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ch-ethics.html"><a href="ch-ethics.html#global-temperature"><i class="fa fa-check"></i><b>8.2.2</b> Global temperature</a></li>
+<li class="chapter" data-level="8.2.3" data-path="ch-ethics.html"><a href="ch-ethics.html#covid-19-reporting"><i class="fa fa-check"></i><b>8.2.3</b> COVID-19 reporting</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ch-ethics.html"><a href="ch-ethics.html#role-of-data-science-in-society"><i class="fa fa-check"></i><b>8.3</b> Role of data science in society</a></li>
+<li class="chapter" data-level="8.4" data-path="ch-ethics.html"><a href="ch-ethics.html#some-settings-for-professional-ethics"><i class="fa fa-check"></i><b>8.4</b> Some settings for professional ethics</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-chief-executive-officer"><i class="fa fa-check"></i><b>8.4.1</b> The chief executive officer</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination"><i class="fa fa-check"></i><b>8.4.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar"><i class="fa fa-check"></i><b>8.4.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.4.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction"><i class="fa fa-check"></i><b>8.4.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.4.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping"><i class="fa fa-check"></i><b>8.4.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.4.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis"><i class="fa fa-check"></i><b>8.4.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.4.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers"><i class="fa fa-check"></i><b>8.4.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.4.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations"><i class="fa fa-check"></i><b>8.4.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ch-ethics.html"><a href="ch-ethics.html#some-principles-to-guide-ethical-action"><i class="fa fa-check"></i><b>8.5</b> Some principles to guide ethical action</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-ceo"><i class="fa fa-check"></i><b>8.5.1</b> The CEO</a></li>
+<li class="chapter" data-level="8.5.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination-1"><i class="fa fa-check"></i><b>8.5.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.5.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar-1"><i class="fa fa-check"></i><b>8.5.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.5.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction-1"><i class="fa fa-check"></i><b>8.5.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.5.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping-1"><i class="fa fa-check"></i><b>8.5.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.5.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis-1"><i class="fa fa-check"></i><b>8.5.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.5.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers-1"><i class="fa fa-check"></i><b>8.5.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.5.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations-1"><i class="fa fa-check"></i><b>8.5.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="ch-ethics.html"><a href="ch-ethics.html#algorithmic-bias"><i class="fa fa-check"></i><b>8.6</b> Algorithmic bias</a></li>
+<li class="chapter" data-level="8.7" data-path="ch-ethics.html"><a href="ch-ethics.html#data-and-disclosure"><i class="fa fa-check"></i><b>8.7</b> Data and disclosure</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="ch-ethics.html"><a href="ch-ethics.html#reidentification-and-disclosure-avoidance"><i class="fa fa-check"></i><b>8.7.1</b> Reidentification and disclosure avoidance</a></li>
+<li class="chapter" data-level="8.7.2" data-path="ch-ethics.html"><a href="ch-ethics.html#safe-data-storage"><i class="fa fa-check"></i><b>8.7.2</b> Safe data storage</a></li>
+<li class="chapter" data-level="8.7.3" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:terms-of-use"><i class="fa fa-check"></i><b>8.7.3</b> Data scraping and terms of use</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:reproducibility"><i class="fa fa-check"></i><b>8.8</b> Reproducibility</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#example-erroneous-data-merging"><i class="fa fa-check"></i><b>8.8.1</b> Example: Erroneous data merging</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-collectively"><i class="fa fa-check"></i><b>8.9</b> Ethics, collectively</a></li>
+<li class="chapter" data-level="8.10" data-path="ch-ethics.html"><a href="ch-ethics.html#professional-guidelines-for-ethical-conduct"><i class="fa fa-check"></i><b>8.10</b> Professional guidelines for ethical conduct</a></li>
+<li class="chapter" data-level="8.11" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-further"><i class="fa fa-check"></i><b>8.11</b> Further resources</a></li>
+<li class="chapter" data-level="8.12" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-exercises"><i class="fa fa-check"></i><b>8.12</b> Exercises</a></li>
+<li class="chapter" data-level="8.13" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-online-exercises"><i class="fa fa-check"></i><b>8.13</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>II Part II: Statistics and Modeling</b></span></li>
+<li class="chapter" data-level="9" data-path="ch-foundations.html"><a href="ch-foundations.html"><i class="fa fa-check"></i><b>9</b> Statistical foundations</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch-foundations.html"><a href="ch-foundations.html#samples-and-populations"><i class="fa fa-check"></i><b>9.1</b> Samples and populations</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy-by-sampling-from-the-population"><i class="fa fa-check"></i><b>9.1.1</b> Example: Setting travel policy by sampling from the population</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="ch-foundations.html"><a href="ch-foundations.html#sample-statistics"><i class="fa fa-check"></i><b>9.2</b> Sample statistics</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:lln"><i class="fa fa-check"></i><b>9.2.1</b> The sampling distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:boot"><i class="fa fa-check"></i><b>9.3</b> The bootstrap</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy"><i class="fa fa-check"></i><b>9.3.1</b> Example: Setting travel policy</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="ch-foundations.html"><a href="ch-foundations.html#outliers"><i class="fa fa-check"></i><b>9.4</b> Outliers</a></li>
+<li class="chapter" data-level="9.5" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:gooddesign"><i class="fa fa-check"></i><b>9.5</b> Statistical models: Explaining variation</a></li>
+<li class="chapter" data-level="9.6" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:confound"><i class="fa fa-check"></i><b>9.6</b> Confounding and accounting for other factors</a></li>
+<li class="chapter" data-level="9.7" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:p-perils"><i class="fa fa-check"></i><b>9.7</b> The perils of p-values</a></li>
+<li class="chapter" data-level="9.8" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-further"><i class="fa fa-check"></i><b>9.8</b> Further resources</a></li>
+<li class="chapter" data-level="9.9" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-exercises"><i class="fa fa-check"></i><b>9.9</b> Exercises</a></li>
+<li class="chapter" data-level="9.10" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-online-exercises"><i class="fa fa-check"></i><b>9.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch-modeling.html"><a href="ch-modeling.html"><i class="fa fa-check"></i><b>10</b> Predictive modeling</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch-modeling.html"><a href="ch-modeling.html#predictive-modeling"><i class="fa fa-check"></i><b>10.1</b> Predictive modeling</a></li>
+<li class="chapter" data-level="10.2" data-path="ch-modeling.html"><a href="ch-modeling.html#simple-classification-models"><i class="fa fa-check"></i><b>10.2</b> Simple classification models</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="ch-modeling.html"><a href="ch-modeling.html#example-high-earners-in-the-1994-united-states-census"><i class="fa fa-check"></i><b>10.2.1</b> Example: High-earners in the 1994 United States Census</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="ch-modeling.html"><a href="ch-modeling.html#evaluating-models"><i class="fa fa-check"></i><b>10.3</b> Evaluating models</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:bias-variance"><i class="fa fa-check"></i><b>10.3.1</b> Bias-variance trade-off</a></li>
+<li class="chapter" data-level="10.3.2" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:cv"><i class="fa fa-check"></i><b>10.3.2</b> Cross-validation</a></li>
+<li class="chapter" data-level="10.3.3" data-path="ch-modeling.html"><a href="ch-modeling.html#confusion-matrices-and-roc-curves"><i class="fa fa-check"></i><b>10.3.3</b> Confusion matrices and ROC curves</a></li>
+<li class="chapter" data-level="10.3.4" data-path="ch-modeling.html"><a href="ch-modeling.html#measuring-prediction-error-for-quantitative-responses"><i class="fa fa-check"></i><b>10.3.4</b> Measuring prediction error for quantitative responses</a></li>
+<li class="chapter" data-level="10.3.5" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:evaluate"><i class="fa fa-check"></i><b>10.3.5</b> Example: Evaluation of income models</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:diabetes"><i class="fa fa-check"></i><b>10.4</b> Extended example: Who has diabetes?</a></li>
+<li class="chapter" data-level="10.5" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-further"><i class="fa fa-check"></i><b>10.5</b> Further resources</a></li>
+<li class="chapter" data-level="10.6" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-exercises"><i class="fa fa-check"></i><b>10.6</b> Exercises</a></li>
+<li class="chapter" data-level="10.7" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-online-exercises"><i class="fa fa-check"></i><b>10.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch-learningI.html"><a href="ch-learningI.html"><i class="fa fa-check"></i><b>11</b> Supervised learning</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch-learningI.html"><a href="ch-learningI.html#non-regression-classifiers"><i class="fa fa-check"></i><b>11.1</b> Non-regression classifiers</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="ch-learningI.html"><a href="ch-learningI.html#decision-trees"><i class="fa fa-check"></i><b>11.1.1</b> Decision trees</a></li>
+<li class="chapter" data-level="11.1.2" data-path="ch-learningI.html"><a href="ch-learningI.html#random-forests"><i class="fa fa-check"></i><b>11.1.2</b> Random forests</a></li>
+<li class="chapter" data-level="11.1.3" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:knn"><i class="fa fa-check"></i><b>11.1.3</b> Nearest neighbor</a></li>
+<li class="chapter" data-level="11.1.4" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:bayes"><i class="fa fa-check"></i><b>11.1.4</b> Naïve Bayes</a></li>
+<li class="chapter" data-level="11.1.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:neuralnet"><i class="fa fa-check"></i><b>11.1.5</b> Artificial neural networks</a></li>
+<li class="chapter" data-level="11.1.6" data-path="ch-learningI.html"><a href="ch-learningI.html#ensemble-methods"><i class="fa fa-check"></i><b>11.1.6</b> Ensemble methods</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:tuning"><i class="fa fa-check"></i><b>11.2</b> Parameter tuning</a></li>
+<li class="chapter" data-level="11.3" data-path="ch-learningI.html"><a href="ch-learningI.html#example-evaluation-of-income-models-redux"><i class="fa fa-check"></i><b>11.3</b> Example: Evaluation of income models redux</a></li>
+<li class="chapter" data-level="11.4" data-path="ch-learningI.html"><a href="ch-learningI.html#extended-example-who-has-diabetes-this-time"><i class="fa fa-check"></i><b>11.4</b> Extended example: Who has diabetes this time?</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch-learningI.html"><a href="ch-learningI.html#comparing-all-models"><i class="fa fa-check"></i><b>11.4.1</b> Comparing all models</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:regularization"><i class="fa fa-check"></i><b>11.5</b> Regularization</a></li>
+<li class="chapter" data-level="11.6" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-further"><i class="fa fa-check"></i><b>11.6</b> Further resources</a></li>
+<li class="chapter" data-level="11.7" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-exercises"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
+<li class="chapter" data-level="11.8" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-online-exercises"><i class="fa fa-check"></i><b>11.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch-learningII.html"><a href="ch-learningII.html"><i class="fa fa-check"></i><b>12</b> Unsupervised learning</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch-learningII.html"><a href="ch-learningII.html#clustering"><i class="fa fa-check"></i><b>12.1</b> Clustering</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="ch-learningII.html"><a href="ch-learningII.html#sec:hclust"><i class="fa fa-check"></i><b>12.1.1</b> Hierarchical clustering</a></li>
+<li class="chapter" data-level="12.1.2" data-path="ch-learningII.html"><a href="ch-learningII.html#k-means"><i class="fa fa-check"></i><b>12.1.2</b> <span class="math inline">\(k\)</span>-means</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="ch-learningII.html"><a href="ch-learningII.html#dimension-reduction"><i class="fa fa-check"></i><b>12.2</b> Dimension reduction</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch-learningII.html"><a href="ch-learningII.html#intuitive-approaches"><i class="fa fa-check"></i><b>12.2.1</b> Intuitive approaches</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch-learningII.html"><a href="ch-learningII.html#singular-value-decomposition"><i class="fa fa-check"></i><b>12.2.2</b> Singular value decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-further"><i class="fa fa-check"></i><b>12.3</b> Further resources</a></li>
+<li class="chapter" data-level="12.4" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-exercises"><i class="fa fa-check"></i><b>12.4</b> Exercises</a></li>
+<li class="chapter" data-level="12.5" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-online-exercises"><i class="fa fa-check"></i><b>12.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch-simulation.html"><a href="ch-simulation.html"><i class="fa fa-check"></i><b>13</b> Simulation</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch-simulation.html"><a href="ch-simulation.html#reasoning-in-reverse"><i class="fa fa-check"></i><b>13.1</b> Reasoning in reverse</a></li>
+<li class="chapter" data-level="13.2" data-path="ch-simulation.html"><a href="ch-simulation.html#extended-example-grouping-cancers"><i class="fa fa-check"></i><b>13.2</b> Extended example: Grouping cancers</a></li>
+<li class="chapter" data-level="13.3" data-path="ch-simulation.html"><a href="ch-simulation.html#randomizing-functions"><i class="fa fa-check"></i><b>13.3</b> Randomizing functions</a></li>
+<li class="chapter" data-level="13.4" data-path="ch-simulation.html"><a href="ch-simulation.html#simulating-variability"><i class="fa fa-check"></i><b>13.4</b> Simulating variability</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch-simulation.html"><a href="ch-simulation.html#the-partially-planned-rendezvous"><i class="fa fa-check"></i><b>13.4.1</b> The partially-planned rendezvous</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:jobsnum"><i class="fa fa-check"></i><b>13.4.2</b> The jobs report</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch-simulation.html"><a href="ch-simulation.html#restaurant-health-and-sanitation-grades"><i class="fa fa-check"></i><b>13.4.3</b> Restaurant health and sanitation grades</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch-simulation.html"><a href="ch-simulation.html#random-networks"><i class="fa fa-check"></i><b>13.5</b> Random networks</a></li>
+<li class="chapter" data-level="13.6" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:key-principles-random"><i class="fa fa-check"></i><b>13.6</b> Key principles of simulation</a>
+<ul>
+<li class="chapter" data-level="13.6.1" data-path="ch-simulation.html"><a href="ch-simulation.html#design"><i class="fa fa-check"></i><b>13.6.1</b> Design</a></li>
+<li class="chapter" data-level="13.6.2" data-path="ch-simulation.html"><a href="ch-simulation.html#modularity"><i class="fa fa-check"></i><b>13.6.2</b> Modularity</a></li>
+<li class="chapter" data-level="13.6.3" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:seed"><i class="fa fa-check"></i><b>13.6.3</b> Reproducibility and random number seeds</a></li>
+</ul></li>
+<li class="chapter" data-level="13.7" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-further"><i class="fa fa-check"></i><b>13.7</b> Further resources</a></li>
+<li class="chapter" data-level="13.8" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-exercises"><i class="fa fa-check"></i><b>13.8</b> Exercises</a></li>
+<li class="chapter" data-level="13.9" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-online-exercises"><i class="fa fa-check"></i><b>13.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>III Part III: Topics in Data Science</b></span></li>
+<li class="chapter" data-level="14" data-path="ch-vizIII.html"><a href="ch-vizIII.html"><i class="fa fa-check"></i><b>14</b> Dynamic and customized data graphics</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:d3"><i class="fa fa-check"></i><b>14.1</b> Rich Web content using <code>D3.js</code> and <strong>htmlwidgets</strong></a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#leaflet"><i class="fa fa-check"></i><b>14.1.1</b> Leaflet</a></li>
+<li class="chapter" data-level="14.1.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#plot.ly"><i class="fa fa-check"></i><b>14.1.2</b> Plot.ly</a></li>
+<li class="chapter" data-level="14.1.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datatables"><i class="fa fa-check"></i><b>14.1.3</b> DataTables</a></li>
+<li class="chapter" data-level="14.1.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#dygraphs"><i class="fa fa-check"></i><b>14.1.4</b> Dygraphs</a></li>
+<li class="chapter" data-level="14.1.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#streamgraphs"><i class="fa fa-check"></i><b>14.1.5</b> Streamgraphs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#animation"><i class="fa fa-check"></i><b>14.2</b> Animation</a></li>
+<li class="chapter" data-level="14.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:fleshdashboard"><i class="fa fa-check"></i><b>14.3</b> Flexdashboard</a></li>
+<li class="chapter" data-level="14.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:shiny"><i class="fa fa-check"></i><b>14.4</b> Interactive web apps with Shiny</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#example-interactive-display-of-the-beatles"><i class="fa fa-check"></i><b>14.4.1</b> Example: interactive display of the Beatles</a></li>
+<li class="chapter" data-level="14.4.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#more-on-reactive-programming"><i class="fa fa-check"></i><b>14.4.2</b> More on reactive programming</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:themes"><i class="fa fa-check"></i><b>14.5</b> Customization of <strong>ggplot2</strong> graphics</a></li>
+<li class="chapter" data-level="14.6" data-path="ch-vizIII.html"><a href="ch-vizIII.html#extended-example-hot-dog-eating"><i class="fa fa-check"></i><b>14.6</b> Extended example: Hot dog eating</a></li>
+<li class="chapter" data-level="14.7" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-further"><i class="fa fa-check"></i><b>14.7</b> Further resources</a></li>
+<li class="chapter" data-level="14.8" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-exercises"><i class="fa fa-check"></i><b>14.8</b> Exercises</a></li>
+<li class="chapter" data-level="14.9" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-online-exercises"><i class="fa fa-check"></i><b>14.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch-sql.html"><a href="ch-sql.html"><i class="fa fa-check"></i><b>15</b> Database querying using SQL</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch-sql.html"><a href="ch-sql.html#sec:dplyr-sql"><i class="fa fa-check"></i><b>15.1</b> From <strong>dplyr</strong> to SQL</a></li>
+<li class="chapter" data-level="15.2" data-path="ch-sql.html"><a href="ch-sql.html#flat-file-databases"><i class="fa fa-check"></i><b>15.2</b> Flat-file databases</a></li>
+<li class="chapter" data-level="15.3" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-universe"><i class="fa fa-check"></i><b>15.3</b> The SQL universe</a></li>
+<li class="chapter" data-level="15.4" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-data-manipulation-language"><i class="fa fa-check"></i><b>15.4</b> The SQL data manipulation language</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="ch-sql.html"><a href="ch-sql.html#select...from"><i class="fa fa-check"></i><b>15.4.1</b> <code>SELECT...FROM</code></a></li>
+<li class="chapter" data-level="15.4.2" data-path="ch-sql.html"><a href="ch-sql.html#where"><i class="fa fa-check"></i><b>15.4.2</b> <code>WHERE</code></a></li>
+<li class="chapter" data-level="15.4.3" data-path="ch-sql.html"><a href="ch-sql.html#group-by"><i class="fa fa-check"></i><b>15.4.3</b> <code>GROUP BY</code></a></li>
+<li class="chapter" data-level="15.4.4" data-path="ch-sql.html"><a href="ch-sql.html#order-by"><i class="fa fa-check"></i><b>15.4.4</b> <code>ORDER BY</code></a></li>
+<li class="chapter" data-level="15.4.5" data-path="ch-sql.html"><a href="ch-sql.html#having"><i class="fa fa-check"></i><b>15.4.5</b> <code>HAVING</code></a></li>
+<li class="chapter" data-level="15.4.6" data-path="ch-sql.html"><a href="ch-sql.html#limit"><i class="fa fa-check"></i><b>15.4.6</b> <code>LIMIT</code></a></li>
+<li class="chapter" data-level="15.4.7" data-path="ch-sql.html"><a href="ch-sql.html#join"><i class="fa fa-check"></i><b>15.4.7</b> <code>JOIN</code></a></li>
+<li class="chapter" data-level="15.4.8" data-path="ch-sql.html"><a href="ch-sql.html#union"><i class="fa fa-check"></i><b>15.4.8</b> <code>UNION</code></a></li>
+<li class="chapter" data-level="15.4.9" data-path="ch-sql.html"><a href="ch-sql.html#subqueries"><i class="fa fa-check"></i><b>15.4.9</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="ch-sql.html"><a href="ch-sql.html#sec:ft8-flights"><i class="fa fa-check"></i><b>15.5</b> Extended example: FiveThirtyEight flights</a></li>
+<li class="chapter" data-level="15.6" data-path="ch-sql.html"><a href="ch-sql.html#sql-vs.-refr"><i class="fa fa-check"></i><b>15.6</b> SQL vs. (ref:R)</a></li>
+<li class="chapter" data-level="15.7" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-further"><i class="fa fa-check"></i><b>15.7</b> Further resources</a></li>
+<li class="chapter" data-level="15.8" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-exercises"><i class="fa fa-check"></i><b>15.8</b> Exercises</a></li>
+<li class="chapter" data-level="15.9" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-online-exercises"><i class="fa fa-check"></i><b>15.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="ch-sql2.html"><a href="ch-sql2.html"><i class="fa fa-check"></i><b>16</b> Database administration</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:indices"><i class="fa fa-check"></i><b>16.1</b> Constructing efficient SQL databases</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="ch-sql2.html"><a href="ch-sql2.html#creating-new-databases"><i class="fa fa-check"></i><b>16.1.1</b> Creating new databases</a></li>
+<li class="chapter" data-level="16.1.2" data-path="ch-sql2.html"><a href="ch-sql2.html#create-table"><i class="fa fa-check"></i><b>16.1.2</b> <code>CREATE TABLE</code></a></li>
+<li class="chapter" data-level="16.1.3" data-path="ch-sql2.html"><a href="ch-sql2.html#keys"><i class="fa fa-check"></i><b>16.1.3</b> Keys</a></li>
+<li class="chapter" data-level="16.1.4" data-path="ch-sql2.html"><a href="ch-sql2.html#indices"><i class="fa fa-check"></i><b>16.1.4</b> Indices</a></li>
+<li class="chapter" data-level="16.1.5" data-path="ch-sql2.html"><a href="ch-sql2.html#query-plans"><i class="fa fa-check"></i><b>16.1.5</b> Query plans</a></li>
+<li class="chapter" data-level="16.1.6" data-path="ch-sql2.html"><a href="ch-sql2.html#partitioning"><i class="fa fa-check"></i><b>16.1.6</b> Partitioning</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-sql-data"><i class="fa fa-check"></i><b>16.2</b> Changing SQL data</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-data"><i class="fa fa-check"></i><b>16.2.1</b> Changing data</a></li>
+<li class="chapter" data-level="16.2.2" data-path="ch-sql2.html"><a href="ch-sql2.html#adding-data"><i class="fa fa-check"></i><b>16.2.2</b> Adding data</a></li>
+<li class="chapter" data-level="16.2.3" data-path="ch-sql2.html"><a href="ch-sql2.html#importing-data-from-a-file"><i class="fa fa-check"></i><b>16.2.3</b> Importing data from a file</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:toy-db"><i class="fa fa-check"></i><b>16.3</b> Extended example: Building a database</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="ch-sql2.html"><a href="ch-sql2.html#extract"><i class="fa fa-check"></i><b>16.3.1</b> Extract</a></li>
+<li class="chapter" data-level="16.3.2" data-path="ch-sql2.html"><a href="ch-sql2.html#transform"><i class="fa fa-check"></i><b>16.3.2</b> Transform</a></li>
+<li class="chapter" data-level="16.3.3" data-path="ch-sql2.html"><a href="ch-sql2.html#load-into-mysql-database"><i class="fa fa-check"></i><b>16.3.3</b> Load into MySQL database</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="ch-sql2.html"><a href="ch-sql2.html#scalability"><i class="fa fa-check"></i><b>16.4</b> Scalability</a></li>
+<li class="chapter" data-level="16.5" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-further"><i class="fa fa-check"></i><b>16.5</b> Further resources</a></li>
+<li class="chapter" data-level="16.6" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-exercises"><i class="fa fa-check"></i><b>16.6</b> Exercises</a></li>
+<li class="chapter" data-level="16.7" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-online-exercises"><i class="fa fa-check"></i><b>16.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="ch-spatial.html"><a href="ch-spatial.html"><i class="fa fa-check"></i><b>17</b> Working with geospatial data</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="ch-spatial.html"><a href="ch-spatial.html#motivation-whats-so-great-about-geospatial-data"><i class="fa fa-check"></i><b>17.1</b> Motivation: What’s so great about geospatial data?</a></li>
+<li class="chapter" data-level="17.2" data-path="ch-spatial.html"><a href="ch-spatial.html#spatial-data-structures"><i class="fa fa-check"></i><b>17.2</b> Spatial data structures</a></li>
+<li class="chapter" data-level="17.3" data-path="ch-spatial.html"><a href="ch-spatial.html#making-maps"><i class="fa fa-check"></i><b>17.3</b> Making maps</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="ch-spatial.html"><a href="ch-spatial.html#static-maps"><i class="fa fa-check"></i><b>17.3.1</b> Static maps</a></li>
+<li class="chapter" data-level="17.3.2" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:projections"><i class="fa fa-check"></i><b>17.3.2</b> Projections</a></li>
+<li class="chapter" data-level="17.3.3" data-path="ch-spatial.html"><a href="ch-spatial.html#dynamic-maps-with-leaflet"><i class="fa fa-check"></i><b>17.3.3</b> Dynamic maps with <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="ch-spatial.html"><a href="ch-spatial.html#extended-example-congressional-districts"><i class="fa fa-check"></i><b>17.4</b> Extended example: Congressional districts</a>
+<ul>
+<li class="chapter" data-level="17.4.1" data-path="ch-spatial.html"><a href="ch-spatial.html#election-results"><i class="fa fa-check"></i><b>17.4.1</b> Election results</a></li>
+<li class="chapter" data-level="17.4.2" data-path="ch-spatial.html"><a href="ch-spatial.html#congressional-districts"><i class="fa fa-check"></i><b>17.4.2</b> Congressional districts</a></li>
+<li class="chapter" data-level="17.4.3" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:sf-inner-join"><i class="fa fa-check"></i><b>17.4.3</b> Putting it all together</a></li>
+<li class="chapter" data-level="17.4.4" data-path="ch-spatial.html"><a href="ch-spatial.html#using-ggplot2"><i class="fa fa-check"></i><b>17.4.4</b> Using <code>ggplot2</code></a></li>
+<li class="chapter" data-level="17.4.5" data-path="ch-spatial.html"><a href="ch-spatial.html#using-leaflet"><i class="fa fa-check"></i><b>17.4.5</b> Using <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="ch-spatial.html"><a href="ch-spatial.html#effective-maps-how-not-to-lie"><i class="fa fa-check"></i><b>17.5</b> Effective maps: How (not) to lie</a></li>
+<li class="chapter" data-level="17.6" data-path="ch-spatial.html"><a href="ch-spatial.html#projecting-polygons"><i class="fa fa-check"></i><b>17.6</b> Projecting polygons</a></li>
+<li class="chapter" data-level="17.7" data-path="ch-spatial.html"><a href="ch-spatial.html#playing-well-with-others"><i class="fa fa-check"></i><b>17.7</b> Playing well with others</a></li>
+<li class="chapter" data-level="17.8" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialII-further"><i class="fa fa-check"></i><b>17.8</b> Further resources</a></li>
+<li class="chapter" data-level="17.9" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-exercises"><i class="fa fa-check"></i><b>17.9</b> Exercises</a></li>
+<li class="chapter" data-level="17.10" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-online-exercises"><i class="fa fa-check"></i><b>17.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="ch-spatial2.html"><a href="ch-spatial2.html"><i class="fa fa-check"></i><b>18</b> Geospatial computations</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-operations"><i class="fa fa-check"></i><b>18.1</b> Geospatial operations</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geocoding-routes-and-distances"><i class="fa fa-check"></i><b>18.1.1</b> Geocoding, routes, and distances</a></li>
+<li class="chapter" data-level="18.1.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#sec:geometric-operations"><i class="fa fa-check"></i><b>18.1.2</b> Geometric operations</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-aggregation"><i class="fa fa-check"></i><b>18.2</b> Geospatial aggregation</a></li>
+<li class="chapter" data-level="18.3" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-joins"><i class="fa fa-check"></i><b>18.3</b> Geospatial joins</a></li>
+<li class="chapter" data-level="18.4" data-path="ch-spatial2.html"><a href="ch-spatial2.html#extended-example-trail-elevations-at-macleish"><i class="fa fa-check"></i><b>18.4</b> Extended example: Trail elevations at MacLeish</a></li>
+<li class="chapter" data-level="18.5" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialI-further"><i class="fa fa-check"></i><b>18.5</b> Further resources</a></li>
+<li class="chapter" data-level="18.6" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-exercises"><i class="fa fa-check"></i><b>18.6</b> Exercises</a></li>
+<li class="chapter" data-level="18.7" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-online-exercises"><i class="fa fa-check"></i><b>18.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="ch-text.html"><a href="ch-text.html"><i class="fa fa-check"></i><b>19</b> Text as data</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="ch-text.html"><a href="ch-text.html#regular-expressions-using-macbeth"><i class="fa fa-check"></i><b>19.1</b> Regular expressions using <em>Macbeth</em></a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="ch-text.html"><a href="ch-text.html#parsing-the-text-of-the-scottish-play"><i class="fa fa-check"></i><b>19.1.1</b> Parsing the text of the <span><em>Scottish play</em></span></a></li>
+<li class="chapter" data-level="19.1.2" data-path="ch-text.html"><a href="ch-text.html#life-and-death-in-macbeth"><i class="fa fa-check"></i><b>19.1.2</b> Life and death in <em>Macbeth</em></a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="ch-text.html"><a href="ch-text.html#extended-example-analyzing-textual-data-from-arxiv.org"><i class="fa fa-check"></i><b>19.2</b> Extended example: Analyzing textual data from arXiv.org</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="ch-text.html"><a href="ch-text.html#corpora"><i class="fa fa-check"></i><b>19.2.1</b> Corpora</a></li>
+<li class="chapter" data-level="19.2.2" data-path="ch-text.html"><a href="ch-text.html#word-clouds"><i class="fa fa-check"></i><b>19.2.2</b> Word clouds</a></li>
+<li class="chapter" data-level="19.2.3" data-path="ch-text.html"><a href="ch-text.html#sentiment-analysis"><i class="fa fa-check"></i><b>19.2.3</b> Sentiment analysis</a></li>
+<li class="chapter" data-level="19.2.4" data-path="ch-text.html"><a href="ch-text.html#bigrams-and-n-grams"><i class="fa fa-check"></i><b>19.2.4</b> Bigrams and N-grams</a></li>
+<li class="chapter" data-level="19.2.5" data-path="ch-text.html"><a href="ch-text.html#document-term-matrices"><i class="fa fa-check"></i><b>19.2.5</b> Document term matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="ch-text.html"><a href="ch-text.html#ingesting-text"><i class="fa fa-check"></i><b>19.3</b> Ingesting text</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="ch-text.html"><a href="ch-text.html#example-scraping-the-songs-of-the-beatles"><i class="fa fa-check"></i><b>19.3.1</b> Example: Scraping the songs of the Beatles</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="ch-text.html"><a href="ch-text.html#text-further"><i class="fa fa-check"></i><b>19.4</b> Further resources</a></li>
+<li class="chapter" data-level="19.5" data-path="ch-text.html"><a href="ch-text.html#text-exercises"><i class="fa fa-check"></i><b>19.5</b> Exercises</a></li>
+<li class="chapter" data-level="19.6" data-path="ch-text.html"><a href="ch-text.html#text-online-exercises"><i class="fa fa-check"></i><b>19.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="ch-netsci.html"><a href="ch-netsci.html"><i class="fa fa-check"></i><b>20</b> Network science</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-intro"><i class="fa fa-check"></i><b>20.1</b> Introduction to network science</a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="ch-netsci.html"><a href="ch-netsci.html#definitions"><i class="fa fa-check"></i><b>20.1.1</b> Definitions</a></li>
+<li class="chapter" data-level="20.1.2" data-path="ch-netsci.html"><a href="ch-netsci.html#a-brief-history-of-network-science"><i class="fa fa-check"></i><b>20.1.2</b> A brief history of network science</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-six-degrees-of-kristen-stewart"><i class="fa fa-check"></i><b>20.2</b> Extended example: Six degrees of Kristen Stewart</a>
+<ul>
+<li class="chapter" data-level="20.2.1" data-path="ch-netsci.html"><a href="ch-netsci.html#sql:imdb"><i class="fa fa-check"></i><b>20.2.1</b> Collecting Hollywood data</a></li>
+<li class="chapter" data-level="20.2.2" data-path="ch-netsci.html"><a href="ch-netsci.html#building-the-hollywood-network"><i class="fa fa-check"></i><b>20.2.2</b> Building the Hollywood network</a></li>
+<li class="chapter" data-level="20.2.3" data-path="ch-netsci.html"><a href="ch-netsci.html#building-a-kristen-stewart-oracle"><i class="fa fa-check"></i><b>20.2.3</b> Building a Kristen Stewart oracle</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="ch-netsci.html"><a href="ch-netsci.html#sec:pagerank"><i class="fa fa-check"></i><b>20.3</b> PageRank</a>
+<ul>
+<li class="chapter" data-level="20.3.1" data-path="ch-netsci.html"><a href="ch-netsci.html#eigenvector-centrality"><i class="fa fa-check"></i><b>20.3.1</b> Eigenvector centrality</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-1996-mens-college-basketball"><i class="fa fa-check"></i><b>20.4</b> Extended example: 1996 men’s college basketball</a></li>
+<li class="chapter" data-level="20.5" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-further"><i class="fa fa-check"></i><b>20.5</b> Further resources</a></li>
+<li class="chapter" data-level="20.6" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-exercises"><i class="fa fa-check"></i><b>20.6</b> Exercises</a></li>
+<li class="chapter" data-level="20.7" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-online-exercises"><i class="fa fa-check"></i><b>20.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="ch-big.html"><a href="ch-big.html"><i class="fa fa-check"></i><b>21</b> Epilogue: Towards “big data”</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="ch-big.html"><a href="ch-big.html#notions-of-big-data"><i class="fa fa-check"></i><b>21.1</b> Notions of big data</a></li>
+<li class="chapter" data-level="21.2" data-path="ch-big.html"><a href="ch-big.html#tools-for-bigger-data"><i class="fa fa-check"></i><b>21.2</b> Tools for bigger data</a>
+<ul>
+<li class="chapter" data-level="21.2.1" data-path="ch-big.html"><a href="ch-big.html#data-and-memory-structures-for-big-data"><i class="fa fa-check"></i><b>21.2.1</b> Data and memory structures for big data</a></li>
+<li class="chapter" data-level="21.2.2" data-path="ch-big.html"><a href="ch-big.html#compilation"><i class="fa fa-check"></i><b>21.2.2</b> Compilation</a></li>
+<li class="chapter" data-level="21.2.3" data-path="ch-big.html"><a href="ch-big.html#parallel-and-distributed-computing"><i class="fa fa-check"></i><b>21.2.3</b> Parallel and distributed computing</a></li>
+<li class="chapter" data-level="21.2.4" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-sql"><i class="fa fa-check"></i><b>21.2.4</b> Alternatives to SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-refr"><i class="fa fa-check"></i><b>21.3</b> Alternatives to (ref:R)</a></li>
+<li class="chapter" data-level="21.4" data-path="ch-big.html"><a href="ch-big.html#closing-thoughts"><i class="fa fa-check"></i><b>21.4</b> Closing thoughts</a></li>
+<li class="chapter" data-level="21.5" data-path="ch-big.html"><a href="ch-big.html#bigdata-further"><i class="fa fa-check"></i><b>21.5</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="part"><span><b>IV Part IV: Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="ch-mdsr.html"><a href="ch-mdsr.html"><i class="fa fa-check"></i><b>A</b> Packages used in this book</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="ch-mdsr.html"><a href="ch-mdsr.html#the-mdsr-package"><i class="fa fa-check"></i><b>A.1</b> The <strong>mdsr</strong> package</a></li>
+<li class="chapter" data-level="A.2" data-path="ch-mdsr.html"><a href="ch-mdsr.html#other-packages"><i class="fa fa-check"></i><b>A.2</b> Other packages</a></li>
+<li class="chapter" data-level="A.3" data-path="ch-mdsr.html"><a href="ch-mdsr.html#pkg-further"><i class="fa fa-check"></i><b>A.3</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="ch-R.html"><a href="ch-R.html"><i class="fa fa-check"></i><b>B</b> Introduction to <code>R</code> and RStudio</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="ch-R.html"><a href="ch-R.html#appR:install"><i class="fa fa-check"></i><b>B.1</b> Installation</a>
+<ul>
+<li class="chapter" data-level="B.1.1" data-path="ch-R.html"><a href="ch-R.html#rstudio"><i class="fa fa-check"></i><b>B.1.1</b> RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="B.2" data-path="ch-R.html"><a href="ch-R.html#learning-refr"><i class="fa fa-check"></i><b>B.2</b> Learning (ref:R)</a></li>
+<li class="chapter" data-level="B.3" data-path="ch-R.html"><a href="ch-R.html#appR:objects"><i class="fa fa-check"></i><b>B.3</b> Fundamental structures and objects</a>
+<ul>
+<li class="chapter" data-level="B.3.1" data-path="ch-R.html"><a href="ch-R.html#appR:assign"><i class="fa fa-check"></i><b>B.3.1</b> Objects and vectors</a></li>
+<li class="chapter" data-level="B.3.2" data-path="ch-R.html"><a href="ch-R.html#appR:operators"><i class="fa fa-check"></i><b>B.3.2</b> Operators</a></li>
+<li class="chapter" data-level="B.3.3" data-path="ch-R.html"><a href="ch-R.html#appR:lists"><i class="fa fa-check"></i><b>B.3.3</b> Lists</a></li>
+<li class="chapter" data-level="B.3.4" data-path="ch-R.html"><a href="ch-R.html#appR:matrix"><i class="fa fa-check"></i><b>B.3.4</b> Matrices</a></li>
+<li class="chapter" data-level="B.3.5" data-path="ch-R.html"><a href="ch-R.html#appR:dataframe"><i class="fa fa-check"></i><b>B.3.5</b> Dataframes and tibbles</a></li>
+<li class="chapter" data-level="B.3.6" data-path="ch-R.html"><a href="ch-R.html#appR:attr"><i class="fa fa-check"></i><b>B.3.6</b> Attributes and classes</a></li>
+<li class="chapter" data-level="B.3.7" data-path="ch-R.html"><a href="ch-R.html#appR:options"><i class="fa fa-check"></i><b>B.3.7</b> Options</a></li>
+<li class="chapter" data-level="B.3.8" data-path="ch-R.html"><a href="ch-R.html#sec:func"><i class="fa fa-check"></i><b>B.3.8</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="ch-R.html"><a href="ch-R.html#add-ons-packages"><i class="fa fa-check"></i><b>B.4</b> Add-ons: Packages</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="ch-R.html"><a href="ch-R.html#appR:packages"><i class="fa fa-check"></i><b>B.4.1</b> Introduction to packages</a></li>
+<li class="chapter" data-level="B.4.2" data-path="ch-R.html"><a href="ch-R.html#packages-and-name-conflicts"><i class="fa fa-check"></i><b>B.4.2</b> Packages and name conflicts</a></li>
+<li class="chapter" data-level="B.4.3" data-path="ch-R.html"><a href="ch-R.html#appR:tasks"><i class="fa fa-check"></i><b>B.4.3</b> CRAN task views</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="ch-R.html"><a href="ch-R.html#appR-further"><i class="fa fa-check"></i><b>B.5</b> Further resources</a></li>
+<li class="chapter" data-level="B.6" data-path="ch-R.html"><a href="ch-R.html#appR-exercises"><i class="fa fa-check"></i><b>B.6</b> Exercises</a></li>
+<li class="chapter" data-level="B.7" data-path="ch-R.html"><a href="ch-R.html#appR-online-exercises"><i class="fa fa-check"></i><b>B.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="ch-function.html"><a href="ch-function.html"><i class="fa fa-check"></i><b>C</b> Algorithmic thinking</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-intro"><i class="fa fa-check"></i><b>C.1</b> Introduction</a></li>
+<li class="chapter" data-level="C.2" data-path="ch-function.html"><a href="ch-function.html#simple-example"><i class="fa fa-check"></i><b>C.2</b> Simple example</a></li>
+<li class="chapter" data-level="C.3" data-path="ch-function.html"><a href="ch-function.html#sec:runaverage"><i class="fa fa-check"></i><b>C.3</b> Extended example: Law of large numbers</a></li>
+<li class="chapter" data-level="C.4" data-path="ch-function.html"><a href="ch-function.html#sec:tidyeval"><i class="fa fa-check"></i><b>C.4</b> Non-standard evaluation</a></li>
+<li class="chapter" data-level="C.5" data-path="ch-function.html"><a href="ch-function.html#sec:debugging"><i class="fa fa-check"></i><b>C.5</b> Debugging and defensive coding</a></li>
+<li class="chapter" data-level="C.6" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-further"><i class="fa fa-check"></i><b>C.6</b> Further resources</a></li>
+<li class="chapter" data-level="C.7" data-path="ch-function.html"><a href="ch-function.html#algorithmic-exercises"><i class="fa fa-check"></i><b>C.7</b> Exercises</a></li>
+<li class="chapter" data-level="C.8" data-path="ch-function.html"><a href="ch-function.html#algorithmic-online-exercises"><i class="fa fa-check"></i><b>C.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="ch-reproduce.html"><a href="ch-reproduce.html"><i class="fa fa-check"></i><b>D</b> Reproducible analysis and workflow</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="ch-reproduce.html"><a href="ch-reproduce.html#scriptable-statistical-computing"><i class="fa fa-check"></i><b>D.1</b> Scriptable statistical computing</a></li>
+<li class="chapter" data-level="D.2" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-analysis-with-refr-markdown"><i class="fa fa-check"></i><b>D.2</b> Reproducible analysis with (ref:R) Markdown</a></li>
+<li class="chapter" data-level="D.3" data-path="ch-reproduce.html"><a href="ch-reproduce.html#projects-and-version-control"><i class="fa fa-check"></i><b>D.3</b> Projects and version control</a></li>
+<li class="chapter" data-level="D.4" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-further"><i class="fa fa-check"></i><b>D.4</b> Further resources</a></li>
+<li class="chapter" data-level="D.5" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-exercises"><i class="fa fa-check"></i><b>D.5</b> Exercises</a></li>
+<li class="chapter" data-level="D.6" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-online-exercises"><i class="fa fa-check"></i><b>D.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="ch-regression.html"><a href="ch-regression.html"><i class="fa fa-check"></i><b>E</b> Regression modeling</a>
+<ul>
+<li class="chapter" data-level="E.1" data-path="ch-regression.html"><a href="ch-regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>E.1</b> Simple linear regression</a>
+<ul>
+<li class="chapter" data-level="E.1.1" data-path="ch-regression.html"><a href="ch-regression.html#motivating-example-modeling-usage-of-a-rail-trail"><i class="fa fa-check"></i><b>E.1.1</b> Motivating example: Modeling usage of a rail trail</a></li>
+<li class="chapter" data-level="E.1.2" data-path="ch-regression.html"><a href="ch-regression.html#model-visualization"><i class="fa fa-check"></i><b>E.1.2</b> Model visualization</a></li>
+<li class="chapter" data-level="E.1.3" data-path="ch-regression.html"><a href="ch-regression.html#measuring-the-strength-of-fit"><i class="fa fa-check"></i><b>E.1.3</b> Measuring the strength of fit</a></li>
+<li class="chapter" data-level="E.1.4" data-path="ch-regression.html"><a href="ch-regression.html#sec:anova"><i class="fa fa-check"></i><b>E.1.4</b> Categorical explanatory variables</a></li>
+</ul></li>
+<li class="chapter" data-level="E.2" data-path="ch-regression.html"><a href="ch-regression.html#multiple-regression"><i class="fa fa-check"></i><b>E.2</b> Multiple regression</a>
+<ul>
+<li class="chapter" data-level="E.2.1" data-path="ch-regression.html"><a href="ch-regression.html#sec:indicators"><i class="fa fa-check"></i><b>E.2.1</b> Parallel slopes: Multiple regression with a categorical variable</a></li>
+<li class="chapter" data-level="E.2.2" data-path="ch-regression.html"><a href="ch-regression.html#parallel-planes-multiple-regression-with-a-second-quantitative-variable"><i class="fa fa-check"></i><b>E.2.2</b> Parallel planes: Multiple regression with a second quantitative variable</a></li>
+<li class="chapter" data-level="E.2.3" data-path="ch-regression.html"><a href="ch-regression.html#sec:interaction"><i class="fa fa-check"></i><b>E.2.3</b> Non-parallel slopes: Multiple regression with interaction</a></li>
+<li class="chapter" data-level="E.2.4" data-path="ch-regression.html"><a href="ch-regression.html#modeling-non-linear-relationships"><i class="fa fa-check"></i><b>E.2.4</b> Modeling non-linear relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="E.3" data-path="ch-regression.html"><a href="ch-regression.html#inference-for-regression"><i class="fa fa-check"></i><b>E.3</b> Inference for regression</a></li>
+<li class="chapter" data-level="E.4" data-path="ch-regression.html"><a href="ch-regression.html#assumptions-underlying-regression"><i class="fa fa-check"></i><b>E.4</b> Assumptions underlying regression</a></li>
+<li class="chapter" data-level="E.5" data-path="ch-regression.html"><a href="ch-regression.html#sec:logistic"><i class="fa fa-check"></i><b>E.5</b> Logistic regression</a></li>
+<li class="chapter" data-level="E.6" data-path="ch-regression.html"><a href="ch-regression.html#regression-further"><i class="fa fa-check"></i><b>E.6</b> Further resources</a></li>
+<li class="chapter" data-level="E.7" data-path="ch-regression.html"><a href="ch-regression.html#regression-exercises"><i class="fa fa-check"></i><b>E.7</b> Exercises</a></li>
+<li class="chapter" data-level="E.8" data-path="ch-regression.html"><a href="ch-regression.html#regression-online-exercises"><i class="fa fa-check"></i><b>E.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="F" data-path="ch-db-setup.html"><a href="ch-db-setup.html"><i class="fa fa-check"></i><b>F</b> Setting up a database server</a>
+<ul>
+<li class="chapter" data-level="F.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sqlite"><i class="fa fa-check"></i><b>F.1</b> SQLite</a></li>
+<li class="chapter" data-level="F.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#mysql"><i class="fa fa-check"></i><b>F.2</b> MySQL</a>
+<ul>
+<li class="chapter" data-level="F.2.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#installation"><i class="fa fa-check"></i><b>F.2.1</b> Installation</a></li>
+<li class="chapter" data-level="F.2.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:mysql-access"><i class="fa fa-check"></i><b>F.2.2</b> Access</a></li>
+<li class="chapter" data-level="F.2.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#running-scripts-from-the-command-line"><i class="fa fa-check"></i><b>F.2.3</b> Running scripts from the command line</a></li>
+</ul></li>
+<li class="chapter" data-level="F.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#postgresql"><i class="fa fa-check"></i><b>F.3</b> PostgreSQL</a></li>
+<li class="chapter" data-level="F.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-sql"><i class="fa fa-check"></i><b>F.4</b> Connecting to SQL</a>
+<ul>
+<li class="chapter" data-level="F.4.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#the-command-line-client"><i class="fa fa-check"></i><b>F.4.1</b> The command line client</a></li>
+<li class="chapter" data-level="F.4.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#guis"><i class="fa fa-check"></i><b>F.4.2</b> GUIs</a></li>
+<li class="chapter" data-level="F.4.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-r-sql"><i class="fa fa-check"></i><b>F.4.3</b> R and RStudio</a></li>
+<li class="chapter" data-level="F.4.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:sqlitebaby"><i class="fa fa-check"></i><b>F.4.4</b> Load into SQLite database</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="index.html">Modern Data Science with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch:regression" class="section level1" number="26">
+<h1><span class="header-section-number">E</span> Regression modeling</h1>
+<p>
+
+
+
+
+
+
+
+
+
+Regression analysis is a powerful and flexible framework that allows an analyst to model an outcome (the <a href="https://en.wikipedia.org/w/index.php?search=response%20variable"><em>response variable</em></a>) as a function of one or more <a href="https://en.wikipedia.org/w/index.php?search=explanatory%20variables"><em>explanatory variables</em></a> (or predictors). Regression forms the basis of many important statistical models described in Chapters <a href="ch-foundations.html#ch:foundations">9</a> and <a href="ch-learningI.html#ch:learningI">11</a>. This appendix provides a brief review of linear and logistic regression models, beginning with a single predictor, then extending to multiple predictors.</p>
+<div id="simple-linear-regression" class="section level2" number="26.1">
+<h2><span class="header-section-number">E.1</span> Simple linear regression</h2>
+<p>
+
+
+
+
+Linear regression can help us understand how values of a quantitative (numerical) outcome (or response) are associated with values of a quantitative explanatory (or predictor) variable.
+This technique is often applied in two ways: to generate predicted values or to make inferences regarding associations in the dataset.</p>
+<p>
+
+In some disciplines the outcome is called the dependent variable and the predictor the independent variable. We avoid such usage since the words dependent and independent have many meanings in statistics.</p>
+<p>A simple linear regression model for an outcome <span class="math inline">\(y\)</span> as a function of a predictor <span class="math inline">\(x\)</span> takes the form:
+<span class="math display">\[
+  y_i = \beta_0 + \beta_1 x_i + \epsilon_i \,, \text{ for } i=1,\ldots,n \,,
+\]</span>
+where <span class="math inline">\(n\)</span> represents the number of observations (rows) in the data set.
+For this model, <span class="math inline">\(\beta_0\)</span> is the population parameter corresponding to the <a href="https://en.wikipedia.org/w/index.php?search=intercept"><em>intercept</em></a> (i.e., the predicted value when <span class="math inline">\(x=0\)</span>) and <span class="math inline">\(\beta_1\)</span> is the true (population) <a href="https://en.wikipedia.org/w/index.php?search=slope"><em>slope</em></a> coefficient (i.e., the predicted increase in <span class="math inline">\(y\)</span> for a unit increase in <span class="math inline">\(x\)</span>). The <span class="math inline">\(\epsilon_i\)</span>’s are the <a href="https://en.wikipedia.org/w/index.php?search=errors"><em>errors</em></a> (these are assumed to be random noise with mean 0).
+
+
+
+
+
+
+</p>
+<p>We almost never know the true values of the population parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, but we estimate them using data from our sample. The <code>lm()</code> function finds the “best” coefficients <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> where
+the <a href="https://en.wikipedia.org/w/index.php?search=fitted%20values"><em>fitted values</em></a> (or expected values) are given by
+<span class="math inline">\(\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i\)</span>.
+What is left over is captured by the <a href="https://en.wikipedia.org/w/index.php?search=residuals"><em>residuals</em></a> (<span class="math inline">\(\hat{\epsilon}_i = y_i - \hat{y}_i\)</span>).
+
+The model almost never fits perfectly—if it did there would be no need for a model.</p>
+<p>
+
+The best-fitting
+regression line is usually determined by a <a href="https://en.wikipedia.org/w/index.php?search=least%20squares"><em>least squares</em></a> criteria that minimizes the sum of the squared residuals (<span class="math inline">\(\epsilon_i^2\)</span>).
+The least squares regression line (defined by the values of <span class="math inline">\(\hat{\beta_0}\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>) is unique.</p>
+<div id="motivating-example-modeling-usage-of-a-rail-trail" class="section level3" number="26.1.1">
+<h3><span class="header-section-number">E.1.1</span> Motivating example: Modeling usage of a rail trail</h3>
+<p>
+
+
+
+
+
+The <a href="https://en.wikipedia.org/w/index.php?search=Pioneer%20Valley"><em>Pioneer Valley</em></a> Planning Commission (PVPC) collected data north of Chestnut Street in <a href="https://en.wikipedia.org/w/index.php?search=Florence,%20Massachusetts"><em>Florence, Massachusetts</em></a> for a 90-day period.
+Data collectors set up a laser sensor that recorded when a rail-trail user passed the data collection station.
+The data are available in the <code>RailTrail</code> data set in the <strong>mosaicData</strong> package.</p>
+<p></p>
+<div class="sourceCode" id="cb1396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1396-1"><a href="ch-regression.html#cb1396-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1396-2"><a href="ch-regression.html#cb1396-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdsr)</span>
+<span id="cb1396-3"><a href="ch-regression.html#cb1396-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb1396-4"><a href="ch-regression.html#cb1396-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(RailTrail)</span></code></pre></div>
+<pre><code>Rows: 90
+Columns: 11
+$ hightemp   &lt;int&gt; 83, 73, 74, 95, 44, 69, 66, 66, 80, 79, 78, 65, 41, 59,…
+$ lowtemp    &lt;int&gt; 50, 49, 52, 61, 52, 54, 39, 38, 55, 45, 55, 48, 49, 35,…
+$ avgtemp    &lt;dbl&gt; 66.5, 61.0, 63.0, 78.0, 48.0, 61.5, 52.5, 52.0, 67.5, 6…
+$ spring     &lt;int&gt; 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1…
+$ summer     &lt;int&gt; 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0…
+$ fall       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0…
+$ cloudcover &lt;dbl&gt; 7.6, 6.3, 7.5, 2.6, 10.0, 6.6, 2.4, 0.0, 3.8, 4.1, 8.5,…
+$ precip     &lt;dbl&gt; 0.00, 0.29, 0.32, 0.00, 0.14, 0.02, 0.00, 0.00, 0.00, 0…
+$ volume     &lt;int&gt; 501, 419, 397, 385, 200, 375, 417, 629, 533, 547, 432, …
+$ weekday    &lt;lgl&gt; TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE…
+$ dayType    &lt;chr&gt; &quot;weekday&quot;, &quot;weekday&quot;, &quot;weekday&quot;, &quot;weekend&quot;, &quot;weekday&quot;, …</code></pre>
+<p>
+
+The PVPC wants to understand the relationship between daily ridership (i.e., the number of riders and walkers who use the bike path on any given day) and a collection of explanatory variables, including the temperature, rainfall, cloud cover, and day of the week.</p>
+<p>In a simple linear regression model, there
+is a single quantitative explanatory variable.
+It seems reasonable that the high temperature for the day (<code>hightemp</code>, measured in degrees Fahrenheit) might be related to ridership, so we will explore that first.
+Figure <a href="ch-regression.html#fig:railtrail">E.1</a> shows a scatterplot between ridership (<code>volume</code>) and high temperature (<code>hightemp</code>), with the simple linear regression line overlaid.
+The fitted coefficients are calculated through a call to the <code>lm()</code> function.
+
+
+</p>
+<p>We will use functions from the <strong>broom</strong> package to display model results in a tidy fashion.</p>
+<p>
+
+</p>
+<div class="sourceCode" id="cb1398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1398-1"><a href="ch-regression.html#cb1398-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(volume <span class="sc">~</span> hightemp, <span class="at">data =</span> RailTrail)</span>
+<span id="cb1398-2"><a href="ch-regression.html#cb1398-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1398-3"><a href="ch-regression.html#cb1398-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(mod)</span></code></pre></div>
+<pre><code># A tibble: 2 × 5
+  term        estimate std.error statistic       p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+1 (Intercept)   -17.1     59.4      -0.288 0.774        
+2 hightemp        5.70     0.848     6.72  0.00000000171</code></pre>
+<p></p>
+<div class="sourceCode" id="cb1400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1400-1"><a href="ch-regression.html#cb1400-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(RailTrail, <span class="fu">aes</span>(<span class="at">x =</span> hightemp, <span class="at">y =</span> volume)) <span class="sc">+</span> </span>
+<span id="cb1400-2"><a href="ch-regression.html#cb1400-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1400-3"><a href="ch-regression.html#cb1400-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:railtrail"></span>
+<img src="E-regression_files/figure-html/railtrail-1.png" alt="Scatterplot of number of trail crossings as a function of highest daily temperature (in degrees Fahrenheit)." width="100%" />
+<p class="caption">
+Figure E.1: Scatterplot of number of trail crossings as a function of highest daily temperature (in degrees Fahrenheit).
+</p>
+</div>
+<p>The first coefficient is <span class="math inline">\(\hat{\beta}_0\)</span>, the estimated <span class="math inline">\(y\)</span>-intercept. The interpretation is that if the high temperature was 0 degrees Fahrenheit, then the estimated ridership would be about <span class="math inline">\(-17\)</span> riders. This is doubly non-sensical in this context, since it is impossible to have a negative number of riders and this represents a substantial extrapolation to far colder temperatures than are present in the data set (recall the <a href="https://en.wikipedia.org/w/index.php?search=Challenger"><em>Challenger</em></a> discussion from Chapter <a href="ch-vizI.html#ch:vizI">2</a>). It turns out that the monitoring equipment didn’t work when it got too cold, so values for those days are unavailable.</p>
+<div class="rmdtip">
+<p>In this case, it is not appropriate to simply multiply
+the average number of users on the observed days by the number of days in a year, since cold days that are likely to have fewer trail users are excluded due to instrumentation issues.
+Such missing data can lead to selection bias.</p>
+</div>
+<p>
+
+
+</p>
+<p>
+The second coefficient (the slope) is usually more interesting. This coefficient (<span class="math inline">\(\hat{\beta}_1\)</span>) is interpreted as the predicted increase in trail users for each additional degree in temperature. We expect to see about 5.7 additional riders use the rail trail on a day that is 1 degree warmer than another day.</p>
+</div>
+<div id="model-visualization" class="section level3" number="26.1.2">
+<h3><span class="header-section-number">E.1.2</span> Model visualization</h3>
+<p>Figure <a href="ch-regression.html#fig:railtrail">E.1</a> allows us to visualize our model in the data space. How does our model compare to a null model? That is, how do we know that our model is useful?
+
+
+</p>
+<div class="sourceCode" id="cb1401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1401-1"><a href="ch-regression.html#cb1401-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1401-2"><a href="ch-regression.html#cb1401-2" aria-hidden="true" tabindex="-1"></a>mod_avg <span class="ot">&lt;-</span> RailTrail <span class="sc">%&gt;%</span></span>
+<span id="cb1401-3"><a href="ch-regression.html#cb1401-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(volume <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb1401-4"><a href="ch-regression.html#cb1401-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(RailTrail)</span>
+<span id="cb1401-5"><a href="ch-regression.html#cb1401-5" aria-hidden="true" tabindex="-1"></a>mod_temp <span class="ot">&lt;-</span> RailTrail <span class="sc">%&gt;%</span></span>
+<span id="cb1401-6"><a href="ch-regression.html#cb1401-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(volume <span class="sc">~</span> hightemp, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb1401-7"><a href="ch-regression.html#cb1401-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(RailTrail)</span>
+<span id="cb1401-8"><a href="ch-regression.html#cb1401-8" aria-hidden="true" tabindex="-1"></a>mod_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(mod_avg, mod_temp) <span class="sc">%&gt;%</span></span>
+<span id="cb1401-9"><a href="ch-regression.html#cb1401-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;null&quot;</span>, <span class="st">&quot;slr&quot;</span>), <span class="at">each =</span> <span class="fu">nrow</span>(RailTrail)))</span></code></pre></div>
+<p>In Figure <a href="ch-regression.html#fig:regplot1">E.2</a>, we compare the least squares regression line (right) with the null model that simply returns the average for every input (left). That is, on the left, the average temperature of the day is ignored. The model simply predicts an average ridership every day, regardless of the temperature. However, on the right, the model takes the average ridership into account, and accordingly makes a different prediction for each input value.
+
+
+
+
+
+
+</p>
+<div class="sourceCode" id="cb1402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1402-1"><a href="ch-regression.html#cb1402-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mod_data, <span class="fu">aes</span>(<span class="at">x =</span> hightemp, <span class="at">y =</span> volume)) <span class="sc">+</span> </span>
+<span id="cb1402-2"><a href="ch-regression.html#cb1402-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(</span>
+<span id="cb1402-3"><a href="ch-regression.html#cb1402-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">filter</span>(mod_data, model <span class="sc">==</span> <span class="st">&quot;null&quot;</span>), </span>
+<span id="cb1402-4"><a href="ch-regression.html#cb1402-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb1402-5"><a href="ch-regression.html#cb1402-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="at">size =</span> <span class="fl">0.5</span></span>
+<span id="cb1402-6"><a href="ch-regression.html#cb1402-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb1402-7"><a href="ch-regression.html#cb1402-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(</span>
+<span id="cb1402-8"><a href="ch-regression.html#cb1402-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">filter</span>(mod_data, model <span class="sc">==</span> <span class="st">&quot;slr&quot;</span>),</span>
+<span id="cb1402-9"><a href="ch-regression.html#cb1402-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, </span>
+<span id="cb1402-10"><a href="ch-regression.html#cb1402-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="at">size =</span> <span class="fl">0.5</span></span>
+<span id="cb1402-11"><a href="ch-regression.html#cb1402-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb1402-12"><a href="ch-regression.html#cb1402-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb1402-13"><a href="ch-regression.html#cb1402-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">xend =</span> hightemp, <span class="at">yend =</span> .fitted), </span>
+<span id="cb1402-14"><a href="ch-regression.html#cb1402-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">&quot;cm&quot;</span>)), </span>
+<span id="cb1402-15"><a href="ch-regression.html#cb1402-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">&quot;darkgray&quot;</span></span>
+<span id="cb1402-16"><a href="ch-regression.html#cb1402-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb1402-17"><a href="ch-regression.html#cb1402-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">&quot;dodgerblue&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb1402-18"><a href="ch-regression.html#cb1402-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>model)</span></code></pre></div>
+<div class="figure"><span id="fig:regplot1"></span>
+<img src="E-regression_files/figure-html/regplot1-1.png" alt="At left, the model based on the overall average high temperature. At right, the simple linear regression model." width="100%" />
+<p class="caption">
+Figure E.2: At left, the model based on the overall average high temperature. At right, the simple linear regression model.
+</p>
+</div>
+<p>Obviously, the regression model works better than the null model (that forces the slope to be zero), since it is more flexible. But how much better?</p>
+</div>
+<div id="measuring-the-strength-of-fit" class="section level3" number="26.1.3">
+<h3><span class="header-section-number">E.1.3</span> Measuring the strength of fit</h3>
+<p>
+
+
+
+
+
+
+The correlation coefficient, <span class="math inline">\(r\)</span>, is used to
+quantify the strength of the linear relationship between two variables. We can quantify the proportion of variation in the response variable (<span class="math inline">\(y\)</span>) that is explained by the model in a similar fashion. This quantity is called the <a href="https://en.wikipedia.org/w/index.php?search=coefficient%20of%20determination"><em>coefficient of determination</em></a> and is denoted <span class="math inline">\(R^2\)</span>. It is a common measure of goodness-of-fit for regression models.
+Like any proportion, <span class="math inline">\(R^2\)</span> is always between 0 and 1. For simple linear regression (one explanatory variable), <span class="math inline">\(R^2 = r^2\)</span>. The definition of <span class="math inline">\(R^2\)</span> is given by the following expression.</p>
+<p><span class="math display">\[
+\begin{aligned}
+    R^2 &amp;= 1 - \frac{SSE}{SST} = \frac{SSM}{SST} \\
+    &amp;= 1 - \frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{\sum_{i=1}^n (y_i - \bar{y})^2} \\
+    &amp;= 1 - \frac{SSE}{(n-1) Var(y)} \, ,
+\end{aligned}
+\]</span></p>
+<p>Here, <span class="math inline">\(\hat{y}\)</span> is the predicted value, <span class="math inline">\(Var(y)\)</span> is the observed variance, <span class="math inline">\(SSE\)</span> is the sum of the squared residuals, <span class="math inline">\(SSM\)</span> is the sum of the squares attributed to the model, and <span class="math inline">\(SST\)</span> is the total sum of the squares.
+We can calculate these values for the rail trail example.
+<!--%\includegraphics[width=9cm]{poverty_scat}--></p>
+<p>
+
+
+</p>
+<div class="sourceCode" id="cb1403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1403-1"><a href="ch-regression.html#cb1403-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(RailTrail)</span>
+<span id="cb1403-2"><a href="ch-regression.html#cb1403-2" aria-hidden="true" tabindex="-1"></a>SST <span class="ot">&lt;-</span> <span class="fu">var</span>(<span class="fu">pull</span>(RailTrail, volume)) <span class="sc">*</span> (n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb1403-3"><a href="ch-regression.html#cb1403-3" aria-hidden="true" tabindex="-1"></a>SSE <span class="ot">&lt;-</span> <span class="fu">var</span>(<span class="fu">residuals</span>(mod)) <span class="sc">*</span> (n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb1403-4"><a href="ch-regression.html#cb1403-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> SSE <span class="sc">/</span> SST</span></code></pre></div>
+<pre><code>[1] 0.339</code></pre>
+<div class="sourceCode" id="cb1405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1405-1"><a href="ch-regression.html#cb1405-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(mod)</span></code></pre></div>
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic   p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.339         0.332  104.      45.2   1.71e-9     1  -545. 1096. 1103.
+# … with 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+<p>In Figure <a href="ch-regression.html#fig:regplot1">E.2</a>, the null model on the left has an <span class="math inline">\(R^2\)</span> of 0, because <span class="math inline">\(\hat{y}_i = \bar{y}\)</span> for all <span class="math inline">\(i\)</span>, and so <span class="math inline">\(SSE = SST\)</span>. On the other hand, the <span class="math inline">\(R^2\)</span> of the regression model on the right is 0.339. We say that the regression model based on average daily temperature explained about 34% of the variation in daily ridership.</p>
+</div>
+<div id="sec:anova" class="section level3" number="26.1.4">
+<h3><span class="header-section-number">E.1.4</span> Categorical explanatory variables</h3>
+<p>
+
+
+
+
+Suppose that instead of using temperature as our explanatory variable for ridership on the rail trail, we only considered whether it was a weekday or not a weekday (e.g., weekend or holiday). The indicator variable <code>weekday</code> is <a href="https://en.wikipedia.org/w/index.php?search=binary"><em>binary</em></a> (or dichotomous) in that it only takes on the values 0 and 1. (Such variables are sometimes called <a href="https://en.wikipedia.org/w/index.php?search=indicator"><em>indicator</em></a> variables or more pejoratively <a href="https://en.wikipedia.org/w/index.php?search=dummy"><em>dummy</em></a> variables.)</p>
+<p>This new linear regression model has the form:
+<span class="math display">\[
+  \widehat{volume} = \hat{\beta}_0 + \hat{\beta}_1 \cdot \mathrm{weekday} \,,
+\]</span>
+where the fitted coefficients are given below.</p>
+<div class="sourceCode" id="cb1407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1407-1"><a href="ch-regression.html#cb1407-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(volume <span class="sc">~</span> weekday, <span class="at">data =</span> RailTrail))</span></code></pre></div>
+<pre><code>(Intercept) weekdayTRUE 
+      430.7       -80.3 </code></pre>
+<p>Note that these coefficients could have been calculated from the means of the two groups (since the regression model has only two possible predicted values). The average ridership on weekdays is 350.4 while the average on non-weekdays is 430.7.</p>
+<p>
+</p>
+<div class="sourceCode" id="cb1409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1409-1"><a href="ch-regression.html#cb1409-1" aria-hidden="true" tabindex="-1"></a>RailTrail <span class="sc">%&gt;%</span></span>
+<span id="cb1409-2"><a href="ch-regression.html#cb1409-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(weekday) <span class="sc">%&gt;%</span></span>
+<span id="cb1409-3"><a href="ch-regression.html#cb1409-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_volume =</span> <span class="fu">mean</span>(volume))</span></code></pre></div>
+<pre><code># A tibble: 2 × 2
+  weekday mean_volume
+  &lt;lgl&gt;         &lt;dbl&gt;
+1 FALSE          431.
+2 TRUE           350.</code></pre>
+<p>In the coefficients listed above, the <code>weekdayTRUE</code> variable corresponds to rows in which the value of the <code>weekday</code> variable was <code>TRUE</code> (i.e., weekdays). Because this value is negative, our interpretation is that 80 fewer riders are expected on a weekday as opposed to a weekend or holiday.</p>
+<p>To improve the readability of the output we can create a new variable with more mnemonic values.
+</p>
+<div class="sourceCode" id="cb1411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1411-1"><a href="ch-regression.html#cb1411-1" aria-hidden="true" tabindex="-1"></a>RailTrail <span class="ot">&lt;-</span> RailTrail <span class="sc">%&gt;%</span></span>
+<span id="cb1411-2"><a href="ch-regression.html#cb1411-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">day =</span> <span class="fu">ifelse</span>(weekday <span class="sc">==</span> <span class="dv">1</span>, <span class="st">&quot;weekday&quot;</span>, <span class="st">&quot;weekend/holiday&quot;</span>))</span></code></pre></div>
+<div class="rmdtip">
+<p>Care was needed to recode the <code>weekday</code> variable because it was a <code>factor</code>. Avoid the use of factors unless they are needed.</p>
+</div>
+
+<p>
+</p>
+<p>
+</p>
+<div class="sourceCode" id="cb1412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1412-1"><a href="ch-regression.html#cb1412-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(volume <span class="sc">~</span> day, <span class="at">data =</span> RailTrail))</span></code></pre></div>
+<pre><code>       (Intercept) dayweekend/holiday 
+             350.4               80.3 </code></pre>
+<p>
+
+The model coefficients have changed (although they still provide the same interpretation). By default, the <code>lm()</code> function will pick the alphabetically lowest value of the categorical predictor as the <a href="https://en.wikipedia.org/w/index.php?search=reference%20group"><em>reference group</em></a> and create indicators for the other levels (in this case <code>dayweekend/holiday</code>). As a result the intercept is now the predicted number of trail crossings on a <code>weekday</code>.
+In either formulation, the interpretation of the model remains the same: On a weekday, 80 fewer riders are expected than on a weekend or holiday.</p>
+</div>
+</div>
+<div id="multiple-regression" class="section level2" number="26.2">
+<h2><span class="header-section-number">E.2</span> Multiple regression</h2>
+<p>
+
+Multiple regression is a natural extension of simple linear regression that incorporates multiple explanatory (or predictor) variables. It has the general form:</p>
+<p><span class="math display">\[
+    y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \epsilon, \text{ where } \epsilon \sim N(0, \sigma_\epsilon) \,.
+  \]</span></p>
+<p>The estimated coefficients (i.e., <span class="math inline">\(\hat{\beta}_i\)</span>’s) are now interpreted as “conditional on” the other variables—each <span class="math inline">\(\beta_i\)</span> reflects the <em>predicted</em> change in <span class="math inline">\(y\)</span> associated with a one-unit increase in <span class="math inline">\(x_i\)</span>, conditional upon the rest of the <span class="math inline">\(x_i\)</span>’s.
+This type of model can help to disentangle more complex relationships between three or more variables.
+The value of <span class="math inline">\(R^2\)</span> from a multiple regression model has the same interpretation as before: the proportion of variability explained by the model.
+
+
+
+</p>
+<p></p>
+<div class="rmdtip">
+<p>Interpreting conditional regression parameters can be challenging. The analyst needs to ensure
+that comparisons that hold other factors constant do not involve extrapolations beyond the
+observed data.</p>
+</div>
+<div id="sec:indicators" class="section level3" number="26.2.1">
+<h3><span class="header-section-number">E.2.1</span> Parallel slopes: Multiple regression with a categorical variable</h3>
+<p>
+
+Consider first the case where <span class="math inline">\(x_2\)</span> is an <a href="https://en.wikipedia.org/w/index.php?search=indicator"><em>indicator</em></a> variable that can only be 0 or 1 (e.g., <code>weekday</code>). Then,
+<span class="math display">\[
+  \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 \,.
+\]</span>
+In the case where <span class="math inline">\(x_1\)</span> is quantitative but <span class="math inline">\(x_2\)</span> is an indicator variable, we have:</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \text{For weekends, } \qquad \hat{y} |_{ x_1, x_2 = 0} &amp;= \hat{\beta}_0 + \hat{\beta}_1 x_1 \\ 
+  \text{For weekdays, } \qquad \hat{y} |_{ x_1, x_2 = 1} &amp;= \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 \cdot 1 \\ 
+  &amp;= \left( \hat{\beta}_0 + \hat{\beta}_2 \right) + \hat{\beta}_1 x_1 \, .
+\end{aligned}
+\]</span></p>
+<p>This is called a <a href="https://en.wikipedia.org/w/index.php?search=parallel%20slopes"><em>parallel slopes</em></a> model (see Figure <a href="ch-regression.html#fig:parallel-slopes">E.3</a>), since the predicted values of the model take the geometric shape of two parallel lines with slope <span class="math inline">\(\hat{\beta}_1\)</span>: one with <span class="math inline">\(y\)</span>-intercept <span class="math inline">\(\hat{\beta}_0\)</span> for weekends, and another with <span class="math inline">\(y\)</span>-intercept <span class="math inline">\(\hat{\beta}_0 + \hat{\beta}_2\)</span> for weekdays.</p>
+<p>
+
+</p>
+<div class="sourceCode" id="cb1414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1414-1"><a href="ch-regression.html#cb1414-1" aria-hidden="true" tabindex="-1"></a>mod_parallel <span class="ot">&lt;-</span> <span class="fu">lm</span>(volume <span class="sc">~</span> hightemp <span class="sc">+</span> weekday, <span class="at">data =</span> RailTrail)</span>
+<span id="cb1414-2"><a href="ch-regression.html#cb1414-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(mod_parallel)</span></code></pre></div>
+<pre><code># A tibble: 3 × 5
+  term        estimate std.error statistic      p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+1 (Intercept)    42.8     64.3       0.665 0.508       
+2 hightemp        5.35     0.846     6.32  0.0000000109
+3 weekdayTRUE   -51.6     23.7      -2.18  0.0321      </code></pre>
+<div class="sourceCode" id="cb1416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1416-1"><a href="ch-regression.html#cb1416-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(mod_parallel)</span></code></pre></div>
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic   p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.374         0.359  102.      25.9   1.46e-9     2  -542. 1093. 1103.
+# … with 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+<div class="sourceCode" id="cb1418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1418-1"><a href="ch-regression.html#cb1418-1" aria-hidden="true" tabindex="-1"></a>mod_parallel <span class="sc">%&gt;%</span></span>
+<span id="cb1418-2"><a href="ch-regression.html#cb1418-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1418-3"><a href="ch-regression.html#cb1418-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> hightemp, <span class="at">y =</span> volume, <span class="at">color =</span> weekday)) <span class="sc">+</span></span>
+<span id="cb1418-4"><a href="ch-regression.html#cb1418-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb1418-5"><a href="ch-regression.html#cb1418-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> .fitted)) <span class="sc">+</span> </span>
+<span id="cb1418-6"><a href="ch-regression.html#cb1418-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;Is it a</span><span class="sc">\n</span><span class="st">weekday?&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:parallel-slopes"></span>
+<img src="E-regression_files/figure-html/parallel-slopes-1.png" alt="Visualization of parallel slopes model for the rail trail data." width="100%" />
+<p class="caption">
+Figure E.3: Visualization of parallel slopes model for the rail trail data.
+</p>
+</div>
+</div>
+<div id="parallel-planes-multiple-regression-with-a-second-quantitative-variable" class="section level3" number="26.2.2">
+<h3><span class="header-section-number">E.2.2</span> Parallel planes: Multiple regression with a second quantitative variable</h3>
+<p>
+
+If <span class="math inline">\(x_2\)</span> is a quantitative variable, then we have:</p>
+<p><span class="math display">\[
+    \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 \,.
+  \]</span>
+Notice that our model is no longer a line, rather it is a <em>plane</em> that exists in three dimensions.</p>
+<p>
+
+
+
+Now suppose that we want to improve our model for ridership by considering not only the average temperature, but also the amount of precipitation (rain or snow, measured in inches). We can do this in <strong>R</strong> by simply adding this variable to our regression model.</p>
+<div class="sourceCode" id="cb1419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1419-1"><a href="ch-regression.html#cb1419-1" aria-hidden="true" tabindex="-1"></a>mod_plane <span class="ot">&lt;-</span> <span class="fu">lm</span>(volume <span class="sc">~</span> hightemp <span class="sc">+</span> precip, <span class="at">data =</span> RailTrail)</span>
+<span id="cb1419-2"><a href="ch-regression.html#cb1419-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(mod_plane)</span></code></pre></div>
+<pre><code># A tibble: 3 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)   -31.5     55.2      -0.571 5.70e- 1
+2 hightemp        6.12     0.794     7.70  1.97e-11
+3 precip       -153.      39.3      -3.90  1.90e- 4</code></pre>
+<p>Note that the coefficient on <code>hightemp</code> (6.1 riders per degree) has changed from its value in the simple linear regression model (5.7 riders per degree). This is due to the moderating effect of precipitation. Our interpretation is that for each additional degree in temperature, we expect an additional 6.1 riders on the rail trail, after controlling for the amount of precipitation.</p>
+<p>As you can imagine, the effect of precipitation is strong—some people may be less likely to bike or walk in the rain. Thus, even after controlling for temperature, an inch of rainfall is associated with a drop in ridership of about 153.</p>
+<div class="rmdtip">
+<p>Note that since the median precipitation on days when there was precipitation was only 0.15 inches, a predicted change for an additional inch may be misleading. It may be better to report a predicted difference of 0.15 additional inches or replace the continuous term in the model with a dichotomous indicator of any precipitation.</p>
+</div>
+
+<p>If we added all three explanatory variables to the model we would have parallel <a href="https://en.wikipedia.org/w/index.php?search=planes"><em>planes</em></a>.</p>
+<div class="sourceCode" id="cb1421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1421-1"><a href="ch-regression.html#cb1421-1" aria-hidden="true" tabindex="-1"></a>mod_p_planes <span class="ot">&lt;-</span> <span class="fu">lm</span>(volume <span class="sc">~</span> hightemp <span class="sc">+</span> precip <span class="sc">+</span> weekday, <span class="at">data =</span> RailTrail)</span>
+<span id="cb1421-2"><a href="ch-regression.html#cb1421-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(mod_p_planes)</span></code></pre></div>
+<pre><code># A tibble: 4 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)    19.3     60.3       0.320 7.50e- 1
+2 hightemp        5.80     0.799     7.26  1.59e-10
+3 precip       -146.      38.9      -3.74  3.27e- 4
+4 weekdayTRUE   -43.1     22.2      -1.94  5.52e- 2</code></pre>
+</div>
+<div id="sec:interaction" class="section level3" number="26.2.3">
+<h3><span class="header-section-number">E.2.3</span> Non-parallel slopes: Multiple regression with interaction</h3>
+<p>Let’s return to a model that includes <code>weekday</code> and <code>hightemp</code> as predictors.
+What if the parallel lines model doesn’t fit well?
+Adding an additional term into the model can make it more flexible
+and allow there to be a different slope on the two different types of days.</p>
+<p><span class="math display">\[
+  \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 x_2 + \hat{\beta}_3 x_1 x_2 \,.
+\]</span>
+The model can also be described separately for weekends/holidays and weekdays.</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \text{For weekends, } \qquad \hat{y} |_{ x_1, x_2 = 0} &amp;= \hat{\beta}_0 + \hat{\beta}_1 x_1 \\ 
+  \text{For weekdays, } \qquad \hat{y} |_{ x_1, x_2 = 1} &amp;= \hat{\beta}_0 + \hat{\beta}_1 x_1 + \hat{\beta}_2 \cdot 1  + \hat{\beta}_3 \cdot x_1\\
+    &amp;= \left( \hat{\beta}_0 + \hat{\beta}_2 \right) + \left( \hat{\beta}_1 + \hat{\beta}_3 \right) x_1 \, .
+\end{aligned}
+\]</span></p>
+<p>
+
+
+
+
+This is called an <a href="https://en.wikipedia.org/w/index.php?search=interaction%20model"><em>interaction model</em></a> (see Figure <a href="ch-regression.html#fig:interact">E.4</a>).
+The predicted values of the model take the geometric shape of two non-parallel lines with different slopes.</p>
+<div class="sourceCode" id="cb1423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1423-1"><a href="ch-regression.html#cb1423-1" aria-hidden="true" tabindex="-1"></a>mod_interact <span class="ot">&lt;-</span> <span class="fu">lm</span>(volume <span class="sc">~</span> hightemp <span class="sc">+</span> weekday <span class="sc">+</span> hightemp <span class="sc">*</span> weekday, </span>
+<span id="cb1423-2"><a href="ch-regression.html#cb1423-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> RailTrail)</span>
+<span id="cb1423-3"><a href="ch-regression.html#cb1423-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(mod_interact)</span></code></pre></div>
+<pre><code># A tibble: 4 × 5
+  term                 estimate std.error statistic p.value
+  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept)            135.      108.        1.25 0.215  
+2 hightemp                 4.07      1.47      2.78 0.00676
+3 weekdayTRUE           -186.      129.       -1.44 0.153  
+4 hightemp:weekdayTRUE     1.91      1.80      1.06 0.292  </code></pre>
+<div class="sourceCode" id="cb1425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1425-1"><a href="ch-regression.html#cb1425-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(mod_interact)</span></code></pre></div>
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic   p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.382         0.360  102.      17.7   4.96e-9     3  -542. 1094. 1106.
+# … with 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+<div class="sourceCode" id="cb1427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1427-1"><a href="ch-regression.html#cb1427-1" aria-hidden="true" tabindex="-1"></a>mod_interact <span class="sc">%&gt;%</span></span>
+<span id="cb1427-2"><a href="ch-regression.html#cb1427-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1427-3"><a href="ch-regression.html#cb1427-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> hightemp, <span class="at">y =</span> volume, <span class="at">color =</span> weekday)) <span class="sc">+</span></span>
+<span id="cb1427-4"><a href="ch-regression.html#cb1427-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb1427-5"><a href="ch-regression.html#cb1427-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> .fitted)) <span class="sc">+</span> </span>
+<span id="cb1427-6"><a href="ch-regression.html#cb1427-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;Is it a</span><span class="sc">\n</span><span class="st">weekday?&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:interact"></span>
+<img src="E-regression_files/figure-html/interact-1.png" alt="Visualization of interaction model for the rail trail data. " width="100%" />
+<p class="caption">
+Figure E.4: Visualization of interaction model for the rail trail data.
+</p>
+</div>
+<p>We see that the slope on weekdays is about two riders per degree higher than on weekends and holidays.
+This may indicate that trail users on weekends
+and holidays are less concerned about the temperature than on weekdays.</p>
+</div>
+<div id="modeling-non-linear-relationships" class="section level3" number="26.2.4">
+<h3><span class="header-section-number">E.2.4</span> Modeling non-linear relationships</h3>
+<p>
+
+
+
+
+
+
+
+A linear model with a single parameter fits well in many situations but is not appropriate in others. Consider modeling height (in centimeters) as a function of age (in years) using data
+from a subset of female subjects included in the <a href="https://en.wikipedia.org/w/index.php?search=National%20Health%20and%20Nutrition%20Examination%20Study"><em>National Health and Nutrition Examination Study</em></a> (from the <strong>NHANES</strong> package) with a linear term.
+Another approach uses a
+<a href="https://en.wikipedia.org/w/index.php?search=smoother"><em>smoother</em></a> instead of a linear model.
+Unlike the straight line, the smoother can bend to better fit the points when modeling the
+functional form of a relationship (see Figure <a href="ch-regression.html#fig:ageheightmod">E.5</a>).</p>
+<p>
+</p>
+<div class="sourceCode" id="cb1428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1428-1"><a href="ch-regression.html#cb1428-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
+<span id="cb1428-2"><a href="ch-regression.html#cb1428-2" aria-hidden="true" tabindex="-1"></a>NHANES <span class="sc">%&gt;%</span></span>
+<span id="cb1428-3"><a href="ch-regression.html#cb1428-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(<span class="dv">300</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1428-4"><a href="ch-regression.html#cb1428-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">==</span> <span class="st">&quot;female&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1428-5"><a href="ch-regression.html#cb1428-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> Height)) <span class="sc">+</span> </span>
+<span id="cb1428-6"><a href="ch-regression.html#cb1428-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb1428-7"><a href="ch-regression.html#cb1428-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb1428-8"><a href="ch-regression.html#cb1428-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> loess, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">&quot;green&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb1428-9"><a href="ch-regression.html#cb1428-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Age (in years)&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb1428-10"><a href="ch-regression.html#cb1428-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Height (in cm)&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:ageheightmod"></span>
+<img src="E-regression_files/figure-html/ageheightmod-1.png" alt="Scatterplot of height as a function of age with superimposed linear model (blue) and smoother (green). " width="100%" />
+<p class="caption">
+Figure E.5: Scatterplot of height as a function of age with superimposed linear model (blue) and smoother (green).
+</p>
+</div>
+<p>
+
+The fit of the linear model (denoted in blue) is poor: A straight line does not account for the dramatic increases in height during
+puberty to young adulthood or for the gradual decline in height for older subjects. The smoother (in green) does a much better job of describing the functional form.</p>
+<p>
+
+
+The improved fit does come with a cost. Compare the results for linear and smoothed models in Figure <a href="ch-regression.html#fig:railtrailsmooth">E.6</a>. Here the functional form of the relationship between high temperature and
+volume of trail use is closer to linear (with some deviation for warmer temperatures).</p>
+<div class="sourceCode" id="cb1429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1429-1"><a href="ch-regression.html#cb1429-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> RailTrail, <span class="fu">aes</span>(<span class="at">x =</span> hightemp, <span class="at">y =</span> volume)) <span class="sc">+</span> </span>
+<span id="cb1429-2"><a href="ch-regression.html#cb1429-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1429-3"><a href="ch-regression.html#cb1429-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm) <span class="sc">+</span></span>
+<span id="cb1429-4"><a href="ch-regression.html#cb1429-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> loess, <span class="at">color =</span> <span class="st">&quot;green&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb1429-5"><a href="ch-regression.html#cb1429-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Number of trail crossings&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb1429-6"><a href="ch-regression.html#cb1429-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;High temperature (F)&quot;</span>) </span></code></pre></div>
+<div class="figure"><span id="fig:railtrailsmooth"></span>
+<img src="E-regression_files/figure-html/railtrailsmooth-1.png" alt="Scatterplot of volume as a function of high temperature  with superimposed linear and smooth models for the rail trail data." width="100%" />
+<p class="caption">
+Figure E.6: Scatterplot of volume as a function of high temperature with superimposed linear and smooth models for the rail trail data.
+</p>
+</div>
+<p>
+
+The width of the confidence bands (95% confidence interval at each point) for the smoother tend to be wider than that for the linear model.
+This is one of the costs of the additional flexibility in modeling.
+Another cost is interpretation: It is more complicated to explain the results from the smoother than to interpret a slope coefficient (straight line).</p>
+</div>
+</div>
+<div id="inference-for-regression" class="section level2" number="26.3">
+<h2><span class="header-section-number">E.3</span> Inference for regression</h2>
+<p>
+
+
+
+Thus far, we have fit several models and interpreted their estimated coefficients. However,
+with the exception of the confidence bands in Figure <a href="ch-regression.html#fig:railtrailsmooth">E.6</a>,
+we have only made statements about the estimated coefficients (i.e., the <span class="math inline">\(\hat{\beta}\)</span>’s)—we have made no statements about the true coefficients (i.e., the <span class="math inline">\(\beta\)</span>’s), the values of which of course remain unknown.</p>
+<p>
+
+However, we can use our understanding of the <span class="math inline">\(t\)</span>-distribution to make <a href="https://en.wikipedia.org/w/index.php?search=inferences"><em>inferences</em></a> about the true value of regression coefficients. In particular, we can test a hypothesis about <span class="math inline">\(\beta_1\)</span> (most commonly that it is equal to zero) and find a confidence interval (range of plausible values) for it.</p>
+<p>
+</p>
+<div class="sourceCode" id="cb1430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1430-1"><a href="ch-regression.html#cb1430-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(mod_p_planes)</span></code></pre></div>
+<pre><code># A tibble: 4 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)    19.3     60.3       0.320 7.50e- 1
+2 hightemp        5.80     0.799     7.26  1.59e-10
+3 precip       -146.      38.9      -3.74  3.27e- 4
+4 weekdayTRUE   -43.1     22.2      -1.94  5.52e- 2</code></pre>
+<div class="sourceCode" id="cb1432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1432-1"><a href="ch-regression.html#cb1432-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(mod_p_planes)</span></code></pre></div>
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.461         0.443  95.2      24.6 1.44e-11     3  -536. 1081. 1094.
+# … with 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+<p>
+
+
+
+In the output above, the p-value that is associated with the <code>hightemp</code> coefficient is displayed as 1.59e-10 (or nearly zero).
+That is, if the true coefficient (<span class="math inline">\(\beta_1\)</span>) was in fact zero, then the probability of observing an association on ridership due to average temperature as large or larger than the one we actually observed in the data, after controlling for precipitation and day of the week, is essentially zero.
+This output suggests that the hypothesis that <span class="math inline">\(\beta_1\)</span> was in fact zero is dubious based on these data.
+Perhaps there is a real association between ridership and average temperature?</p>
+<p>
+</p>
+<div class="rmdtip">
+<p>Very small p-values should be rounded to the nearest 0.0001. We suggest reporting this p-value as <span class="math inline">\(p&lt;0.0001\)</span>.</p>
+</div>
+
+<p>Another way of thinking about this process is to form a confidence interval around our estimate of the slope coefficient <span class="math inline">\(\hat{\beta}_1\)</span>. Here we can say with 95% confidence that the value of the true coefficient <span class="math inline">\(\beta_1\)</span> is between 4.21 and 7.39 riders per degree. That this interval does not contain zero confirms the result from the hypothesis test.</p>
+<div class="sourceCode" id="cb1434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1434-1"><a href="ch-regression.html#cb1434-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mod_p_planes)</span></code></pre></div>
+<pre><code>              2.5 %  97.5 %
+(Intercept) -100.63 139.268
+hightemp       4.21   7.388
+precip      -222.93 -68.291
+weekdayTRUE  -87.27   0.976</code></pre>
+</div>
+<div id="assumptions-underlying-regression" class="section level2" number="26.4">
+<h2><span class="header-section-number">E.4</span> Assumptions underlying regression</h2>
+<p>
+
+The inferences we made above were predicated upon our assumption that the slope follows a <span class="math inline">\(t\)</span>-distribution. This follows from the assumption that the errors
+follow a normal distribution (with mean 0 and standard deviation <span class="math inline">\(\sigma_\epsilon\)</span>, for some constant <span class="math inline">\(\sigma_\epsilon\)</span>). Inferences from the model are only valid if the following assumptions hold:
+</p>
+<ul>
+<li><p><strong>L</strong>inearity: The functional form of the relationship between the predictors and the outcome follows a linear combination of regression parameters that are correctly specified (this assumption can be verified by bivariate graphical displays).
+</p></li>
+<li><p><strong>I</strong>ndependence: Are the errors uncorrelated? Or do they follow a pattern (perhaps over time or within clusters of subjects)?
+</p></li>
+<li><p><strong>N</strong>ormality of residuals: Do the residuals follow a distribution that is approximately normal? This assumption can be verified using univariate displays.
+</p></li>
+<li><p><strong>E</strong>qual variance of residuals: Is the variance in the residuals constant across the explanatory variables (<a href="https://en.wikipedia.org/w/index.php?search=homoscedastic%20errors"><em>homoscedastic errors</em></a>)? Or does the variance in the residuals depend on the value of one or more of the explanatory variables (<a href="https://en.wikipedia.org/w/index.php?search=heteroscedastic%20errors"><em>heteroscedastic errors</em></a>)? This assumption can be verified using residual diagnostics.
+
+
+</p></li>
+</ul>
+<p>These conditions are sometimes called the “LINE” assumptions.
+All but the independence assumption can be assessed using diagnostic plots.</p>
+<p>How might we assess the <code>mod_p_planes</code> model?
+
+
+
+Figure <a href="ch-regression.html#fig:plotmod3a">E.7</a> displays a scatterplot of residuals versus fitted (predicted) values.
+As we observed in Figure <a href="ch-regression.html#fig:railtrailsmooth">E.6</a>, the number of crossings does not increase as much for warm temperatures as it does for more moderate ones. We may need to consider a more sophisticated model with a more complex model for temperature.</p>
+<p></p>
+<div class="sourceCode" id="cb1436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1436-1"><a href="ch-regression.html#cb1436-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mplot</span>(mod_p_planes, <span class="at">which =</span> <span class="dv">1</span>, <span class="at">system =</span> <span class="st">&quot;ggplot2&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:plotmod3a"></span>
+<img src="E-regression_files/figure-html/plotmod3a-1.png" alt="Assessing linearity using a scatterplot of residuals versus fitted (predicted) values." width="100%" />
+<p class="caption">
+Figure E.7: Assessing linearity using a scatterplot of residuals versus fitted (predicted) values.
+</p>
+</div>
+<p>
+
+
+
+
+
+
+
+
+Figure <a href="ch-regression.html#fig:plotmod3b">E.8</a> displays the quantile-quantile plot for the residuals from the
+regression model. The plot deviates from the straight line: This indicates that the residuals
+have heavier tails than a normal distribution.</p>
+<div class="sourceCode" id="cb1437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1437-1"><a href="ch-regression.html#cb1437-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mplot</span>(mod_p_planes, <span class="at">which =</span> <span class="dv">2</span>, <span class="at">system =</span> <span class="st">&quot;ggplot2&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:plotmod3b"></span>
+<img src="E-regression_files/figure-html/plotmod3b-1.png" alt="Assessing normality assumption using a Q--Q plot." width="100%" />
+<p class="caption">
+Figure E.8: Assessing normality assumption using a Q–Q plot.
+</p>
+</div>
+<p>Figure <a href="ch-regression.html#fig:plotmod3c">E.9</a> displays the scale-location plot for the residuals from the model: The results indicate that there is evidence of heteroscedasticity (the variance of the residuals increases as a function of predicted value).</p>
+<div class="sourceCode" id="cb1438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1438-1"><a href="ch-regression.html#cb1438-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mplot</span>(mod_p_planes, <span class="at">which =</span> <span class="dv">3</span>, <span class="at">system =</span> <span class="st">&quot;ggplot2&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:plotmod3c"></span>
+<img src="E-regression_files/figure-html/plotmod3c-1.png" alt="Assessing equal variance using a scale--location plot." width="100%" />
+<p class="caption">
+Figure E.9: Assessing equal variance using a scale–location plot.
+</p>
+</div>
+<p>
+
+
+When performing model diagnostics,
+it is important to identify any outliers and understand their role in determining the regression coefficients.</p>
+<p>
+</p>
+<ul>
+<li>We call observations that don’t seem to fit the general pattern of the data <a href="https://en.wikipedia.org/w/index.php?search=outliers"><em>outliers</em></a>
+Figures <a href="ch-regression.html#fig:plotmod3a">E.7</a>, <a href="ch-regression.html#fig:plotmod3b">E.8</a>, and <a href="ch-regression.html#fig:plotmod3c">E.9</a> mark three points (8, 18, and 34) as values that large negative or positive residuals that merit further exploration.</li>
+<li>An observation with an extreme value of the explanatory variable is a point of high <a href="https://en.wikipedia.org/w/index.php?search=leverage"><em>leverage</em></a>.</li>
+<li>A high leverage point that exerts disproportionate influence on the slope of the regression line is an <a href="https://en.wikipedia.org/w/index.php?search=influential%20point"><em>influential point</em></a>.</li>
+</ul>
+<p>Figure <a href="ch-regression.html#fig:plotmod3d">E.10</a> displays the values for <a href="https://en.wikipedia.org/w/index.php?search=Cook&#39;s%20distance"><em>Cook’s distance</em></a> (a common measure of
+influential points in a regression model).</p>
+<div class="sourceCode" id="cb1439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1439-1"><a href="ch-regression.html#cb1439-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mplot</span>(mod_p_planes, <span class="at">which =</span> <span class="dv">4</span>, <span class="at">system =</span> <span class="st">&quot;ggplot2&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:plotmod3d"></span>
+<img src="E-regression_files/figure-html/plotmod3d-1.png" alt="Cook's distance for rail trail model." width="100%" />
+<p class="caption">
+Figure E.10: Cook’s distance for rail trail model.
+</p>
+</div>
+<p>We can use the <code>augment()</code> function from the <strong>broom</strong> package to calculate the value of
+this statistic and identify the most extreme Cook’s distance.</p>
+<div class="sourceCode" id="cb1440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1440-1"><a href="ch-regression.html#cb1440-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1440-2"><a href="ch-regression.html#cb1440-2" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(mod_p_planes) <span class="sc">%&gt;%</span></span>
+<span id="cb1440-3"><a href="ch-regression.html#cb1440-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">row_num =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb1440-4"><a href="ch-regression.html#cb1440-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>.std.resid, <span class="sc">-</span>.sigma) <span class="sc">%&gt;%</span></span>
+<span id="cb1440-5"><a href="ch-regression.html#cb1440-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.cooksd <span class="sc">&gt;</span> <span class="fl">0.4</span>)</span></code></pre></div>
+<pre><code># A tibble: 1 × 9
+  volume hightemp precip weekday .fitted .resid  .hat .cooksd row_num
+   &lt;int&gt;    &lt;int&gt;  &lt;dbl&gt; &lt;lgl&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;int&gt;
+1    388       84   1.49 TRUE       246.   142. 0.332   0.412      65</code></pre>
+<p>Observation 65 has the highest Cook’s distance.
+It references a day with nearly one and a half inches of rain (the most recorded in the dataset) and a high temperature of 84 degrees.
+This data point has high leverage and is influential on the results.
+Observations 4 and 34 also have relatively high Cook’s distances and may merit further exploration.</p>
+</div>
+<div id="sec:logistic" class="section level2" number="26.5">
+<h2><span class="header-section-number">E.5</span> Logistic regression</h2>
+<p>
+
+
+
+
+
+
+
+
+Our previous examples had quantitative (or continuous) outcomes.
+What happens when we are interested in modeling a dichotomous outcome?
+For example, we might model the probability of developing diabetes as a function of age and BMI (we explored this question further in Chapter <a href="ch-learningI.html#ch:learningI">11</a>).
+Figure <a href="ch-regression.html#fig:diabeteslogreg">E.11</a> displays the scatterplot of diabetes status as a function of age, while
+Figure <a href="ch-regression.html#fig:diabeteslogreg2">E.12</a> displays the scatterplot of diabetes as a function of BMI (body mass index).
+Note that each subject can either have diabetes or not, so all of the points are displayed at 0 or 1 on the <span class="math inline">\(y\)</span>-axis.</p>
+<p>
+
+
+
+
+
+
+</p>
+<div class="sourceCode" id="cb1442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1442-1"><a href="ch-regression.html#cb1442-1" aria-hidden="true" tabindex="-1"></a>NHANES <span class="ot">&lt;-</span> NHANES <span class="sc">%&gt;%</span></span>
+<span id="cb1442-2"><a href="ch-regression.html#cb1442-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">has_diabetes =</span> <span class="fu">as.numeric</span>(Diabetes <span class="sc">==</span> <span class="st">&quot;Yes&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb1443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1443-1"><a href="ch-regression.html#cb1443-1" aria-hidden="true" tabindex="-1"></a>log_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> NHANES, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> has_diabetes)) <span class="sc">+</span> </span>
+<span id="cb1443-2"><a href="ch-regression.html#cb1443-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="fl">0.05</span>) <span class="sc">+</span> </span>
+<span id="cb1443-3"><a href="ch-regression.html#cb1443-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb1443-4"><a href="ch-regression.html#cb1443-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Diabetes status&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1443-5"><a href="ch-regression.html#cb1443-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Age (in years)&quot;</span>)</span>
+<span id="cb1443-6"><a href="ch-regression.html#cb1443-6" aria-hidden="true" tabindex="-1"></a>log_plot</span></code></pre></div>
+<div class="figure"><span id="fig:diabeteslogreg"></span>
+<img src="E-regression_files/figure-html/diabeteslogreg-1.png" alt="Scatterplot of diabetes as a function of age with superimposed smoother." width="100%" />
+<p class="caption">
+Figure E.11: Scatterplot of diabetes as a function of age with superimposed smoother.
+</p>
+</div>
+<div class="sourceCode" id="cb1444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1444-1"><a href="ch-regression.html#cb1444-1" aria-hidden="true" tabindex="-1"></a>log_plot <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x =</span> BMI) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;BMI (body mass index)&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:diabeteslogreg2"></span>
+<img src="E-regression_files/figure-html/diabeteslogreg2-1.png" alt="Scatterplot of diabetes as a function of BMI with superimposed smoother." width="100%" />
+<p class="caption">
+Figure E.12: Scatterplot of diabetes as a function of BMI with superimposed smoother.
+</p>
+</div>
+<p>We see that the probability that a subject has diabetes tends to increase as both a function of age and of BMI.</p>
+<p>
+Which variable is more important: <code>Age</code> or <code>BMI</code>?
+We can use a multiple logistic regression model to model the probability of diabetes as a function of both predictors.
+
+
+</p>
+<div class="sourceCode" id="cb1445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1445-1"><a href="ch-regression.html#cb1445-1" aria-hidden="true" tabindex="-1"></a>logreg <span class="ot">&lt;-</span> <span class="fu">glm</span>(has_diabetes <span class="sc">~</span> BMI <span class="sc">+</span> Age, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>, <span class="at">data =</span> NHANES)</span>
+<span id="cb1445-2"><a href="ch-regression.html#cb1445-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(logreg)</span></code></pre></div>
+<pre><code># A tibble: 3 × 5
+  term        estimate std.error statistic   p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)  -8.08     0.244       -33.1 1.30e-239
+2 BMI           0.0943   0.00552      17.1 1.74e- 65
+3 Age           0.0573   0.00249      23.0 2.28e-117</code></pre>
+<p>
+The answer is that both predictors seem to be important (since both p-values are very small).
+To interpret the findings, we might consider a visual display of predicted probabilities as displayed in Figure <a href="ch-regression.html#fig:plotFundiabetes">E.13</a> (compare with Figure <a href="ch-learningI.html#fig:mod-compare">11.11</a>).</p>
+<p>
+
+</p>
+<div class="sourceCode" id="cb1447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1447-1"><a href="ch-regression.html#cb1447-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
+<span id="cb1447-2"><a href="ch-regression.html#cb1447-2" aria-hidden="true" tabindex="-1"></a>fake_grid <span class="ot">&lt;-</span> <span class="fu">data_grid</span>(</span>
+<span id="cb1447-3"><a href="ch-regression.html#cb1447-3" aria-hidden="true" tabindex="-1"></a>  NHANES, </span>
+<span id="cb1447-4"><a href="ch-regression.html#cb1447-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Age =</span> <span class="fu">seq_range</span>(Age, <span class="dv">100</span>),</span>
+<span id="cb1447-5"><a href="ch-regression.html#cb1447-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">BMI =</span> <span class="fu">seq_range</span>(BMI, <span class="dv">100</span>)</span>
+<span id="cb1447-6"><a href="ch-regression.html#cb1447-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1447-7"><a href="ch-regression.html#cb1447-7" aria-hidden="true" tabindex="-1"></a>y_hats <span class="ot">&lt;-</span> fake_grid <span class="sc">%&gt;%</span></span>
+<span id="cb1447-8"><a href="ch-regression.html#cb1447-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y_hat =</span> <span class="fu">predict</span>(logreg, <span class="at">newdata =</span> ., <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span>
+<span id="cb1447-9"><a href="ch-regression.html#cb1447-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(y_hats, <span class="dv">1</span>)</span></code></pre></div>
+<pre><code># A tibble: 1 × 3
+    Age   BMI   y_hat
+  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+1     0  12.9 0.00104</code></pre>
+<p>The predicted probability from the model is given by:</p>
+<p><span class="math display">\[
+  \pi_i = \mathrm{logit} \left( P (y_i = 1) \right) = \frac{e^{\beta_0 + \beta_1 Age_i + \beta_2 BMI_i}}{1 + e^{\beta_0 + \beta_1 Age_i + \beta_2 BMI_i}}\ \ \text{ for } i=1,\ldots,n \,.
+\]</span>
+Let’s consider a hypothetical 0 year old with a BMI of 12.9 (corresponding to the first entry in the <code>y_hats</code> dataframe).
+Their predicted probability of having diabetes would be calculated as a function of the regression coefficients.</p>
+<div class="sourceCode" id="cb1449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1449-1"><a href="ch-regression.html#cb1449-1" aria-hidden="true" tabindex="-1"></a>linear_component <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">12.9</span>, <span class="dv">0</span>) <span class="sc">%*%</span> <span class="fu">coef</span>(logreg)</span>
+<span id="cb1449-2"><a href="ch-regression.html#cb1449-2" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(linear_component) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(linear_component))</span></code></pre></div>
+<pre><code>        [,1]
+[1,] 0.00104</code></pre>
+<p>The predicted probability is very small: about 1/10th of 1%.</p>
+<p>But what about a 60 year old with a BMI of 25?</p>
+<div class="sourceCode" id="cb1451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1451-1"><a href="ch-regression.html#cb1451-1" aria-hidden="true" tabindex="-1"></a>linear_component <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">25</span>, <span class="dv">60</span>) <span class="sc">%*%</span> <span class="fu">coef</span>(logreg)</span>
+<span id="cb1451-2"><a href="ch-regression.html#cb1451-2" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(linear_component) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(linear_component))</span></code></pre></div>
+<pre><code>       [,1]
+[1,] 0.0923</code></pre>
+<p>The predicted probability is now 9.2%.</p>
+<p>
+
+
+
+
+
+
+
+</p>
+<div class="sourceCode" id="cb1453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1453-1"><a href="ch-regression.html#cb1453-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> NHANES, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> BMI)) <span class="sc">+</span></span>
+<span id="cb1453-2"><a href="ch-regression.html#cb1453-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">data =</span> y_hats, <span class="fu">aes</span>(<span class="at">fill =</span> y_hat), <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb1453-3"><a href="ch-regression.html#cb1453-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">factor</span>(has_diabetes)), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span> </span>
+<span id="cb1453-4"><a href="ch-regression.html#cb1453-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">&quot;white&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1453-5"><a href="ch-regression.html#cb1453-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">&quot;Diabetes&quot;</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;gold&quot;</span>, <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb1453-6"><a href="ch-regression.html#cb1453-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb1453-7"><a href="ch-regression.html#cb1453-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Predicted</span><span class="sc">\n</span><span class="st">probability&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:plotFundiabetes"></span>
+<img src="E-regression_files/figure-html/plotFundiabetes-1.png" alt="Predicted probabilities for diabetes as a function of BMI and age." width="100%" />
+<p class="caption">
+Figure E.13: Predicted probabilities for diabetes as a function of BMI and age.
+</p>
+</div>
+<p>Figure <a href="ch-regression.html#fig:plotFundiabetes">E.13</a> displays the predicted probabilities for each of our grid points.
+We see that very few young adults have diabetes, even if they have moderately high BMI scores.
+As we look at older subjects while holding BMI fixed, the predicted probability of diabetes increases.</p>
+</div>
+<div id="regression-further" class="section level2" number="26.6">
+<h2><span class="header-section-number">E.6</span> Further resources</h2>
+<p>
+
+
+
+Regression is described in many books. An introduction is found in most introductory statistics textbooks, including <em>Open Intro Statistics</em> <span class="citation">(Diez, Barr, and Çetinkaya-Rundel 2019)</span>.
+For a deeper but still accessible treatment, we suggest <span class="citation">Cannon et al. (2019)</span>.
+<span class="citation">G. James et al. (2013)</span> and <span class="citation">Hastie, Tibshirani, and Friedman (2009)</span> also cover regression from a modeling and machine learning perspective.
+<span class="citation">Hoaglin (2016)</span> provides guidance on how to interpret conditional regression parameters.
+<span class="citation">Cook (1982)</span> comprehensively reviews regression diagnostics.
+An accessible introduction to smoothing can be found in <span class="citation">Ruppert, Wand, and Carroll (2003)</span>.</p>
+</div>
+<div id="regression-exercises" class="section level2" number="26.7">
+<h2><span class="header-section-number">E.7</span> Exercises</h2>
+<p><strong>Problem 1 (Easy)</strong>: In 1966, <a href="http://en.wikipedia.org/wiki/Cyril_Burt">Cyril Burt</a> published a paper called <em>The genetic determination of differences in intelligence: A study of monozygotic twins reared apart.</em> The data consist of IQ scores for [an assumed random sample of] 27 identical twins, one raised by foster parents, the other by the biological parents.</p>
+<p>Here is the regression output for using <code>Biological</code> IQ to predict <code>Foster</code> IQ:</p>
+<div class="sourceCode" id="cb1454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1454-1"><a href="ch-regression.html#cb1454-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdsr)</span>
+<span id="cb1454-2"><a href="ch-regression.html#cb1454-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(faraway)</span>
+<span id="cb1454-3"><a href="ch-regression.html#cb1454-3" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Foster <span class="sc">~</span> Biological, <span class="at">data =</span> twins)</span>
+<span id="cb1454-4"><a href="ch-regression.html#cb1454-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mod)</span></code></pre></div>
+<pre><code>(Intercept)  Biological 
+      9.208       0.901 </code></pre>
+<div class="sourceCode" id="cb1456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1456-1"><a href="ch-regression.html#cb1456-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">rsquared</span>(mod)</span></code></pre></div>
+<pre><code>[1] 0.778</code></pre>
+<p>Which of the following is <strong>FALSE</strong>? Justify your answers.</p>
+<ul>
+<li>Alice and Beth were raised by their biological parents. If Beth’s IQ is 10 points higher than Alice’s, then we would expect that her foster twin Bernice’s IQ is 9 points higher than the IQ of Alice’s foster twin Ashley.</li>
+<li>Roughly 78% of the foster twins’ IQs can be accurately predicted by the model.</li>
+<li>The linear model is <span class="math inline">\(\widehat{Foster} = 9.2 + 0.9 \times Biological\)</span>.</li>
+<li>Foster twins with IQs higher than average are expected to have biological twins with higher than average IQs as well.</li>
+</ul>
+<p><strong>Problem 2 (Medium)</strong>: The <code>atus</code> package includes data from the American Time Use Survey (ATUS). Use the <code>atusresp</code> dataset to model <code>hourly_wage</code> as a function of other predictors in the dataset.</p>
+<p><strong>Problem 3 (Medium)</strong>: The <code>Gestation</code> data set in <code>mdsr</code> contains birth weight, date, and gestational period collected as part of the Child Health and Development Studies. Information about the baby’s parents—age, education, height, weight, and whether the mother smoked is also recorded.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Fit a linear regression model for birthweight (<code>wt</code>) as a function of the mother’s age (<code>age</code>).</li>
+<li>Find a 95% confidence interval and p-value for the slope coefficient.</li>
+<li>What do you conclude about the association between a mother’s age and her baby’s birthweight?</li>
+</ol>
+<p><strong>Problem 4 (Medium)</strong>: The Child Health and Development Studies investigate a range of topics. One study, in particular, considered all pregnancies among women in the Kaiser Foundation Health Plan in the San Francisco East Bay area. The goal is to model the weight of the infants (<code>bwt</code>, in ounces) using variables including length of pregnancy in days (<code>gestation</code>), mother’s age in years (<code>age</code>), mother’s height in inches (<code>height</code>), whether the child was the first born (<code>parity</code>), mother’s pregnancy weight in pounds (<code>weight</code>), and whether the mother was a smoker (<code>smoke</code>).
+The summary table that follows shows the results of a regression model for predicting the average birth weight of babies based on all of the variables included in the data set.</p>
+<div class="sourceCode" id="cb1458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1458-1"><a href="ch-regression.html#cb1458-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdsr)</span>
+<span id="cb1458-2"><a href="ch-regression.html#cb1458-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaicData)</span>
+<span id="cb1458-3"><a href="ch-regression.html#cb1458-3" aria-hidden="true" tabindex="-1"></a>babies <span class="ot">&lt;-</span> Gestation <span class="sc">%&gt;%</span></span>
+<span id="cb1458-4"><a href="ch-regression.html#cb1458-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">bwt =</span> wt, <span class="at">height =</span> ht, <span class="at">weight =</span> wt<span class="fl">.1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1458-5"><a href="ch-regression.html#cb1458-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parity =</span> parity <span class="sc">==</span> <span class="dv">0</span>, <span class="at">smoke =</span> smoke <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1458-6"><a href="ch-regression.html#cb1458-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, bwt, gestation, age, height, weight, parity, smoke)</span>
+<span id="cb1458-7"><a href="ch-regression.html#cb1458-7" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bwt <span class="sc">~</span> gestation <span class="sc">+</span> age <span class="sc">+</span> height <span class="sc">+</span> weight <span class="sc">+</span> parity <span class="sc">+</span> smoke,</span>
+<span id="cb1458-8"><a href="ch-regression.html#cb1458-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> babies</span>
+<span id="cb1458-9"><a href="ch-regression.html#cb1458-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1458-10"><a href="ch-regression.html#cb1458-10" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mod)</span></code></pre></div>
+<pre><code>(Intercept)   gestation         age      height      weight  parityTRUE 
+   -85.7875      0.4601      0.0429      1.0623      0.0653     -2.9530 
+  smokeTRUE 
+         NA </code></pre>
+<p>Answer the following questions regarding this linear regression model.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>The coefficient for <code>parity</code> is different than if you fit a linear model predicting weight using only that variable. Why might there be a difference?</p></li>
+<li><p>Calculate the residual for the first observation in the data set.</p></li>
+<li><p>This data set contains missing values. What happens to these rows when we fit the model?</p></li>
+</ol>
+<p><strong>Problem 5 (Medium)</strong>: Investigators in the HELP (Health Evaluation and Linkage to Primary Care) study were interested in modeling predictors of being <code>homeless</code> (one or more nights spent on the street or in a shelter in the past six months vs. housed) using baseline data from the clinical trial. Fit and interpret a parsimonious model that would help the investigators identify predictors of homelessness.</p>
+</div>
+<div id="regression-online-exercises" class="section level2" number="26.8">
+<h2><span class="header-section-number">E.8</span> Supplementary exercises</h2>
+<p>Available at <a href="ch-regression.html#regression-online-exercises" class="uri">https://mdsr-book.github.io/mdsr2e/ch-regression.html#regression-online-exercises</a></p>
+<p><strong>Problem 1 (Medium)</strong>: In the HELP (Health Evaluation and Linkage to Primary Care) study, investigators were interested in determining predictors of severe depressive symptoms (measured by the Center for Epidemiologic Studies—Depression scale, <code>cesd</code>) amongst a cohort enrolled at a substance abuse treatment facility. These predictors include <code>substance</code> of abuse (alcohol, cocaine, or heroin), <code>mcs</code> (a measure of mental well-being), gender, and housing status (housed or homeless). Answer the following questions regarding the following multiple regression model.</p>
+<div class="sourceCode" id="cb1460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1460-1"><a href="ch-regression.html#cb1460-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdsr)</span>
+<span id="cb1460-2"><a href="ch-regression.html#cb1460-2" aria-hidden="true" tabindex="-1"></a>fm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cesd <span class="sc">~</span> substance <span class="sc">+</span> mcs <span class="sc">+</span> sex <span class="sc">+</span> homeless, <span class="at">data =</span> HELPrct)</span>
+<span id="cb1460-3"><a href="ch-regression.html#cb1460-3" aria-hidden="true" tabindex="-1"></a><span class="fu">msummary</span>(fm)</span></code></pre></div>
+<pre><code>                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       57.7794     1.4664   39.40   &lt;2e-16 ***
+substancecocaine  -3.5406     1.0101   -3.51   0.0005 ***
+substanceheroin   -1.6818     1.0731   -1.57   0.1178    
+mcs               -0.6407     0.0338  -18.97   &lt;2e-16 ***
+sexmale           -3.3239     1.0075   -3.30   0.0010 ** 
+homelesshoused    -0.8327     0.8686   -0.96   0.3383    
+
+Residual standard error: 8.97 on 447 degrees of freedom
+Multiple R-squared:  0.492, Adjusted R-squared:  0.486 
+F-statistic: 86.4 on 5 and 447 DF,  p-value: &lt;2e-16</code></pre>
+<div class="sourceCode" id="cb1462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1462-1"><a href="ch-regression.html#cb1462-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fm)</span></code></pre></div>
+<pre><code>                  2.5 % 97.5 %
+(Intercept)      54.898 60.661
+substancecocaine -5.526 -1.555
+substanceheroin  -3.791  0.427
+mcs              -0.707 -0.574
+sexmale          -5.304 -1.344
+homelesshoused   -2.540  0.874</code></pre>
+<ul>
+<li><p>Write out the linear model.</p></li>
+<li><p>Calculate the predicted CESD for a female homeless cocaine-involved subject with
+an MCS score of 20.</p></li>
+<li><p>Identify the null and alternative hypotheses for the 8 tests displayed above.</p></li>
+<li><p>Interpret the 95% confidence interval for the <code>substancecocaine</code> coefficient.</p></li>
+<li><p>Make a conclusion and summarize the results of a test of the <code>homeless</code> parameter.</p></li>
+<li><p>Report and interpret the <span class="math inline">\(R^2\)</span> (coefficient of determination) for this model.</p></li>
+<li><p>Which of the residual diagnostic plots are redundant?<br />
+</p></li>
+<li><p>What do we conclude about the distribution of the residuals?</p></li>
+<li><p>What do we conclude about the relationship between the fitted values and the residuals?</p></li>
+<li><p>What do we conclude about the relationship between the MCS score and the residuals?</p></li>
+<li><p>What other things can we learn from the residual diagnostics?</p></li>
+<li><p>Which observations should we flag for further study?</p></li>
+</ul>
+<hr />
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch-reproduce.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch-db-setup.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="book_assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/E-regression.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["mdsr2e.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

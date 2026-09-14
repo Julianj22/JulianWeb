@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 18 Geospatial computations | Modern Data Science with R</title>
+  <meta name="description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 18 Geospatial computations | Modern Data Science with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://mdsr-book.github.io/mdsr2e/" />
+  <meta property="og:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+  <meta property="og:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="github-repo" content="mdsr-book/mdsr2e" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 18 Geospatial computations | Modern Data Science with R" />
+  
+  <meta name="twitter:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="twitter:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+
+<meta name="author" content="Benjamin S. Baumer, Daniel T. Kaplan, and Nicholas J. Horton" />
+
+
+<meta name="date" content="2021-07-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch-spatial.html"/>
+<link rel="next" href="ch-text.html"/>
+<script src="book_assets/header-attrs-2.9/header-attrs.js"></script>
+<script src="book_assets/jquery-3.5.1/jquery.min.js"></script>
+<link href="book_assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="book_assets/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="book_assets/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="book_assets/kePrint-0.0.1/kePrint.js"></script>
+<link href="book_assets/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="book_assets/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="book_assets/bsTable-3.3.7/bootstrapTable.js"></script>
+<script src="book_assets/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="book_assets/plotly-binding-4.9.4.1/plotly.js"></script>
+<script src="book_assets/typedarray-0.1/typedarray.min.js"></script>
+<link href="book_assets/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="book_assets/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="book_assets/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="book_assets/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<link href="book_assets/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="book_assets/datatables-binding-0.18/datatables.js"></script>
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="book_assets/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="book_assets/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="book_assets/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="book_assets/dygraphs-1.1.1/shapes.js"></script>
+<script src="book_assets/moment-2.8.4/moment.js"></script>
+<script src="book_assets/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="book_assets/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="book_assets/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<script src="book_assets/d3-3.5.3/d3.min.js"></script>
+<link href="book_assets/colorbrewer-1/colorbrewer.css" rel="stylesheet" />
+<script src="book_assets/colorbrewer-1/colorbrewer.js"></script>
+<link href="book_assets/streamgraph-1/streamgraph.css" rel="stylesheet" />
+<script src="book_assets/streamgraph-binding-0.9.0/streamgraph.js"></script>
+<link href="book_assets/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-1.3.1/leaflet.js"></script>
+<link href="book_assets/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="book_assets/proj4-2.6.2/proj4.min.js"></script>
+<script src="book_assets/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="book_assets/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-binding-2.0.4.1/leaflet.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html">Modern Data Science with R, 2nd edition</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#nd-edition"><i class="fa fa-check"></i>2nd edition</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#note-about-erroneous-black-and-white-printing"><i class="fa fa-check"></i>Note about erroneous black-and-white printing!</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#cover"><i class="fa fa-check"></i>Cover</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#st-edition"><i class="fa fa-check"></i>1st edition</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#copyright"><i class="fa fa-check"></i>Copyright</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#background-and-motivation"><i class="fa fa-check"></i>Background and motivation</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#intended-audience"><i class="fa fa-check"></i>Intended audience</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-features-of-this-book"><i class="fa fa-check"></i>Key features of this book</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#focus-on-case-studies-and-extended-examples"><i class="fa fa-check"></i>Focus on case studies and extended examples</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#structure"><i class="fa fa-check"></i>Structure</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#supporting-materials"><i class="fa fa-check"></i>Supporting materials</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#changes-in-the-second-edition"><i class="fa fa-check"></i>Changes in the second edition</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-role-of-technology"><i class="fa fa-check"></i>Key role of technology</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#how-to-use-this-book"><i class="fa fa-check"></i>How to use this book</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="part"><span><b>I Part I: Introduction to Data Science</b></span></li>
+<li class="chapter" data-level="1" data-path="ch-prologue.html"><a href="ch-prologue.html"><i class="fa fa-check"></i><b>1</b> Prologue: Why data science?</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="ch-prologue.html"><a href="ch-prologue.html#what-is-data-science"><i class="fa fa-check"></i><b>1.1</b> What is data science?</a></li>
+<li class="chapter" data-level="1.2" data-path="ch-prologue.html"><a href="ch-prologue.html#case-study-the-evolution-of-sabermetrics"><i class="fa fa-check"></i><b>1.2</b> Case study: The evolution of sabermetrics</a></li>
+<li class="chapter" data-level="1.3" data-path="ch-prologue.html"><a href="ch-prologue.html#datasets"><i class="fa fa-check"></i><b>1.3</b> Datasets</a></li>
+<li class="chapter" data-level="1.4" data-path="ch-prologue.html"><a href="ch-prologue.html#intro-further"><i class="fa fa-check"></i><b>1.4</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch-vizI.html"><a href="ch-vizI.html"><i class="fa fa-check"></i><b>2</b> Data visualization</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#the-2012-federal-election-cycle"><i class="fa fa-check"></i><b>2.1</b> The 2012 federal election cycle</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="ch-vizI.html"><a href="ch-vizI.html#are-these-two-groups-different"><i class="fa fa-check"></i><b>2.1.1</b> Are these two groups different?</a></li>
+<li class="chapter" data-level="2.1.2" data-path="ch-vizI.html"><a href="ch-vizI.html#graphing-variation"><i class="fa fa-check"></i><b>2.1.2</b> Graphing variation</a></li>
+<li class="chapter" data-level="2.1.3" data-path="ch-vizI.html"><a href="ch-vizI.html#examining-relationships-among-variables"><i class="fa fa-check"></i><b>2.1.3</b> Examining relationships among variables</a></li>
+<li class="chapter" data-level="2.1.4" data-path="ch-vizI.html"><a href="ch-vizI.html#networks"><i class="fa fa-check"></i><b>2.1.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#composing-data-graphics"><i class="fa fa-check"></i><b>2.2</b> Composing data graphics</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#a-taxonomy-for-data-graphics"><i class="fa fa-check"></i><b>2.2.1</b> A taxonomy for data graphics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#sec:color"><i class="fa fa-check"></i><b>2.2.2</b> Color</a></li>
+<li class="chapter" data-level="2.2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#dissecting-data-graphics"><i class="fa fa-check"></i><b>2.2.3</b> Dissecting data graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#importance-of-data-graphics-challenger"><i class="fa fa-check"></i><b>2.3</b> Importance of data graphics: <em>Challenger</em></a></li>
+<li class="chapter" data-level="2.4" data-path="ch-vizI.html"><a href="ch-vizI.html#creating-effective-presentations"><i class="fa fa-check"></i><b>2.4</b> Creating effective presentations</a></li>
+<li class="chapter" data-level="2.5" data-path="ch-vizI.html"><a href="ch-vizI.html#the-wider-world-of-data-visualization"><i class="fa fa-check"></i><b>2.5</b> The wider world of data visualization</a></li>
+<li class="chapter" data-level="2.6" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-further"><i class="fa fa-check"></i><b>2.6</b> Further resources</a></li>
+<li class="chapter" data-level="2.7" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-exercises"><i class="fa fa-check"></i><b>2.7</b> Exercises</a></li>
+<li class="chapter" data-level="2.8" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-online-exercises"><i class="fa fa-check"></i><b>2.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch-vizII.html"><a href="ch-vizII.html"><i class="fa fa-check"></i><b>3</b> A grammar for graphics</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#a-grammar-for-data-graphics"><i class="fa fa-check"></i><b>3.1</b> A grammar for data graphics</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="ch-vizII.html"><a href="ch-vizII.html#aesthetics"><i class="fa fa-check"></i><b>3.1.1</b> Aesthetics</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ch-vizII.html"><a href="ch-vizII.html#scales"><i class="fa fa-check"></i><b>3.1.2</b> Scales</a></li>
+<li class="chapter" data-level="3.1.3" data-path="ch-vizII.html"><a href="ch-vizII.html#guides"><i class="fa fa-check"></i><b>3.1.3</b> Guides</a></li>
+<li class="chapter" data-level="3.1.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:facet"><i class="fa fa-check"></i><b>3.1.4</b> Facets</a></li>
+<li class="chapter" data-level="3.1.5" data-path="ch-vizII.html"><a href="ch-vizII.html#layers"><i class="fa fa-check"></i><b>3.1.5</b> Layers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:canonical"><i class="fa fa-check"></i><b>3.2</b> Canonical data graphics in (ref:R)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch-vizII.html"><a href="ch-vizII.html#univariate-displays"><i class="fa fa-check"></i><b>3.2.1</b> Univariate displays</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch-vizII.html"><a href="ch-vizII.html#multivariate-displays"><i class="fa fa-check"></i><b>3.2.2</b> Multivariate displays</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch-vizII.html"><a href="ch-vizII.html#maps"><i class="fa fa-check"></i><b>3.2.3</b> Maps</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:datanetwork"><i class="fa fa-check"></i><b>3.2.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:babynames"><i class="fa fa-check"></i><b>3.3</b> Extended example: Historical baby names</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#percentage-of-people-alive-today"><i class="fa fa-check"></i><b>3.3.1</b> Percentage of people alive today</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#most-common-names-for-women"><i class="fa fa-check"></i><b>3.3.2</b> Most common names for women</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-further"><i class="fa fa-check"></i><b>3.4</b> Further resources</a></li>
+<li class="chapter" data-level="3.5" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-exercises"><i class="fa fa-check"></i><b>3.5</b> Exercises</a></li>
+<li class="chapter" data-level="3.6" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-online-exercises"><i class="fa fa-check"></i><b>3.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch-dataI.html"><a href="ch-dataI.html"><i class="fa fa-check"></i><b>4</b> Data wrangling on one table</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:five_idioms"><i class="fa fa-check"></i><b>4.1</b> A grammar for data wrangling</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:pipe"><i class="fa fa-check"></i><b>4.1.1</b> <code>select()</code> and <code>filter()</code></a></li>
+<li class="chapter" data-level="4.1.2" data-path="ch-dataI.html"><a href="ch-dataI.html#mutate-and-rename"><i class="fa fa-check"></i><b>4.1.2</b> <code>mutate()</code> and <code>rename()</code></a></li>
+<li class="chapter" data-level="4.1.3" data-path="ch-dataI.html"><a href="ch-dataI.html#arrange"><i class="fa fa-check"></i><b>4.1.3</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="4.1.4" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:summarize"><i class="fa fa-check"></i><b>4.1.4</b> <code>summarize()</code> with <code>group_by()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:mets"><i class="fa fa-check"></i><b>4.2</b> Extended example: Ben’s time with the Mets</a></li>
+<li class="chapter" data-level="4.3" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-further"><i class="fa fa-check"></i><b>4.3</b> Further resources</a></li>
+<li class="chapter" data-level="4.4" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-exercises"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+<li class="chapter" data-level="4.5" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-online-exercises"><i class="fa fa-check"></i><b>4.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch-join.html"><a href="ch-join.html"><i class="fa fa-check"></i><b>5</b> Data wrangling on multiple tables</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch-join.html"><a href="ch-join.html#inner_join"><i class="fa fa-check"></i><b>5.1</b> <code>inner_join()</code></a></li>
+<li class="chapter" data-level="5.2" data-path="ch-join.html"><a href="ch-join.html#left_join"><i class="fa fa-check"></i><b>5.2</b> <code>left_join()</code></a></li>
+<li class="chapter" data-level="5.3" data-path="ch-join.html"><a href="ch-join.html#extended-example-manny-ramirez"><i class="fa fa-check"></i><b>5.3</b> Extended example: Manny Ramirez</a></li>
+<li class="chapter" data-level="5.4" data-path="ch-join.html"><a href="ch-join.html#joins-further"><i class="fa fa-check"></i><b>5.4</b> Further resources</a></li>
+<li class="chapter" data-level="5.5" data-path="ch-join.html"><a href="ch-join.html#join-exercises"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
+<li class="chapter" data-level="5.6" data-path="ch-join.html"><a href="ch-join.html#join-online-exercises"><i class="fa fa-check"></i><b>5.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch-dataII.html"><a href="ch-dataII.html"><i class="fa fa-check"></i><b>6</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch-dataII.html"><a href="ch-dataII.html#tidy-data"><i class="fa fa-check"></i><b>6.1</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="ch-dataII.html"><a href="ch-dataII.html#motivation"><i class="fa fa-check"></i><b>6.1.1</b> Motivation</a></li>
+<li class="chapter" data-level="6.1.2" data-path="ch-dataII.html"><a href="ch-dataII.html#what-are-tidy-data"><i class="fa fa-check"></i><b>6.1.2</b> What are tidy data?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="ch-dataII.html"><a href="ch-dataII.html#reshaping-data"><i class="fa fa-check"></i><b>6.2</b> Reshaping data</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-verbs-for-converting-wide-to-narrow-and-vice-versa"><i class="fa fa-check"></i><b>6.2.1</b> Data verbs for converting wide to narrow and <em>vice versa</em></a></li>
+<li class="chapter" data-level="6.2.2" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-wider"><i class="fa fa-check"></i><b>6.2.2</b> Pivoting wider</a></li>
+<li class="chapter" data-level="6.2.3" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-longer"><i class="fa fa-check"></i><b>6.2.3</b> Pivoting longer</a></li>
+<li class="chapter" data-level="6.2.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nest"><i class="fa fa-check"></i><b>6.2.4</b> List-columns</a></li>
+<li class="chapter" data-level="6.2.5" data-path="ch-dataII.html"><a href="ch-dataII.html#example-gender-neutral-names"><i class="fa fa-check"></i><b>6.2.5</b> Example: Gender-neutral names</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:naming"><i class="fa fa-check"></i><b>6.3</b> Naming conventions</a></li>
+<li class="chapter" data-level="6.4" data-path="ch-dataII.html"><a href="ch-dataII.html#data-intake"><i class="fa fa-check"></i><b>6.4</b> Data intake</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-table-friendly-formats"><i class="fa fa-check"></i><b>6.4.1</b> Data-table friendly formats</a></li>
+<li class="chapter" data-level="6.4.2" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:apis"><i class="fa fa-check"></i><b>6.4.2</b> APIs</a></li>
+<li class="chapter" data-level="6.4.3" data-path="ch-dataII.html"><a href="ch-dataII.html#cleaning-data"><i class="fa fa-check"></i><b>6.4.3</b> Cleaning data</a></li>
+<li class="chapter" data-level="6.4.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nukes"><i class="fa fa-check"></i><b>6.4.4</b> Example: Japanese nuclear reactors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-further"><i class="fa fa-check"></i><b>6.5</b> Further resources</a></li>
+<li class="chapter" data-level="6.6" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-exercises"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+<li class="chapter" data-level="6.7" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-online-exercises"><i class="fa fa-check"></i><b>6.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch-iteration.html"><a href="ch-iteration.html"><i class="fa fa-check"></i><b>7</b> Iteration</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:vectorized"><i class="fa fa-check"></i><b>7.1</b> Vectorized operations</a></li>
+<li class="chapter" data-level="7.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:scoped"><i class="fa fa-check"></i><b>7.2</b> Using <code>across()</code> with <strong>dplyr</strong> functions</a></li>
+<li class="chapter" data-level="7.3" data-path="ch-iteration.html"><a href="ch-iteration.html#appR:apply"><i class="fa fa-check"></i><b>7.3</b> The <code>map()</code> family of functions</a></li>
+<li class="chapter" data-level="7.4" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-over-a-one-dimensional-vector"><i class="fa fa-check"></i><b>7.4</b> Iterating over a one-dimensional vector</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-a-known-function"><i class="fa fa-check"></i><b>7.4.1</b> Iterating a known function</a></li>
+<li class="chapter" data-level="7.4.2" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-an-arbitrary-function"><i class="fa fa-check"></i><b>7.4.2</b> Iterating an arbitrary function</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:group-map"><i class="fa fa-check"></i><b>7.5</b> Iteration over subgroups</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:pythag"><i class="fa fa-check"></i><b>7.5.1</b> Example: Expected winning percentage</a></li>
+<li class="chapter" data-level="7.5.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:hrs"><i class="fa fa-check"></i><b>7.5.2</b> Example: Annual leaders</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="ch-iteration.html"><a href="ch-iteration.html#simulation"><i class="fa fa-check"></i><b>7.6</b> Simulation</a></li>
+<li class="chapter" data-level="7.7" data-path="ch-iteration.html"><a href="ch-iteration.html#extended-example-factors-associated-with-bmi"><i class="fa fa-check"></i><b>7.7</b> Extended example: Factors associated with BMI</a></li>
+<li class="chapter" data-level="7.8" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-further"><i class="fa fa-check"></i><b>7.8</b> Further resources</a></li>
+<li class="chapter" data-level="7.9" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-exercises"><i class="fa fa-check"></i><b>7.9</b> Exercises</a></li>
+<li class="chapter" data-level="7.10" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-online-exercises"><i class="fa fa-check"></i><b>7.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch-ethics.html"><a href="ch-ethics.html"><i class="fa fa-check"></i><b>8</b> Data science ethics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-intro"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ch-ethics.html"><a href="ch-ethics.html#truthful-falsehoods"><i class="fa fa-check"></i><b>8.2</b> Truthful falsehoods</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ch-ethics.html"><a href="ch-ethics.html#stand-your-ground"><i class="fa fa-check"></i><b>8.2.1</b> Stand your ground</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ch-ethics.html"><a href="ch-ethics.html#global-temperature"><i class="fa fa-check"></i><b>8.2.2</b> Global temperature</a></li>
+<li class="chapter" data-level="8.2.3" data-path="ch-ethics.html"><a href="ch-ethics.html#covid-19-reporting"><i class="fa fa-check"></i><b>8.2.3</b> COVID-19 reporting</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ch-ethics.html"><a href="ch-ethics.html#role-of-data-science-in-society"><i class="fa fa-check"></i><b>8.3</b> Role of data science in society</a></li>
+<li class="chapter" data-level="8.4" data-path="ch-ethics.html"><a href="ch-ethics.html#some-settings-for-professional-ethics"><i class="fa fa-check"></i><b>8.4</b> Some settings for professional ethics</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-chief-executive-officer"><i class="fa fa-check"></i><b>8.4.1</b> The chief executive officer</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination"><i class="fa fa-check"></i><b>8.4.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar"><i class="fa fa-check"></i><b>8.4.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.4.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction"><i class="fa fa-check"></i><b>8.4.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.4.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping"><i class="fa fa-check"></i><b>8.4.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.4.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis"><i class="fa fa-check"></i><b>8.4.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.4.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers"><i class="fa fa-check"></i><b>8.4.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.4.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations"><i class="fa fa-check"></i><b>8.4.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ch-ethics.html"><a href="ch-ethics.html#some-principles-to-guide-ethical-action"><i class="fa fa-check"></i><b>8.5</b> Some principles to guide ethical action</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-ceo"><i class="fa fa-check"></i><b>8.5.1</b> The CEO</a></li>
+<li class="chapter" data-level="8.5.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination-1"><i class="fa fa-check"></i><b>8.5.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.5.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar-1"><i class="fa fa-check"></i><b>8.5.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.5.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction-1"><i class="fa fa-check"></i><b>8.5.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.5.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping-1"><i class="fa fa-check"></i><b>8.5.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.5.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis-1"><i class="fa fa-check"></i><b>8.5.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.5.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers-1"><i class="fa fa-check"></i><b>8.5.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.5.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations-1"><i class="fa fa-check"></i><b>8.5.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="ch-ethics.html"><a href="ch-ethics.html#algorithmic-bias"><i class="fa fa-check"></i><b>8.6</b> Algorithmic bias</a></li>
+<li class="chapter" data-level="8.7" data-path="ch-ethics.html"><a href="ch-ethics.html#data-and-disclosure"><i class="fa fa-check"></i><b>8.7</b> Data and disclosure</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="ch-ethics.html"><a href="ch-ethics.html#reidentification-and-disclosure-avoidance"><i class="fa fa-check"></i><b>8.7.1</b> Reidentification and disclosure avoidance</a></li>
+<li class="chapter" data-level="8.7.2" data-path="ch-ethics.html"><a href="ch-ethics.html#safe-data-storage"><i class="fa fa-check"></i><b>8.7.2</b> Safe data storage</a></li>
+<li class="chapter" data-level="8.7.3" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:terms-of-use"><i class="fa fa-check"></i><b>8.7.3</b> Data scraping and terms of use</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:reproducibility"><i class="fa fa-check"></i><b>8.8</b> Reproducibility</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#example-erroneous-data-merging"><i class="fa fa-check"></i><b>8.8.1</b> Example: Erroneous data merging</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-collectively"><i class="fa fa-check"></i><b>8.9</b> Ethics, collectively</a></li>
+<li class="chapter" data-level="8.10" data-path="ch-ethics.html"><a href="ch-ethics.html#professional-guidelines-for-ethical-conduct"><i class="fa fa-check"></i><b>8.10</b> Professional guidelines for ethical conduct</a></li>
+<li class="chapter" data-level="8.11" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-further"><i class="fa fa-check"></i><b>8.11</b> Further resources</a></li>
+<li class="chapter" data-level="8.12" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-exercises"><i class="fa fa-check"></i><b>8.12</b> Exercises</a></li>
+<li class="chapter" data-level="8.13" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-online-exercises"><i class="fa fa-check"></i><b>8.13</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>II Part II: Statistics and Modeling</b></span></li>
+<li class="chapter" data-level="9" data-path="ch-foundations.html"><a href="ch-foundations.html"><i class="fa fa-check"></i><b>9</b> Statistical foundations</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch-foundations.html"><a href="ch-foundations.html#samples-and-populations"><i class="fa fa-check"></i><b>9.1</b> Samples and populations</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy-by-sampling-from-the-population"><i class="fa fa-check"></i><b>9.1.1</b> Example: Setting travel policy by sampling from the population</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="ch-foundations.html"><a href="ch-foundations.html#sample-statistics"><i class="fa fa-check"></i><b>9.2</b> Sample statistics</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:lln"><i class="fa fa-check"></i><b>9.2.1</b> The sampling distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:boot"><i class="fa fa-check"></i><b>9.3</b> The bootstrap</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy"><i class="fa fa-check"></i><b>9.3.1</b> Example: Setting travel policy</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="ch-foundations.html"><a href="ch-foundations.html#outliers"><i class="fa fa-check"></i><b>9.4</b> Outliers</a></li>
+<li class="chapter" data-level="9.5" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:gooddesign"><i class="fa fa-check"></i><b>9.5</b> Statistical models: Explaining variation</a></li>
+<li class="chapter" data-level="9.6" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:confound"><i class="fa fa-check"></i><b>9.6</b> Confounding and accounting for other factors</a></li>
+<li class="chapter" data-level="9.7" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:p-perils"><i class="fa fa-check"></i><b>9.7</b> The perils of p-values</a></li>
+<li class="chapter" data-level="9.8" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-further"><i class="fa fa-check"></i><b>9.8</b> Further resources</a></li>
+<li class="chapter" data-level="9.9" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-exercises"><i class="fa fa-check"></i><b>9.9</b> Exercises</a></li>
+<li class="chapter" data-level="9.10" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-online-exercises"><i class="fa fa-check"></i><b>9.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch-modeling.html"><a href="ch-modeling.html"><i class="fa fa-check"></i><b>10</b> Predictive modeling</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch-modeling.html"><a href="ch-modeling.html#predictive-modeling"><i class="fa fa-check"></i><b>10.1</b> Predictive modeling</a></li>
+<li class="chapter" data-level="10.2" data-path="ch-modeling.html"><a href="ch-modeling.html#simple-classification-models"><i class="fa fa-check"></i><b>10.2</b> Simple classification models</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="ch-modeling.html"><a href="ch-modeling.html#example-high-earners-in-the-1994-united-states-census"><i class="fa fa-check"></i><b>10.2.1</b> Example: High-earners in the 1994 United States Census</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="ch-modeling.html"><a href="ch-modeling.html#evaluating-models"><i class="fa fa-check"></i><b>10.3</b> Evaluating models</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:bias-variance"><i class="fa fa-check"></i><b>10.3.1</b> Bias-variance trade-off</a></li>
+<li class="chapter" data-level="10.3.2" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:cv"><i class="fa fa-check"></i><b>10.3.2</b> Cross-validation</a></li>
+<li class="chapter" data-level="10.3.3" data-path="ch-modeling.html"><a href="ch-modeling.html#confusion-matrices-and-roc-curves"><i class="fa fa-check"></i><b>10.3.3</b> Confusion matrices and ROC curves</a></li>
+<li class="chapter" data-level="10.3.4" data-path="ch-modeling.html"><a href="ch-modeling.html#measuring-prediction-error-for-quantitative-responses"><i class="fa fa-check"></i><b>10.3.4</b> Measuring prediction error for quantitative responses</a></li>
+<li class="chapter" data-level="10.3.5" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:evaluate"><i class="fa fa-check"></i><b>10.3.5</b> Example: Evaluation of income models</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:diabetes"><i class="fa fa-check"></i><b>10.4</b> Extended example: Who has diabetes?</a></li>
+<li class="chapter" data-level="10.5" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-further"><i class="fa fa-check"></i><b>10.5</b> Further resources</a></li>
+<li class="chapter" data-level="10.6" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-exercises"><i class="fa fa-check"></i><b>10.6</b> Exercises</a></li>
+<li class="chapter" data-level="10.7" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-online-exercises"><i class="fa fa-check"></i><b>10.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch-learningI.html"><a href="ch-learningI.html"><i class="fa fa-check"></i><b>11</b> Supervised learning</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch-learningI.html"><a href="ch-learningI.html#non-regression-classifiers"><i class="fa fa-check"></i><b>11.1</b> Non-regression classifiers</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="ch-learningI.html"><a href="ch-learningI.html#decision-trees"><i class="fa fa-check"></i><b>11.1.1</b> Decision trees</a></li>
+<li class="chapter" data-level="11.1.2" data-path="ch-learningI.html"><a href="ch-learningI.html#random-forests"><i class="fa fa-check"></i><b>11.1.2</b> Random forests</a></li>
+<li class="chapter" data-level="11.1.3" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:knn"><i class="fa fa-check"></i><b>11.1.3</b> Nearest neighbor</a></li>
+<li class="chapter" data-level="11.1.4" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:bayes"><i class="fa fa-check"></i><b>11.1.4</b> Naïve Bayes</a></li>
+<li class="chapter" data-level="11.1.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:neuralnet"><i class="fa fa-check"></i><b>11.1.5</b> Artificial neural networks</a></li>
+<li class="chapter" data-level="11.1.6" data-path="ch-learningI.html"><a href="ch-learningI.html#ensemble-methods"><i class="fa fa-check"></i><b>11.1.6</b> Ensemble methods</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:tuning"><i class="fa fa-check"></i><b>11.2</b> Parameter tuning</a></li>
+<li class="chapter" data-level="11.3" data-path="ch-learningI.html"><a href="ch-learningI.html#example-evaluation-of-income-models-redux"><i class="fa fa-check"></i><b>11.3</b> Example: Evaluation of income models redux</a></li>
+<li class="chapter" data-level="11.4" data-path="ch-learningI.html"><a href="ch-learningI.html#extended-example-who-has-diabetes-this-time"><i class="fa fa-check"></i><b>11.4</b> Extended example: Who has diabetes this time?</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch-learningI.html"><a href="ch-learningI.html#comparing-all-models"><i class="fa fa-check"></i><b>11.4.1</b> Comparing all models</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:regularization"><i class="fa fa-check"></i><b>11.5</b> Regularization</a></li>
+<li class="chapter" data-level="11.6" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-further"><i class="fa fa-check"></i><b>11.6</b> Further resources</a></li>
+<li class="chapter" data-level="11.7" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-exercises"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
+<li class="chapter" data-level="11.8" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-online-exercises"><i class="fa fa-check"></i><b>11.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch-learningII.html"><a href="ch-learningII.html"><i class="fa fa-check"></i><b>12</b> Unsupervised learning</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch-learningII.html"><a href="ch-learningII.html#clustering"><i class="fa fa-check"></i><b>12.1</b> Clustering</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="ch-learningII.html"><a href="ch-learningII.html#sec:hclust"><i class="fa fa-check"></i><b>12.1.1</b> Hierarchical clustering</a></li>
+<li class="chapter" data-level="12.1.2" data-path="ch-learningII.html"><a href="ch-learningII.html#k-means"><i class="fa fa-check"></i><b>12.1.2</b> <span class="math inline">\(k\)</span>-means</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="ch-learningII.html"><a href="ch-learningII.html#dimension-reduction"><i class="fa fa-check"></i><b>12.2</b> Dimension reduction</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch-learningII.html"><a href="ch-learningII.html#intuitive-approaches"><i class="fa fa-check"></i><b>12.2.1</b> Intuitive approaches</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch-learningII.html"><a href="ch-learningII.html#singular-value-decomposition"><i class="fa fa-check"></i><b>12.2.2</b> Singular value decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-further"><i class="fa fa-check"></i><b>12.3</b> Further resources</a></li>
+<li class="chapter" data-level="12.4" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-exercises"><i class="fa fa-check"></i><b>12.4</b> Exercises</a></li>
+<li class="chapter" data-level="12.5" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-online-exercises"><i class="fa fa-check"></i><b>12.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch-simulation.html"><a href="ch-simulation.html"><i class="fa fa-check"></i><b>13</b> Simulation</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch-simulation.html"><a href="ch-simulation.html#reasoning-in-reverse"><i class="fa fa-check"></i><b>13.1</b> Reasoning in reverse</a></li>
+<li class="chapter" data-level="13.2" data-path="ch-simulation.html"><a href="ch-simulation.html#extended-example-grouping-cancers"><i class="fa fa-check"></i><b>13.2</b> Extended example: Grouping cancers</a></li>
+<li class="chapter" data-level="13.3" data-path="ch-simulation.html"><a href="ch-simulation.html#randomizing-functions"><i class="fa fa-check"></i><b>13.3</b> Randomizing functions</a></li>
+<li class="chapter" data-level="13.4" data-path="ch-simulation.html"><a href="ch-simulation.html#simulating-variability"><i class="fa fa-check"></i><b>13.4</b> Simulating variability</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch-simulation.html"><a href="ch-simulation.html#the-partially-planned-rendezvous"><i class="fa fa-check"></i><b>13.4.1</b> The partially-planned rendezvous</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:jobsnum"><i class="fa fa-check"></i><b>13.4.2</b> The jobs report</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch-simulation.html"><a href="ch-simulation.html#restaurant-health-and-sanitation-grades"><i class="fa fa-check"></i><b>13.4.3</b> Restaurant health and sanitation grades</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch-simulation.html"><a href="ch-simulation.html#random-networks"><i class="fa fa-check"></i><b>13.5</b> Random networks</a></li>
+<li class="chapter" data-level="13.6" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:key-principles-random"><i class="fa fa-check"></i><b>13.6</b> Key principles of simulation</a>
+<ul>
+<li class="chapter" data-level="13.6.1" data-path="ch-simulation.html"><a href="ch-simulation.html#design"><i class="fa fa-check"></i><b>13.6.1</b> Design</a></li>
+<li class="chapter" data-level="13.6.2" data-path="ch-simulation.html"><a href="ch-simulation.html#modularity"><i class="fa fa-check"></i><b>13.6.2</b> Modularity</a></li>
+<li class="chapter" data-level="13.6.3" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:seed"><i class="fa fa-check"></i><b>13.6.3</b> Reproducibility and random number seeds</a></li>
+</ul></li>
+<li class="chapter" data-level="13.7" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-further"><i class="fa fa-check"></i><b>13.7</b> Further resources</a></li>
+<li class="chapter" data-level="13.8" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-exercises"><i class="fa fa-check"></i><b>13.8</b> Exercises</a></li>
+<li class="chapter" data-level="13.9" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-online-exercises"><i class="fa fa-check"></i><b>13.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>III Part III: Topics in Data Science</b></span></li>
+<li class="chapter" data-level="14" data-path="ch-vizIII.html"><a href="ch-vizIII.html"><i class="fa fa-check"></i><b>14</b> Dynamic and customized data graphics</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:d3"><i class="fa fa-check"></i><b>14.1</b> Rich Web content using <code>D3.js</code> and <strong>htmlwidgets</strong></a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#leaflet"><i class="fa fa-check"></i><b>14.1.1</b> Leaflet</a></li>
+<li class="chapter" data-level="14.1.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#plot.ly"><i class="fa fa-check"></i><b>14.1.2</b> Plot.ly</a></li>
+<li class="chapter" data-level="14.1.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datatables"><i class="fa fa-check"></i><b>14.1.3</b> DataTables</a></li>
+<li class="chapter" data-level="14.1.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#dygraphs"><i class="fa fa-check"></i><b>14.1.4</b> Dygraphs</a></li>
+<li class="chapter" data-level="14.1.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#streamgraphs"><i class="fa fa-check"></i><b>14.1.5</b> Streamgraphs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#animation"><i class="fa fa-check"></i><b>14.2</b> Animation</a></li>
+<li class="chapter" data-level="14.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:fleshdashboard"><i class="fa fa-check"></i><b>14.3</b> Flexdashboard</a></li>
+<li class="chapter" data-level="14.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:shiny"><i class="fa fa-check"></i><b>14.4</b> Interactive web apps with Shiny</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#example-interactive-display-of-the-beatles"><i class="fa fa-check"></i><b>14.4.1</b> Example: interactive display of the Beatles</a></li>
+<li class="chapter" data-level="14.4.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#more-on-reactive-programming"><i class="fa fa-check"></i><b>14.4.2</b> More on reactive programming</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:themes"><i class="fa fa-check"></i><b>14.5</b> Customization of <strong>ggplot2</strong> graphics</a></li>
+<li class="chapter" data-level="14.6" data-path="ch-vizIII.html"><a href="ch-vizIII.html#extended-example-hot-dog-eating"><i class="fa fa-check"></i><b>14.6</b> Extended example: Hot dog eating</a></li>
+<li class="chapter" data-level="14.7" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-further"><i class="fa fa-check"></i><b>14.7</b> Further resources</a></li>
+<li class="chapter" data-level="14.8" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-exercises"><i class="fa fa-check"></i><b>14.8</b> Exercises</a></li>
+<li class="chapter" data-level="14.9" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-online-exercises"><i class="fa fa-check"></i><b>14.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch-sql.html"><a href="ch-sql.html"><i class="fa fa-check"></i><b>15</b> Database querying using SQL</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch-sql.html"><a href="ch-sql.html#sec:dplyr-sql"><i class="fa fa-check"></i><b>15.1</b> From <strong>dplyr</strong> to SQL</a></li>
+<li class="chapter" data-level="15.2" data-path="ch-sql.html"><a href="ch-sql.html#flat-file-databases"><i class="fa fa-check"></i><b>15.2</b> Flat-file databases</a></li>
+<li class="chapter" data-level="15.3" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-universe"><i class="fa fa-check"></i><b>15.3</b> The SQL universe</a></li>
+<li class="chapter" data-level="15.4" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-data-manipulation-language"><i class="fa fa-check"></i><b>15.4</b> The SQL data manipulation language</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="ch-sql.html"><a href="ch-sql.html#select...from"><i class="fa fa-check"></i><b>15.4.1</b> <code>SELECT...FROM</code></a></li>
+<li class="chapter" data-level="15.4.2" data-path="ch-sql.html"><a href="ch-sql.html#where"><i class="fa fa-check"></i><b>15.4.2</b> <code>WHERE</code></a></li>
+<li class="chapter" data-level="15.4.3" data-path="ch-sql.html"><a href="ch-sql.html#group-by"><i class="fa fa-check"></i><b>15.4.3</b> <code>GROUP BY</code></a></li>
+<li class="chapter" data-level="15.4.4" data-path="ch-sql.html"><a href="ch-sql.html#order-by"><i class="fa fa-check"></i><b>15.4.4</b> <code>ORDER BY</code></a></li>
+<li class="chapter" data-level="15.4.5" data-path="ch-sql.html"><a href="ch-sql.html#having"><i class="fa fa-check"></i><b>15.4.5</b> <code>HAVING</code></a></li>
+<li class="chapter" data-level="15.4.6" data-path="ch-sql.html"><a href="ch-sql.html#limit"><i class="fa fa-check"></i><b>15.4.6</b> <code>LIMIT</code></a></li>
+<li class="chapter" data-level="15.4.7" data-path="ch-sql.html"><a href="ch-sql.html#join"><i class="fa fa-check"></i><b>15.4.7</b> <code>JOIN</code></a></li>
+<li class="chapter" data-level="15.4.8" data-path="ch-sql.html"><a href="ch-sql.html#union"><i class="fa fa-check"></i><b>15.4.8</b> <code>UNION</code></a></li>
+<li class="chapter" data-level="15.4.9" data-path="ch-sql.html"><a href="ch-sql.html#subqueries"><i class="fa fa-check"></i><b>15.4.9</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="ch-sql.html"><a href="ch-sql.html#sec:ft8-flights"><i class="fa fa-check"></i><b>15.5</b> Extended example: FiveThirtyEight flights</a></li>
+<li class="chapter" data-level="15.6" data-path="ch-sql.html"><a href="ch-sql.html#sql-vs.-refr"><i class="fa fa-check"></i><b>15.6</b> SQL vs. (ref:R)</a></li>
+<li class="chapter" data-level="15.7" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-further"><i class="fa fa-check"></i><b>15.7</b> Further resources</a></li>
+<li class="chapter" data-level="15.8" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-exercises"><i class="fa fa-check"></i><b>15.8</b> Exercises</a></li>
+<li class="chapter" data-level="15.9" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-online-exercises"><i class="fa fa-check"></i><b>15.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="ch-sql2.html"><a href="ch-sql2.html"><i class="fa fa-check"></i><b>16</b> Database administration</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:indices"><i class="fa fa-check"></i><b>16.1</b> Constructing efficient SQL databases</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="ch-sql2.html"><a href="ch-sql2.html#creating-new-databases"><i class="fa fa-check"></i><b>16.1.1</b> Creating new databases</a></li>
+<li class="chapter" data-level="16.1.2" data-path="ch-sql2.html"><a href="ch-sql2.html#create-table"><i class="fa fa-check"></i><b>16.1.2</b> <code>CREATE TABLE</code></a></li>
+<li class="chapter" data-level="16.1.3" data-path="ch-sql2.html"><a href="ch-sql2.html#keys"><i class="fa fa-check"></i><b>16.1.3</b> Keys</a></li>
+<li class="chapter" data-level="16.1.4" data-path="ch-sql2.html"><a href="ch-sql2.html#indices"><i class="fa fa-check"></i><b>16.1.4</b> Indices</a></li>
+<li class="chapter" data-level="16.1.5" data-path="ch-sql2.html"><a href="ch-sql2.html#query-plans"><i class="fa fa-check"></i><b>16.1.5</b> Query plans</a></li>
+<li class="chapter" data-level="16.1.6" data-path="ch-sql2.html"><a href="ch-sql2.html#partitioning"><i class="fa fa-check"></i><b>16.1.6</b> Partitioning</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-sql-data"><i class="fa fa-check"></i><b>16.2</b> Changing SQL data</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-data"><i class="fa fa-check"></i><b>16.2.1</b> Changing data</a></li>
+<li class="chapter" data-level="16.2.2" data-path="ch-sql2.html"><a href="ch-sql2.html#adding-data"><i class="fa fa-check"></i><b>16.2.2</b> Adding data</a></li>
+<li class="chapter" data-level="16.2.3" data-path="ch-sql2.html"><a href="ch-sql2.html#importing-data-from-a-file"><i class="fa fa-check"></i><b>16.2.3</b> Importing data from a file</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:toy-db"><i class="fa fa-check"></i><b>16.3</b> Extended example: Building a database</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="ch-sql2.html"><a href="ch-sql2.html#extract"><i class="fa fa-check"></i><b>16.3.1</b> Extract</a></li>
+<li class="chapter" data-level="16.3.2" data-path="ch-sql2.html"><a href="ch-sql2.html#transform"><i class="fa fa-check"></i><b>16.3.2</b> Transform</a></li>
+<li class="chapter" data-level="16.3.3" data-path="ch-sql2.html"><a href="ch-sql2.html#load-into-mysql-database"><i class="fa fa-check"></i><b>16.3.3</b> Load into MySQL database</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="ch-sql2.html"><a href="ch-sql2.html#scalability"><i class="fa fa-check"></i><b>16.4</b> Scalability</a></li>
+<li class="chapter" data-level="16.5" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-further"><i class="fa fa-check"></i><b>16.5</b> Further resources</a></li>
+<li class="chapter" data-level="16.6" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-exercises"><i class="fa fa-check"></i><b>16.6</b> Exercises</a></li>
+<li class="chapter" data-level="16.7" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-online-exercises"><i class="fa fa-check"></i><b>16.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="ch-spatial.html"><a href="ch-spatial.html"><i class="fa fa-check"></i><b>17</b> Working with geospatial data</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="ch-spatial.html"><a href="ch-spatial.html#motivation-whats-so-great-about-geospatial-data"><i class="fa fa-check"></i><b>17.1</b> Motivation: What’s so great about geospatial data?</a></li>
+<li class="chapter" data-level="17.2" data-path="ch-spatial.html"><a href="ch-spatial.html#spatial-data-structures"><i class="fa fa-check"></i><b>17.2</b> Spatial data structures</a></li>
+<li class="chapter" data-level="17.3" data-path="ch-spatial.html"><a href="ch-spatial.html#making-maps"><i class="fa fa-check"></i><b>17.3</b> Making maps</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="ch-spatial.html"><a href="ch-spatial.html#static-maps"><i class="fa fa-check"></i><b>17.3.1</b> Static maps</a></li>
+<li class="chapter" data-level="17.3.2" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:projections"><i class="fa fa-check"></i><b>17.3.2</b> Projections</a></li>
+<li class="chapter" data-level="17.3.3" data-path="ch-spatial.html"><a href="ch-spatial.html#dynamic-maps-with-leaflet"><i class="fa fa-check"></i><b>17.3.3</b> Dynamic maps with <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="ch-spatial.html"><a href="ch-spatial.html#extended-example-congressional-districts"><i class="fa fa-check"></i><b>17.4</b> Extended example: Congressional districts</a>
+<ul>
+<li class="chapter" data-level="17.4.1" data-path="ch-spatial.html"><a href="ch-spatial.html#election-results"><i class="fa fa-check"></i><b>17.4.1</b> Election results</a></li>
+<li class="chapter" data-level="17.4.2" data-path="ch-spatial.html"><a href="ch-spatial.html#congressional-districts"><i class="fa fa-check"></i><b>17.4.2</b> Congressional districts</a></li>
+<li class="chapter" data-level="17.4.3" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:sf-inner-join"><i class="fa fa-check"></i><b>17.4.3</b> Putting it all together</a></li>
+<li class="chapter" data-level="17.4.4" data-path="ch-spatial.html"><a href="ch-spatial.html#using-ggplot2"><i class="fa fa-check"></i><b>17.4.4</b> Using <code>ggplot2</code></a></li>
+<li class="chapter" data-level="17.4.5" data-path="ch-spatial.html"><a href="ch-spatial.html#using-leaflet"><i class="fa fa-check"></i><b>17.4.5</b> Using <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="ch-spatial.html"><a href="ch-spatial.html#effective-maps-how-not-to-lie"><i class="fa fa-check"></i><b>17.5</b> Effective maps: How (not) to lie</a></li>
+<li class="chapter" data-level="17.6" data-path="ch-spatial.html"><a href="ch-spatial.html#projecting-polygons"><i class="fa fa-check"></i><b>17.6</b> Projecting polygons</a></li>
+<li class="chapter" data-level="17.7" data-path="ch-spatial.html"><a href="ch-spatial.html#playing-well-with-others"><i class="fa fa-check"></i><b>17.7</b> Playing well with others</a></li>
+<li class="chapter" data-level="17.8" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialII-further"><i class="fa fa-check"></i><b>17.8</b> Further resources</a></li>
+<li class="chapter" data-level="17.9" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-exercises"><i class="fa fa-check"></i><b>17.9</b> Exercises</a></li>
+<li class="chapter" data-level="17.10" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-online-exercises"><i class="fa fa-check"></i><b>17.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="ch-spatial2.html"><a href="ch-spatial2.html"><i class="fa fa-check"></i><b>18</b> Geospatial computations</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-operations"><i class="fa fa-check"></i><b>18.1</b> Geospatial operations</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geocoding-routes-and-distances"><i class="fa fa-check"></i><b>18.1.1</b> Geocoding, routes, and distances</a></li>
+<li class="chapter" data-level="18.1.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#sec:geometric-operations"><i class="fa fa-check"></i><b>18.1.2</b> Geometric operations</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-aggregation"><i class="fa fa-check"></i><b>18.2</b> Geospatial aggregation</a></li>
+<li class="chapter" data-level="18.3" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-joins"><i class="fa fa-check"></i><b>18.3</b> Geospatial joins</a></li>
+<li class="chapter" data-level="18.4" data-path="ch-spatial2.html"><a href="ch-spatial2.html#extended-example-trail-elevations-at-macleish"><i class="fa fa-check"></i><b>18.4</b> Extended example: Trail elevations at MacLeish</a></li>
+<li class="chapter" data-level="18.5" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialI-further"><i class="fa fa-check"></i><b>18.5</b> Further resources</a></li>
+<li class="chapter" data-level="18.6" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-exercises"><i class="fa fa-check"></i><b>18.6</b> Exercises</a></li>
+<li class="chapter" data-level="18.7" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-online-exercises"><i class="fa fa-check"></i><b>18.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="ch-text.html"><a href="ch-text.html"><i class="fa fa-check"></i><b>19</b> Text as data</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="ch-text.html"><a href="ch-text.html#regular-expressions-using-macbeth"><i class="fa fa-check"></i><b>19.1</b> Regular expressions using <em>Macbeth</em></a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="ch-text.html"><a href="ch-text.html#parsing-the-text-of-the-scottish-play"><i class="fa fa-check"></i><b>19.1.1</b> Parsing the text of the <span><em>Scottish play</em></span></a></li>
+<li class="chapter" data-level="19.1.2" data-path="ch-text.html"><a href="ch-text.html#life-and-death-in-macbeth"><i class="fa fa-check"></i><b>19.1.2</b> Life and death in <em>Macbeth</em></a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="ch-text.html"><a href="ch-text.html#extended-example-analyzing-textual-data-from-arxiv.org"><i class="fa fa-check"></i><b>19.2</b> Extended example: Analyzing textual data from arXiv.org</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="ch-text.html"><a href="ch-text.html#corpora"><i class="fa fa-check"></i><b>19.2.1</b> Corpora</a></li>
+<li class="chapter" data-level="19.2.2" data-path="ch-text.html"><a href="ch-text.html#word-clouds"><i class="fa fa-check"></i><b>19.2.2</b> Word clouds</a></li>
+<li class="chapter" data-level="19.2.3" data-path="ch-text.html"><a href="ch-text.html#sentiment-analysis"><i class="fa fa-check"></i><b>19.2.3</b> Sentiment analysis</a></li>
+<li class="chapter" data-level="19.2.4" data-path="ch-text.html"><a href="ch-text.html#bigrams-and-n-grams"><i class="fa fa-check"></i><b>19.2.4</b> Bigrams and N-grams</a></li>
+<li class="chapter" data-level="19.2.5" data-path="ch-text.html"><a href="ch-text.html#document-term-matrices"><i class="fa fa-check"></i><b>19.2.5</b> Document term matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="ch-text.html"><a href="ch-text.html#ingesting-text"><i class="fa fa-check"></i><b>19.3</b> Ingesting text</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="ch-text.html"><a href="ch-text.html#example-scraping-the-songs-of-the-beatles"><i class="fa fa-check"></i><b>19.3.1</b> Example: Scraping the songs of the Beatles</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="ch-text.html"><a href="ch-text.html#text-further"><i class="fa fa-check"></i><b>19.4</b> Further resources</a></li>
+<li class="chapter" data-level="19.5" data-path="ch-text.html"><a href="ch-text.html#text-exercises"><i class="fa fa-check"></i><b>19.5</b> Exercises</a></li>
+<li class="chapter" data-level="19.6" data-path="ch-text.html"><a href="ch-text.html#text-online-exercises"><i class="fa fa-check"></i><b>19.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="ch-netsci.html"><a href="ch-netsci.html"><i class="fa fa-check"></i><b>20</b> Network science</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-intro"><i class="fa fa-check"></i><b>20.1</b> Introduction to network science</a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="ch-netsci.html"><a href="ch-netsci.html#definitions"><i class="fa fa-check"></i><b>20.1.1</b> Definitions</a></li>
+<li class="chapter" data-level="20.1.2" data-path="ch-netsci.html"><a href="ch-netsci.html#a-brief-history-of-network-science"><i class="fa fa-check"></i><b>20.1.2</b> A brief history of network science</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-six-degrees-of-kristen-stewart"><i class="fa fa-check"></i><b>20.2</b> Extended example: Six degrees of Kristen Stewart</a>
+<ul>
+<li class="chapter" data-level="20.2.1" data-path="ch-netsci.html"><a href="ch-netsci.html#sql:imdb"><i class="fa fa-check"></i><b>20.2.1</b> Collecting Hollywood data</a></li>
+<li class="chapter" data-level="20.2.2" data-path="ch-netsci.html"><a href="ch-netsci.html#building-the-hollywood-network"><i class="fa fa-check"></i><b>20.2.2</b> Building the Hollywood network</a></li>
+<li class="chapter" data-level="20.2.3" data-path="ch-netsci.html"><a href="ch-netsci.html#building-a-kristen-stewart-oracle"><i class="fa fa-check"></i><b>20.2.3</b> Building a Kristen Stewart oracle</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="ch-netsci.html"><a href="ch-netsci.html#sec:pagerank"><i class="fa fa-check"></i><b>20.3</b> PageRank</a>
+<ul>
+<li class="chapter" data-level="20.3.1" data-path="ch-netsci.html"><a href="ch-netsci.html#eigenvector-centrality"><i class="fa fa-check"></i><b>20.3.1</b> Eigenvector centrality</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-1996-mens-college-basketball"><i class="fa fa-check"></i><b>20.4</b> Extended example: 1996 men’s college basketball</a></li>
+<li class="chapter" data-level="20.5" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-further"><i class="fa fa-check"></i><b>20.5</b> Further resources</a></li>
+<li class="chapter" data-level="20.6" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-exercises"><i class="fa fa-check"></i><b>20.6</b> Exercises</a></li>
+<li class="chapter" data-level="20.7" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-online-exercises"><i class="fa fa-check"></i><b>20.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="ch-big.html"><a href="ch-big.html"><i class="fa fa-check"></i><b>21</b> Epilogue: Towards “big data”</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="ch-big.html"><a href="ch-big.html#notions-of-big-data"><i class="fa fa-check"></i><b>21.1</b> Notions of big data</a></li>
+<li class="chapter" data-level="21.2" data-path="ch-big.html"><a href="ch-big.html#tools-for-bigger-data"><i class="fa fa-check"></i><b>21.2</b> Tools for bigger data</a>
+<ul>
+<li class="chapter" data-level="21.2.1" data-path="ch-big.html"><a href="ch-big.html#data-and-memory-structures-for-big-data"><i class="fa fa-check"></i><b>21.2.1</b> Data and memory structures for big data</a></li>
+<li class="chapter" data-level="21.2.2" data-path="ch-big.html"><a href="ch-big.html#compilation"><i class="fa fa-check"></i><b>21.2.2</b> Compilation</a></li>
+<li class="chapter" data-level="21.2.3" data-path="ch-big.html"><a href="ch-big.html#parallel-and-distributed-computing"><i class="fa fa-check"></i><b>21.2.3</b> Parallel and distributed computing</a></li>
+<li class="chapter" data-level="21.2.4" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-sql"><i class="fa fa-check"></i><b>21.2.4</b> Alternatives to SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-refr"><i class="fa fa-check"></i><b>21.3</b> Alternatives to (ref:R)</a></li>
+<li class="chapter" data-level="21.4" data-path="ch-big.html"><a href="ch-big.html#closing-thoughts"><i class="fa fa-check"></i><b>21.4</b> Closing thoughts</a></li>
+<li class="chapter" data-level="21.5" data-path="ch-big.html"><a href="ch-big.html#bigdata-further"><i class="fa fa-check"></i><b>21.5</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="part"><span><b>IV Part IV: Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="ch-mdsr.html"><a href="ch-mdsr.html"><i class="fa fa-check"></i><b>A</b> Packages used in this book</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="ch-mdsr.html"><a href="ch-mdsr.html#the-mdsr-package"><i class="fa fa-check"></i><b>A.1</b> The <strong>mdsr</strong> package</a></li>
+<li class="chapter" data-level="A.2" data-path="ch-mdsr.html"><a href="ch-mdsr.html#other-packages"><i class="fa fa-check"></i><b>A.2</b> Other packages</a></li>
+<li class="chapter" data-level="A.3" data-path="ch-mdsr.html"><a href="ch-mdsr.html#pkg-further"><i class="fa fa-check"></i><b>A.3</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="ch-R.html"><a href="ch-R.html"><i class="fa fa-check"></i><b>B</b> Introduction to <code>R</code> and RStudio</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="ch-R.html"><a href="ch-R.html#appR:install"><i class="fa fa-check"></i><b>B.1</b> Installation</a>
+<ul>
+<li class="chapter" data-level="B.1.1" data-path="ch-R.html"><a href="ch-R.html#rstudio"><i class="fa fa-check"></i><b>B.1.1</b> RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="B.2" data-path="ch-R.html"><a href="ch-R.html#learning-refr"><i class="fa fa-check"></i><b>B.2</b> Learning (ref:R)</a></li>
+<li class="chapter" data-level="B.3" data-path="ch-R.html"><a href="ch-R.html#appR:objects"><i class="fa fa-check"></i><b>B.3</b> Fundamental structures and objects</a>
+<ul>
+<li class="chapter" data-level="B.3.1" data-path="ch-R.html"><a href="ch-R.html#appR:assign"><i class="fa fa-check"></i><b>B.3.1</b> Objects and vectors</a></li>
+<li class="chapter" data-level="B.3.2" data-path="ch-R.html"><a href="ch-R.html#appR:operators"><i class="fa fa-check"></i><b>B.3.2</b> Operators</a></li>
+<li class="chapter" data-level="B.3.3" data-path="ch-R.html"><a href="ch-R.html#appR:lists"><i class="fa fa-check"></i><b>B.3.3</b> Lists</a></li>
+<li class="chapter" data-level="B.3.4" data-path="ch-R.html"><a href="ch-R.html#appR:matrix"><i class="fa fa-check"></i><b>B.3.4</b> Matrices</a></li>
+<li class="chapter" data-level="B.3.5" data-path="ch-R.html"><a href="ch-R.html#appR:dataframe"><i class="fa fa-check"></i><b>B.3.5</b> Dataframes and tibbles</a></li>
+<li class="chapter" data-level="B.3.6" data-path="ch-R.html"><a href="ch-R.html#appR:attr"><i class="fa fa-check"></i><b>B.3.6</b> Attributes and classes</a></li>
+<li class="chapter" data-level="B.3.7" data-path="ch-R.html"><a href="ch-R.html#appR:options"><i class="fa fa-check"></i><b>B.3.7</b> Options</a></li>
+<li class="chapter" data-level="B.3.8" data-path="ch-R.html"><a href="ch-R.html#sec:func"><i class="fa fa-check"></i><b>B.3.8</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="ch-R.html"><a href="ch-R.html#add-ons-packages"><i class="fa fa-check"></i><b>B.4</b> Add-ons: Packages</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="ch-R.html"><a href="ch-R.html#appR:packages"><i class="fa fa-check"></i><b>B.4.1</b> Introduction to packages</a></li>
+<li class="chapter" data-level="B.4.2" data-path="ch-R.html"><a href="ch-R.html#packages-and-name-conflicts"><i class="fa fa-check"></i><b>B.4.2</b> Packages and name conflicts</a></li>
+<li class="chapter" data-level="B.4.3" data-path="ch-R.html"><a href="ch-R.html#appR:tasks"><i class="fa fa-check"></i><b>B.4.3</b> CRAN task views</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="ch-R.html"><a href="ch-R.html#appR-further"><i class="fa fa-check"></i><b>B.5</b> Further resources</a></li>
+<li class="chapter" data-level="B.6" data-path="ch-R.html"><a href="ch-R.html#appR-exercises"><i class="fa fa-check"></i><b>B.6</b> Exercises</a></li>
+<li class="chapter" data-level="B.7" data-path="ch-R.html"><a href="ch-R.html#appR-online-exercises"><i class="fa fa-check"></i><b>B.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="ch-function.html"><a href="ch-function.html"><i class="fa fa-check"></i><b>C</b> Algorithmic thinking</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-intro"><i class="fa fa-check"></i><b>C.1</b> Introduction</a></li>
+<li class="chapter" data-level="C.2" data-path="ch-function.html"><a href="ch-function.html#simple-example"><i class="fa fa-check"></i><b>C.2</b> Simple example</a></li>
+<li class="chapter" data-level="C.3" data-path="ch-function.html"><a href="ch-function.html#sec:runaverage"><i class="fa fa-check"></i><b>C.3</b> Extended example: Law of large numbers</a></li>
+<li class="chapter" data-level="C.4" data-path="ch-function.html"><a href="ch-function.html#sec:tidyeval"><i class="fa fa-check"></i><b>C.4</b> Non-standard evaluation</a></li>
+<li class="chapter" data-level="C.5" data-path="ch-function.html"><a href="ch-function.html#sec:debugging"><i class="fa fa-check"></i><b>C.5</b> Debugging and defensive coding</a></li>
+<li class="chapter" data-level="C.6" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-further"><i class="fa fa-check"></i><b>C.6</b> Further resources</a></li>
+<li class="chapter" data-level="C.7" data-path="ch-function.html"><a href="ch-function.html#algorithmic-exercises"><i class="fa fa-check"></i><b>C.7</b> Exercises</a></li>
+<li class="chapter" data-level="C.8" data-path="ch-function.html"><a href="ch-function.html#algorithmic-online-exercises"><i class="fa fa-check"></i><b>C.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="ch-reproduce.html"><a href="ch-reproduce.html"><i class="fa fa-check"></i><b>D</b> Reproducible analysis and workflow</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="ch-reproduce.html"><a href="ch-reproduce.html#scriptable-statistical-computing"><i class="fa fa-check"></i><b>D.1</b> Scriptable statistical computing</a></li>
+<li class="chapter" data-level="D.2" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-analysis-with-refr-markdown"><i class="fa fa-check"></i><b>D.2</b> Reproducible analysis with (ref:R) Markdown</a></li>
+<li class="chapter" data-level="D.3" data-path="ch-reproduce.html"><a href="ch-reproduce.html#projects-and-version-control"><i class="fa fa-check"></i><b>D.3</b> Projects and version control</a></li>
+<li class="chapter" data-level="D.4" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-further"><i class="fa fa-check"></i><b>D.4</b> Further resources</a></li>
+<li class="chapter" data-level="D.5" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-exercises"><i class="fa fa-check"></i><b>D.5</b> Exercises</a></li>
+<li class="chapter" data-level="D.6" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-online-exercises"><i class="fa fa-check"></i><b>D.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="ch-regression.html"><a href="ch-regression.html"><i class="fa fa-check"></i><b>E</b> Regression modeling</a>
+<ul>
+<li class="chapter" data-level="E.1" data-path="ch-regression.html"><a href="ch-regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>E.1</b> Simple linear regression</a>
+<ul>
+<li class="chapter" data-level="E.1.1" data-path="ch-regression.html"><a href="ch-regression.html#motivating-example-modeling-usage-of-a-rail-trail"><i class="fa fa-check"></i><b>E.1.1</b> Motivating example: Modeling usage of a rail trail</a></li>
+<li class="chapter" data-level="E.1.2" data-path="ch-regression.html"><a href="ch-regression.html#model-visualization"><i class="fa fa-check"></i><b>E.1.2</b> Model visualization</a></li>
+<li class="chapter" data-level="E.1.3" data-path="ch-regression.html"><a href="ch-regression.html#measuring-the-strength-of-fit"><i class="fa fa-check"></i><b>E.1.3</b> Measuring the strength of fit</a></li>
+<li class="chapter" data-level="E.1.4" data-path="ch-regression.html"><a href="ch-regression.html#sec:anova"><i class="fa fa-check"></i><b>E.1.4</b> Categorical explanatory variables</a></li>
+</ul></li>
+<li class="chapter" data-level="E.2" data-path="ch-regression.html"><a href="ch-regression.html#multiple-regression"><i class="fa fa-check"></i><b>E.2</b> Multiple regression</a>
+<ul>
+<li class="chapter" data-level="E.2.1" data-path="ch-regression.html"><a href="ch-regression.html#sec:indicators"><i class="fa fa-check"></i><b>E.2.1</b> Parallel slopes: Multiple regression with a categorical variable</a></li>
+<li class="chapter" data-level="E.2.2" data-path="ch-regression.html"><a href="ch-regression.html#parallel-planes-multiple-regression-with-a-second-quantitative-variable"><i class="fa fa-check"></i><b>E.2.2</b> Parallel planes: Multiple regression with a second quantitative variable</a></li>
+<li class="chapter" data-level="E.2.3" data-path="ch-regression.html"><a href="ch-regression.html#sec:interaction"><i class="fa fa-check"></i><b>E.2.3</b> Non-parallel slopes: Multiple regression with interaction</a></li>
+<li class="chapter" data-level="E.2.4" data-path="ch-regression.html"><a href="ch-regression.html#modeling-non-linear-relationships"><i class="fa fa-check"></i><b>E.2.4</b> Modeling non-linear relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="E.3" data-path="ch-regression.html"><a href="ch-regression.html#inference-for-regression"><i class="fa fa-check"></i><b>E.3</b> Inference for regression</a></li>
+<li class="chapter" data-level="E.4" data-path="ch-regression.html"><a href="ch-regression.html#assumptions-underlying-regression"><i class="fa fa-check"></i><b>E.4</b> Assumptions underlying regression</a></li>
+<li class="chapter" data-level="E.5" data-path="ch-regression.html"><a href="ch-regression.html#sec:logistic"><i class="fa fa-check"></i><b>E.5</b> Logistic regression</a></li>
+<li class="chapter" data-level="E.6" data-path="ch-regression.html"><a href="ch-regression.html#regression-further"><i class="fa fa-check"></i><b>E.6</b> Further resources</a></li>
+<li class="chapter" data-level="E.7" data-path="ch-regression.html"><a href="ch-regression.html#regression-exercises"><i class="fa fa-check"></i><b>E.7</b> Exercises</a></li>
+<li class="chapter" data-level="E.8" data-path="ch-regression.html"><a href="ch-regression.html#regression-online-exercises"><i class="fa fa-check"></i><b>E.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="F" data-path="ch-db-setup.html"><a href="ch-db-setup.html"><i class="fa fa-check"></i><b>F</b> Setting up a database server</a>
+<ul>
+<li class="chapter" data-level="F.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sqlite"><i class="fa fa-check"></i><b>F.1</b> SQLite</a></li>
+<li class="chapter" data-level="F.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#mysql"><i class="fa fa-check"></i><b>F.2</b> MySQL</a>
+<ul>
+<li class="chapter" data-level="F.2.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#installation"><i class="fa fa-check"></i><b>F.2.1</b> Installation</a></li>
+<li class="chapter" data-level="F.2.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:mysql-access"><i class="fa fa-check"></i><b>F.2.2</b> Access</a></li>
+<li class="chapter" data-level="F.2.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#running-scripts-from-the-command-line"><i class="fa fa-check"></i><b>F.2.3</b> Running scripts from the command line</a></li>
+</ul></li>
+<li class="chapter" data-level="F.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#postgresql"><i class="fa fa-check"></i><b>F.3</b> PostgreSQL</a></li>
+<li class="chapter" data-level="F.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-sql"><i class="fa fa-check"></i><b>F.4</b> Connecting to SQL</a>
+<ul>
+<li class="chapter" data-level="F.4.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#the-command-line-client"><i class="fa fa-check"></i><b>F.4.1</b> The command line client</a></li>
+<li class="chapter" data-level="F.4.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#guis"><i class="fa fa-check"></i><b>F.4.2</b> GUIs</a></li>
+<li class="chapter" data-level="F.4.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-r-sql"><i class="fa fa-check"></i><b>F.4.3</b> R and RStudio</a></li>
+<li class="chapter" data-level="F.4.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:sqlitebaby"><i class="fa fa-check"></i><b>F.4.4</b> Load into SQLite database</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="index.html">Modern Data Science with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch:spatial2" class="section level1" number="18">
+<h1><span class="header-section-number">Chapter 18</span> Geospatial computations</h1>
+<p>
+In Chapter <a href="ch-spatial.html#ch:spatial">17</a>, we learned how to work with geospatial data. We learned about <a href="https://en.wikipedia.org/w/index.php?search=shapefiles"><em>shapefiles</em></a>, <a href="https://en.wikipedia.org/w/index.php?search=map%20projections"><em>map projections</em></a>, and how to plot spatial data using both <strong>ggplot2</strong> and <strong>leaflet</strong>.
+In this chapter, we will learn how to perform computations on geospatial data that will enable us to answer questions about how long or how big spatial features are.
+We will also learn how to use geometric operations and spatial joins to create new geospatial objects. These capabilities will broaden the spectrum of analytical tasks we can perform, and accordingly expand the range of questions we can answer.</p>
+<div id="geospatial-operations" class="section level2" number="18.1">
+<h2><span class="header-section-number">18.1</span> Geospatial operations</h2>
+<div id="geocoding-routes-and-distances" class="section level3" number="18.1.1">
+<h3><span class="header-section-number">18.1.1</span> Geocoding, routes, and distances</h3>
+<p>
+
+The process of converting a human-readable address into geographic coordinates is called <a href="https://en.wikipedia.org/w/index.php?search=geocoding"><em>geocoding</em></a>. While there are numerous APIs available online that will do this for you, the functionality provided in <strong>tidygeocoder</strong> by the <code>geocode()</code> function uses <a href="https://www.openstreetmap.org">Open Street Map</a> and does not require registration to use the API. Here, we build a data frame of the places of business of the three authors, geocode the addresses of the schools, convert the resulting data frame into an <strong>sf</strong> object, and set the projection to <code>epsg:4326</code> (see Chapter <a href="ch-spatial.html#ch:spatial">17</a>).</p>
+<p>
+
+
+
+
+
+
+
+</p>
+<div class="sourceCode" id="cb903"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb903-1"><a href="ch-spatial2.html#cb903-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb903-2"><a href="ch-spatial2.html#cb903-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdsr)</span>
+<span id="cb903-3"><a href="ch-spatial2.html#cb903-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb903-4"><a href="ch-spatial2.html#cb903-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidygeocoder)</span>
+<span id="cb903-5"><a href="ch-spatial2.html#cb903-5" aria-hidden="true" tabindex="-1"></a>colleges <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb903-6"><a href="ch-spatial2.html#cb903-6" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>school, <span class="sc">~</span>address, </span>
+<span id="cb903-7"><a href="ch-spatial2.html#cb903-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Smith&quot;</span>, <span class="st">&quot;44 College Lane, Northampton, MA 01063&quot;</span>,</span>
+<span id="cb903-8"><a href="ch-spatial2.html#cb903-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Macalester&quot;</span>, <span class="st">&quot;1600 Grand Ave, St Paul, MN 55105&quot;</span>,</span>
+<span id="cb903-9"><a href="ch-spatial2.html#cb903-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Amherst&quot;</span>, <span class="st">&quot;Amherst College, Amherst, MA 01002&quot;</span></span>
+<span id="cb903-10"><a href="ch-spatial2.html#cb903-10" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb903-11"><a href="ch-spatial2.html#cb903-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geocode</span>(address, <span class="at">method =</span> <span class="st">&quot;osm&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb903-12"><a href="ch-spatial2.html#cb903-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;long&quot;</span>, <span class="st">&quot;lat&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb903-13"><a href="ch-spatial2.html#cb903-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_set_crs</span>(<span class="dv">4326</span>)</span>
+<span id="cb903-14"><a href="ch-spatial2.html#cb903-14" aria-hidden="true" tabindex="-1"></a>colleges</span></code></pre></div>
+<pre><code>Simple feature collection with 3 features and 2 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: -93.2 ymin: 42.3 xmax: -72.5 ymax: 44.9
+Geodetic CRS:  WGS 84
+# A tibble: 3 × 3
+  school     address                                    geometry
+* &lt;chr&gt;      &lt;chr&gt;                                   &lt;POINT [°]&gt;
+1 Smith      44 College Lane, Northampton, MA 01063 (-72.6 42.3)
+2 Macalester 1600 Grand Ave, St Paul, MN 55105      (-93.2 44.9)
+3 Amherst    Amherst College, Amherst, MA 01002     (-72.5 42.4)</code></pre>
+<p><a href="https://en.wikipedia.org/w/index.php?search=Geodesic"><em>Geodesic</em></a> distances can be computed using the <code>st_distance()</code> function in <strong>sf</strong>. Here, we compute the distance between two of the Five Colleges<a href="ch-spatial2.html#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>.</p>
+<p></p>
+<div class="sourceCode" id="cb905"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb905-1"><a href="ch-spatial2.html#cb905-1" aria-hidden="true" tabindex="-1"></a>colleges <span class="sc">%&gt;%</span></span>
+<span id="cb905-2"><a href="ch-spatial2.html#cb905-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(school <span class="sc">!=</span> <span class="st">&quot;Macalester&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb905-3"><a href="ch-spatial2.html#cb905-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_distance</span>()</span></code></pre></div>
+<pre><code>Units: [m]
+      [,1]  [,2]
+[1,]     0 11962
+[2,] 11962     0</code></pre>
+<p>The geodesic distance is closer to “<a href="https://en.wikipedia.org/w/index.php?search=as%20the%20crow%20files"><em>as the crow files</em></a>,” but we might be more interested in the <em>driving distance</em> between two locations along the road.
+To compute this, we need to access a service with a database of roads.
+Here, we use the <a href="https://www.openrouteservice.org">openroute service</a>, which requires an API key<a href="ch-spatial2.html#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a>. The <strong>openrouteservice</strong> package provides this access via the <code>ors_directions()</code> function.
+Note that the value of the API key is not shown.
+You will need your own API key to use this service.</p>
+<p></p>
+<p>
+
+</p>
+<div class="sourceCode" id="cb907"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb907-1"><a href="ch-spatial2.html#cb907-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openrouteservice)</span>
+<span id="cb907-2"><a href="ch-spatial2.html#cb907-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ors_api_key</span>()</span></code></pre></div>
+<p>
+</p>
+<div class="sourceCode" id="cb908"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb908-1"><a href="ch-spatial2.html#cb908-1" aria-hidden="true" tabindex="-1"></a>smith_amherst <span class="ot">&lt;-</span> colleges <span class="sc">%&gt;%</span></span>
+<span id="cb908-2"><a href="ch-spatial2.html#cb908-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(school <span class="sc">!=</span> <span class="st">&quot;Macalester&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb908-3"><a href="ch-spatial2.html#cb908-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_coordinates</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb908-4"><a href="ch-spatial2.html#cb908-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb908-5"><a href="ch-spatial2.html#cb908-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb908-6"><a href="ch-spatial2.html#cb908-6" aria-hidden="true" tabindex="-1"></a>route_driving <span class="ot">&lt;-</span> smith_amherst <span class="sc">%&gt;%</span></span>
+<span id="cb908-7"><a href="ch-spatial2.html#cb908-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ors_directions</span>(<span class="at">profile =</span> <span class="st">&quot;driving-car&quot;</span>, <span class="at">output =</span> <span class="st">&quot;sf&quot;</span>)</span></code></pre></div>
+<p>Note the difference between the geodesic distance computed above and the driving distance computed below.
+Of course, the driving distance must be longer than the geodesic distance.</p>
+<p></p>
+<div class="sourceCode" id="cb909"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb909-1"><a href="ch-spatial2.html#cb909-1" aria-hidden="true" tabindex="-1"></a>route_driving <span class="sc">%&gt;%</span></span>
+<span id="cb909-2"><a href="ch-spatial2.html#cb909-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_length</span>()</span></code></pre></div>
+<pre><code>13541 [m]</code></pre>
+<p>If you prefer, you can convert meters to miles using the <code>set_units()</code> function from the <strong>units</strong> package.</p>
+<p>
+</p>
+<div class="sourceCode" id="cb911"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb911-1"><a href="ch-spatial2.html#cb911-1" aria-hidden="true" tabindex="-1"></a>route_driving <span class="sc">%&gt;%</span></span>
+<span id="cb911-2"><a href="ch-spatial2.html#cb911-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_length</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb911-3"><a href="ch-spatial2.html#cb911-3" aria-hidden="true" tabindex="-1"></a>  units<span class="sc">::</span><span class="fu">set_units</span>(<span class="st">&quot;miles&quot;</span>)</span></code></pre></div>
+<pre><code>8.41 [miles]</code></pre>
+<p>
+
+
+Given the convenient <a href="https://www.mass.gov/locations/norwottuck-rail-trail">Norwottuck Rail Trail</a> connecting Northampton and Amherst, we might prefer to bike.
+Will that be shorter?</p>
+<p></p>
+<div class="sourceCode" id="cb913"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb913-1"><a href="ch-spatial2.html#cb913-1" aria-hidden="true" tabindex="-1"></a>route_cycling <span class="ot">&lt;-</span> smith_amherst <span class="sc">%&gt;%</span></span>
+<span id="cb913-2"><a href="ch-spatial2.html#cb913-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ors_directions</span>(<span class="at">profile =</span> <span class="st">&quot;cycling-regular&quot;</span>, <span class="at">output =</span> <span class="st">&quot;sf&quot;</span>)</span>
+<span id="cb913-3"><a href="ch-spatial2.html#cb913-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb913-4"><a href="ch-spatial2.html#cb913-4" aria-hidden="true" tabindex="-1"></a>route_cycling <span class="sc">%&gt;%</span></span>
+<span id="cb913-5"><a href="ch-spatial2.html#cb913-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_length</span>()</span></code></pre></div>
+<pre><code>14050 [m]</code></pre>
+<p>It turns out that the rail trail path is slightly longer (but far more scenic).</p>
+<p>
+
+
+Since the <a href="https://en.wikipedia.org/w/index.php?search=Calvin%20Coolidge%20Bridge"><em>Calvin Coolidge Bridge</em></a> is the only reasonable way to get from Northampton to Amherst when driving, there is only one shortest route between Smith and Amherst, as shown in Figure <a href="ch-spatial2.html#fig:smith-amherst">18.1</a>.
+We also show the shortest biking route, which follows the Norwottuck Rail Trail.</p>
+<p>
+
+</p>
+<div class="sourceCode" id="cb915"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb915-1"><a href="ch-spatial2.html#cb915-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
+<span id="cb915-2"><a href="ch-spatial2.html#cb915-2" aria-hidden="true" tabindex="-1"></a><span class="fu">leaflet</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb915-3"><a href="ch-spatial2.html#cb915-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb915-4"><a href="ch-spatial2.html#cb915-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addPolylines</span>(<span class="at">data =</span> route_driving, <span class="at">weight =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb915-5"><a href="ch-spatial2.html#cb915-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addPolylines</span>(<span class="at">data =</span> route_cycling, <span class="at">color =</span> <span class="st">&quot;green&quot;</span>, <span class="at">weight =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:smith-amherst"></span>
+<div id="htmlwidget-acc12460260ecab931ed" style="width:100%;height:378px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-acc12460260ecab931ed">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href="https://mdsr-book.github.io/mdsr2e/\&quot;http://openstreetmap.org\&quot;">OpenStreetMap<\/a> contributors, <a href="https://mdsr-book.github.io/mdsr2e/\&quot;http://creativecommons.org/licenses/by-sa/2.0/\&quot;">CC-BY-SA<\/a>"}]},{"method":"addPolylines","args":[[[[{"lng":[-72.63994,-72.640148,-72.640315,-72.6405,-72.640539,-72.640525,-72.640508,-72.640445,-72.6402,-72.640101,-72.64004,-72.639976,-72.63963,-72.639299,-72.638985,-72.638854,-72.638587,-72.63821,-72.638198,-72.637995,-72.637845,-72.63772,-72.637694,-72.637685,-72.637712,-72.637649,-72.637594,-72.637421,-72.637374,-72.637027,-72.63671,-72.636663,-72.636624,-72.636587,-72.636446,-72.636361,-72.636342,-72.636327,-72.63619,-72.636121,-72.636031,-72.635931,-72.635797,-72.635112,-72.634683,-72.634595,-72.634501,-72.634255,-72.634059,-72.634028,-72.633823,-72.633322,-72.63318,-72.63213,-72.632018,-72.632041,-72.632145,-72.63229,-72.632366,-72.632511,-72.632595,-72.632689,-72.632524,-72.631877,-72.631855,-72.63161,-72.631374,-72.631067,-72.630968,-72.631003,-72.631049,-72.631052,-72.631052,-72.63106,-72.631027,-72.630998,-72.630927,-72.630867,-72.630673,-72.630434,-72.630293,-72.630183,-72.630111,-72.629821,-72.629649,-72.629375,-72.62908,-72.628835,-72.628692,-72.628615,-72.628315,-72.628225,-72.628151,-72.627993,-72.62796,-72.627843,-72.627735,-72.627726,-72.627531,-72.627354,-72.627216,-72.62714,-72.627085,-72.627043,-72.626672,-72.626634,-72.626619,-72.626562,-72.626469,-72.625917,-72.624436,-72.624097,-72.623986,-72.623656,-72.62318,-72.622568,-72.622496,-72.622261,-72.62218,-72.621985,-72.621744,-72.621627,-72.621384,-72.620997,-72.620758,-72.620643,-72.620497,-72.620398,-72.620396,-72.620377,-72.6202,-72.620126,-72.620041,-72.619546,-72.617849,-72.616478,-72.616326,-72.61601,-72.615714,-72.615344,-72.615065,-72.614968,-72.614716,-72.614428,-72.614173,-72.613724,-72.613146,-72.611917,-72.610503,-72.610016,-72.609754,-72.609335,-72.608418,-72.607602,-72.606799,-72.60672,-72.606634,-72.606122,-72.605869,-72.605814,-72.605417,-72.605268,-72.60507,-72.60287,-72.602484,-72.602311,-72.601429,-72.601306,-72.60124,-72.600771,-72.599996,-72.598888,-72.597767,-72.59741,-72.597132,-72.596971,-72.59678,-72.596417,-72.596205,-72.595968,-72.595828,-72.595661,-72.595636,-72.595528,-72.595306,-72.595014,-72.593806,-72.593153,-72.592894,-72.591867,-72.591062,-72.590559,-72.589905,-72.58923,-72.589064,-72.588895,-72.588273,-72.58751,-72.586751,-72.586515,-72.585365,-72.585034,-72.584995,-72.584631,-72.584154,-72.584099,-72.583705,-72.583399,-72.583344,-72.582959,-72.581958,-72.581349,-72.580789,-72.58051,-72.579847,-72.579797,-72.579779,-72.579696,-72.577829,-72.577757,-72.577506,-72.577444,-72.577149,-72.576397,-72.575698,-72.575124,-72.574836,-72.574633,-72.574225,-72.573054,-72.572953,-72.572514,-72.57242,-72.572128,-72.571546,-72.571244,-72.570856,-72.570593,-72.570323,-72.569845,-72.569429,-72.568661,-72.568275,-72.566917,-72.56662,-72.565856,-72.565779,-72.564016,-72.563098,-72.56286,-72.56256,-72.561363,-72.561299,-72.560878,-72.560375,-72.560114,-72.559577,-72.559414,-72.55893,-72.558885,-72.558311,-72.557836,-72.557328,-72.557269,-72.557024,-72.556784,-72.556544,-72.555425,-72.555157,-72.55476,-72.553603,-72.553289,-72.553173,-72.552968,-72.552279,-72.551776,-72.551268,-72.550722,-72.550561,-72.550434,-72.549753,-72.549212,-72.548906,-72.54869,-72.548645,-72.548299,-72.547648,-72.54748,-72.545745,-72.544842,-72.544455,-72.544101,-72.543404,-72.542936,-72.542822,-72.542107,-72.541136,-72.540373,-72.539533,-72.539392,-72.539123,-72.538587,-72.538458,-72.538195,-72.537911,-72.536475,-72.535942,-72.535792,-72.535432,-72.535356,-72.535148,-72.534928,-72.534729,-72.534502,-72.534076,-72.533689,-72.53329,-72.532902,-72.532782,-72.532722,-72.532081,-72.531733,-72.53166,-72.531331,-72.531238,-72.529286,-72.528903,-72.5286,-72.528297,-72.527995,-72.527735,-72.527476,-72.52733,-72.526736,-72.526256,-72.525776,-72.525605,-72.524459,-72.524327,-72.524101,-72.523874,-72.523162,-72.52211,-72.521438,-72.521136,-72.520219,-72.520113,-72.519972,-72.519809,-72.519666,-72.518882,-72.518809,-72.518763,-72.518022,-72.517049,-72.516951,-72.516182,-72.515846,-72.515757,-72.515671,-72.515146,-72.514413,-72.51337,-72.513373,-72.513389,-72.513394,-72.513397,-72.513427,-72.513409,-72.513402,-72.513355,-72.513294,-72.513496,-72.513545,-72.513686,-72.513854],"lat":[42.31765,42.318072,42.318547,42.319164,42.31945,42.319526,42.319584,42.319708,42.320163,42.320342,42.320325,42.320306,42.320229,42.320165,42.320113,42.320091,42.320047,42.319957,42.319953,42.319888,42.319825,42.319769,42.319885,42.319973,42.320038,42.320091,42.320132,42.320259,42.320291,42.32053,42.32075,42.320788,42.320827,42.320868,42.32107,42.321257,42.321298,42.321328,42.321627,42.321742,42.321845,42.321905,42.321919,42.321833,42.321773,42.321769,42.32177,42.321773,42.321786,42.321788,42.321806,42.321879,42.3219,42.322059,42.322077,42.322136,42.322448,42.322937,42.323179,42.323611,42.323806,42.324027,42.323996,42.324169,42.324175,42.324239,42.324302,42.324386,42.324413,42.324528,42.324807,42.324868,42.324919,42.325603,42.325982,42.326166,42.326355,42.326445,42.326654,42.326893,42.327016,42.327105,42.327154,42.327345,42.327455,42.327617,42.327814,42.327997,42.328127,42.328198,42.328471,42.328552,42.328619,42.328783,42.328818,42.328948,42.329068,42.329078,42.329305,42.329527,42.329699,42.329799,42.329883,42.32995,42.330665,42.330769,42.330882,42.330871,42.330835,42.330507,42.329547,42.329353,42.329289,42.329887,42.330699,42.331532,42.33163,42.331906,42.331926,42.332138,42.332403,42.332557,42.332881,42.333271,42.333324,42.333357,42.333399,42.333533,42.333666,42.333736,42.334279,42.334433,42.334504,42.334956,42.336392,42.337583,42.337717,42.337969,42.338163,42.33835,42.338468,42.338504,42.338583,42.338651,42.338693,42.338743,42.338805,42.33896,42.339196,42.339233,42.339281,42.339358,42.339525,42.339675,42.339821,42.339836,42.339852,42.339966,42.340022,42.340032,42.340102,42.340128,42.340163,42.340568,42.340638,42.34067,42.340824,42.340846,42.340858,42.340943,42.341084,42.341286,42.341501,42.341572,42.341649,42.341696,42.341756,42.341865,42.341909,42.341949,42.341961,42.341975,42.341978,42.341983,42.341993,42.342006,42.342062,42.342093,42.342105,42.342155,42.342193,42.342215,42.342255,42.342286,42.342291,42.342296,42.342318,42.342346,42.342384,42.342395,42.342454,42.34247,42.342472,42.34249,42.342513,42.342518,42.342548,42.342586,42.342593,42.342675,42.342919,42.3431,42.343281,42.343391,42.343651,42.343671,42.343679,42.343718,42.344592,42.344626,42.344743,42.344773,42.34491,42.345262,42.345588,42.345857,42.345992,42.346088,42.34628,42.346832,42.346879,42.347086,42.34713,42.347268,42.347542,42.347684,42.347867,42.347991,42.348119,42.348349,42.348548,42.348918,42.349109,42.349784,42.349931,42.350292,42.35033,42.351201,42.351662,42.351781,42.351932,42.352532,42.352564,42.352773,42.353023,42.353153,42.35342,42.353501,42.353741,42.353764,42.354049,42.354285,42.354538,42.354568,42.35469,42.354811,42.354931,42.35549,42.355624,42.355822,42.3564,42.356575,42.35664,42.356661,42.356996,42.357242,42.357502,42.357784,42.357862,42.357924,42.358266,42.358546,42.358704,42.358816,42.358838,42.359007,42.359325,42.359413,42.360293,42.360744,42.360937,42.361116,42.361478,42.361712,42.361766,42.362102,42.362602,42.362985,42.363407,42.363477,42.363611,42.363878,42.363942,42.364073,42.364215,42.36493,42.365189,42.365261,42.365424,42.365461,42.365563,42.365671,42.365769,42.365881,42.366092,42.366291,42.366486,42.366692,42.366762,42.366797,42.367164,42.36734,42.367376,42.367542,42.367589,42.368549,42.368736,42.368888,42.369039,42.369191,42.369318,42.369446,42.369537,42.369812,42.370051,42.370289,42.370374,42.370945,42.37101,42.371125,42.37124,42.3716,42.372123,42.372461,42.372617,42.373105,42.373153,42.373188,42.373212,42.373217,42.373214,42.373213,42.373212,42.373201,42.373186,42.373185,42.373174,42.373173,42.373173,42.373171,42.373161,42.373147,42.373127,42.373071,42.372716,42.372664,42.372635,42.372324,42.372244,42.372211,42.37211,42.371975,42.371902,42.371966,42.372075,42.372086]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":10,"opacity":0.5,"fill":false,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[-72.63994,-72.640148,-72.640202,-72.640231,-72.640315,-72.640459,-72.6405,-72.640523,-72.640539,-72.640525,-72.640508,-72.640445,-72.64036,-72.6402,-72.640101,-72.640159,-72.640421,-72.640586,-72.640527,-72.640489,-72.640407,-72.64029,-72.640275,-72.640252,-72.640226,-72.640166,-72.640156,-72.640118,-72.640092,-72.640012,-72.640007,-72.639926,-72.639911,-72.639493,-72.639362,-72.639287,-72.639245,-72.639271,-72.639327,-72.639378,-72.639899,-72.63992,-72.639948,-72.639929,-72.639855,-72.639745,-72.639685,-72.639624,-72.639167,-72.639109,-72.638856,-72.638514,-72.638409,-72.638323,-72.637743,-72.636108,-72.635958,-72.635832,-72.635789,-72.635765,-72.635674,-72.635648,-72.635576,-72.635512,-72.635417,-72.635352,-72.635107,-72.634918,-72.634328,-72.634211,-72.634111,-72.634089,-72.634043,-72.633911,-72.633786,-72.633614,-72.633479,-72.633364,-72.633401,-72.63288,-72.632698,-72.632363,-72.632398,-72.632341,-72.632146,-72.632046,-72.631906,-72.631865,-72.631815,-72.631779,-72.631704,-72.631648,-72.630726,-72.630188,-72.629422,-72.627611,-72.627542,-72.62708,-72.626537,-72.625909,-72.625522,-72.624127,-72.624018,-72.623536,-72.623369,-72.622625,-72.622538,-72.622314,-72.622241,-72.622177,-72.622096,-72.621974,-72.621863,-72.621793,-72.618173,-72.617247,-72.616761,-72.616261,-72.615729,-72.615428,-72.612815,-72.612037,-72.612001,-72.611958,-72.597017,-72.596522,-72.593903,-72.589469,-72.589241,-72.584741,-72.584219,-72.5827,-72.582162,-72.581801,-72.573422,-72.567719,-72.567012,-72.566941,-72.56658,-72.566472,-72.566308,-72.556146,-72.551371,-72.550685,-72.5459,-72.538326,-72.537753,-72.537139,-72.536653,-72.53617,-72.5348,-72.532755,-72.530967,-72.530667,-72.530116,-72.52882,-72.528745,-72.528388,-72.52823,-72.52803,-72.527984,-72.527924,-72.527814,-72.527693,-72.52729,-72.526317,-72.52566,-72.525081,-72.524502,-72.524081,-72.522518,-72.521675,-72.521119,-72.521026,-72.52089,-72.520339,-72.520029,-72.519669,-72.519473,-72.515137,-72.514103,-72.513615,-72.513164,-72.512755,-72.512348,-72.512242,-72.51217,-72.512168,-72.511957,-72.511918,-72.511697,-72.511461,-72.511248,-72.511163,-72.511104,-72.511066,-72.511063,-72.511057,-72.511094,-72.511148,-72.51123,-72.51132,-72.511379,-72.511502,-72.511557,-72.511587,-72.511599,-72.511633,-72.511709,-72.512497,-72.512665,-72.512971,-72.513058,-72.513294,-72.513496,-72.513584,-72.513825,-72.51404,-72.514363,-72.514635,-72.514631,-72.514655,-72.514686,-72.514655,-72.514538,-72.51436,-72.51435],"lat":[42.31765,42.318072,42.318212,42.318288,42.318547,42.31901,42.319164,42.319301,42.31945,42.319526,42.319584,42.319708,42.319864,42.320164,42.320342,42.320362,42.320455,42.320514,42.320644,42.320744,42.321135,42.3217,42.321775,42.321888,42.322017,42.322323,42.32236,42.322494,42.322587,42.322766,42.322777,42.322924,42.322951,42.323604,42.323857,42.324105,42.324411,42.32461,42.32471,42.324783,42.325528,42.32557,42.325676,42.325792,42.325922,42.326028,42.326079,42.326128,42.326498,42.326543,42.326742,42.326986,42.327013,42.327033,42.327338,42.328205,42.32826,42.328273,42.328268,42.328264,42.328228,42.328211,42.328255,42.328274,42.328295,42.328319,42.328251,42.328214,42.328162,42.328124,42.328055,42.32803,42.327978,42.327853,42.327827,42.327835,42.327841,42.327847,42.328206,42.328244,42.328258,42.328303,42.329087,42.329089,42.329099,42.329122,42.329185,42.329228,42.329307,42.329363,42.32948,42.329533,42.330089,42.330414,42.330879,42.331927,42.331966,42.332238,42.332601,42.332971,42.333312,42.334115,42.334162,42.334291,42.334358,42.334793,42.334829,42.334887,42.33493,42.334999,42.335082,42.33516,42.335232,42.335268,42.33734,42.337885,42.338155,42.338384,42.338571,42.338657,42.339253,42.339423,42.339431,42.339441,42.342854,42.342969,42.343565,42.344572,42.344624,42.345646,42.345792,42.346133,42.346271,42.346312,42.348218,42.349532,42.34986,42.349865,42.349815,42.349804,42.349828,42.352136,42.35322,42.353373,42.35447,42.3562,42.356389,42.356674,42.3569,42.357209,42.358448,42.360525,42.36234,42.362725,42.363691,42.365962,42.366114,42.366711,42.366881,42.367083,42.367122,42.367173,42.367262,42.367352,42.367609,42.368,42.368139,42.368204,42.36817,42.368112,42.36778,42.367635,42.367569,42.367559,42.367545,42.367485,42.367458,42.367433,42.367418,42.36705,42.366946,42.366871,42.366766,42.366632,42.366447,42.366389,42.366416,42.366498,42.36679,42.366929,42.366974,42.367063,42.367179,42.367255,42.367342,42.367423,42.367598,42.367664,42.367805,42.36791,42.368074,42.36823,42.368313,42.368485,42.368581,42.368831,42.368891,42.368984,42.369084,42.370134,42.370507,42.371504,42.371683,42.371975,42.371902,42.371871,42.371827,42.371822,42.371843,42.371837,42.372075,42.37219,42.372389,42.372383,42.37235,42.372257,42.372187]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"green","weight":10,"opacity":0.5,"fill":false,"fillColor":"green","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[42.31765,42.373217],"lng":[-72.640586,-72.511057]}},"evals":[],"jsHooks":[]}</script>
+<p class="caption">
+Figure 18.1: The fastest route from Smith College to Amherst College, by both car (blue) and bike (green).
+</p>
+</div>
+<p>
+
+
+
+
+
+
+
+However, shortest paths in a network are not unique (see Chapter <a href="ch-netsci.html#ch:netsci">20</a>). Ben’s daily commute to <a href="https://en.wikipedia.org/w/index.php?search=Citi%20Field"><em>Citi Field</em></a> from his apartment in <a href="https://en.wikipedia.org/w/index.php?search=Brooklyn"><em>Brooklyn</em></a> presented three distinct alternatives:</p>
+<ol style="list-style-type: decimal">
+<li>One could take the <a href="https://en.wikipedia.org/w/index.php?search=Brooklyn-Queens%20Expressway"><em>Brooklyn-Queens Expressway</em></a> (I-278 E) to the <a href="https://en.wikipedia.org/w/index.php?search=Grand%20Central%20Parkway"><em>Grand Central Parkway</em></a> E and pass by <a href="https://en.wikipedia.org/w/index.php?search=LaGuardia%20Airport"><em>LaGuardia Airport</em></a>.</li>
+<li>One could continue on the <a href="https://en.wikipedia.org/w/index.php?search=Long%20Island%20Expressway"><em>Long Island Expressway</em></a> (I-495 E) and then approach Citi Field from the opposite direction on the Grand Central Parkway W.</li>
+<li>One could avoid highways altogether and take <a href="https://en.wikipedia.org/w/index.php?search=Roosevelt%20Avenue"><em>Roosevelt Avenue</em></a> all the way through <a href="https://en.wikipedia.org/w/index.php?search=Queens"><em>Queens</em></a>.</li>
+</ol>
+<p>The latter route is the shortest but often will take longer due to traffic. The first route is the most convenient approach to the Citi Field employee parking lot.
+These two routes are overlaid on the map in Figure <a href="ch-spatial2.html#fig:citifield">18.2</a>.</p>
+<p></p>
+<div class="sourceCode" id="cb916"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb916-1"><a href="ch-spatial2.html#cb916-1" aria-hidden="true" tabindex="-1"></a>commute <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb916-2"><a href="ch-spatial2.html#cb916-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>place, <span class="sc">~</span>address, </span>
+<span id="cb916-3"><a href="ch-spatial2.html#cb916-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;home&quot;</span>, <span class="st">&quot;736 Leonard St, Brooklyn, NY&quot;</span>,</span>
+<span id="cb916-4"><a href="ch-spatial2.html#cb916-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;lga&quot;</span>, <span class="st">&quot;LaGuardia Airport, Queens, NY&quot;</span>,</span>
+<span id="cb916-5"><a href="ch-spatial2.html#cb916-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;work&quot;</span>, <span class="st">&quot;Citi Field, 41 Seaver Way, Queens, NY 11368&quot;</span>,</span>
+<span id="cb916-6"><a href="ch-spatial2.html#cb916-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb916-7"><a href="ch-spatial2.html#cb916-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geocode</span>(address, <span class="at">method =</span> <span class="st">&quot;osm&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb916-8"><a href="ch-spatial2.html#cb916-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;long&quot;</span>, <span class="st">&quot;lat&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb916-9"><a href="ch-spatial2.html#cb916-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_set_crs</span>(<span class="dv">4326</span>)</span>
+<span id="cb916-10"><a href="ch-spatial2.html#cb916-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb916-11"><a href="ch-spatial2.html#cb916-11" aria-hidden="true" tabindex="-1"></a>route_direct <span class="ot">&lt;-</span> commute <span class="sc">%&gt;%</span></span>
+<span id="cb916-12"><a href="ch-spatial2.html#cb916-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(place <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;home&quot;</span>, <span class="st">&quot;work&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb916-13"><a href="ch-spatial2.html#cb916-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_coordinates</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb916-14"><a href="ch-spatial2.html#cb916-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb916-15"><a href="ch-spatial2.html#cb916-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ors_directions</span>(<span class="at">output =</span> <span class="st">&quot;sf&quot;</span>,  <span class="at">preference =</span> <span class="st">&quot;recommended&quot;</span>)</span>
+<span id="cb916-16"><a href="ch-spatial2.html#cb916-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb916-17"><a href="ch-spatial2.html#cb916-17" aria-hidden="true" tabindex="-1"></a>route_gcp <span class="ot">&lt;-</span> commute <span class="sc">%&gt;%</span></span>
+<span id="cb916-18"><a href="ch-spatial2.html#cb916-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_coordinates</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb916-19"><a href="ch-spatial2.html#cb916-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb916-20"><a href="ch-spatial2.html#cb916-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ors_directions</span>(<span class="at">output =</span> <span class="st">&quot;sf&quot;</span>)</span>
+<span id="cb916-21"><a href="ch-spatial2.html#cb916-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb916-22"><a href="ch-spatial2.html#cb916-22" aria-hidden="true" tabindex="-1"></a><span class="fu">leaflet</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb916-23"><a href="ch-spatial2.html#cb916-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb916-24"><a href="ch-spatial2.html#cb916-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addMarkers</span>(<span class="at">data =</span> commute, <span class="at">popup =</span> <span class="sc">~</span>place) <span class="sc">%&gt;%</span></span>
+<span id="cb916-25"><a href="ch-spatial2.html#cb916-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addPolylines</span>(<span class="at">data =</span> route_direct, <span class="at">color =</span> <span class="st">&quot;green&quot;</span>, <span class="at">weight =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb916-26"><a href="ch-spatial2.html#cb916-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addPolylines</span>(<span class="at">data =</span> route_gcp, <span class="at">weight =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:citifield"></span>
+<div id="htmlwidget-2b6e8857fc11b1a216f4" style="width:100%;height:378px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2b6e8857fc11b1a216f4">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href="https://mdsr-book.github.io/mdsr2e/\&quot;http://openstreetmap.org\&quot;">OpenStreetMap<\/a> contributors, <a href="https://mdsr-book.github.io/mdsr2e/\&quot;http://creativecommons.org/licenses/by-sa/2.0/\&quot;">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[40.72978395,40.7757145,40.75727785],[-73.9529764091538,-73.8733639851154,-73.8458788494242],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["home","lga","work"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[-73.953157,-73.952449,-73.952412,-73.952346,-73.951635,-73.951567,-73.951508,-73.950806,-73.950722,-73.950593,-73.950628,-73.950873,-73.951033,-73.951048,-73.951109,-73.951356,-73.951377,-73.951415,-73.95131,-73.951258,-73.950891,-73.950628,-73.949993,-73.949696,-73.949316,-73.94922,-73.949133,-73.949043,-73.94877,-73.94857,-73.948289,-73.948073,-73.947895,-73.946515,-73.9464,-73.945933,-73.945512,-73.94461,-73.943885,-73.94373,-73.943131,-73.942911,-73.942781,-73.942041,-73.941775,-73.941304,-73.940789,-73.940684,-73.940295,-73.940074,-73.93986,-73.9396,-73.939178,-73.93903,-73.938687,-73.938204,-73.938023,-73.938009,-73.937668,-73.937415,-73.9365,-73.936285,-73.93478,-73.933831,-73.933078,-73.932951,-73.932654,-73.931588,-73.93148,-73.930883,-73.930814,-73.930602,-73.930592,-73.93053,-73.930329,-73.929946,-73.929493,-73.929237,-73.928226,-73.927628,-73.927578,-73.927412,-73.927242,-73.926157,-73.925115,-73.924303,-73.923955,-73.92304,-73.922002,-73.920948,-73.919918,-73.918898,-73.917873,-73.91694,-73.916154,-73.915856,-73.914837,-73.914573,-73.914286,-73.913829,-73.913041,-73.912889,-73.91248,-73.911509,-73.910564,-73.909587,-73.908596,-73.908378,-73.907645,-73.907522,-73.907348,-73.906998,-73.906741,-73.906614,-73.906493,-73.906256,-73.905555,-73.904437,-73.903375,-73.902117,-73.901096,-73.900055,-73.899012,-73.898512,-73.89811,-73.897224,-73.896325,-73.895421,-73.895032,-73.894364,-73.893588,-73.893501,-73.892959,-73.892554,-73.892421,-73.892324,-73.891705,-73.891429,-73.891357,-73.890655,-73.890612,-73.890501,-73.890369,-73.889639,-73.889571,-73.888678,-73.888468,-73.888346,-73.888017,-73.887822,-73.887777,-73.887611,-73.886795,-73.886717,-73.886637,-73.885783,-73.884855,-73.883936,-73.882999,-73.882569,-73.882071,-73.881137,-73.880206,-73.879839,-73.879278,-73.878362,-73.877416,-73.876925,-73.87648,-73.876252,-73.875657,-73.875489,-73.874722,-73.874629,-73.874553,-73.873983,-73.873701,-73.873303,-73.872774,-73.872454,-73.872373,-73.872291,-73.871841,-73.871356,-73.87047,-73.870378,-73.870297,-73.869425,-73.868458,-73.867514,-73.866557,-73.864172,-73.86414,-73.862726,-73.861753,-73.861234,-73.860825,-73.860427,-73.858856,-73.858753,-73.858652,-73.856183,-73.855852,-73.855562,-73.854549,-73.85262,-73.8526,-73.850981,-73.850637,-73.850254,-73.850042,-73.849608,-73.848396,-73.848213,-73.848115,-73.847186,-73.847093,-73.84634,-73.843324,-73.843237,-73.84326,-73.843711,-73.844044,-73.844428],"lat":[40.729725,40.728482,40.728419,40.728441,40.728675,40.728698,40.728717,40.728949,40.728976,40.729019,40.729083,40.729506,40.729787,40.729815,40.729919,40.730346,40.73039,40.730467,40.730477,40.730483,40.730515,40.730544,40.730604,40.730632,40.730669,40.730678,40.730686,40.730695,40.730722,40.73074,40.730772,40.730833,40.730884,40.731383,40.731425,40.731596,40.73175,40.732079,40.732332,40.732386,40.732595,40.732636,40.732661,40.732771,40.732821,40.73294,40.733116,40.733154,40.733293,40.733376,40.733455,40.733551,40.733739,40.733812,40.73398,40.734221,40.734312,40.734319,40.734409,40.734555,40.734911,40.734993,40.735554,40.735906,40.736185,40.736232,40.736342,40.736821,40.736867,40.737126,40.737152,40.737245,40.73725,40.737278,40.737366,40.737536,40.73771,40.737809,40.738206,40.738444,40.738464,40.738531,40.7386,40.739063,40.739528,40.73988,40.740035,40.740436,40.74089,40.741375,40.741812,40.742187,40.742511,40.742799,40.743042,40.74313,40.743455,40.743538,40.743628,40.743772,40.744003,40.744047,40.744167,40.744471,40.744743,40.744941,40.745114,40.745156,40.745287,40.745309,40.745347,40.745391,40.745398,40.745398,40.745393,40.745392,40.745391,40.745498,40.745603,40.745731,40.74583,40.74594,40.746048,40.746102,40.746144,40.746238,40.746333,40.746428,40.746471,40.746544,40.74662,40.746629,40.746686,40.746728,40.746742,40.746753,40.746818,40.746846,40.746854,40.746926,40.74693,40.746942,40.746956,40.747032,40.747039,40.747134,40.747158,40.747171,40.747209,40.747232,40.747237,40.747249,40.747333,40.747341,40.747349,40.747438,40.747535,40.74763,40.747734,40.747778,40.74783,40.747927,40.748025,40.748062,40.748124,40.74822,40.748319,40.748369,40.748416,40.748439,40.748503,40.748521,40.748604,40.748614,40.748622,40.748686,40.748717,40.748758,40.748813,40.748844,40.748852,40.748859,40.748906,40.748957,40.749048,40.749058,40.749067,40.749157,40.749264,40.749376,40.749464,40.749715,40.749719,40.749868,40.749979,40.750037,40.750114,40.750216,40.750685,40.750715,40.750745,40.751476,40.751574,40.75166,40.751958,40.75253,40.752536,40.753013,40.75312,40.753236,40.753306,40.753436,40.753799,40.753853,40.753882,40.75416,40.754188,40.754413,40.755315,40.755341,40.755388,40.756306,40.756945,40.757701]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"green","weight":10,"opacity":0.5,"fill":false,"fillColor":"green","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[-73.953157,-73.952449,-73.952412,-73.952346,-73.951635,-73.951567,-73.951508,-73.950806,-73.950722,-73.950593,-73.950628,-73.950873,-73.951033,-73.951048,-73.951109,-73.951356,-73.951377,-73.951415,-73.95131,-73.951258,-73.950891,-73.950628,-73.949993,-73.949696,-73.949316,-73.94922,-73.949133,-73.949043,-73.94877,-73.94857,-73.948289,-73.948073,-73.947895,-73.946515,-73.9464,-73.945933,-73.945512,-73.94461,-73.943885,-73.94373,-73.943131,-73.942911,-73.942781,-73.942041,-73.941775,-73.941304,-73.940789,-73.940684,-73.940295,-73.940074,-73.93986,-73.9396,-73.939178,-73.93903,-73.938687,-73.938204,-73.938023,-73.938009,-73.937668,-73.937415,-73.9365,-73.936285,-73.93478,-73.933831,-73.933078,-73.932951,-73.932654,-73.931588,-73.93148,-73.930883,-73.930814,-73.930602,-73.930592,-73.93053,-73.930329,-73.929946,-73.929493,-73.929237,-73.928226,-73.927628,-73.927578,-73.927412,-73.927242,-73.926157,-73.925115,-73.924303,-73.923955,-73.92304,-73.922002,-73.920948,-73.919918,-73.918898,-73.917873,-73.91694,-73.916154,-73.915856,-73.914837,-73.914573,-73.914286,-73.913829,-73.913041,-73.912889,-73.91248,-73.911509,-73.910564,-73.909587,-73.908596,-73.908378,-73.907645,-73.907522,-73.907348,-73.906998,-73.906741,-73.906614,-73.906493,-73.906256,-73.905555,-73.904437,-73.903375,-73.902117,-73.901096,-73.900055,-73.899012,-73.898512,-73.89811,-73.897224,-73.896325,-73.89634,-73.896448,-73.896457,-73.896467,-73.896581,-73.896726,-73.896741,-73.896469,-73.896279,-73.896152,-73.896112,-73.896101,-73.896715,-73.896991,-73.897144,-73.897226,-73.897266,-73.897354,-73.897439,-73.897536,-73.8977,-73.898351,-73.898735,-73.898787,-73.898965,-73.899198,-73.899333,-73.899453,-73.899499,-73.899642,-73.899691,-73.899721,-73.899712,-73.899681,-73.899599,-73.899255,-73.898697,-73.898503,-73.897119,-73.896442,-73.896243,-73.895992,-73.895557,-73.895253,-73.895137,-73.895025,-73.894895,-73.894688,-73.894556,-73.894389,-73.894159,-73.893689,-73.893666,-73.893369,-73.893208,-73.89245,-73.891838,-73.890967,-73.890583,-73.890005,-73.888803,-73.887992,-73.887341,-73.886451,-73.885206,-73.883953,-73.882741,-73.882141,-73.881697,-73.879828,-73.879482,-73.879427,-73.879272,-73.87894,-73.878541,-73.8776,-73.876936,-73.876229,-73.876069,-73.875959,-73.875951,-73.875915,-73.875899,-73.875908,-73.875923,-73.876026,-73.876111,-73.876128,-73.876143,-73.876155,-73.876169,-73.876175,-73.876253,-73.876308,-73.87658,-73.876705,-73.876669,-73.876559,-73.876304,-73.876214,-73.875961,-73.875787,-73.875223,-73.874951,-73.874846,-73.87464,-73.87423,-73.874065,-73.873987,-73.874065,-73.87423,-73.87464,-73.874846,-73.874951,-73.875223,-73.875787,-73.875961,-73.876214,-73.876304,-73.876559,-73.876669,-73.876705,-73.876669,-73.876517,-73.876446,-73.876392,-73.876351,-73.87628,-73.87627,-73.876267,-73.876254,-73.876236,-73.876146,-73.876038,-73.876022,-73.876011,-73.876008,-73.876015,-73.876088,-73.876195,-73.876344,-73.876496,-73.876661,-73.87689,-73.87699,-73.877169,-73.877317,-73.877397,-73.877429,-73.877405,-73.877366,-73.877262,-73.877094,-73.876648,-73.876343,-73.876116,-73.875617,-73.875025,-73.874615,-73.87338,-73.873136,-73.872651,-73.871442,-73.870922,-73.870479,-73.870117,-73.869805,-73.869401,-73.869215,-73.86839,-73.867845,-73.866818,-73.866347,-73.865852,-73.865336,-73.86448,-73.86393,-73.863231,-73.862475,-73.861359,-73.860877,-73.860721,-73.860018,-73.859694,-73.859351,-73.858941,-73.858587,-73.857836,-73.857331,-73.856944,-73.856725,-73.856494,-73.856274,-73.855937,-73.85561,-73.855033,-73.85495,-73.854849,-73.854639,-73.85395,-73.853673,-73.853199,-73.85298,-73.852647,-73.852277,-73.851793,-73.851552,-73.850672,-73.850287,-73.849677,-73.848984,-73.848591,-73.847966,-73.847303,-73.846943,-73.846333,-73.846245,-73.846146,-73.84605,-73.845862,-73.845718,-73.845579,-73.845487,-73.845457,-73.845128,-73.844926,-73.844919,-73.84479,-73.84445,-73.844428],"lat":[40.729725,40.728482,40.728419,40.728441,40.728675,40.728698,40.728717,40.728949,40.728976,40.729019,40.729083,40.729506,40.729787,40.729815,40.729919,40.730346,40.73039,40.730467,40.730477,40.730483,40.730515,40.730544,40.730604,40.730632,40.730669,40.730678,40.730686,40.730695,40.730722,40.73074,40.730772,40.730833,40.730884,40.731383,40.731425,40.731596,40.73175,40.732079,40.732332,40.732386,40.732595,40.732636,40.732661,40.732771,40.732821,40.73294,40.733116,40.733154,40.733293,40.733376,40.733455,40.733551,40.733739,40.733812,40.73398,40.734221,40.734312,40.734319,40.734409,40.734555,40.734911,40.734993,40.735554,40.735906,40.736185,40.736232,40.736342,40.736821,40.736867,40.737126,40.737152,40.737245,40.73725,40.737278,40.737366,40.737536,40.73771,40.737809,40.738206,40.738444,40.738464,40.738531,40.7386,40.739063,40.739528,40.73988,40.740035,40.740436,40.74089,40.741375,40.741812,40.742187,40.742511,40.742799,40.743042,40.74313,40.743455,40.743538,40.743628,40.743772,40.744003,40.744047,40.744167,40.744471,40.744743,40.744941,40.745114,40.745156,40.745287,40.745309,40.745347,40.745391,40.745398,40.745398,40.745393,40.745392,40.745391,40.745498,40.745603,40.745731,40.74583,40.74594,40.746048,40.746102,40.746144,40.746238,40.746333,40.746409,40.746956,40.747,40.747052,40.747623,40.748364,40.748429,40.748454,40.748475,40.748572,40.748674,40.748855,40.749867,40.75039,40.750599,40.751066,40.751435,40.751953,40.752289,40.752578,40.752871,40.753889,40.754472,40.754551,40.754989,40.755534,40.755886,40.756282,40.756416,40.756915,40.757241,40.757466,40.757683,40.757918,40.758218,40.758994,40.759816,40.760102,40.762113,40.763034,40.76327,40.763475,40.763772,40.764033,40.764164,40.764306,40.764596,40.765154,40.765355,40.765532,40.765699,40.765906,40.765909,40.765946,40.765967,40.766004,40.766045,40.766136,40.76623,40.766308,40.766509,40.766663,40.766806,40.767047,40.767439,40.767897,40.768403,40.768692,40.768819,40.769737,40.769844,40.769862,40.769912,40.770011,40.770089,40.770193,40.770257,40.770335,40.770351,40.770348,40.770436,40.77078,40.771079,40.771167,40.771219,40.771442,40.771782,40.771857,40.771915,40.772,40.77212,40.772226,40.772453,40.772551,40.772859,40.772897,40.772964,40.773102,40.773271,40.773311,40.773414,40.773495,40.773768,40.773856,40.773867,40.773851,40.773745,40.773722,40.773726,40.773722,40.773745,40.773851,40.773867,40.773856,40.773768,40.773495,40.773414,40.773311,40.773271,40.773102,40.772964,40.772897,40.772783,40.772597,40.772497,40.772407,40.772334,40.772111,40.771986,40.771891,40.771832,40.771759,40.771385,40.771191,40.771146,40.771064,40.77097,40.770862,40.770781,40.77064,40.770517,40.770438,40.77039,40.770369,40.770374,40.770408,40.770491,40.770586,40.770705,40.770827,40.77089,40.770978,40.771052,40.771169,40.771232,40.771275,40.771338,40.771378,40.77138,40.771324,40.771301,40.771271,40.771239,40.771191,40.771109,40.771007,40.770901,40.770816,40.770729,40.770265,40.769928,40.769223,40.768878,40.768505,40.768111,40.767351,40.766827,40.766099,40.765226,40.763826,40.763225,40.763055,40.762137,40.761783,40.761461,40.761145,40.76091,40.760512,40.760288,40.760064,40.759958,40.759821,40.759666,40.759336,40.758884,40.757805,40.75769,40.757597,40.75745,40.757202,40.757194,40.757261,40.757302,40.757363,40.757442,40.757559,40.757618,40.757871,40.757968,40.758181,40.758449,40.758561,40.758821,40.759122,40.759337,40.759822,40.759915,40.760036,40.760027,40.759974,40.759894,40.759791,40.759722,40.759668,40.759075,40.758673,40.75866,40.758403,40.757744,40.757701]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":10,"opacity":0.5,"fill":false,"fillColor":"#03F","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[40.728419,40.7757145],"lng":[-73.953157,-73.843237]}},"evals":[],"jsHooks":[]}</script>
+<p class="caption">
+Figure 18.2: Alternative commuting routes from Ben’s old apartment in Brooklyn to Citi Field. Note that the routes overlap for most of the way from Brooklyn to the I-278 E onramp on Roosevelt Avenue.
+</p>
+</div>
+</div>
+<div id="sec:geometric-operations" class="section level3" number="18.1.2">
+<h3><span class="header-section-number">18.1.2</span> Geometric operations</h3>
+<p>Much of the power of working with geospatial data comes from the interactions between various layers of data. The <strong>sf</strong> package provides many features that enable us to compute with geospatial data.</p>
+<p>A basic geospatial question is: what part of one series of geospatial objects lies within another set? To illustrate, we use geospatial data from the MacLeish field station in <a href="https://en.wikipedia.org/w/index.php?search=Whately,%20MA"><em>Whately, MA</em></a>. These data are provided by the <strong>macleish</strong> package. Figure <a href="ch-spatial2.html#fig:macleish-boundary">18.3</a> illustrates that there are several streams that pass though the MacLeish property.</p>
+<div class="sourceCode" id="cb917"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb917-1"><a href="ch-spatial2.html#cb917-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb917-2"><a href="ch-spatial2.html#cb917-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(macleish)</span>
+<span id="cb917-3"><a href="ch-spatial2.html#cb917-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb917-4"><a href="ch-spatial2.html#cb917-4" aria-hidden="true" tabindex="-1"></a>boundary <span class="ot">&lt;-</span> macleish_layers <span class="sc">%&gt;%</span></span>
+<span id="cb917-5"><a href="ch-spatial2.html#cb917-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;boundary&quot;</span>)</span>
+<span id="cb917-6"><a href="ch-spatial2.html#cb917-6" aria-hidden="true" tabindex="-1"></a>streams <span class="ot">&lt;-</span> macleish_layers <span class="sc">%&gt;%</span></span>
+<span id="cb917-7"><a href="ch-spatial2.html#cb917-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;streams&quot;</span>)</span>
+<span id="cb917-8"><a href="ch-spatial2.html#cb917-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb917-9"><a href="ch-spatial2.html#cb917-9" aria-hidden="true" tabindex="-1"></a>boundary_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(boundary) <span class="sc">+</span> </span>
+<span id="cb917-10"><a href="ch-spatial2.html#cb917-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span> </span>
+<span id="cb917-11"><a href="ch-spatial2.html#cb917-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">72.677</span>, <span class="sc">-</span><span class="fl">72.683</span>))</span>
+<span id="cb917-12"><a href="ch-spatial2.html#cb917-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb917-13"><a href="ch-spatial2.html#cb917-13" aria-hidden="true" tabindex="-1"></a>boundary_plot <span class="sc">+</span></span>
+<span id="cb917-14"><a href="ch-spatial2.html#cb917-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> streams, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">size =</span> <span class="fl">1.5</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:macleish-boundary"></span>
+<img src="18-geospatialII_files/figure-html/macleish-boundary-1.png" alt="Streams cross through the boundary of the MacLeish property." width="100%" />
+<p class="caption">
+Figure 18.3: Streams cross through the boundary of the MacLeish property.
+</p>
+</div>
+<p>The data from MacLeish happens to have a variable called <code>Shape_Area</code> that contains the precomputed size of the property.</p>
+<div class="sourceCode" id="cb918"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb918-1"><a href="ch-spatial2.html#cb918-1" aria-hidden="true" tabindex="-1"></a>boundary <span class="sc">%&gt;%</span></span>
+<span id="cb918-2"><a href="ch-spatial2.html#cb918-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(Shape_Area)</span></code></pre></div>
+<pre><code>[1] 1033988</code></pre>
+<p>Is this accurate? We can easily compute basic geometric properties of spatial objects like area and length using the <strong>st_area</strong> function.</p>
+<div class="sourceCode" id="cb920"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb920-1"><a href="ch-spatial2.html#cb920-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_area</span>(boundary)</span></code></pre></div>
+<pre><code>1032353 [m^2]</code></pre>
+<p>The exact computed area is very close to the reported value. We can also convert the area in square meters to <a href="https://en.wikipedia.org/w/index.php?search=acres"><em>acres</em></a> by dividing by a known conversion factor.</p>
+<div class="sourceCode" id="cb922"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb922-1"><a href="ch-spatial2.html#cb922-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_area</span>(boundary) <span class="sc">/</span> <span class="fl">4046.8564224</span></span></code></pre></div>
+<pre><code>255 [m^2]</code></pre>
+<p>Similarly, we can compute the length of each segment of the streams and the location of the <a href="https://en.wikipedia.org/w/index.php?search=centroid"><em>centroid</em></a> of the property.</p>
+<div class="sourceCode" id="cb924"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb924-1"><a href="ch-spatial2.html#cb924-1" aria-hidden="true" tabindex="-1"></a>streams <span class="sc">%&gt;%</span></span>
+<span id="cb924-2"><a href="ch-spatial2.html#cb924-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">length =</span> <span class="fu">st_length</span>(geometry))</span></code></pre></div>
+<pre><code>Simple feature collection with 13 features and 2 fields
+Geometry type: LINESTRING
+Dimension:     XY
+Bounding box:  xmin: -72.7 ymin: 42.4 xmax: -72.7 ymax: 42.5
+Geodetic CRS:  WGS 84
+First 10 features:
+   Id                       geometry     length
+1   1 LINESTRING (-72.7 42.5, -72...  593.3 [m]
+2   1 LINESTRING (-72.7 42.5, -72...  412.3 [m]
+3   1 LINESTRING (-72.7 42.5, -72...  137.9 [m]
+4   1 LINESTRING (-72.7 42.5, -72...   40.3 [m]
+5   1 LINESTRING (-72.7 42.5, -72...   51.0 [m]
+6   1 LINESTRING (-72.7 42.5, -72...  592.8 [m]
+7   1 LINESTRING (-72.7 42.5, -72... 2152.4 [m]
+8   3 LINESTRING (-72.7 42.5, -72... 1651.3 [m]
+9   3 LINESTRING (-72.7 42.5, -72...  316.2 [m]
+10  3 LINESTRING (-72.7 42.5, -72...  388.3 [m]</code></pre>
+<div class="sourceCode" id="cb926"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb926-1"><a href="ch-spatial2.html#cb926-1" aria-hidden="true" tabindex="-1"></a>boundary <span class="sc">%&gt;%</span></span>
+<span id="cb926-2"><a href="ch-spatial2.html#cb926-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_centroid</span>()</span></code></pre></div>
+<pre><code>Simple feature collection with 1 feature and 3 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: -72.7 ymin: 42.5 xmax: -72.7 ymax: 42.5
+Geodetic CRS:  WGS 84
+  OBJECTID Shape_Leng Shape_Area           geometry
+1        1       5894    1033988 POINT (-72.7 42.5)</code></pre>
+<p>As promised, we can also combine two geospatial layers. The functions <code>st_intersects()</code> and <code>st_intersection()</code> take two geospatial objects and return a <code>logical</code> indicating whether they intersect, or another <strong>sf</strong> object representing that intersection, respectively.</p>
+<div class="sourceCode" id="cb928"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb928-1"><a href="ch-spatial2.html#cb928-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_intersects</span>(boundary, streams)</span></code></pre></div>
+<pre><code>Sparse geometry binary predicate list of length 1, where the
+predicate was `intersects&#39;
+ 1: 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, ...</code></pre>
+<div class="sourceCode" id="cb930"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb930-1"><a href="ch-spatial2.html#cb930-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_intersection</span>(boundary, streams)</span></code></pre></div>
+<pre><code>Simple feature collection with 11 features and 4 fields
+Geometry type: GEOMETRY
+Dimension:     XY
+Bounding box:  xmin: -72.7 ymin: 42.4 xmax: -72.7 ymax: 42.5
+Geodetic CRS:  WGS 84
+First 10 features:
+    OBJECTID Shape_Leng Shape_Area Id                       geometry
+1          1       5894    1033988  1 LINESTRING (-72.7 42.5, -72...
+1.1        1       5894    1033988  1 LINESTRING (-72.7 42.5, -72...
+1.2        1       5894    1033988  1 LINESTRING (-72.7 42.5, -72...
+1.3        1       5894    1033988  1 MULTILINESTRING ((-72.7 42....
+1.4        1       5894    1033988  1 LINESTRING (-72.7 42.4, -72...
+1.5        1       5894    1033988  3 LINESTRING (-72.7 42.5, -72...
+1.6        1       5894    1033988  3 LINESTRING (-72.7 42.5, -72...
+1.7        1       5894    1033988  3 LINESTRING (-72.7 42.5, -72...
+1.8        1       5894    1033988  3 LINESTRING (-72.7 42.5, -72...
+1.9        1       5894    1033988  3 LINESTRING (-72.7 42.4, -72...</code></pre>
+<p><code>st_intersects()</code> is called a <a href="https://en.wikipedia.org/w/index.php?search=predicate"><em>predicate</em></a> function because it returns a <code>logical</code>. It answers the question: “Do these two layers intersect?”
+On the other hand, <code>st_intersection()</code> performs a set operation. It answers the question: “What is the set that represents the intersection of these two layers?” Similar functions compute familiar set operations like unions, differences, and symmetric differences, while a whole host of additional predicate functions detect containment (<code>st_contains()</code>, <code>st_within()</code>, etc.), crossings, overlaps, etc.</p>
+<p>In Figure <a href="ch-spatial2.html#fig:macleish-boundary-streams">18.4</a>(a) we use the <code>st_intersection()</code> function to show only the parts of the streams that are contained within the MacLeish property.
+In Figure <a href="ch-spatial2.html#fig:macleish-boundary-streams">18.4</a>(b), we show the corresponding set of stream parts that lie <em>outside</em> of the MacLeish property.</p>
+<div class="sourceCode" id="cb932"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb932-1"><a href="ch-spatial2.html#cb932-1" aria-hidden="true" tabindex="-1"></a>boundary_plot <span class="sc">+</span> </span>
+<span id="cb932-2"><a href="ch-spatial2.html#cb932-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(</span>
+<span id="cb932-3"><a href="ch-spatial2.html#cb932-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">st_intersection</span>(boundary, streams), </span>
+<span id="cb932-4"><a href="ch-spatial2.html#cb932-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, </span>
+<span id="cb932-5"><a href="ch-spatial2.html#cb932-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">1.5</span></span>
+<span id="cb932-6"><a href="ch-spatial2.html#cb932-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb932-7"><a href="ch-spatial2.html#cb932-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb932-8"><a href="ch-spatial2.html#cb932-8" aria-hidden="true" tabindex="-1"></a>boundary_plot <span class="sc">+</span></span>
+<span id="cb932-9"><a href="ch-spatial2.html#cb932-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(</span>
+<span id="cb932-10"><a href="ch-spatial2.html#cb932-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">st_difference</span>(streams, boundary), </span>
+<span id="cb932-11"><a href="ch-spatial2.html#cb932-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, </span>
+<span id="cb932-12"><a href="ch-spatial2.html#cb932-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">1.5</span></span>
+<span id="cb932-13"><a href="ch-spatial2.html#cb932-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="figure"><span id="fig:macleish-boundary-streams"></span>
+<img src="18-geospatialII_files/figure-html/macleish-boundary-streams-1.png" alt="Streams on the MacLeish property." width="49%" /><img src="18-geospatialII_files/figure-html/macleish-boundary-streams-2.png" alt="Streams on the MacLeish property." width="49%" />
+<p class="caption">
+Figure 18.4: Streams on the MacLeish property.
+</p>
+</div>
+<p>Different spatial geometries intersect in different ways. Above, we saw that the intersection of steams (which are <code>LINESTRING</code>s) and the boundary (which is a <code>POLYGON</code>) produced <code>LINESTRING</code> geometries. Below, we compute the intersection of the streams with the trails that exist at MacLeish. The trails are also <code>LINESTRING</code> geometries, and the intersection of two <code>LINESTRING</code> geometries produces a set of <code>POINT</code> geometries.</p>
+<div class="sourceCode" id="cb933"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb933-1"><a href="ch-spatial2.html#cb933-1" aria-hidden="true" tabindex="-1"></a>trails <span class="ot">&lt;-</span> macleish_layers <span class="sc">%&gt;%</span></span>
+<span id="cb933-2"><a href="ch-spatial2.html#cb933-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;trails&quot;</span>)</span>
+<span id="cb933-3"><a href="ch-spatial2.html#cb933-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb933-4"><a href="ch-spatial2.html#cb933-4" aria-hidden="true" tabindex="-1"></a><span class="fu">st_intersection</span>(trails, streams) </span></code></pre></div>
+<pre><code>Simple feature collection with 10 features and 3 fields
+Geometry type: GEOMETRY
+Dimension:     XY
+Bounding box:  xmin: -72.7 ymin: 42.4 xmax: -72.7 ymax: 42.5
+Geodetic CRS:  WGS 84
+                name  color Id                       geometry
+8        entry trail      -  3             POINT (-72.7 42.4)
+9       Eastern Loop   Blue  3             POINT (-72.7 42.5)
+13  Snowmobile Trail   &lt;NA&gt;  3 MULTIPOINT ((-72.7 42.5), (...
+15          Driveway   &lt;NA&gt;  3             POINT (-72.7 42.4)
+6       Western Loop    Red  3             POINT (-72.7 42.4)
+1    Porcupine Trail  White  3             POINT (-72.7 42.5)
+6.1     Western Loop    Red  3             POINT (-72.7 42.5)
+4   Vernal Pool Loop Yellow  3             POINT (-72.7 42.4)
+3   Poplar Hill Road   Road  3             POINT (-72.7 42.5)
+14  Snowmobile Trail   &lt;NA&gt;  3             POINT (-72.7 42.5)</code></pre>
+<p>Note that one of the features is a <code>MULTIPOINT</code>. Occasionally, a trail might intersect a stream in more than one place (resulting in a <code>MULTIPOINT</code> geometry). This occurs here, where the Snowmobile Trail intersects one of the stream segments in two different places. To clean this up, we first use the <code>st_cast()</code> function to convert everything to <code>MULTIPOINT</code>, and then cast everything to <code>POINT</code>. (We can’t go straight to <code>POINT</code> because we start with a mixture of <code>POINT</code>s and <code>MULTIPOINT</code>s.)</p>
+<div class="sourceCode" id="cb935"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb935-1"><a href="ch-spatial2.html#cb935-1" aria-hidden="true" tabindex="-1"></a>bridges <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(trails, streams) <span class="sc">%&gt;%</span></span>
+<span id="cb935-2"><a href="ch-spatial2.html#cb935-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_cast</span>(<span class="st">&quot;MULTIPOINT&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb935-3"><a href="ch-spatial2.html#cb935-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_cast</span>(<span class="st">&quot;POINT&quot;</span>)</span>
+<span id="cb935-4"><a href="ch-spatial2.html#cb935-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb935-5"><a href="ch-spatial2.html#cb935-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(bridges)</span></code></pre></div>
+<pre><code>[1] 11</code></pre>
+<p>Note that we now have 11 features instead of 10. In this case, the intersections of trails and streams has a natural interpretation: these must be bridges of some type! How else could the trail continue through the stream? Figure <a href="ch-spatial2.html#fig:macleish-bridges">18.5</a> shows the trails, the streams, and these “bridges” (some of the points are hard to see because they partially overlap).</p>
+<div class="sourceCode" id="cb937"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb937-1"><a href="ch-spatial2.html#cb937-1" aria-hidden="true" tabindex="-1"></a>boundary_plot <span class="sc">+</span> </span>
+<span id="cb937-2"><a href="ch-spatial2.html#cb937-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> trails, <span class="at">color =</span> <span class="st">&quot;brown&quot;</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span> </span>
+<span id="cb937-3"><a href="ch-spatial2.html#cb937-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> streams, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span> </span>
+<span id="cb937-4"><a href="ch-spatial2.html#cb937-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> bridges, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">&quot;yellow&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:macleish-bridges"></span>
+<img src="18-geospatialII_files/figure-html/macleish-bridges-1.png" alt="Bridges on the MacLeish property where trails and streams intersect." width="100%" />
+<p class="caption">
+Figure 18.5: Bridges on the MacLeish property where trails and streams intersect.
+</p>
+</div>
+</div>
+</div>
+<div id="geospatial-aggregation" class="section level2" number="18.2">
+<h2><span class="header-section-number">18.2</span> Geospatial aggregation</h2>
+<p>In Section <a href="ch-spatial2.html#sec:geometric-operations">18.1.2</a>, we saw how we can split <code>MULTIPOINT</code> geometries into <code>POINT</code> geometries. This was, in a sense, geospatial disaggregation. Here, we consider the perhaps more natural behavior of spatial aggregation.</p>
+<p>Just as we saw previously that the intersection of different geometries can produce different resulting geometries, so too will different geometries aggregate in different ways. For example, <code>POINT</code> geometries can be aggregated into <code>MULTIPOINT</code> geometries.</p>
+<p>The <strong>sf</strong> package implements spatial aggreation using the same <code>group_by()</code> and <code>summarize()</code> function that you learned in Chapter <a href="ch-dataI.html#ch:dataI">4</a>. The only difference is that we might have to specify <em>how</em> we want the spatial layers to be aggregated. The default aggregation method is <code>st_union()</code>, which makes sense for most purposes.</p>
+<p>Note that the <code>trails</code> layer is broken into segments: the Western Loop is comprised of three different features.</p>
+<div class="sourceCode" id="cb938"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb938-1"><a href="ch-spatial2.html#cb938-1" aria-hidden="true" tabindex="-1"></a>trails</span></code></pre></div>
+<pre><code>Simple feature collection with 15 features and 2 fields
+Geometry type: LINESTRING
+Dimension:     XY
+Bounding box:  xmin: -72.7 ymin: 42.4 xmax: -72.7 ymax: 42.5
+Geodetic CRS:  WGS 84
+First 10 features:
+               name  color                       geometry
+1   Porcupine Trail  White LINESTRING (-72.7 42.5, -72...
+2      Western Loop    Red LINESTRING (-72.7 42.5, -72...
+3  Poplar Hill Road   Road LINESTRING (-72.7 42.5, -72...
+4  Vernal Pool Loop Yellow LINESTRING (-72.7 42.4, -72...
+5      Eastern Loop   Blue LINESTRING (-72.7 42.5, -72...
+6      Western Loop    Red LINESTRING (-72.7 42.5, -72...
+7      Western Loop    Red LINESTRING (-72.7 42.4, -72...
+8       entry trail      - LINESTRING (-72.7 42.4, -72...
+9      Eastern Loop   Blue LINESTRING (-72.7 42.5, -72...
+10         Easy Out    Red LINESTRING (-72.7 42.5, -72...</code></pre>
+<p>Which trail is the longest? We know we can compute the length of the features with <code>st_length()</code>, but then we’d have to add up the lengths of each segment. Instead, we can aggregate the segments and do the length computation on the full trails.</p>
+<div class="sourceCode" id="cb940"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb940-1"><a href="ch-spatial2.html#cb940-1" aria-hidden="true" tabindex="-1"></a>trails_full <span class="ot">&lt;-</span> trails <span class="sc">%&gt;%</span></span>
+<span id="cb940-2"><a href="ch-spatial2.html#cb940-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name) <span class="sc">%&gt;%</span></span>
+<span id="cb940-3"><a href="ch-spatial2.html#cb940-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">num_segments =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb940-4"><a href="ch-spatial2.html#cb940-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">trail_length =</span> <span class="fu">st_length</span>(geometry)) <span class="sc">%&gt;%</span></span>
+<span id="cb940-5"><a href="ch-spatial2.html#cb940-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(trail_length))</span>
+<span id="cb940-6"><a href="ch-spatial2.html#cb940-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb940-7"><a href="ch-spatial2.html#cb940-7" aria-hidden="true" tabindex="-1"></a>trails_full</span></code></pre></div>
+<pre><code>Simple feature collection with 9 features and 3 fields
+Geometry type: GEOMETRY
+Dimension:     XY
+Bounding box:  xmin: -72.7 ymin: 42.4 xmax: -72.7 ymax: 42.5
+Geodetic CRS:  WGS 84
+# A tibble: 9 × 4
+  name      num_segments                               geometry trail_length
+  &lt;fct&gt;            &lt;int&gt;                         &lt;GEOMETRY [°]&gt;          [m]
+1 Snowmobi…            2 MULTILINESTRING ((-72.7 42.5, -72.7 4…        2576.
+2 Eastern …            2 MULTILINESTRING ((-72.7 42.5, -72.7 4…        1939.
+3 Western …            3 MULTILINESTRING ((-72.7 42.5, -72.7 4…        1350.
+4 Poplar H…            2 MULTILINESTRING ((-72.7 42.5, -72.7 4…        1040.
+5 Porcupin…            1 LINESTRING (-72.7 42.5, -72.7 42.5, -…         700.
+6 Vernal P…            1 LINESTRING (-72.7 42.4, -72.7 42.4, -…         360.
+7 entry tr…            1 LINESTRING (-72.7 42.4, -72.7 42.4, -…         208.
+8 Driveway             1 LINESTRING (-72.7 42.4, -72.7 42.4, -…         173.
+9 Easy Out             2 MULTILINESTRING ((-72.7 42.5, -72.7 4…         136.</code></pre>
+</div>
+<div id="geospatial-joins" class="section level2" number="18.3">
+<h2><span class="header-section-number">18.3</span> Geospatial joins</h2>
+<p>In Section <a href="ch-spatial.html#sec:sf-inner-join">17.4.3</a>, we show how the <code>inner_join()</code> function can be used to merge geospatial data with additional data. This works because the geospatial data was stored in an <strong>sf</strong> object, which is also a data frame. In that case, since the second data frame was not spatial, by necessity the key on which the join was performed was a non-spatial attribute.</p>
+<p>A geospatial join is a fundamentally different type of operation, in which <em>both</em> data frames are geospatial, and the joining key is a geospatial attribute. This operation is implemented by the <code>st_join()</code> function, which behaves similarly to the <code>inner_join()</code> function, but with some additional complexities due to the different nature of its task.</p>
+<p>To illustrate this, we consider the question of in which type of forest the two campsites at MacLeish lie (see Figure <a href="ch-spatial2.html#fig:macleish-campsites">18.6</a>).</p>
+<div class="sourceCode" id="cb942"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb942-1"><a href="ch-spatial2.html#cb942-1" aria-hidden="true" tabindex="-1"></a>forests <span class="ot">&lt;-</span> macleish_layers <span class="sc">%&gt;%</span></span>
+<span id="cb942-2"><a href="ch-spatial2.html#cb942-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;forests&quot;</span>)</span>
+<span id="cb942-3"><a href="ch-spatial2.html#cb942-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb942-4"><a href="ch-spatial2.html#cb942-4" aria-hidden="true" tabindex="-1"></a>camp_sites <span class="ot">&lt;-</span> macleish_layers <span class="sc">%&gt;%</span></span>
+<span id="cb942-5"><a href="ch-spatial2.html#cb942-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;camp_sites&quot;</span>)</span>
+<span id="cb942-6"><a href="ch-spatial2.html#cb942-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb942-7"><a href="ch-spatial2.html#cb942-7" aria-hidden="true" tabindex="-1"></a>boundary_plot <span class="sc">+</span> </span>
+<span id="cb942-8"><a href="ch-spatial2.html#cb942-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> forests, <span class="at">fill =</span> <span class="st">&quot;green&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb942-9"><a href="ch-spatial2.html#cb942-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> camp_sites, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span> </span>
+<span id="cb942-10"><a href="ch-spatial2.html#cb942-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_label</span>(</span>
+<span id="cb942-11"><a href="ch-spatial2.html#cb942-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> camp_sites, <span class="fu">aes</span>(<span class="at">label =</span> name), </span>
+<span id="cb942-12"><a href="ch-spatial2.html#cb942-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">nudge_y =</span> <span class="fl">0.001</span></span>
+<span id="cb942-13"><a href="ch-spatial2.html#cb942-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="figure"><span id="fig:macleish-campsites"></span>
+<img src="18-geospatialII_files/figure-html/macleish-campsites-1.png" alt="The MacLeish property has two campsites and many different types of forest." width="100%" />
+<p class="caption">
+Figure 18.6: The MacLeish property has two campsites and many different types of forest.
+</p>
+</div>
+<p>It is important to note that this question is inherently spatial. There simply is no variable between the <code>forests</code> layer and the <code>camp_sites</code> layer that would allow you to connect them other than their geospatial location.</p>
+<p>Like <code>inner_join()</code>, the <code>st_join()</code> function takes two data frames as its first two arguments. There is no <code>st_left_join()</code> function, but instead <code>st_join()</code> takes a <code>left</code> argument, that is set to <code>TRUE</code> by default. Finally, the <code>join</code> argument takes a predicate function that determines the criteria for whether the spatial features match. The default is <code>st_intersects()</code>, but here we employ <code>st_within()</code>, since we want the <code>POINT</code> geometries of the camp sites to lie <em>within</em> the <code>POLYGON</code> geometries of the forests.</p>
+<div class="sourceCode" id="cb943"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb943-1"><a href="ch-spatial2.html#cb943-1" aria-hidden="true" tabindex="-1"></a><span class="fu">st_join</span>(camp_sites, forests, <span class="at">left =</span> <span class="cn">FALSE</span>, <span class="at">join =</span> st_within) <span class="sc">%&gt;%</span></span>
+<span id="cb943-2"><a href="ch-spatial2.html#cb943-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, type)</span></code></pre></div>
+<pre><code>Simple feature collection with 2 features and 2 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: -72.7 ymin: 42.5 xmax: -72.7 ymax: 42.5
+Geodetic CRS:  WGS 84
+# A tibble: 2 × 3
+  name            type                            geometry
+  &lt;chr&gt;           &lt;fct&gt;                        &lt;POINT [°]&gt;
+1 Group Campsite  Old Field White Pine Forest (-72.7 42.5)
+2 Remote Campsite Sugar Maple Forest          (-72.7 42.5)</code></pre>
+<p>We see that the Group Campsite is in a <a href="https://en.wikipedia.org/w/index.php?search=Eastern%20White%20Pine"><em>Eastern White Pine</em></a> forest, while the Remote Campsite is in a <a href="https://en.wikipedia.org/w/index.php?search=Sugar%20Maple"><em>Sugar Maple</em></a> forest.</p>
+</div>
+<div id="extended-example-trail-elevations-at-macleish" class="section level2" number="18.4">
+<h2><span class="header-section-number">18.4</span> Extended example: Trail elevations at MacLeish</h2>
+<p>Many hiking trails provide trail elevation maps (or <a href="http://downloads.esri.com/learnarcgis/educators/elevation-profiles.pdf">elevation profiles</a>) that depict changes in elevation along the trail. These maps can help hikers understand the interplay between the uphill and downhill segments of the trail and where they occur along their hike.</p>
+<p>More formally, various trail railing systems exist to numerically score the difficulty of a hike. <a href="https://en.wikipedia.org/w/index.php?search=Shenandoah%20National%20Park"><em>Shenandoah National Park</em></a> uses <a href="https://www.nps.gov/shen/planyourvisit/how-to-determine-hiking-difficulty.htm">this simple trail rating system</a>:</p>
+<p><span class="math display">\[
+rating = \sqrt{gain \cdot 2 \cdot distance}
+\]</span>
+A rating below 50 corresponds to the easiest class of hike.</p>
+<p>In this example, we will construct an elevation profile and compute the trail rating for the longest trail at MacLeish.
+The <strong>macleish</strong> package contains elevation contours that are 30 feet apart. These are relatively sparse, but they will suffice for our purposes.</p>
+<div class="sourceCode" id="cb945"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb945-1"><a href="ch-spatial2.html#cb945-1" aria-hidden="true" tabindex="-1"></a>elevations <span class="ot">&lt;-</span> macleish_layers <span class="sc">%&gt;%</span></span>
+<span id="cb945-2"><a href="ch-spatial2.html#cb945-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;elevation&quot;</span>)</span></code></pre></div>
+<p>First, we leverage the spatial aggregation work that we did previously to isolate the longest trail.</p>
+<div class="sourceCode" id="cb946"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb946-1"><a href="ch-spatial2.html#cb946-1" aria-hidden="true" tabindex="-1"></a>longest_trail <span class="ot">&lt;-</span> trails_full <span class="sc">%&gt;%</span></span>
+<span id="cb946-2"><a href="ch-spatial2.html#cb946-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">1</span>)</span>
+<span id="cb946-3"><a href="ch-spatial2.html#cb946-3" aria-hidden="true" tabindex="-1"></a>longest_trail</span></code></pre></div>
+<pre><code>Simple feature collection with 1 feature and 3 fields
+Geometry type: MULTILINESTRING
+Dimension:     XY
+Bounding box:  xmin: -72.7 ymin: 42.4 xmax: -72.7 ymax: 42.5
+Geodetic CRS:  WGS 84
+# A tibble: 1 × 4
+  name      num_segments                               geometry trail_length
+  &lt;fct&gt;            &lt;int&gt;                  &lt;MULTILINESTRING [°]&gt;          [m]
+1 Snowmobi…            2 ((-72.7 42.5, -72.7 42.5, -72.7 42.5,…        2576.</code></pre>
+<p>Next, we compute the geospatial intersection between the trails and the elevation contours, both of which are <code>LINESTRING</code> geometries. This results in <code>POINT</code>s, but just as we saw above, there are several places where the trail crosses the same contour line more than once. If you think about walking up a hill and then back down the other side, this should make sense (see Figure <a href="ch-spatial2.html#fig:macleish-snowmobile-elevation">18.7</a>). These multiple intersections result in <code>MULTIPOINT</code> geometries. We unravel these just as we did before: by casting everything to <code>MULTIPOINT</code> and then casting everything back to <code>POINT</code>.</p>
+<div class="sourceCode" id="cb948"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb948-1"><a href="ch-spatial2.html#cb948-1" aria-hidden="true" tabindex="-1"></a>trail_elevations <span class="ot">&lt;-</span> longest_trail <span class="sc">%&gt;%</span></span>
+<span id="cb948-2"><a href="ch-spatial2.html#cb948-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_intersection</span>(elevations) <span class="sc">%&gt;%</span></span>
+<span id="cb948-3"><a href="ch-spatial2.html#cb948-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_cast</span>(<span class="st">&quot;MULTIPOINT&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb948-4"><a href="ch-spatial2.html#cb948-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_cast</span>(<span class="st">&quot;POINT&quot;</span>)</span></code></pre></div>
+<p>Figure <a href="ch-spatial2.html#fig:macleish-snowmobile-elevation">18.7</a> reveals that the Snowmobile trail starts near the southernmost edge of the property at about 750 feet above sea level, snakes along a ridge at 780 feet, before climbing to the local peak at 870 feet, and finally descending the back side of the hill near the northern border of the property.</p>
+<div class="sourceCode" id="cb949"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb949-1"><a href="ch-spatial2.html#cb949-1" aria-hidden="true" tabindex="-1"></a>boundary_plot <span class="sc">+</span></span>
+<span id="cb949-2"><a href="ch-spatial2.html#cb949-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> elevations, <span class="at">color =</span> <span class="st">&quot;dark gray&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb949-3"><a href="ch-spatial2.html#cb949-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> longest_trail, <span class="at">color =</span> <span class="st">&quot;brown&quot;</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span> </span>
+<span id="cb949-4"><a href="ch-spatial2.html#cb949-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> trail_elevations, <span class="at">fill =</span> <span class="st">&quot;yellow&quot;</span>, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb949-5"><a href="ch-spatial2.html#cb949-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_label</span>(</span>
+<span id="cb949-6"><a href="ch-spatial2.html#cb949-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> trail_elevations, </span>
+<span id="cb949-7"><a href="ch-spatial2.html#cb949-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> CONTOUR_FT), </span>
+<span id="cb949-8"><a href="ch-spatial2.html#cb949-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="st">&quot;right&quot;</span>, </span>
+<span id="cb949-9"><a href="ch-spatial2.html#cb949-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">2.5</span>,</span>
+<span id="cb949-10"><a href="ch-spatial2.html#cb949-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">nudge_x =</span> <span class="sc">-</span><span class="fl">0.0005</span></span>
+<span id="cb949-11"><a href="ch-spatial2.html#cb949-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="figure"><span id="fig:macleish-snowmobile-elevation"></span>
+<img src="18-geospatialII_files/figure-html/macleish-snowmobile-elevation-1.png" alt="The Snowmobile Trail at MacLeish, with contour lines depicted. " width="100%" />
+<p class="caption">
+Figure 18.7: The Snowmobile Trail at MacLeish, with contour lines depicted.
+</p>
+</div>
+<p>Finally, we need to put the features in order, so that we can compute the distance from the start of the trail. Luckily, in this case the trail goes directly south to north, so that we can use the latitude coordinate as an ordering variable.</p>
+<p>In this case, we use <code>st_distance()</code> to compute the geodesic distances between the elevation contours.
+This function returns a <span class="math inline">\(n \times n\)</span> <code>matrix</code> with all of the pairwise distances, but since we only want the distances from the southernmost point (which is the first element), we only select the first column of the resulting matrix.</p>
+<p>To compute the actual distances (i.e., along the trail) we would have to split the trail into pieces.
+We leave this as an exercise.</p>
+<div class="sourceCode" id="cb950"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb950-1"><a href="ch-spatial2.html#cb950-1" aria-hidden="true" tabindex="-1"></a>trail_elevations <span class="ot">&lt;-</span> trail_elevations <span class="sc">%&gt;%</span></span>
+<span id="cb950-2"><a href="ch-spatial2.html#cb950-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lat =</span> <span class="fu">st_coordinates</span>(geometry)[, <span class="dv">2</span>]) <span class="sc">%&gt;%</span></span>
+<span id="cb950-3"><a href="ch-spatial2.html#cb950-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(lat) <span class="sc">%&gt;%</span></span>
+<span id="cb950-4"><a href="ch-spatial2.html#cb950-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">distance_from_start =</span> <span class="fu">as.numeric</span>(<span class="fu">st_distance</span>(geometry)[, <span class="dv">1</span>]))</span></code></pre></div>
+<p>Figure <a href="ch-spatial2.html#fig:snowmobile-trail-map">18.8</a> shows our elevation profile for the Snowmobile trail.</p>
+<div class="sourceCode" id="cb951"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb951-1"><a href="ch-spatial2.html#cb951-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(trail_elevations, <span class="fu">aes</span>(<span class="at">x =</span> distance_from_start)) <span class="sc">+</span> </span>
+<span id="cb951-2"><a href="ch-spatial2.html#cb951-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymax =</span> CONTOUR_FT, <span class="at">ymin =</span> <span class="dv">750</span>)) <span class="sc">+</span></span>
+<span id="cb951-3"><a href="ch-spatial2.html#cb951-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">&quot;Elevation (feet above sea level)&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb951-4"><a href="ch-spatial2.html#cb951-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">&quot;Geodesic distance from trail head (meters)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb951-5"><a href="ch-spatial2.html#cb951-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb951-6"><a href="ch-spatial2.html#cb951-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Trail elevation map: Snowmobile trail&quot;</span>,</span>
+<span id="cb951-7"><a href="ch-spatial2.html#cb951-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Whately, MA&quot;</span>,</span>
+<span id="cb951-8"><a href="ch-spatial2.html#cb951-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;Source: macleish package for R&quot;</span></span>
+<span id="cb951-9"><a href="ch-spatial2.html#cb951-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="figure"><span id="fig:snowmobile-trail-map"></span>
+<img src="18-geospatialII_files/figure-html/snowmobile-trail-map-1.png" alt="Trail elevation map for the Snowmobile trail at MacLeish." width="100%" />
+<p class="caption">
+Figure 18.8: Trail elevation map for the Snowmobile trail at MacLeish.
+</p>
+</div>
+<p>With a rating under 20, this trail rates as one of the easiest according to the Shenandoah system.</p>
+<div class="sourceCode" id="cb952"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb952-1"><a href="ch-spatial2.html#cb952-1" aria-hidden="true" tabindex="-1"></a>trail_elevations <span class="sc">%&gt;%</span></span>
+<span id="cb952-2"><a href="ch-spatial2.html#cb952-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb952-3"><a href="ch-spatial2.html#cb952-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">gain =</span> <span class="fu">max</span>(CONTOUR_FT) <span class="sc">-</span> <span class="fu">min</span>(CONTOUR_FT),</span>
+<span id="cb952-4"><a href="ch-spatial2.html#cb952-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">trail_length =</span> <span class="fu">max</span>(units<span class="sc">::</span><span class="fu">set_units</span>(trail_length, <span class="st">&quot;miles&quot;</span>)),</span>
+<span id="cb952-5"><a href="ch-spatial2.html#cb952-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">rating =</span> <span class="fu">sqrt</span>(gain <span class="sc">*</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">as.numeric</span>(trail_length))</span>
+<span id="cb952-6"><a href="ch-spatial2.html#cb952-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>Simple feature collection with 1 feature and 3 fields
+Geometry type: MULTIPOINT
+Dimension:     XY
+Bounding box:  xmin: -72.7 ymin: 42.4 xmax: -72.7 ymax: 42.5
+Geodetic CRS:  WGS 84
+# A tibble: 1 × 4
+   gain trail_length rating                                         geometry
+  &lt;dbl&gt;      [miles]  &lt;dbl&gt;                                 &lt;MULTIPOINT [°]&gt;
+1   120         1.60   19.6 ((-72.7 42.4), (-72.7 42.5), (-72.7 42.5), (-72…</code></pre>
+</div>
+<div id="geospatialI-further" class="section level2" number="18.5">
+<h2><span class="header-section-number">18.5</span> Further resources</h2>
+<p><span class="citation">Lovelace, Nowosad, and Muenchow (2019)</span> and <span class="citation">Engel (2019)</span> were both helpful in updating this material to take advantage of <strong>sf</strong>.</p>
+</div>
+<div id="geospatialII-exercises" class="section level2" number="18.6">
+<h2><span class="header-section-number">18.6</span> Exercises</h2>
+<p><strong>Problem 1 (Medium)</strong>: The <code>Violations</code> data frame in the <code>mdsr</code> package contains information on violations noted in Board of Health inspections of New York City restaurants. These data contain spatial information in the form of addresses and zip codes.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Use the <code>geocode</code> function in <code>tidygeocoder</code> to obtain spatial coordinates for these restaurants.</p></li>
+<li><p>Using the spatial coordinates you obtained in the previous exercise, create an informative static map using <code>ggspatial</code> that illustrates the nature and extent of restaurant violations in New York City.</p></li>
+<li><p>Using the spatial coordinates you obtained in the previous exercises, create an informative interactive map using <code>leaflet</code> that illustrates the nature and extent of restaurant violations in New York City.</p></li>
+</ol>
+<p><strong>Problem 2 (Medium)</strong>:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Use the spatial data in the <code>macleish</code> package and <code>ggspatial</code> to make an informative static map of the MacLeish Field Station property.</p></li>
+<li><p>Use the spatial data in the <code>macleish</code> package and <code>leaflet</code> to make an informative interactive map of the MacLeish Field Station property.</p></li>
+</ol>
+<p><strong>Problem 3 (Hard)</strong>: GIS data in the form of shapefiles is all over the Web. Government agencies are particularly good sources for these. The following code downloads bike trail data in Massachusetts from MassGIS. Use <code>bike_trails</code> to answer the following questions:</p>
+<div class="sourceCode" id="cb954"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb954-1"><a href="ch-spatial2.html#cb954-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(<span class="st">&quot;./biketrails_arc.zip&quot;</span>)) {</span>
+<span id="cb954-2"><a href="ch-spatial2.html#cb954-2" aria-hidden="true" tabindex="-1"></a>  part1 <span class="ot">&lt;-</span> <span class="st">&quot;http://download.massgis.digital.mass.gov/&quot;</span></span>
+<span id="cb954-3"><a href="ch-spatial2.html#cb954-3" aria-hidden="true" tabindex="-1"></a>  part2 <span class="ot">&lt;-</span> <span class="st">&quot;shapefiles/state/biketrails_arc.zip&quot;</span></span>
+<span id="cb954-4"><a href="ch-spatial2.html#cb954-4" aria-hidden="true" tabindex="-1"></a>  url <span class="ot">&lt;-</span> <span class="fu">paste</span>(part1, part2, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb954-5"><a href="ch-spatial2.html#cb954-5" aria-hidden="true" tabindex="-1"></a>  local_file <span class="ot">&lt;-</span> <span class="fu">basename</span>(url)</span>
+<span id="cb954-6"><a href="ch-spatial2.html#cb954-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">download.file</span>(url, <span class="at">destfile =</span> local_file)</span>
+<span id="cb954-7"><a href="ch-spatial2.html#cb954-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unzip</span>(local_file, <span class="at">exdir =</span> <span class="st">&quot;./biketrails/&quot;</span>)</span>
+<span id="cb954-8"><a href="ch-spatial2.html#cb954-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb955"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb955-1"><a href="ch-spatial2.html#cb955-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb955-2"><a href="ch-spatial2.html#cb955-2" aria-hidden="true" tabindex="-1"></a>dsn <span class="ot">&lt;-</span> <span class="fu">path.expand</span>(<span class="st">&quot;./biketrails/biketrails_arc&quot;</span>)</span>
+<span id="cb955-3"><a href="ch-spatial2.html#cb955-3" aria-hidden="true" tabindex="-1"></a><span class="fu">st_layers</span>(dsn)</span></code></pre></div>
+<pre><code>Driver: ESRI Shapefile 
+Available layers:
+      layer_name geometry_type features fields
+1 biketrails_arc   Line String      272     13</code></pre>
+<div class="sourceCode" id="cb957"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb957-1"><a href="ch-spatial2.html#cb957-1" aria-hidden="true" tabindex="-1"></a>bike_trails <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(dsn)</span></code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li><p>How many distinct bike trail segments are there?</p></li>
+<li><p>What is the longest individual bike trail segment?</p></li>
+<li><p>How many segments are associated with the Norwottuck Rail Trail?</p></li>
+<li><p>Among all of the named trails (which may have multiple features), which one has the longest total length?</p></li>
+<li><p>The bike trails are in a <a href="https://en.wikipedia.org/wiki/Lambert_conformal_conic_projection">Lambert conformal conic projection</a>. Note that the units of the coordinates are very different from lat/long. In order to get these data onto our leaflet map, we need to re-project them. Convert the bike trails to EPSG:4326, and create a leaflet map.</p></li>
+<li><p>Color-code the bike trails based on their length, and add an informative legend to the plot.</p></li>
+</ol>
+<p><strong>Problem 4 (Hard)</strong>: The MacLeish snowmobile trail map generated in the book is quite rudimentary.
+Generate your own map that improves upon the aesthetics and information content.</p>
+</div>
+<div id="geospatialII-online-exercises" class="section level2" number="18.7">
+<h2><span class="header-section-number">18.7</span> Supplementary exercises</h2>
+<p>Available at <a href="https://mdsr-book.github.io/mdsr2e/geospatial-II.html#geospatialII-online-exercises" class="uri">https://mdsr-book.github.io/mdsr2e/geospatial-II.html#geospatialII-online-exercises</a></p>
+<p>No exercises found</p>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="36">
+<li id="fn36"><p>The Five College Consortium consists of Amherst, Hampshire, Mount Holyoke, and Smith Colleges, as well as the University of Massachusetts-Amherst.<a href="ch-spatial2.html#fnref36" class="footnote-back">↩︎</a></p></li>
+<li id="fn37"><p>Google Maps requires an API key backed up by either a credit card or credits requested by an instructor.<a href="ch-spatial2.html#fnref37" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch-spatial.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch-text.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="book_assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/18-geospatialII.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["mdsr2e.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

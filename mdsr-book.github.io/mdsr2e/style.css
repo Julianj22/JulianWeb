@@ -1,0 +1,42 @@
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rmdcaution, .rmdimportant, .rmdnote, .rmdtip, .rmdwarning {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  background: #f5f5f5 5px center/3em no-repeat;
+}
+.rmdcaution {
+  background-image: url("gfx/caution.png");
+}
+.rmdimportant {
+  background-image: url("gfx/important.png");
+}
+.rmdnote {
+  background-image: url("gfx/note.png");
+}
+.rmdtip {
+  background-image: url("gfx/tip.png");
+  border-left: solid 10px #ab3241;
+}
+.rmdwarning {
+  background-image: url("gfx/warning.png");
+}

@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 Data science ethics | Modern Data Science with R</title>
+  <meta name="description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 Data science ethics | Modern Data Science with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://mdsr-book.github.io/mdsr2e/" />
+  <meta property="og:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+  <meta property="og:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="github-repo" content="mdsr-book/mdsr2e" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 Data science ethics | Modern Data Science with R" />
+  
+  <meta name="twitter:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="twitter:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+
+<meta name="author" content="Benjamin S. Baumer, Daniel T. Kaplan, and Nicholas J. Horton" />
+
+
+<meta name="date" content="2021-07-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch-iteration.html"/>
+<link rel="next" href="ch-foundations.html"/>
+<script src="book_assets/header-attrs-2.9/header-attrs.js"></script>
+<script src="book_assets/jquery-3.5.1/jquery.min.js"></script>
+<link href="book_assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="book_assets/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="book_assets/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="book_assets/kePrint-0.0.1/kePrint.js"></script>
+<link href="book_assets/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="book_assets/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="book_assets/bsTable-3.3.7/bootstrapTable.js"></script>
+<script src="book_assets/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="book_assets/plotly-binding-4.9.4.1/plotly.js"></script>
+<script src="book_assets/typedarray-0.1/typedarray.min.js"></script>
+<link href="book_assets/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="book_assets/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="book_assets/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="book_assets/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<link href="book_assets/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="book_assets/datatables-binding-0.18/datatables.js"></script>
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="book_assets/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="book_assets/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="book_assets/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="book_assets/dygraphs-1.1.1/shapes.js"></script>
+<script src="book_assets/moment-2.8.4/moment.js"></script>
+<script src="book_assets/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="book_assets/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="book_assets/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<script src="book_assets/d3-3.5.3/d3.min.js"></script>
+<link href="book_assets/colorbrewer-1/colorbrewer.css" rel="stylesheet" />
+<script src="book_assets/colorbrewer-1/colorbrewer.js"></script>
+<link href="book_assets/streamgraph-1/streamgraph.css" rel="stylesheet" />
+<script src="book_assets/streamgraph-binding-0.9.0/streamgraph.js"></script>
+<link href="book_assets/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-1.3.1/leaflet.js"></script>
+<link href="book_assets/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="book_assets/proj4-2.6.2/proj4.min.js"></script>
+<script src="book_assets/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="book_assets/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-binding-2.0.4.1/leaflet.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html">Modern Data Science with R, 2nd edition</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#nd-edition"><i class="fa fa-check"></i>2nd edition</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#note-about-erroneous-black-and-white-printing"><i class="fa fa-check"></i>Note about erroneous black-and-white printing!</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#cover"><i class="fa fa-check"></i>Cover</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#st-edition"><i class="fa fa-check"></i>1st edition</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#copyright"><i class="fa fa-check"></i>Copyright</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#background-and-motivation"><i class="fa fa-check"></i>Background and motivation</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#intended-audience"><i class="fa fa-check"></i>Intended audience</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-features-of-this-book"><i class="fa fa-check"></i>Key features of this book</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#focus-on-case-studies-and-extended-examples"><i class="fa fa-check"></i>Focus on case studies and extended examples</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#structure"><i class="fa fa-check"></i>Structure</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#supporting-materials"><i class="fa fa-check"></i>Supporting materials</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#changes-in-the-second-edition"><i class="fa fa-check"></i>Changes in the second edition</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-role-of-technology"><i class="fa fa-check"></i>Key role of technology</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#how-to-use-this-book"><i class="fa fa-check"></i>How to use this book</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="part"><span><b>I Part I: Introduction to Data Science</b></span></li>
+<li class="chapter" data-level="1" data-path="ch-prologue.html"><a href="ch-prologue.html"><i class="fa fa-check"></i><b>1</b> Prologue: Why data science?</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="ch-prologue.html"><a href="ch-prologue.html#what-is-data-science"><i class="fa fa-check"></i><b>1.1</b> What is data science?</a></li>
+<li class="chapter" data-level="1.2" data-path="ch-prologue.html"><a href="ch-prologue.html#case-study-the-evolution-of-sabermetrics"><i class="fa fa-check"></i><b>1.2</b> Case study: The evolution of sabermetrics</a></li>
+<li class="chapter" data-level="1.3" data-path="ch-prologue.html"><a href="ch-prologue.html#datasets"><i class="fa fa-check"></i><b>1.3</b> Datasets</a></li>
+<li class="chapter" data-level="1.4" data-path="ch-prologue.html"><a href="ch-prologue.html#intro-further"><i class="fa fa-check"></i><b>1.4</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch-vizI.html"><a href="ch-vizI.html"><i class="fa fa-check"></i><b>2</b> Data visualization</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#the-2012-federal-election-cycle"><i class="fa fa-check"></i><b>2.1</b> The 2012 federal election cycle</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="ch-vizI.html"><a href="ch-vizI.html#are-these-two-groups-different"><i class="fa fa-check"></i><b>2.1.1</b> Are these two groups different?</a></li>
+<li class="chapter" data-level="2.1.2" data-path="ch-vizI.html"><a href="ch-vizI.html#graphing-variation"><i class="fa fa-check"></i><b>2.1.2</b> Graphing variation</a></li>
+<li class="chapter" data-level="2.1.3" data-path="ch-vizI.html"><a href="ch-vizI.html#examining-relationships-among-variables"><i class="fa fa-check"></i><b>2.1.3</b> Examining relationships among variables</a></li>
+<li class="chapter" data-level="2.1.4" data-path="ch-vizI.html"><a href="ch-vizI.html#networks"><i class="fa fa-check"></i><b>2.1.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#composing-data-graphics"><i class="fa fa-check"></i><b>2.2</b> Composing data graphics</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#a-taxonomy-for-data-graphics"><i class="fa fa-check"></i><b>2.2.1</b> A taxonomy for data graphics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#sec:color"><i class="fa fa-check"></i><b>2.2.2</b> Color</a></li>
+<li class="chapter" data-level="2.2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#dissecting-data-graphics"><i class="fa fa-check"></i><b>2.2.3</b> Dissecting data graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#importance-of-data-graphics-challenger"><i class="fa fa-check"></i><b>2.3</b> Importance of data graphics: <em>Challenger</em></a></li>
+<li class="chapter" data-level="2.4" data-path="ch-vizI.html"><a href="ch-vizI.html#creating-effective-presentations"><i class="fa fa-check"></i><b>2.4</b> Creating effective presentations</a></li>
+<li class="chapter" data-level="2.5" data-path="ch-vizI.html"><a href="ch-vizI.html#the-wider-world-of-data-visualization"><i class="fa fa-check"></i><b>2.5</b> The wider world of data visualization</a></li>
+<li class="chapter" data-level="2.6" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-further"><i class="fa fa-check"></i><b>2.6</b> Further resources</a></li>
+<li class="chapter" data-level="2.7" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-exercises"><i class="fa fa-check"></i><b>2.7</b> Exercises</a></li>
+<li class="chapter" data-level="2.8" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-online-exercises"><i class="fa fa-check"></i><b>2.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch-vizII.html"><a href="ch-vizII.html"><i class="fa fa-check"></i><b>3</b> A grammar for graphics</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#a-grammar-for-data-graphics"><i class="fa fa-check"></i><b>3.1</b> A grammar for data graphics</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="ch-vizII.html"><a href="ch-vizII.html#aesthetics"><i class="fa fa-check"></i><b>3.1.1</b> Aesthetics</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ch-vizII.html"><a href="ch-vizII.html#scales"><i class="fa fa-check"></i><b>3.1.2</b> Scales</a></li>
+<li class="chapter" data-level="3.1.3" data-path="ch-vizII.html"><a href="ch-vizII.html#guides"><i class="fa fa-check"></i><b>3.1.3</b> Guides</a></li>
+<li class="chapter" data-level="3.1.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:facet"><i class="fa fa-check"></i><b>3.1.4</b> Facets</a></li>
+<li class="chapter" data-level="3.1.5" data-path="ch-vizII.html"><a href="ch-vizII.html#layers"><i class="fa fa-check"></i><b>3.1.5</b> Layers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:canonical"><i class="fa fa-check"></i><b>3.2</b> Canonical data graphics in (ref:R)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch-vizII.html"><a href="ch-vizII.html#univariate-displays"><i class="fa fa-check"></i><b>3.2.1</b> Univariate displays</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch-vizII.html"><a href="ch-vizII.html#multivariate-displays"><i class="fa fa-check"></i><b>3.2.2</b> Multivariate displays</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch-vizII.html"><a href="ch-vizII.html#maps"><i class="fa fa-check"></i><b>3.2.3</b> Maps</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:datanetwork"><i class="fa fa-check"></i><b>3.2.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:babynames"><i class="fa fa-check"></i><b>3.3</b> Extended example: Historical baby names</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#percentage-of-people-alive-today"><i class="fa fa-check"></i><b>3.3.1</b> Percentage of people alive today</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#most-common-names-for-women"><i class="fa fa-check"></i><b>3.3.2</b> Most common names for women</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-further"><i class="fa fa-check"></i><b>3.4</b> Further resources</a></li>
+<li class="chapter" data-level="3.5" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-exercises"><i class="fa fa-check"></i><b>3.5</b> Exercises</a></li>
+<li class="chapter" data-level="3.6" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-online-exercises"><i class="fa fa-check"></i><b>3.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch-dataI.html"><a href="ch-dataI.html"><i class="fa fa-check"></i><b>4</b> Data wrangling on one table</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:five_idioms"><i class="fa fa-check"></i><b>4.1</b> A grammar for data wrangling</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:pipe"><i class="fa fa-check"></i><b>4.1.1</b> <code>select()</code> and <code>filter()</code></a></li>
+<li class="chapter" data-level="4.1.2" data-path="ch-dataI.html"><a href="ch-dataI.html#mutate-and-rename"><i class="fa fa-check"></i><b>4.1.2</b> <code>mutate()</code> and <code>rename()</code></a></li>
+<li class="chapter" data-level="4.1.3" data-path="ch-dataI.html"><a href="ch-dataI.html#arrange"><i class="fa fa-check"></i><b>4.1.3</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="4.1.4" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:summarize"><i class="fa fa-check"></i><b>4.1.4</b> <code>summarize()</code> with <code>group_by()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:mets"><i class="fa fa-check"></i><b>4.2</b> Extended example: Ben’s time with the Mets</a></li>
+<li class="chapter" data-level="4.3" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-further"><i class="fa fa-check"></i><b>4.3</b> Further resources</a></li>
+<li class="chapter" data-level="4.4" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-exercises"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+<li class="chapter" data-level="4.5" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-online-exercises"><i class="fa fa-check"></i><b>4.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch-join.html"><a href="ch-join.html"><i class="fa fa-check"></i><b>5</b> Data wrangling on multiple tables</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch-join.html"><a href="ch-join.html#inner_join"><i class="fa fa-check"></i><b>5.1</b> <code>inner_join()</code></a></li>
+<li class="chapter" data-level="5.2" data-path="ch-join.html"><a href="ch-join.html#left_join"><i class="fa fa-check"></i><b>5.2</b> <code>left_join()</code></a></li>
+<li class="chapter" data-level="5.3" data-path="ch-join.html"><a href="ch-join.html#extended-example-manny-ramirez"><i class="fa fa-check"></i><b>5.3</b> Extended example: Manny Ramirez</a></li>
+<li class="chapter" data-level="5.4" data-path="ch-join.html"><a href="ch-join.html#joins-further"><i class="fa fa-check"></i><b>5.4</b> Further resources</a></li>
+<li class="chapter" data-level="5.5" data-path="ch-join.html"><a href="ch-join.html#join-exercises"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
+<li class="chapter" data-level="5.6" data-path="ch-join.html"><a href="ch-join.html#join-online-exercises"><i class="fa fa-check"></i><b>5.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch-dataII.html"><a href="ch-dataII.html"><i class="fa fa-check"></i><b>6</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch-dataII.html"><a href="ch-dataII.html#tidy-data"><i class="fa fa-check"></i><b>6.1</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="ch-dataII.html"><a href="ch-dataII.html#motivation"><i class="fa fa-check"></i><b>6.1.1</b> Motivation</a></li>
+<li class="chapter" data-level="6.1.2" data-path="ch-dataII.html"><a href="ch-dataII.html#what-are-tidy-data"><i class="fa fa-check"></i><b>6.1.2</b> What are tidy data?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="ch-dataII.html"><a href="ch-dataII.html#reshaping-data"><i class="fa fa-check"></i><b>6.2</b> Reshaping data</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-verbs-for-converting-wide-to-narrow-and-vice-versa"><i class="fa fa-check"></i><b>6.2.1</b> Data verbs for converting wide to narrow and <em>vice versa</em></a></li>
+<li class="chapter" data-level="6.2.2" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-wider"><i class="fa fa-check"></i><b>6.2.2</b> Pivoting wider</a></li>
+<li class="chapter" data-level="6.2.3" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-longer"><i class="fa fa-check"></i><b>6.2.3</b> Pivoting longer</a></li>
+<li class="chapter" data-level="6.2.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nest"><i class="fa fa-check"></i><b>6.2.4</b> List-columns</a></li>
+<li class="chapter" data-level="6.2.5" data-path="ch-dataII.html"><a href="ch-dataII.html#example-gender-neutral-names"><i class="fa fa-check"></i><b>6.2.5</b> Example: Gender-neutral names</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:naming"><i class="fa fa-check"></i><b>6.3</b> Naming conventions</a></li>
+<li class="chapter" data-level="6.4" data-path="ch-dataII.html"><a href="ch-dataII.html#data-intake"><i class="fa fa-check"></i><b>6.4</b> Data intake</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-table-friendly-formats"><i class="fa fa-check"></i><b>6.4.1</b> Data-table friendly formats</a></li>
+<li class="chapter" data-level="6.4.2" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:apis"><i class="fa fa-check"></i><b>6.4.2</b> APIs</a></li>
+<li class="chapter" data-level="6.4.3" data-path="ch-dataII.html"><a href="ch-dataII.html#cleaning-data"><i class="fa fa-check"></i><b>6.4.3</b> Cleaning data</a></li>
+<li class="chapter" data-level="6.4.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nukes"><i class="fa fa-check"></i><b>6.4.4</b> Example: Japanese nuclear reactors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-further"><i class="fa fa-check"></i><b>6.5</b> Further resources</a></li>
+<li class="chapter" data-level="6.6" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-exercises"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+<li class="chapter" data-level="6.7" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-online-exercises"><i class="fa fa-check"></i><b>6.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch-iteration.html"><a href="ch-iteration.html"><i class="fa fa-check"></i><b>7</b> Iteration</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:vectorized"><i class="fa fa-check"></i><b>7.1</b> Vectorized operations</a></li>
+<li class="chapter" data-level="7.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:scoped"><i class="fa fa-check"></i><b>7.2</b> Using <code>across()</code> with <strong>dplyr</strong> functions</a></li>
+<li class="chapter" data-level="7.3" data-path="ch-iteration.html"><a href="ch-iteration.html#appR:apply"><i class="fa fa-check"></i><b>7.3</b> The <code>map()</code> family of functions</a></li>
+<li class="chapter" data-level="7.4" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-over-a-one-dimensional-vector"><i class="fa fa-check"></i><b>7.4</b> Iterating over a one-dimensional vector</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-a-known-function"><i class="fa fa-check"></i><b>7.4.1</b> Iterating a known function</a></li>
+<li class="chapter" data-level="7.4.2" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-an-arbitrary-function"><i class="fa fa-check"></i><b>7.4.2</b> Iterating an arbitrary function</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:group-map"><i class="fa fa-check"></i><b>7.5</b> Iteration over subgroups</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:pythag"><i class="fa fa-check"></i><b>7.5.1</b> Example: Expected winning percentage</a></li>
+<li class="chapter" data-level="7.5.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:hrs"><i class="fa fa-check"></i><b>7.5.2</b> Example: Annual leaders</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="ch-iteration.html"><a href="ch-iteration.html#simulation"><i class="fa fa-check"></i><b>7.6</b> Simulation</a></li>
+<li class="chapter" data-level="7.7" data-path="ch-iteration.html"><a href="ch-iteration.html#extended-example-factors-associated-with-bmi"><i class="fa fa-check"></i><b>7.7</b> Extended example: Factors associated with BMI</a></li>
+<li class="chapter" data-level="7.8" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-further"><i class="fa fa-check"></i><b>7.8</b> Further resources</a></li>
+<li class="chapter" data-level="7.9" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-exercises"><i class="fa fa-check"></i><b>7.9</b> Exercises</a></li>
+<li class="chapter" data-level="7.10" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-online-exercises"><i class="fa fa-check"></i><b>7.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch-ethics.html"><a href="ch-ethics.html"><i class="fa fa-check"></i><b>8</b> Data science ethics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-intro"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ch-ethics.html"><a href="ch-ethics.html#truthful-falsehoods"><i class="fa fa-check"></i><b>8.2</b> Truthful falsehoods</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ch-ethics.html"><a href="ch-ethics.html#stand-your-ground"><i class="fa fa-check"></i><b>8.2.1</b> Stand your ground</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ch-ethics.html"><a href="ch-ethics.html#global-temperature"><i class="fa fa-check"></i><b>8.2.2</b> Global temperature</a></li>
+<li class="chapter" data-level="8.2.3" data-path="ch-ethics.html"><a href="ch-ethics.html#covid-19-reporting"><i class="fa fa-check"></i><b>8.2.3</b> COVID-19 reporting</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ch-ethics.html"><a href="ch-ethics.html#role-of-data-science-in-society"><i class="fa fa-check"></i><b>8.3</b> Role of data science in society</a></li>
+<li class="chapter" data-level="8.4" data-path="ch-ethics.html"><a href="ch-ethics.html#some-settings-for-professional-ethics"><i class="fa fa-check"></i><b>8.4</b> Some settings for professional ethics</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-chief-executive-officer"><i class="fa fa-check"></i><b>8.4.1</b> The chief executive officer</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination"><i class="fa fa-check"></i><b>8.4.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar"><i class="fa fa-check"></i><b>8.4.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.4.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction"><i class="fa fa-check"></i><b>8.4.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.4.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping"><i class="fa fa-check"></i><b>8.4.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.4.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis"><i class="fa fa-check"></i><b>8.4.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.4.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers"><i class="fa fa-check"></i><b>8.4.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.4.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations"><i class="fa fa-check"></i><b>8.4.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ch-ethics.html"><a href="ch-ethics.html#some-principles-to-guide-ethical-action"><i class="fa fa-check"></i><b>8.5</b> Some principles to guide ethical action</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-ceo"><i class="fa fa-check"></i><b>8.5.1</b> The CEO</a></li>
+<li class="chapter" data-level="8.5.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination-1"><i class="fa fa-check"></i><b>8.5.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.5.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar-1"><i class="fa fa-check"></i><b>8.5.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.5.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction-1"><i class="fa fa-check"></i><b>8.5.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.5.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping-1"><i class="fa fa-check"></i><b>8.5.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.5.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis-1"><i class="fa fa-check"></i><b>8.5.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.5.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers-1"><i class="fa fa-check"></i><b>8.5.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.5.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations-1"><i class="fa fa-check"></i><b>8.5.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="ch-ethics.html"><a href="ch-ethics.html#algorithmic-bias"><i class="fa fa-check"></i><b>8.6</b> Algorithmic bias</a></li>
+<li class="chapter" data-level="8.7" data-path="ch-ethics.html"><a href="ch-ethics.html#data-and-disclosure"><i class="fa fa-check"></i><b>8.7</b> Data and disclosure</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="ch-ethics.html"><a href="ch-ethics.html#reidentification-and-disclosure-avoidance"><i class="fa fa-check"></i><b>8.7.1</b> Reidentification and disclosure avoidance</a></li>
+<li class="chapter" data-level="8.7.2" data-path="ch-ethics.html"><a href="ch-ethics.html#safe-data-storage"><i class="fa fa-check"></i><b>8.7.2</b> Safe data storage</a></li>
+<li class="chapter" data-level="8.7.3" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:terms-of-use"><i class="fa fa-check"></i><b>8.7.3</b> Data scraping and terms of use</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:reproducibility"><i class="fa fa-check"></i><b>8.8</b> Reproducibility</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#example-erroneous-data-merging"><i class="fa fa-check"></i><b>8.8.1</b> Example: Erroneous data merging</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-collectively"><i class="fa fa-check"></i><b>8.9</b> Ethics, collectively</a></li>
+<li class="chapter" data-level="8.10" data-path="ch-ethics.html"><a href="ch-ethics.html#professional-guidelines-for-ethical-conduct"><i class="fa fa-check"></i><b>8.10</b> Professional guidelines for ethical conduct</a></li>
+<li class="chapter" data-level="8.11" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-further"><i class="fa fa-check"></i><b>8.11</b> Further resources</a></li>
+<li class="chapter" data-level="8.12" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-exercises"><i class="fa fa-check"></i><b>8.12</b> Exercises</a></li>
+<li class="chapter" data-level="8.13" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-online-exercises"><i class="fa fa-check"></i><b>8.13</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>II Part II: Statistics and Modeling</b></span></li>
+<li class="chapter" data-level="9" data-path="ch-foundations.html"><a href="ch-foundations.html"><i class="fa fa-check"></i><b>9</b> Statistical foundations</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch-foundations.html"><a href="ch-foundations.html#samples-and-populations"><i class="fa fa-check"></i><b>9.1</b> Samples and populations</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy-by-sampling-from-the-population"><i class="fa fa-check"></i><b>9.1.1</b> Example: Setting travel policy by sampling from the population</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="ch-foundations.html"><a href="ch-foundations.html#sample-statistics"><i class="fa fa-check"></i><b>9.2</b> Sample statistics</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:lln"><i class="fa fa-check"></i><b>9.2.1</b> The sampling distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:boot"><i class="fa fa-check"></i><b>9.3</b> The bootstrap</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy"><i class="fa fa-check"></i><b>9.3.1</b> Example: Setting travel policy</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="ch-foundations.html"><a href="ch-foundations.html#outliers"><i class="fa fa-check"></i><b>9.4</b> Outliers</a></li>
+<li class="chapter" data-level="9.5" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:gooddesign"><i class="fa fa-check"></i><b>9.5</b> Statistical models: Explaining variation</a></li>
+<li class="chapter" data-level="9.6" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:confound"><i class="fa fa-check"></i><b>9.6</b> Confounding and accounting for other factors</a></li>
+<li class="chapter" data-level="9.7" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:p-perils"><i class="fa fa-check"></i><b>9.7</b> The perils of p-values</a></li>
+<li class="chapter" data-level="9.8" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-further"><i class="fa fa-check"></i><b>9.8</b> Further resources</a></li>
+<li class="chapter" data-level="9.9" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-exercises"><i class="fa fa-check"></i><b>9.9</b> Exercises</a></li>
+<li class="chapter" data-level="9.10" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-online-exercises"><i class="fa fa-check"></i><b>9.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch-modeling.html"><a href="ch-modeling.html"><i class="fa fa-check"></i><b>10</b> Predictive modeling</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch-modeling.html"><a href="ch-modeling.html#predictive-modeling"><i class="fa fa-check"></i><b>10.1</b> Predictive modeling</a></li>
+<li class="chapter" data-level="10.2" data-path="ch-modeling.html"><a href="ch-modeling.html#simple-classification-models"><i class="fa fa-check"></i><b>10.2</b> Simple classification models</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="ch-modeling.html"><a href="ch-modeling.html#example-high-earners-in-the-1994-united-states-census"><i class="fa fa-check"></i><b>10.2.1</b> Example: High-earners in the 1994 United States Census</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="ch-modeling.html"><a href="ch-modeling.html#evaluating-models"><i class="fa fa-check"></i><b>10.3</b> Evaluating models</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:bias-variance"><i class="fa fa-check"></i><b>10.3.1</b> Bias-variance trade-off</a></li>
+<li class="chapter" data-level="10.3.2" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:cv"><i class="fa fa-check"></i><b>10.3.2</b> Cross-validation</a></li>
+<li class="chapter" data-level="10.3.3" data-path="ch-modeling.html"><a href="ch-modeling.html#confusion-matrices-and-roc-curves"><i class="fa fa-check"></i><b>10.3.3</b> Confusion matrices and ROC curves</a></li>
+<li class="chapter" data-level="10.3.4" data-path="ch-modeling.html"><a href="ch-modeling.html#measuring-prediction-error-for-quantitative-responses"><i class="fa fa-check"></i><b>10.3.4</b> Measuring prediction error for quantitative responses</a></li>
+<li class="chapter" data-level="10.3.5" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:evaluate"><i class="fa fa-check"></i><b>10.3.5</b> Example: Evaluation of income models</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:diabetes"><i class="fa fa-check"></i><b>10.4</b> Extended example: Who has diabetes?</a></li>
+<li class="chapter" data-level="10.5" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-further"><i class="fa fa-check"></i><b>10.5</b> Further resources</a></li>
+<li class="chapter" data-level="10.6" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-exercises"><i class="fa fa-check"></i><b>10.6</b> Exercises</a></li>
+<li class="chapter" data-level="10.7" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-online-exercises"><i class="fa fa-check"></i><b>10.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch-learningI.html"><a href="ch-learningI.html"><i class="fa fa-check"></i><b>11</b> Supervised learning</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch-learningI.html"><a href="ch-learningI.html#non-regression-classifiers"><i class="fa fa-check"></i><b>11.1</b> Non-regression classifiers</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="ch-learningI.html"><a href="ch-learningI.html#decision-trees"><i class="fa fa-check"></i><b>11.1.1</b> Decision trees</a></li>
+<li class="chapter" data-level="11.1.2" data-path="ch-learningI.html"><a href="ch-learningI.html#random-forests"><i class="fa fa-check"></i><b>11.1.2</b> Random forests</a></li>
+<li class="chapter" data-level="11.1.3" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:knn"><i class="fa fa-check"></i><b>11.1.3</b> Nearest neighbor</a></li>
+<li class="chapter" data-level="11.1.4" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:bayes"><i class="fa fa-check"></i><b>11.1.4</b> Naïve Bayes</a></li>
+<li class="chapter" data-level="11.1.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:neuralnet"><i class="fa fa-check"></i><b>11.1.5</b> Artificial neural networks</a></li>
+<li class="chapter" data-level="11.1.6" data-path="ch-learningI.html"><a href="ch-learningI.html#ensemble-methods"><i class="fa fa-check"></i><b>11.1.6</b> Ensemble methods</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:tuning"><i class="fa fa-check"></i><b>11.2</b> Parameter tuning</a></li>
+<li class="chapter" data-level="11.3" data-path="ch-learningI.html"><a href="ch-learningI.html#example-evaluation-of-income-models-redux"><i class="fa fa-check"></i><b>11.3</b> Example: Evaluation of income models redux</a></li>
+<li class="chapter" data-level="11.4" data-path="ch-learningI.html"><a href="ch-learningI.html#extended-example-who-has-diabetes-this-time"><i class="fa fa-check"></i><b>11.4</b> Extended example: Who has diabetes this time?</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch-learningI.html"><a href="ch-learningI.html#comparing-all-models"><i class="fa fa-check"></i><b>11.4.1</b> Comparing all models</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:regularization"><i class="fa fa-check"></i><b>11.5</b> Regularization</a></li>
+<li class="chapter" data-level="11.6" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-further"><i class="fa fa-check"></i><b>11.6</b> Further resources</a></li>
+<li class="chapter" data-level="11.7" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-exercises"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
+<li class="chapter" data-level="11.8" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-online-exercises"><i class="fa fa-check"></i><b>11.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch-learningII.html"><a href="ch-learningII.html"><i class="fa fa-check"></i><b>12</b> Unsupervised learning</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch-learningII.html"><a href="ch-learningII.html#clustering"><i class="fa fa-check"></i><b>12.1</b> Clustering</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="ch-learningII.html"><a href="ch-learningII.html#sec:hclust"><i class="fa fa-check"></i><b>12.1.1</b> Hierarchical clustering</a></li>
+<li class="chapter" data-level="12.1.2" data-path="ch-learningII.html"><a href="ch-learningII.html#k-means"><i class="fa fa-check"></i><b>12.1.2</b> <span class="math inline">\(k\)</span>-means</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="ch-learningII.html"><a href="ch-learningII.html#dimension-reduction"><i class="fa fa-check"></i><b>12.2</b> Dimension reduction</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch-learningII.html"><a href="ch-learningII.html#intuitive-approaches"><i class="fa fa-check"></i><b>12.2.1</b> Intuitive approaches</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch-learningII.html"><a href="ch-learningII.html#singular-value-decomposition"><i class="fa fa-check"></i><b>12.2.2</b> Singular value decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-further"><i class="fa fa-check"></i><b>12.3</b> Further resources</a></li>
+<li class="chapter" data-level="12.4" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-exercises"><i class="fa fa-check"></i><b>12.4</b> Exercises</a></li>
+<li class="chapter" data-level="12.5" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-online-exercises"><i class="fa fa-check"></i><b>12.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch-simulation.html"><a href="ch-simulation.html"><i class="fa fa-check"></i><b>13</b> Simulation</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch-simulation.html"><a href="ch-simulation.html#reasoning-in-reverse"><i class="fa fa-check"></i><b>13.1</b> Reasoning in reverse</a></li>
+<li class="chapter" data-level="13.2" data-path="ch-simulation.html"><a href="ch-simulation.html#extended-example-grouping-cancers"><i class="fa fa-check"></i><b>13.2</b> Extended example: Grouping cancers</a></li>
+<li class="chapter" data-level="13.3" data-path="ch-simulation.html"><a href="ch-simulation.html#randomizing-functions"><i class="fa fa-check"></i><b>13.3</b> Randomizing functions</a></li>
+<li class="chapter" data-level="13.4" data-path="ch-simulation.html"><a href="ch-simulation.html#simulating-variability"><i class="fa fa-check"></i><b>13.4</b> Simulating variability</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch-simulation.html"><a href="ch-simulation.html#the-partially-planned-rendezvous"><i class="fa fa-check"></i><b>13.4.1</b> The partially-planned rendezvous</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:jobsnum"><i class="fa fa-check"></i><b>13.4.2</b> The jobs report</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch-simulation.html"><a href="ch-simulation.html#restaurant-health-and-sanitation-grades"><i class="fa fa-check"></i><b>13.4.3</b> Restaurant health and sanitation grades</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch-simulation.html"><a href="ch-simulation.html#random-networks"><i class="fa fa-check"></i><b>13.5</b> Random networks</a></li>
+<li class="chapter" data-level="13.6" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:key-principles-random"><i class="fa fa-check"></i><b>13.6</b> Key principles of simulation</a>
+<ul>
+<li class="chapter" data-level="13.6.1" data-path="ch-simulation.html"><a href="ch-simulation.html#design"><i class="fa fa-check"></i><b>13.6.1</b> Design</a></li>
+<li class="chapter" data-level="13.6.2" data-path="ch-simulation.html"><a href="ch-simulation.html#modularity"><i class="fa fa-check"></i><b>13.6.2</b> Modularity</a></li>
+<li class="chapter" data-level="13.6.3" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:seed"><i class="fa fa-check"></i><b>13.6.3</b> Reproducibility and random number seeds</a></li>
+</ul></li>
+<li class="chapter" data-level="13.7" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-further"><i class="fa fa-check"></i><b>13.7</b> Further resources</a></li>
+<li class="chapter" data-level="13.8" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-exercises"><i class="fa fa-check"></i><b>13.8</b> Exercises</a></li>
+<li class="chapter" data-level="13.9" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-online-exercises"><i class="fa fa-check"></i><b>13.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>III Part III: Topics in Data Science</b></span></li>
+<li class="chapter" data-level="14" data-path="ch-vizIII.html"><a href="ch-vizIII.html"><i class="fa fa-check"></i><b>14</b> Dynamic and customized data graphics</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:d3"><i class="fa fa-check"></i><b>14.1</b> Rich Web content using <code>D3.js</code> and <strong>htmlwidgets</strong></a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#leaflet"><i class="fa fa-check"></i><b>14.1.1</b> Leaflet</a></li>
+<li class="chapter" data-level="14.1.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#plot.ly"><i class="fa fa-check"></i><b>14.1.2</b> Plot.ly</a></li>
+<li class="chapter" data-level="14.1.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datatables"><i class="fa fa-check"></i><b>14.1.3</b> DataTables</a></li>
+<li class="chapter" data-level="14.1.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#dygraphs"><i class="fa fa-check"></i><b>14.1.4</b> Dygraphs</a></li>
+<li class="chapter" data-level="14.1.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#streamgraphs"><i class="fa fa-check"></i><b>14.1.5</b> Streamgraphs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#animation"><i class="fa fa-check"></i><b>14.2</b> Animation</a></li>
+<li class="chapter" data-level="14.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:fleshdashboard"><i class="fa fa-check"></i><b>14.3</b> Flexdashboard</a></li>
+<li class="chapter" data-level="14.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:shiny"><i class="fa fa-check"></i><b>14.4</b> Interactive web apps with Shiny</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#example-interactive-display-of-the-beatles"><i class="fa fa-check"></i><b>14.4.1</b> Example: interactive display of the Beatles</a></li>
+<li class="chapter" data-level="14.4.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#more-on-reactive-programming"><i class="fa fa-check"></i><b>14.4.2</b> More on reactive programming</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:themes"><i class="fa fa-check"></i><b>14.5</b> Customization of <strong>ggplot2</strong> graphics</a></li>
+<li class="chapter" data-level="14.6" data-path="ch-vizIII.html"><a href="ch-vizIII.html#extended-example-hot-dog-eating"><i class="fa fa-check"></i><b>14.6</b> Extended example: Hot dog eating</a></li>
+<li class="chapter" data-level="14.7" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-further"><i class="fa fa-check"></i><b>14.7</b> Further resources</a></li>
+<li class="chapter" data-level="14.8" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-exercises"><i class="fa fa-check"></i><b>14.8</b> Exercises</a></li>
+<li class="chapter" data-level="14.9" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-online-exercises"><i class="fa fa-check"></i><b>14.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch-sql.html"><a href="ch-sql.html"><i class="fa fa-check"></i><b>15</b> Database querying using SQL</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch-sql.html"><a href="ch-sql.html#sec:dplyr-sql"><i class="fa fa-check"></i><b>15.1</b> From <strong>dplyr</strong> to SQL</a></li>
+<li class="chapter" data-level="15.2" data-path="ch-sql.html"><a href="ch-sql.html#flat-file-databases"><i class="fa fa-check"></i><b>15.2</b> Flat-file databases</a></li>
+<li class="chapter" data-level="15.3" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-universe"><i class="fa fa-check"></i><b>15.3</b> The SQL universe</a></li>
+<li class="chapter" data-level="15.4" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-data-manipulation-language"><i class="fa fa-check"></i><b>15.4</b> The SQL data manipulation language</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="ch-sql.html"><a href="ch-sql.html#select...from"><i class="fa fa-check"></i><b>15.4.1</b> <code>SELECT...FROM</code></a></li>
+<li class="chapter" data-level="15.4.2" data-path="ch-sql.html"><a href="ch-sql.html#where"><i class="fa fa-check"></i><b>15.4.2</b> <code>WHERE</code></a></li>
+<li class="chapter" data-level="15.4.3" data-path="ch-sql.html"><a href="ch-sql.html#group-by"><i class="fa fa-check"></i><b>15.4.3</b> <code>GROUP BY</code></a></li>
+<li class="chapter" data-level="15.4.4" data-path="ch-sql.html"><a href="ch-sql.html#order-by"><i class="fa fa-check"></i><b>15.4.4</b> <code>ORDER BY</code></a></li>
+<li class="chapter" data-level="15.4.5" data-path="ch-sql.html"><a href="ch-sql.html#having"><i class="fa fa-check"></i><b>15.4.5</b> <code>HAVING</code></a></li>
+<li class="chapter" data-level="15.4.6" data-path="ch-sql.html"><a href="ch-sql.html#limit"><i class="fa fa-check"></i><b>15.4.6</b> <code>LIMIT</code></a></li>
+<li class="chapter" data-level="15.4.7" data-path="ch-sql.html"><a href="ch-sql.html#join"><i class="fa fa-check"></i><b>15.4.7</b> <code>JOIN</code></a></li>
+<li class="chapter" data-level="15.4.8" data-path="ch-sql.html"><a href="ch-sql.html#union"><i class="fa fa-check"></i><b>15.4.8</b> <code>UNION</code></a></li>
+<li class="chapter" data-level="15.4.9" data-path="ch-sql.html"><a href="ch-sql.html#subqueries"><i class="fa fa-check"></i><b>15.4.9</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="ch-sql.html"><a href="ch-sql.html#sec:ft8-flights"><i class="fa fa-check"></i><b>15.5</b> Extended example: FiveThirtyEight flights</a></li>
+<li class="chapter" data-level="15.6" data-path="ch-sql.html"><a href="ch-sql.html#sql-vs.-refr"><i class="fa fa-check"></i><b>15.6</b> SQL vs. (ref:R)</a></li>
+<li class="chapter" data-level="15.7" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-further"><i class="fa fa-check"></i><b>15.7</b> Further resources</a></li>
+<li class="chapter" data-level="15.8" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-exercises"><i class="fa fa-check"></i><b>15.8</b> Exercises</a></li>
+<li class="chapter" data-level="15.9" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-online-exercises"><i class="fa fa-check"></i><b>15.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="ch-sql2.html"><a href="ch-sql2.html"><i class="fa fa-check"></i><b>16</b> Database administration</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:indices"><i class="fa fa-check"></i><b>16.1</b> Constructing efficient SQL databases</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="ch-sql2.html"><a href="ch-sql2.html#creating-new-databases"><i class="fa fa-check"></i><b>16.1.1</b> Creating new databases</a></li>
+<li class="chapter" data-level="16.1.2" data-path="ch-sql2.html"><a href="ch-sql2.html#create-table"><i class="fa fa-check"></i><b>16.1.2</b> <code>CREATE TABLE</code></a></li>
+<li class="chapter" data-level="16.1.3" data-path="ch-sql2.html"><a href="ch-sql2.html#keys"><i class="fa fa-check"></i><b>16.1.3</b> Keys</a></li>
+<li class="chapter" data-level="16.1.4" data-path="ch-sql2.html"><a href="ch-sql2.html#indices"><i class="fa fa-check"></i><b>16.1.4</b> Indices</a></li>
+<li class="chapter" data-level="16.1.5" data-path="ch-sql2.html"><a href="ch-sql2.html#query-plans"><i class="fa fa-check"></i><b>16.1.5</b> Query plans</a></li>
+<li class="chapter" data-level="16.1.6" data-path="ch-sql2.html"><a href="ch-sql2.html#partitioning"><i class="fa fa-check"></i><b>16.1.6</b> Partitioning</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-sql-data"><i class="fa fa-check"></i><b>16.2</b> Changing SQL data</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-data"><i class="fa fa-check"></i><b>16.2.1</b> Changing data</a></li>
+<li class="chapter" data-level="16.2.2" data-path="ch-sql2.html"><a href="ch-sql2.html#adding-data"><i class="fa fa-check"></i><b>16.2.2</b> Adding data</a></li>
+<li class="chapter" data-level="16.2.3" data-path="ch-sql2.html"><a href="ch-sql2.html#importing-data-from-a-file"><i class="fa fa-check"></i><b>16.2.3</b> Importing data from a file</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:toy-db"><i class="fa fa-check"></i><b>16.3</b> Extended example: Building a database</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="ch-sql2.html"><a href="ch-sql2.html#extract"><i class="fa fa-check"></i><b>16.3.1</b> Extract</a></li>
+<li class="chapter" data-level="16.3.2" data-path="ch-sql2.html"><a href="ch-sql2.html#transform"><i class="fa fa-check"></i><b>16.3.2</b> Transform</a></li>
+<li class="chapter" data-level="16.3.3" data-path="ch-sql2.html"><a href="ch-sql2.html#load-into-mysql-database"><i class="fa fa-check"></i><b>16.3.3</b> Load into MySQL database</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="ch-sql2.html"><a href="ch-sql2.html#scalability"><i class="fa fa-check"></i><b>16.4</b> Scalability</a></li>
+<li class="chapter" data-level="16.5" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-further"><i class="fa fa-check"></i><b>16.5</b> Further resources</a></li>
+<li class="chapter" data-level="16.6" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-exercises"><i class="fa fa-check"></i><b>16.6</b> Exercises</a></li>
+<li class="chapter" data-level="16.7" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-online-exercises"><i class="fa fa-check"></i><b>16.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="ch-spatial.html"><a href="ch-spatial.html"><i class="fa fa-check"></i><b>17</b> Working with geospatial data</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="ch-spatial.html"><a href="ch-spatial.html#motivation-whats-so-great-about-geospatial-data"><i class="fa fa-check"></i><b>17.1</b> Motivation: What’s so great about geospatial data?</a></li>
+<li class="chapter" data-level="17.2" data-path="ch-spatial.html"><a href="ch-spatial.html#spatial-data-structures"><i class="fa fa-check"></i><b>17.2</b> Spatial data structures</a></li>
+<li class="chapter" data-level="17.3" data-path="ch-spatial.html"><a href="ch-spatial.html#making-maps"><i class="fa fa-check"></i><b>17.3</b> Making maps</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="ch-spatial.html"><a href="ch-spatial.html#static-maps"><i class="fa fa-check"></i><b>17.3.1</b> Static maps</a></li>
+<li class="chapter" data-level="17.3.2" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:projections"><i class="fa fa-check"></i><b>17.3.2</b> Projections</a></li>
+<li class="chapter" data-level="17.3.3" data-path="ch-spatial.html"><a href="ch-spatial.html#dynamic-maps-with-leaflet"><i class="fa fa-check"></i><b>17.3.3</b> Dynamic maps with <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="ch-spatial.html"><a href="ch-spatial.html#extended-example-congressional-districts"><i class="fa fa-check"></i><b>17.4</b> Extended example: Congressional districts</a>
+<ul>
+<li class="chapter" data-level="17.4.1" data-path="ch-spatial.html"><a href="ch-spatial.html#election-results"><i class="fa fa-check"></i><b>17.4.1</b> Election results</a></li>
+<li class="chapter" data-level="17.4.2" data-path="ch-spatial.html"><a href="ch-spatial.html#congressional-districts"><i class="fa fa-check"></i><b>17.4.2</b> Congressional districts</a></li>
+<li class="chapter" data-level="17.4.3" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:sf-inner-join"><i class="fa fa-check"></i><b>17.4.3</b> Putting it all together</a></li>
+<li class="chapter" data-level="17.4.4" data-path="ch-spatial.html"><a href="ch-spatial.html#using-ggplot2"><i class="fa fa-check"></i><b>17.4.4</b> Using <code>ggplot2</code></a></li>
+<li class="chapter" data-level="17.4.5" data-path="ch-spatial.html"><a href="ch-spatial.html#using-leaflet"><i class="fa fa-check"></i><b>17.4.5</b> Using <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="ch-spatial.html"><a href="ch-spatial.html#effective-maps-how-not-to-lie"><i class="fa fa-check"></i><b>17.5</b> Effective maps: How (not) to lie</a></li>
+<li class="chapter" data-level="17.6" data-path="ch-spatial.html"><a href="ch-spatial.html#projecting-polygons"><i class="fa fa-check"></i><b>17.6</b> Projecting polygons</a></li>
+<li class="chapter" data-level="17.7" data-path="ch-spatial.html"><a href="ch-spatial.html#playing-well-with-others"><i class="fa fa-check"></i><b>17.7</b> Playing well with others</a></li>
+<li class="chapter" data-level="17.8" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialII-further"><i class="fa fa-check"></i><b>17.8</b> Further resources</a></li>
+<li class="chapter" data-level="17.9" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-exercises"><i class="fa fa-check"></i><b>17.9</b> Exercises</a></li>
+<li class="chapter" data-level="17.10" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-online-exercises"><i class="fa fa-check"></i><b>17.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="ch-spatial2.html"><a href="ch-spatial2.html"><i class="fa fa-check"></i><b>18</b> Geospatial computations</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-operations"><i class="fa fa-check"></i><b>18.1</b> Geospatial operations</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geocoding-routes-and-distances"><i class="fa fa-check"></i><b>18.1.1</b> Geocoding, routes, and distances</a></li>
+<li class="chapter" data-level="18.1.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#sec:geometric-operations"><i class="fa fa-check"></i><b>18.1.2</b> Geometric operations</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-aggregation"><i class="fa fa-check"></i><b>18.2</b> Geospatial aggregation</a></li>
+<li class="chapter" data-level="18.3" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-joins"><i class="fa fa-check"></i><b>18.3</b> Geospatial joins</a></li>
+<li class="chapter" data-level="18.4" data-path="ch-spatial2.html"><a href="ch-spatial2.html#extended-example-trail-elevations-at-macleish"><i class="fa fa-check"></i><b>18.4</b> Extended example: Trail elevations at MacLeish</a></li>
+<li class="chapter" data-level="18.5" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialI-further"><i class="fa fa-check"></i><b>18.5</b> Further resources</a></li>
+<li class="chapter" data-level="18.6" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-exercises"><i class="fa fa-check"></i><b>18.6</b> Exercises</a></li>
+<li class="chapter" data-level="18.7" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-online-exercises"><i class="fa fa-check"></i><b>18.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="ch-text.html"><a href="ch-text.html"><i class="fa fa-check"></i><b>19</b> Text as data</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="ch-text.html"><a href="ch-text.html#regular-expressions-using-macbeth"><i class="fa fa-check"></i><b>19.1</b> Regular expressions using <em>Macbeth</em></a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="ch-text.html"><a href="ch-text.html#parsing-the-text-of-the-scottish-play"><i class="fa fa-check"></i><b>19.1.1</b> Parsing the text of the <span><em>Scottish play</em></span></a></li>
+<li class="chapter" data-level="19.1.2" data-path="ch-text.html"><a href="ch-text.html#life-and-death-in-macbeth"><i class="fa fa-check"></i><b>19.1.2</b> Life and death in <em>Macbeth</em></a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="ch-text.html"><a href="ch-text.html#extended-example-analyzing-textual-data-from-arxiv.org"><i class="fa fa-check"></i><b>19.2</b> Extended example: Analyzing textual data from arXiv.org</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="ch-text.html"><a href="ch-text.html#corpora"><i class="fa fa-check"></i><b>19.2.1</b> Corpora</a></li>
+<li class="chapter" data-level="19.2.2" data-path="ch-text.html"><a href="ch-text.html#word-clouds"><i class="fa fa-check"></i><b>19.2.2</b> Word clouds</a></li>
+<li class="chapter" data-level="19.2.3" data-path="ch-text.html"><a href="ch-text.html#sentiment-analysis"><i class="fa fa-check"></i><b>19.2.3</b> Sentiment analysis</a></li>
+<li class="chapter" data-level="19.2.4" data-path="ch-text.html"><a href="ch-text.html#bigrams-and-n-grams"><i class="fa fa-check"></i><b>19.2.4</b> Bigrams and N-grams</a></li>
+<li class="chapter" data-level="19.2.5" data-path="ch-text.html"><a href="ch-text.html#document-term-matrices"><i class="fa fa-check"></i><b>19.2.5</b> Document term matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="ch-text.html"><a href="ch-text.html#ingesting-text"><i class="fa fa-check"></i><b>19.3</b> Ingesting text</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="ch-text.html"><a href="ch-text.html#example-scraping-the-songs-of-the-beatles"><i class="fa fa-check"></i><b>19.3.1</b> Example: Scraping the songs of the Beatles</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="ch-text.html"><a href="ch-text.html#text-further"><i class="fa fa-check"></i><b>19.4</b> Further resources</a></li>
+<li class="chapter" data-level="19.5" data-path="ch-text.html"><a href="ch-text.html#text-exercises"><i class="fa fa-check"></i><b>19.5</b> Exercises</a></li>
+<li class="chapter" data-level="19.6" data-path="ch-text.html"><a href="ch-text.html#text-online-exercises"><i class="fa fa-check"></i><b>19.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="ch-netsci.html"><a href="ch-netsci.html"><i class="fa fa-check"></i><b>20</b> Network science</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-intro"><i class="fa fa-check"></i><b>20.1</b> Introduction to network science</a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="ch-netsci.html"><a href="ch-netsci.html#definitions"><i class="fa fa-check"></i><b>20.1.1</b> Definitions</a></li>
+<li class="chapter" data-level="20.1.2" data-path="ch-netsci.html"><a href="ch-netsci.html#a-brief-history-of-network-science"><i class="fa fa-check"></i><b>20.1.2</b> A brief history of network science</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-six-degrees-of-kristen-stewart"><i class="fa fa-check"></i><b>20.2</b> Extended example: Six degrees of Kristen Stewart</a>
+<ul>
+<li class="chapter" data-level="20.2.1" data-path="ch-netsci.html"><a href="ch-netsci.html#sql:imdb"><i class="fa fa-check"></i><b>20.2.1</b> Collecting Hollywood data</a></li>
+<li class="chapter" data-level="20.2.2" data-path="ch-netsci.html"><a href="ch-netsci.html#building-the-hollywood-network"><i class="fa fa-check"></i><b>20.2.2</b> Building the Hollywood network</a></li>
+<li class="chapter" data-level="20.2.3" data-path="ch-netsci.html"><a href="ch-netsci.html#building-a-kristen-stewart-oracle"><i class="fa fa-check"></i><b>20.2.3</b> Building a Kristen Stewart oracle</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="ch-netsci.html"><a href="ch-netsci.html#sec:pagerank"><i class="fa fa-check"></i><b>20.3</b> PageRank</a>
+<ul>
+<li class="chapter" data-level="20.3.1" data-path="ch-netsci.html"><a href="ch-netsci.html#eigenvector-centrality"><i class="fa fa-check"></i><b>20.3.1</b> Eigenvector centrality</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-1996-mens-college-basketball"><i class="fa fa-check"></i><b>20.4</b> Extended example: 1996 men’s college basketball</a></li>
+<li class="chapter" data-level="20.5" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-further"><i class="fa fa-check"></i><b>20.5</b> Further resources</a></li>
+<li class="chapter" data-level="20.6" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-exercises"><i class="fa fa-check"></i><b>20.6</b> Exercises</a></li>
+<li class="chapter" data-level="20.7" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-online-exercises"><i class="fa fa-check"></i><b>20.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="ch-big.html"><a href="ch-big.html"><i class="fa fa-check"></i><b>21</b> Epilogue: Towards “big data”</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="ch-big.html"><a href="ch-big.html#notions-of-big-data"><i class="fa fa-check"></i><b>21.1</b> Notions of big data</a></li>
+<li class="chapter" data-level="21.2" data-path="ch-big.html"><a href="ch-big.html#tools-for-bigger-data"><i class="fa fa-check"></i><b>21.2</b> Tools for bigger data</a>
+<ul>
+<li class="chapter" data-level="21.2.1" data-path="ch-big.html"><a href="ch-big.html#data-and-memory-structures-for-big-data"><i class="fa fa-check"></i><b>21.2.1</b> Data and memory structures for big data</a></li>
+<li class="chapter" data-level="21.2.2" data-path="ch-big.html"><a href="ch-big.html#compilation"><i class="fa fa-check"></i><b>21.2.2</b> Compilation</a></li>
+<li class="chapter" data-level="21.2.3" data-path="ch-big.html"><a href="ch-big.html#parallel-and-distributed-computing"><i class="fa fa-check"></i><b>21.2.3</b> Parallel and distributed computing</a></li>
+<li class="chapter" data-level="21.2.4" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-sql"><i class="fa fa-check"></i><b>21.2.4</b> Alternatives to SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-refr"><i class="fa fa-check"></i><b>21.3</b> Alternatives to (ref:R)</a></li>
+<li class="chapter" data-level="21.4" data-path="ch-big.html"><a href="ch-big.html#closing-thoughts"><i class="fa fa-check"></i><b>21.4</b> Closing thoughts</a></li>
+<li class="chapter" data-level="21.5" data-path="ch-big.html"><a href="ch-big.html#bigdata-further"><i class="fa fa-check"></i><b>21.5</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="part"><span><b>IV Part IV: Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="ch-mdsr.html"><a href="ch-mdsr.html"><i class="fa fa-check"></i><b>A</b> Packages used in this book</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="ch-mdsr.html"><a href="ch-mdsr.html#the-mdsr-package"><i class="fa fa-check"></i><b>A.1</b> The <strong>mdsr</strong> package</a></li>
+<li class="chapter" data-level="A.2" data-path="ch-mdsr.html"><a href="ch-mdsr.html#other-packages"><i class="fa fa-check"></i><b>A.2</b> Other packages</a></li>
+<li class="chapter" data-level="A.3" data-path="ch-mdsr.html"><a href="ch-mdsr.html#pkg-further"><i class="fa fa-check"></i><b>A.3</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="ch-R.html"><a href="ch-R.html"><i class="fa fa-check"></i><b>B</b> Introduction to <code>R</code> and RStudio</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="ch-R.html"><a href="ch-R.html#appR:install"><i class="fa fa-check"></i><b>B.1</b> Installation</a>
+<ul>
+<li class="chapter" data-level="B.1.1" data-path="ch-R.html"><a href="ch-R.html#rstudio"><i class="fa fa-check"></i><b>B.1.1</b> RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="B.2" data-path="ch-R.html"><a href="ch-R.html#learning-refr"><i class="fa fa-check"></i><b>B.2</b> Learning (ref:R)</a></li>
+<li class="chapter" data-level="B.3" data-path="ch-R.html"><a href="ch-R.html#appR:objects"><i class="fa fa-check"></i><b>B.3</b> Fundamental structures and objects</a>
+<ul>
+<li class="chapter" data-level="B.3.1" data-path="ch-R.html"><a href="ch-R.html#appR:assign"><i class="fa fa-check"></i><b>B.3.1</b> Objects and vectors</a></li>
+<li class="chapter" data-level="B.3.2" data-path="ch-R.html"><a href="ch-R.html#appR:operators"><i class="fa fa-check"></i><b>B.3.2</b> Operators</a></li>
+<li class="chapter" data-level="B.3.3" data-path="ch-R.html"><a href="ch-R.html#appR:lists"><i class="fa fa-check"></i><b>B.3.3</b> Lists</a></li>
+<li class="chapter" data-level="B.3.4" data-path="ch-R.html"><a href="ch-R.html#appR:matrix"><i class="fa fa-check"></i><b>B.3.4</b> Matrices</a></li>
+<li class="chapter" data-level="B.3.5" data-path="ch-R.html"><a href="ch-R.html#appR:dataframe"><i class="fa fa-check"></i><b>B.3.5</b> Dataframes and tibbles</a></li>
+<li class="chapter" data-level="B.3.6" data-path="ch-R.html"><a href="ch-R.html#appR:attr"><i class="fa fa-check"></i><b>B.3.6</b> Attributes and classes</a></li>
+<li class="chapter" data-level="B.3.7" data-path="ch-R.html"><a href="ch-R.html#appR:options"><i class="fa fa-check"></i><b>B.3.7</b> Options</a></li>
+<li class="chapter" data-level="B.3.8" data-path="ch-R.html"><a href="ch-R.html#sec:func"><i class="fa fa-check"></i><b>B.3.8</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="ch-R.html"><a href="ch-R.html#add-ons-packages"><i class="fa fa-check"></i><b>B.4</b> Add-ons: Packages</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="ch-R.html"><a href="ch-R.html#appR:packages"><i class="fa fa-check"></i><b>B.4.1</b> Introduction to packages</a></li>
+<li class="chapter" data-level="B.4.2" data-path="ch-R.html"><a href="ch-R.html#packages-and-name-conflicts"><i class="fa fa-check"></i><b>B.4.2</b> Packages and name conflicts</a></li>
+<li class="chapter" data-level="B.4.3" data-path="ch-R.html"><a href="ch-R.html#appR:tasks"><i class="fa fa-check"></i><b>B.4.3</b> CRAN task views</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="ch-R.html"><a href="ch-R.html#appR-further"><i class="fa fa-check"></i><b>B.5</b> Further resources</a></li>
+<li class="chapter" data-level="B.6" data-path="ch-R.html"><a href="ch-R.html#appR-exercises"><i class="fa fa-check"></i><b>B.6</b> Exercises</a></li>
+<li class="chapter" data-level="B.7" data-path="ch-R.html"><a href="ch-R.html#appR-online-exercises"><i class="fa fa-check"></i><b>B.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="ch-function.html"><a href="ch-function.html"><i class="fa fa-check"></i><b>C</b> Algorithmic thinking</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-intro"><i class="fa fa-check"></i><b>C.1</b> Introduction</a></li>
+<li class="chapter" data-level="C.2" data-path="ch-function.html"><a href="ch-function.html#simple-example"><i class="fa fa-check"></i><b>C.2</b> Simple example</a></li>
+<li class="chapter" data-level="C.3" data-path="ch-function.html"><a href="ch-function.html#sec:runaverage"><i class="fa fa-check"></i><b>C.3</b> Extended example: Law of large numbers</a></li>
+<li class="chapter" data-level="C.4" data-path="ch-function.html"><a href="ch-function.html#sec:tidyeval"><i class="fa fa-check"></i><b>C.4</b> Non-standard evaluation</a></li>
+<li class="chapter" data-level="C.5" data-path="ch-function.html"><a href="ch-function.html#sec:debugging"><i class="fa fa-check"></i><b>C.5</b> Debugging and defensive coding</a></li>
+<li class="chapter" data-level="C.6" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-further"><i class="fa fa-check"></i><b>C.6</b> Further resources</a></li>
+<li class="chapter" data-level="C.7" data-path="ch-function.html"><a href="ch-function.html#algorithmic-exercises"><i class="fa fa-check"></i><b>C.7</b> Exercises</a></li>
+<li class="chapter" data-level="C.8" data-path="ch-function.html"><a href="ch-function.html#algorithmic-online-exercises"><i class="fa fa-check"></i><b>C.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="ch-reproduce.html"><a href="ch-reproduce.html"><i class="fa fa-check"></i><b>D</b> Reproducible analysis and workflow</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="ch-reproduce.html"><a href="ch-reproduce.html#scriptable-statistical-computing"><i class="fa fa-check"></i><b>D.1</b> Scriptable statistical computing</a></li>
+<li class="chapter" data-level="D.2" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-analysis-with-refr-markdown"><i class="fa fa-check"></i><b>D.2</b> Reproducible analysis with (ref:R) Markdown</a></li>
+<li class="chapter" data-level="D.3" data-path="ch-reproduce.html"><a href="ch-reproduce.html#projects-and-version-control"><i class="fa fa-check"></i><b>D.3</b> Projects and version control</a></li>
+<li class="chapter" data-level="D.4" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-further"><i class="fa fa-check"></i><b>D.4</b> Further resources</a></li>
+<li class="chapter" data-level="D.5" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-exercises"><i class="fa fa-check"></i><b>D.5</b> Exercises</a></li>
+<li class="chapter" data-level="D.6" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-online-exercises"><i class="fa fa-check"></i><b>D.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="ch-regression.html"><a href="ch-regression.html"><i class="fa fa-check"></i><b>E</b> Regression modeling</a>
+<ul>
+<li class="chapter" data-level="E.1" data-path="ch-regression.html"><a href="ch-regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>E.1</b> Simple linear regression</a>
+<ul>
+<li class="chapter" data-level="E.1.1" data-path="ch-regression.html"><a href="ch-regression.html#motivating-example-modeling-usage-of-a-rail-trail"><i class="fa fa-check"></i><b>E.1.1</b> Motivating example: Modeling usage of a rail trail</a></li>
+<li class="chapter" data-level="E.1.2" data-path="ch-regression.html"><a href="ch-regression.html#model-visualization"><i class="fa fa-check"></i><b>E.1.2</b> Model visualization</a></li>
+<li class="chapter" data-level="E.1.3" data-path="ch-regression.html"><a href="ch-regression.html#measuring-the-strength-of-fit"><i class="fa fa-check"></i><b>E.1.3</b> Measuring the strength of fit</a></li>
+<li class="chapter" data-level="E.1.4" data-path="ch-regression.html"><a href="ch-regression.html#sec:anova"><i class="fa fa-check"></i><b>E.1.4</b> Categorical explanatory variables</a></li>
+</ul></li>
+<li class="chapter" data-level="E.2" data-path="ch-regression.html"><a href="ch-regression.html#multiple-regression"><i class="fa fa-check"></i><b>E.2</b> Multiple regression</a>
+<ul>
+<li class="chapter" data-level="E.2.1" data-path="ch-regression.html"><a href="ch-regression.html#sec:indicators"><i class="fa fa-check"></i><b>E.2.1</b> Parallel slopes: Multiple regression with a categorical variable</a></li>
+<li class="chapter" data-level="E.2.2" data-path="ch-regression.html"><a href="ch-regression.html#parallel-planes-multiple-regression-with-a-second-quantitative-variable"><i class="fa fa-check"></i><b>E.2.2</b> Parallel planes: Multiple regression with a second quantitative variable</a></li>
+<li class="chapter" data-level="E.2.3" data-path="ch-regression.html"><a href="ch-regression.html#sec:interaction"><i class="fa fa-check"></i><b>E.2.3</b> Non-parallel slopes: Multiple regression with interaction</a></li>
+<li class="chapter" data-level="E.2.4" data-path="ch-regression.html"><a href="ch-regression.html#modeling-non-linear-relationships"><i class="fa fa-check"></i><b>E.2.4</b> Modeling non-linear relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="E.3" data-path="ch-regression.html"><a href="ch-regression.html#inference-for-regression"><i class="fa fa-check"></i><b>E.3</b> Inference for regression</a></li>
+<li class="chapter" data-level="E.4" data-path="ch-regression.html"><a href="ch-regression.html#assumptions-underlying-regression"><i class="fa fa-check"></i><b>E.4</b> Assumptions underlying regression</a></li>
+<li class="chapter" data-level="E.5" data-path="ch-regression.html"><a href="ch-regression.html#sec:logistic"><i class="fa fa-check"></i><b>E.5</b> Logistic regression</a></li>
+<li class="chapter" data-level="E.6" data-path="ch-regression.html"><a href="ch-regression.html#regression-further"><i class="fa fa-check"></i><b>E.6</b> Further resources</a></li>
+<li class="chapter" data-level="E.7" data-path="ch-regression.html"><a href="ch-regression.html#regression-exercises"><i class="fa fa-check"></i><b>E.7</b> Exercises</a></li>
+<li class="chapter" data-level="E.8" data-path="ch-regression.html"><a href="ch-regression.html#regression-online-exercises"><i class="fa fa-check"></i><b>E.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="F" data-path="ch-db-setup.html"><a href="ch-db-setup.html"><i class="fa fa-check"></i><b>F</b> Setting up a database server</a>
+<ul>
+<li class="chapter" data-level="F.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sqlite"><i class="fa fa-check"></i><b>F.1</b> SQLite</a></li>
+<li class="chapter" data-level="F.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#mysql"><i class="fa fa-check"></i><b>F.2</b> MySQL</a>
+<ul>
+<li class="chapter" data-level="F.2.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#installation"><i class="fa fa-check"></i><b>F.2.1</b> Installation</a></li>
+<li class="chapter" data-level="F.2.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:mysql-access"><i class="fa fa-check"></i><b>F.2.2</b> Access</a></li>
+<li class="chapter" data-level="F.2.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#running-scripts-from-the-command-line"><i class="fa fa-check"></i><b>F.2.3</b> Running scripts from the command line</a></li>
+</ul></li>
+<li class="chapter" data-level="F.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#postgresql"><i class="fa fa-check"></i><b>F.3</b> PostgreSQL</a></li>
+<li class="chapter" data-level="F.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-sql"><i class="fa fa-check"></i><b>F.4</b> Connecting to SQL</a>
+<ul>
+<li class="chapter" data-level="F.4.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#the-command-line-client"><i class="fa fa-check"></i><b>F.4.1</b> The command line client</a></li>
+<li class="chapter" data-level="F.4.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#guis"><i class="fa fa-check"></i><b>F.4.2</b> GUIs</a></li>
+<li class="chapter" data-level="F.4.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-r-sql"><i class="fa fa-check"></i><b>F.4.3</b> R and RStudio</a></li>
+<li class="chapter" data-level="F.4.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:sqlitebaby"><i class="fa fa-check"></i><b>F.4.4</b> Load into SQLite database</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="index.html">Modern Data Science with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch:ethics" class="section level1" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Data science ethics</h1>
+<div id="ethics-intro" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Introduction</h2>
+<p>
+
+
+
+Work in data analytics involves expert knowledge, understanding, and skill.
+In much of your work, you will be relying on the trust and confidence that your clients place in you. The term <a href="https://en.wikipedia.org/w/index.php?search=professional%20ethics"><em>professional ethics</em></a> describes the special responsibilities not to take unfair advantage of that trust. This involves more than being thoughtful and using common sense; there are specific professional standards that should guide your actions.
+Moreover, due to the potential that their work may be deployed at scale, data scientists must anticipate how their work could used by others and wrestle with any ethical implications.</p>
+<p>
+
+
+The best-known professional standards are those in the <a href="https://en.wikipedia.org/w/index.php?search=Hippocratic%20Oath"><em>Hippocratic Oath</em></a> for physicians, which were originally written in the 5th century B.C. Three of the eight principles in the modern version of the oath <span class="citation">(Wikipedia 2016)</span> are presented here because of similarity to standards for data analytics.</p>
+<p>
+</p>
+<ol style="list-style-type: decimal">
+<li>“I will not be ashamed to say ‘I know not,’ nor will I fail to call in my colleagues when the skills of another are needed for a patient’s recovery.”</li>
+<li>“I will respect the privacy of my patients, for their problems are not disclosed to me that the world may know.”</li>
+<li>“I will remember that I remain a member of society, with special obligations to all my fellow human beings, those sound of mind and body as well as the infirm.”</li>
+</ol>
+<p>
+
+
+
+
+Depending on the jurisdiction, these principles are extended and qualified by law. For instance, notwithstanding the need to “respect the privacy of my patients,” health-care providers in the United States are required by law to report to appropriate government authorities evidence of child abuse or infectious diseases such as botulism, chicken pox, and cholera.</p>
+<p>
+
+This chapter introduces principles of professional ethics for data science and gives examples of legal obligations, as well as guidelines issued by professional societies.
+There is no official data scientist’s oath—although attempts to forge one exist <span class="citation">(National Academies of Science, Engineering, and Medicine 2018)</span>. Reasonable people can disagree about what actions are best, but the existing guidelines provide a description of the ethical expectations on which your clients can reasonably rely. As a consensus statement of professional ethics, the guidelines also establish standards of accountability.
+
+</p>
+</div>
+<div id="truthful-falsehoods" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Truthful falsehoods</h2>
+<p>
+</p>
+<p>
+
+
+
+
+The single best-selling book with “statistics” in the title is <em>How to Lie with Statistics</em> by <a href="https://en.wikipedia.org/w/index.php?search=Darrell%20Huff">Darrell Huff</a> <span class="citation">(Huff 1954)</span>. Written in the 1950s, the book shows graphical ploys to fool people even with accurate data. A general method is to violate conventions and tacit expectations that readers rely on when interpreting graphs. One way to think of <em>How to Lie</em> is a text to show the general public what these tacit expectations are and give tips for detecting when the trick is being played on them. The book’s title, while compelling, has wrongly tarred the field of statistics. The “statistics” of the title are really just “numbers.” The misleading graphical techniques are employed by politicians, journalists, and businessmen: not statisticians. More accurate titles would be “How to Lie with Numbers,” or “Don’t be misled by graphics.”</p>
+<p>Some of the graphical tricks in <em>How to Lie</em> are still in use. Consider these three recent examples.</p>
+<div id="stand-your-ground" class="section level3" number="8.2.1">
+<h3><span class="header-section-number">8.2.1</span> Stand your ground</h3>
+<p>
+
+
+
+
+
+In 2005, the <a href="https://en.wikipedia.org/w/index.php?search=Florida%20legislature"><em>Florida legislature</em></a> passed the controversial <a href="https://en.wikipedia.org/wiki/Stand-your-ground_law">“Stand Your Ground” law</a> that broadened the situations in which citizens can use lethal force to protect themselves against perceived threats. Advocates believed that the new law would ultimately reduce crime; opponents feared an increase in the use of lethal force. What was the actual outcome?</p>
+<p>
+
+
+The graphic in Figure <a href="ch-ethics.html#fig:florida">8.1</a> is a reproduction of one published by the news service <a href="http://static5.businessinsider.com/image/53038b556da8110e5ce82be7-604-756/florida%20gun%20deaths.jpg">Reuters</a> on February 16, 2014 showing the number of firearm murders in Florida over the years.
+Upon first glance, the graphic gives the visual impression that right after the passage of the 2005 law, the number of murders decreased substantially.
+However, the numbers tell a different story.
+</p>
+<div class="figure"><span id="fig:florida"></span>
+<img src="08-ethics_files/figure-html/florida-1.png" alt="Reproduction of a data graphic reporting the number of gun deaths in Florida over time. The original image was published by Reuters." width="100%" />
+<p class="caption">
+Figure 8.1: Reproduction of a data graphic reporting the number of gun deaths in Florida over time. The original image was published by Reuters.
+</p>
+</div>
+<p>The convention in data graphics is that up corresponds to increasing values. This is not an obscure convention—rather, it’s a standard part of the secondary school curriculum.
+Close inspection reveals that the <span class="math inline">\(y\)</span>-axis in Figure <a href="ch-ethics.html#fig:florida">8.1</a> has been flipped upside down—the number of gun deaths increased sharply after 2005.</p>
+</div>
+<div id="global-temperature" class="section level3" number="8.2.2">
+<h3><span class="header-section-number">8.2.2</span> Global temperature</h3>
+<p>
+
+
+
+
+Figure <a href="ch-ethics.html#fig:climate">8.2</a> shows another example of misleading graphics: a tweet by the news magazine <em>National Review</em> on the subject of climate change.
+The dominant visual impression of the graphic is that global temperature has hardly changed at all.</p>
+<div class="figure"><span id="fig:climate"></span>
+<img src="gfx/national_review_tweet.png" alt="A tweet by National Review on December 14, 2015 showing the change in global temperature over time. The tweet was later deleted." width="80%" />
+<p class="caption">
+Figure 8.2: A tweet by <em>National Review</em> on December 14, 2015 showing the change in global temperature over time. The tweet was later deleted.
+</p>
+</div>
+
+<p>There is a tacit graphical convention that the coordinate scales on which the data are plotted are relevant to an informed interpretation of the data. The <span class="math inline">\(x\)</span>-axis follows the convention—1880 to 2015 is a reasonable choice when considering the relationship between human industrial activity and climate. The <span class="math inline">\(y\)</span>-axis, however, is utterly misleading. The scale goes from <span class="math inline">\(-10\)</span> to 110 degrees <a href="https://en.wikipedia.org/w/index.php?search=Fahrenheit"><em>Fahrenheit</em></a>.
+While this is a relevant scale for showing <em>season-to-season</em> variation in temperature, that is not the salient issue with respect to climate change.
+The concern with climate change is about rising ocean levels, intensification of storms, ecological and agricultural disruption, etc.
+These are the anticipated results of a change in global <em>average</em> temperature on the order of 5 degrees Fahrenheit.
+The <em>National Review</em> graphic has obscured the data by showing them on an irrelevant scale where the actual changes in temperature are practically invisible.
+By graying out the numbers on the <span class="math inline">\(y\)</span>-axis, the <em>National Review</em> makes it even harder to see the trick that’s being played.
+The tweet was subsequently deleted.
+
+
+
+</p>
+</div>
+<div id="covid-19-reporting" class="section level3" number="8.2.3">
+<h3><span class="header-section-number">8.2.3</span> COVID-19 reporting</h3>
+<p>
+
+In May 2020, the state of <a href="https://en.wikipedia.org/w/index.php?search=Georgia"><em>Georgia</em></a> published <a href="https://www.vox.com/covid-19-coronavirus-us-response-trump/2020/5/18/21262265/georgia-covid-19-cases-declining-reopening">a highly misleading graphical display of COVID-19 cases</a> (see Figure <a href="ch-ethics.html#fig:covidga">8.3</a>).
+Note that the results for April 17th appear to the right of April 19th, and that the counties are ordered such that all of the results are monotonically decreasing for each reporting period.
+The net effect of the graph is to demonstrate that confirmed COVID cases are decreasing, but it does so in a misleading fashion.
+Public outcry led to a statement from the governor’s office that moving forward, chronological order would be used to display time.</p>
+<div class="figure"><span id="fig:covidga"></span>
+<img src="gfx/covid-ga-recreation.jpg" alt="A recreation of a misleading display of confirmed COVID-19 cases in Georgia." width="100%" />
+<p class="caption">
+Figure 8.3: A recreation of a misleading display of confirmed COVID-19 cases in Georgia.
+</p>
+</div>
+</div>
+</div>
+<div id="role-of-data-science-in-society" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Role of data science in society</h2>
+<p>
+The examples in Figures <a href="ch-ethics.html#fig:florida">8.1</a>, <a href="ch-ethics.html#fig:climate">8.2</a>, and <a href="ch-ethics.html#fig:covidga">8.3</a> are not about lying with statistics.
+Statistical methodology doesn’t enter into them.
+It’s the professional ethics of journalism that the graphics violate, aided and abetted by an irresponsible ignorance of statistical methodology.
+Insofar as the graphics concern matters of political controversy, they can be seen as part of the political process.
+While politics is a profession, it’s a profession without any comprehensive standard of professional ethics.</p>
+<p>As data scientists, what role do we play in shaping public discourse? What responsibilities do we have?
+The stakes are high, and context matters.</p>
+<p>The misleading data graphic about the “Stand Your Ground” law was published about six months after <a href="https://en.wikipedia.org/w/index.php?search=George%20Zimmerman">George Zimmerman</a> was acquitted for <a href="https://en.wikipedia.org/wiki/Shooting_of_Trayvon_Martin">killing</a> <a href="https://en.wikipedia.org/w/index.php?search=Trayvon%20Martin">Trayvon Martin</a>.
+Did the data graphic affect public perception in the wake of this tragedy?</p>
+<p>The <em>National Review</em> tweet was published during the thick of the presidential primaries leading up the 2016 election, and the publication is a leading voice in conservative political thought.
+<a href="https://en.wikipedia.org/w/index.php?search=Pew%20Research"><em>Pew Research</em></a> reports that while concern about climate change has increased steadily among those who lean Democratic since 2013 (88% said climate change is “a major threat to the United States” in 2020, up from 58% in 2013), <a href="https://www.pewresearch.org/fact-tank/2020/04/16/u-s-concern-about-climate-change-is-rising-but-mainly-among-democrats/">it did not increase at all among those who lean Republican from 2010 to mid-2019</a>, holding steady at 25%.
+Did the <em>National Review</em> persuade their readers to dismiss the <a href="https://en.wikipedia.org/w/index.php?search=scientific%20consensus%20on%20climate%20change"><em>scientific consensus on climate change</em></a>?</p>
+<p>The misleading data graphic about COVID-19 cases in Georgia was published during a time that Governor <a href="https://en.wikipedia.org/w/index.php?search=Brian%20Kemp">Brian Kemp</a>’s reopening plan was facing stiff criticism from Atlanta mayor <a href="https://en.wikipedia.org/w/index.php?search=Keisha%20Lance%20Bottoms">Keisha Lance Bottoms</a>, his former opponent in the governor’s race <a href="https://en.wikipedia.org/w/index.php?search=Stacey%20Abrams">Stacey Abrams</a>, and even President <a href="https://en.wikipedia.org/w/index.php?search=Donald%20Trump">Donald Trump</a>.
+<a href="https://www.businessinsider.com/graph-shows-georgia-bungling-coronavirus-data-2020-5">Journalists called attention to the data graphic on May 10th</a>.
+The <a href="https://dph.georgia.gov/covid-19-daily-status-report">Georgia Department of Health itself reports</a> that the 7-day moving average for COVID-19 cases increased by more than 125 cases per day during the two weeks following May 10th.
+Did the Georgia’s governor’s office convince people to ignore the risk of COVID-19?</p>
+<p>These unanswered (and intentionally provocative) questions are meant to encourage you to see the deep and not always obvious ways in which data science work connects to society at-large.</p>
+</div>
+<div id="some-settings-for-professional-ethics" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> Some settings for professional ethics</h2>
+<p>
+
+
+
+
+Common sense is a good starting point for evaluating the ethics of a situation. Tell the truth. Don’t steal. Don’t harm innocent people.
+But professional ethics also require an informed assessment.
+A dramatic illustration of this comes from legal ethics: a situation where the lawyers for an accused murderer found the bodies of two victims whose deaths were unknown to authorities and to the victims’ families.
+The responsibility to confidentiality for their client precluded the lawyers from following their hearts and reporting the discovery.
+The lawyers’ careers were destroyed by the public and political recriminations that followed, yet courts and legal scholars have confirmed that the lawyers were right to do what they did, and have even held them up as heroes for their ethical behavior.</p>
+<p>Such extreme drama is rare. This section describes in brief six situations that raise questions of the ethical course of action.
+Some are drawn from the authors’ personal experience, others from court cases and other reports.
+The purpose of these short case reports is to raise questions.
+Principles for addressing those questions are the subject of the next section.</p>
+<div id="the-chief-executive-officer" class="section level3" number="8.4.1">
+<h3><span class="header-section-number">8.4.1</span> The chief executive officer</h3>
+<p>
+
+One of us once worked as a statistical consultant for a client who wanted a proprietary model to predict commercial outcomes.
+After reviewing the literature, an existing multiple linear regression model was found that matched the scenario well, and available public data were used to fit the parameters of the model.
+The client’s staff were pleased with the result, but the CEO wanted a model that would give a competitive advantage.
+After all, their competitors could easily follow the same process to the same model, so what advantage would the client’s company have?
+The CEO asked the statistical consultant whether the coefficients in the model could be “tweaked” to reflect the specific values of his company.
+The consultant suggested that this would not be appropriate, that the fitted coefficients best match the data and to change them arbitrarily would be “playing God.”
+In response, the CEO rose from his chair and asserted, “I want to play God.”</p>
+<p>How should the consultant respond?</p>
+</div>
+<div id="employment-discrimination" class="section level3" number="8.4.2">
+<h3><span class="header-section-number">8.4.2</span> Employment discrimination</h3>
+<p>
+
+
+
+
+
+
+One of us works on legal cases arising from audits of employers, conducted by the <a href="https://en.wikipedia.org/w/index.php?search=United%20States%20Office%20of%20Federal%20Contract%20Compliance%20Programs"><em>United States Office of Federal Contract Compliance Programs</em></a> (OFCCP).
+In a typical case, the OFCCP asks for hiring and salary data from a company that has a contract with the United States government.
+The company usually complies, sometimes unaware that the OFCCP applies a method to identify “discrimination” through a two-standard-deviation test outlined in the Uniform Guidelines on Employee Selection Procedures (UGESP).
+A company that does not discriminate has some risk of being labeled as discriminating by the OFCCP method <span class="citation">(Bridgeford 2014)</span>.
+By using a questionable statistical method, is the OFCCP acting unethically?</p>
+</div>
+<div id="gaydar" class="section level3" number="8.4.3">
+<h3><span class="header-section-number">8.4.3</span> “Gaydar”</h3>
+<p><span class="citation">Y. Wang and Kosinski (2018)</span> used a deep neural network (see Section <a href="ch-learningI.html#sec:neuralnet">11.1.5</a>) and logistic regression to build a classifier (see Chapter <a href="ch-modeling.html#ch:modeling">10</a>) for sexual orientation based on pictures of people’s faces. The authors claim that if given five images of a person’s face, their model would correctly predict the sexual orientation of 91% of men and 83% of women. The authors highlight the potential harm that their work could do in their abstract:</p>
+<blockquote>
+<p>“Additionally, given that companies and governments are increasingly using computer vision algorithms to detect people’s intimate traits, our findings expose a threat to the privacy and safety of gay men and women.”</p>
+</blockquote>
+<p><a href="https://www.newyorker.com/news/daily-comment/the-ai-gaydar-study-and-the-real-dangers-of-big-data">A subsequent article in <em>The New Yorker</em></a> also notes that:</p>
+<blockquote>
+<p>“the study consisted entirely of white faces, but only because the dating site had served up too few faces of color to provide for meaningful analysis.”</p>
+</blockquote>
+<p>Was this research ethical? Were the authors justified in creating and publishing this model?</p>
+</div>
+<div id="race-prediction" class="section level3" number="8.4.4">
+<h3><span class="header-section-number">8.4.4</span> Race prediction</h3>
+<p><span class="citation">Imai and Khanna (2016)</span> built a racial prediction algorithm using a Bayes classifer (see Section <a href="ch-learningI.html#sec:bayes">11.1.4</a>) trained on voter registration records from Florida and the U.S. Census Bureau’s name list.
+In addition to the publishing the paper detailing the methodology, the authors published the software for the classifer on <a href="https://en.wikipedia.org/w/index.php?search=GitHub"><em>GitHub</em></a> under an open-source license. The <strong>wru</strong> package is available on CRAN and will return predicted probabilities for a person’s race based on either their last name alone, or their last name and their address.</p>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="ch-ethics.html#cb355-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb355-2"><a href="ch-ethics.html#cb355-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wru)</span>
+<span id="cb355-3"><a href="ch-ethics.html#cb355-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict_race</span>(<span class="at">voter.file =</span> voters, <span class="at">surname.only =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb355-4"><a href="ch-ethics.html#cb355-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(surname, pred.whi, pred.bla, pred.his, pred.asi, pred.oth)</span></code></pre></div>
+<pre><code>[1] &quot;Proceeding with surname-only predictions...&quot;</code></pre>
+<pre><code>      surname pred.whi pred.bla pred.his pred.asi pred.oth
+4      Khanna   0.0676   0.0043  0.00820   0.8668  0.05310
+2        Imai   0.0812   0.0024  0.06890   0.7375  0.11000
+8     Velasco   0.0594   0.0026  0.82270   0.1051  0.01020
+1     Fifield   0.9356   0.0022  0.02850   0.0078  0.02590
+10       Zhou   0.0098   0.0018  0.00065   0.9820  0.00575
+7    Ratkovic   0.9187   0.0108  0.01083   0.0108  0.04880
+3     Johnson   0.5897   0.3463  0.02360   0.0054  0.03500
+5       Lopez   0.0486   0.0057  0.92920   0.0102  0.00630
+11 Wantchekon   0.6665   0.0853  0.13670   0.0797  0.03180
+6       Morse   0.9054   0.0431  0.02060   0.0072  0.02370</code></pre>
+<p>Given the long history of <a href="https://en.wikipedia.org/w/index.php?search=systemic%20racism"><em>systemic racism</em></a> <a href="https://en.wikipedia.org/wiki/Institutional_racism#United_States">in the United States</a>, it is clear how this software could be used to discriminate against people of color.
+One of us once partnered with a progressive voting rights organization that wanted to use racial prediction to target members of an ethnic group to <em>help them register to vote</em>.</p>
+<p>Was the publication of this model ethical?
+Does the open-source nature of the code affect your answer?
+Is it ethical to use this software?
+Does your answer change depending on the intended use?</p>
+</div>
+<div id="data-scraping" class="section level3" number="8.4.5">
+<h3><span class="header-section-number">8.4.5</span> Data scraping</h3>
+<p>
+
+
+
+
+
+
+In May 2016, the online OpenPsych Forum published
+<a href="http://openpsych.net/forum/showthread.php?tid=279">a paper</a> by <span class="citation">Kirkegaard and Bjerrekær (2016)</span>
+titled “The OkCupid data set: A very large public data set of dating site users.”
+The resulting data set contained 2,620 variables—including usernames, gender, and dating preferences—from 68,371 people scraped from the <a href="https://www.okcupid.com">OkCupid</a> dating website.
+The ostensible purpose of the data dump was to provide an interesting open public data set to fellow researchers.
+These data might be used to answer questions such as this one suggested in the abstract of the paper: whether the <a href="https://en.wikipedia.org/w/index.php?search=zodiac%20sign"><em>zodiac sign</em></a> of each user was associated with any of the other variables (spoiler alert: it wasn’t).</p>
+<p>The data scraping did not involve any illicit technology such as breaking passwords. Nonetheless, the author received many comments on the OpenPsych Forum challenging the work as an ethical breach and accusing him of <a href="https://en.wikipedia.org/w/index.php?search=doxing"><em>doxing</em></a> people by releasing personal data. Does the work raise ethical issues?</p>
+</div>
+<div id="reproducible-spreadsheet-analysis" class="section level3" number="8.4.6">
+<h3><span class="header-section-number">8.4.6</span> Reproducible spreadsheet analysis</h3>
+<p>
+
+
+
+
+
+
+
+In 2010, <a href="https://en.wikipedia.org/w/index.php?search=Harvard%20University"><em>Harvard University</em></a> economists <a href="https://en.wikipedia.org/w/index.php?search=Carmen%20Reinhart">Carmen Reinhart</a> and <a href="https://en.wikipedia.org/w/index.php?search=Kenneth%20Rogoff">Kenneth Rogoff</a> published a report entitled “Growth in a Time of Debt” <span class="citation">(Rogoff and Reinhart 2010)</span>, which argued that countries which pursued austerity measures did not necessarily suffer from slow economic growth.
+These ideas influenced the thinking of policymakers—notably United States Congressman <a href="https://en.wikipedia.org/w/index.php?search=Paul%20Ryan">Paul Ryan</a>—during the time of the <a href="https://en.wikipedia.org/w/index.php?search=European%20debt%20crisis"><em>European debt crisis</em></a>.</p>
+<p>
+
+<a href="https://en.wikipedia.org/w/index.php?search=University%20of%20Massachusetts"><em>University of Massachusetts</em></a> graduate student <a href="https://en.wikipedia.org/w/index.php?search=Thomas%20Herndon">Thomas Herndon</a> requested access to the data and analysis contained in the paper. After receiving the original spreadsheet from Reinhart, Herndon found several errors.</p>
+<blockquote>
+<p>“I clicked on cell L51, and saw that they had only averaged rows 30 through 44, instead of rows 30 through 49.” —Thomas Herndon <span class="citation">(Roose 2013)</span></p>
+</blockquote>
+<p>
+
+In a critique of the paper, <span class="citation">Herndon, Ash, and Pollin (2014)</span> point out coding errors, selective inclusion of data, and odd weighting of summary statistics that shaped the conclusions of the Reinhart/Rogoff paper.</p>
+<p>What ethical questions does publishing a flawed analysis raise?</p>
+</div>
+<div id="drug-dangers" class="section level3" number="8.4.7">
+<h3><span class="header-section-number">8.4.7</span> Drug dangers</h3>
+<p>
+
+
+
+
+In September 2004, the drug company <a href="https://en.wikipedia.org/w/index.php?search=Merck"><em>Merck</em></a> withdrew the popular product <a href="https://en.wikipedia.org/w/index.php?search=Vioxx"><em>Vioxx</em></a> from the market because of evidence that the drug increases the risk of <a href="https://en.wikipedia.org/w/index.php?search=myocardial%20infarction"><em>myocardial infarction</em></a> (MI), a major type of heart attack.
+Approximately 20 million Americans had taken Vioxx up to that point. The leading medical journal <em>Lancet</em> later reported an estimate that Vioxx use resulted in 88,000 Americans having heart attacks, of whom 38,000 died.</p>
+<p>
+
+
+
+
+Vioxx had been approved in May 1999 by the <a href="https://en.wikipedia.org/w/index.php?search=United%20States%20Food%20and%20Drug%20Administration"><em>United States Food and Drug Administration</em></a> based on tests involving 5,400 subjects.
+Slightly more than a year after the FDA approval, a study <span class="citation">(Bombardier et al. 2000)</span> of 8,076 patients published in another leading medical journal, <em>The New England Journal of Medicine</em>, established that Vioxx reduced the incidence of severe gastrointestinal events substantially compared to the standard treatment, <a href="https://en.wikipedia.org/w/index.php?search=naproxen"><em>naproxen</em></a>.
+That’s good for Vioxx. In addition, the abstract reports these findings regarding heart attacks:</p>
+<p>
+
+</p>
+<blockquote>
+<p>The incidence of myocardial infarction was lower among patients in the naproxen group than among those in the [Vioxx] group (0.1 percent vs. 0.4 percent; relative risk, 0.2; 95% confidence interval, 0.1 to 0.7); the overall mortality rate and the rate of death from cardiovascular causes were similar in the two groups."</p>
+</blockquote>
+<p>Read the abstract again carefully. The Vioxx group had a much <em>higher</em> rate of MI than the group taking the standard treatment.
+This influential report identified the high risk soon after the drug was approved for use.
+Yet Vioxx was not withdrawn for another three years. Something clearly went wrong here. Did it involve an ethical lapse?</p>
+</div>
+<div id="legal-negotiations" class="section level3" number="8.4.8">
+<h3><span class="header-section-number">8.4.8</span> Legal negotiations</h3>
+<p>
+
+
+
+Lawyers sometimes retain statistical experts to help plan negotiations. In a common scenario, the defense lawyer will be negotiating the amount of damages in a case with the plaintiff’s attorney.
+Plaintiffs will ask the statistician to estimate the amount of damages, with a clear but implicit directive that the estimate should reflect the plaintiff’s interests.
+Similarly, the defense will ask their own expert to construct a framework that produces an estimate at a lower level.</p>
+<p>Is this a game statisticians should play?</p>
+</div>
+</div>
+<div id="some-principles-to-guide-ethical-action" class="section level2" number="8.5">
+<h2><span class="header-section-number">8.5</span> Some principles to guide ethical action</h2>
+<p>In Section <a href="ch-ethics.html#ethics-intro">8.1</a>, we listed three principles from the Hippocratic Oath that has been administered to doctors for hundreds of years. Below, we reprint the three corresponding principles as outlined in the Data Science Oath published by the <a href="https://en.wikipedia.org/w/index.php?search=National%20Academy%20of%20Sciences"><em>National Academy of Sciences</em></a> <span class="citation">(National Academies of Science, Engineering, and Medicine 2018)</span>.</p>
+<ol style="list-style-type: decimal">
+<li>I will not be ashamed to say, “I know not,” nor will I fail to call in my colleagues when the skills of another are needed for solving a problem.</li>
+<li>I will respect the privacy of my data subjects, for their data are not disclosed to me that the world may know, so I will tread with care in matters of privacy and security.</li>
+<li>I will remember that my data are not just numbers without meaning or context, but represent real people and situations, and that my work may lead to unintended societal consequences, such as inequality, poverty, and disparities due to algorithmic bias.</li>
+</ol>
+<p>To date, the Data Science Oath has not achieved the widespread adoption or formal acceptance of its inspiration.
+We hope this will change in the coming years.</p>
+<p>Another set of ethical guidelines for data science is the <a href="https://datapractices.org/manifesto/">Data Values and Principles</a> manifesto published by DataPractices.org.
+This document espouses four values (inclusion, experimentation, accountability, and impact) and 12 principles that provide a guide for the ethical practice of data science:</p>
+<ol style="list-style-type: decimal">
+<li>Use data to improve life for our users, customers, organizations, and communities.</li>
+<li>Create reproducible and extensible work.</li>
+<li>Build teams with diverse ideas, backgrounds, and strengths.</li>
+<li>Prioritize the continuous collection and availability of discussions and metadata.</li>
+<li>Clearly identify the questions and objectives that drive each project and use to guide both planning and refinement.</li>
+<li>Be open to changing our methods and conclusions in response to new knowledge.</li>
+<li>Recognize and mitigate bias in ourselves and in the data we use.</li>
+<li>Present our work in ways that empower others to make better-informed decisions.</li>
+<li>Consider carefully the ethical implications of choices we make when using data, and the impacts of our work on individuals and society.</li>
+<li>Respect and invite fair criticism while promoting the identification and open discussion of errors, risks, and unintended consequences of our work.</li>
+<li>Protect the privacy and security of individuals represented in our data.</li>
+<li>Help others to understand the most useful and appropriate applications of data to solve real-world problems.</li>
+</ol>
+<p>In October 2020, this document had over 2,000 signatories (including two of the authors of this book).</p>
+<p>In what follows we explore how these principles can be applied to guide ethical thinking in the several scenarios outlined in the previous section.</p>
+<div id="the-ceo" class="section level3" number="8.5.1">
+<h3><span class="header-section-number">8.5.1</span> The CEO</h3>
+<p>
+You’ve been asked by a company CEO to modify model coefficients from the correct values, that is, from the values found by a generally accepted method.
+The stakeholder in this setting is the company.
+If your work will involve a method that’s not generally accepted by the professional community, you’re obliged to point this out to the company.</p>
+<p>Principles 8 and 12 are germane.
+Have you presented your work in a way that empowers others to make better-informed decisions (principle 8)?
+Certainly your client also has substantial knowledge of how their business works.
+It’s important to realize that your client’s needs may not map well onto a particular statistical methodology.
+The consultant should work genuinely to understand the client’s whole set of interests (principle 12).
+Often the problem that clients identify is not really the problem that needs to be solved when seen from an expert statistical perspective.</p>
+</div>
+<div id="employment-discrimination-1" class="section level3" number="8.5.2">
+<h3><span class="header-section-number">8.5.2</span> Employment discrimination</h3>
+<p>
+
+
+
+
+
+
+
+
+
+
+The procedures adopted by the OFCCP are stated using statistical terms like “standard deviation” that themselves suggest that they are part of a legitimate statistical method.
+Yet the methods raise significant questions, since by construction they will sometimes label a company that is not discriminating as a discriminator.
+Principle 10 suggests the OFCCP should “invite fair criticism” of their methodology.
+OFCCP and others might argue that they are not a statistical organization. They are enforcing a law, not participating in research. The OFCCP has a responsibility to the courts.
+The courts themselves, including the United States Supreme Court, have not developed or even called for a coherent approach to the use of statistics (although in 1977 the <a href="http://peopleclick.com/resources/pri/10-09/Statistical_Significance.asp">Supreme Court labeled</a> differences greater than two or three standard deviations as too large to attribute solely to chance).</p>
+</div>
+<div id="gaydar-1" class="section level3" number="8.5.3">
+<h3><span class="header-section-number">8.5.3</span> “Gaydar”</h3>
+<p>Principles 1, 3, 7, 9, and 11 are relevant here.
+Does the prediction of sexual orientation based on facial recognition improve life for communities (principle 1)?
+As noted in the abstract, the researchers <em>did</em> consider the ethical implications of their work (principle 9), but did they protect the privacy and security of the individuals presented in their data (principle 11)?
+The exclusion of non-white faces from the study casts doubt on whether the standard outlined in principle 7 was met.</p>
+</div>
+<div id="race-prediction-1" class="section level3" number="8.5.4">
+<h3><span class="header-section-number">8.5.4</span> Race prediction</h3>
+<p>Clearly, using this software to discriminate against historically marginalized people would violate some combination of principles 3, 7, and 9.
+On the other hand, is it ethical to use this software to try and help underrepresented groups if those same principles are not violated?
+The authors of the <strong>wru</strong> package admirably met principle 2, but they may not have fully adhered to principle 9.</p>
+</div>
+<div id="data-scraping-1" class="section level3" number="8.5.5">
+<h3><span class="header-section-number">8.5.5</span> Data scraping</h3>
+<p>
+OkCupid provides public access to data. A researcher uses legitimate means to acquire those data. What could be wrong?</p>
+<p>
+
+
+
+There is the matter of the stakeholders. The collection of data was intended to support psychological research.
+The ethics of research involving humans requires that the human not be exposed to any risk for which consent has not been explicitly given.
+The OkCupid members did not provide such consent.
+Since the data contain information that makes it possible to identify individual humans, there is a realistic risk of the release of potentially embarrassing information, or worse, information that jeopardizes the physical safety of certain users.
+Principles 1 and 11 were clearly violated by the authors.
+Ultimately, the Danish Data Protection Agency <a href="https://emilkirkegaard.dk/en/wp-content/uploads/1.1-2016-631-0148-Sagen-afsluttes.pdf">decided not to file any charges against the authors</a>.</p>
+<p>
+
+Another stakeholder is OkCupid itself. Many information providers, like OkCupid, have <a href="https://en.wikipedia.org/w/index.php?search=terms%20of%20use"><em>terms of use</em></a> that restrict how the data may be legitimately used. Such terms of use (see Section <a href="ch-ethics.html#sec:terms-of-use">8.7.3</a>) form an explicit agreement between the service and the users of that service. They cannot ethically be disregarded.</p>
+</div>
+<div id="reproducible-spreadsheet-analysis-1" class="section level3" number="8.5.6">
+<h3><span class="header-section-number">8.5.6</span> Reproducible spreadsheet analysis</h3>
+<p>
+
+
+
+
+
+The scientific community as a whole is a stakeholder in public research.
+Insofar as the research is used to inform public policy, the public as a whole is a stakeholder.
+Researchers have an obligation to be truthful in their reporting of research. This is not just a matter of being honest but also of participating in the process by which scientific work is challenged or confirmed.
+Reinhart and Rogoff honored this professional obligation by providing reasonable access to their software and data.
+In this regard, they complied with principle 10.</p>
+<p>
+
+
+
+Seen from the perspective of data science, Microsoft Excel, the tool used by Reinhart and Rogoff, is an unfortunate choice.
+It mixes the data with the analysis. It works at a low level of abstraction, so it’s difficult to program in a concise and readable way. Commands are customized to a particular size and organization of data, so it’s hard to apply to a new or modified data set.
+One of the major strategies in debugging is to work on a data set where the answer is known; this is impractical in Excel.
+Programming and revision in Excel generally involves lots of click-and-drag copying, which is itself an error-prone operation.</p>
+<p>
+Data science professionals have an ethical obligation to use tools that are reliable, verifiable, and conducive to reproducible data analysis (see Appendix <a href="ch-reproduce.html#ch:reproduce">D</a>).
+Reinhart and Rogoff did not meet the standard implied by principle 2.</p>
+</div>
+<div id="drug-dangers-1" class="section level3" number="8.5.7">
+<h3><span class="header-section-number">8.5.7</span> Drug dangers</h3>
+<p>When something goes wrong on a large scale, it’s tempting to look for a breach of ethics. This may indeed identify an offender, but we must also beware of creating scapegoats. With Vioxx, there were many claims, counterclaims, and lawsuits. The researchers failed to incorporate some data that were available and provided a misleading summary of results.
+The journal editors also failed to highlight the very substantial problem of the increased rate of myocardial infarction with Vioxx.
+
+
+
+</p>
+<p>To be sure, it’s unethical not to include data that undermines the conclusion presented in a paper. The Vioxx researchers were acting according to their original research protocol—a solid professional practice.</p>
+<p>What seems to have happened with Vioxx is that the researchers had a theory that the higher rate of infarction was not due to Vioxx, <em>per se</em>, but to an aspect of the study protocol that excluded subjects who were being treated with aspirin to reduce the risk of heart attacks.
+The researchers believed with some justification that the drug to which Vioxx was being compared, naproxen, was acting as a substitute for aspirin. They were wrong, as subsequent research showed.
+Their failure was in not honoring principle 6 and publishing their results in a misleading way.</p>
+<p>Professional ethics dictate that professional standards be applied in work.
+Incidents like Vioxx should remind us to work with appropriate humility and to be vigilant to the possibility that our own explanations are misleading us.</p>
+</div>
+<div id="legal-negotiations-1" class="section level3" number="8.5.8">
+<h3><span class="header-section-number">8.5.8</span> Legal negotiations</h3>
+<p>
+
+In legal cases such as the one described earlier in the chapter, the data scientist has ethical obligations to their client. Depending on the circumstances, they may also have obligations to the court.</p>
+<p>
+
+
+As always, you should be forthright with your client. Usually you will be using methods that you deem appropriate, but on occasion you will be directed to use a method that you think is inappropriate.
+For instance, we’ve seen occasions when the client requested that the time period of data included in the analysis be limited in some way to produce a “better” result. We’ve had clients ask us to subdivide the data (in employment discrimination cases, say, by job title) in order to change p-values.
+Although such subdivision may be entirely legitimate, the decision about subdividing—seen from a purely statistical point of view—ought to be based on the situation, not the desired outcome (see the discussion of the “garden of forking paths” in Section <a href="ch-foundations.html#sec:p-perils">9.7</a>).</p>
+<p>Your client is entitled to make such requests. Whether or not you think the method being asked for is the right one doesn’t enter into it. Your professional obligation is to inform the client what the flaws in the proposed method are and how and why you think another method would be better (principle 8). (See the major exception that follows.)</p>
+<p>The legal system in countries such as the U.S. is an <em>adversarial</em> system. Lawyers are allowed to frame legal arguments that may be dismissed: They are entitled to enter some facts and not others into evidence. Of course, the opposing legal team is entitled to create their own legal arguments and to cross-examine the evidence to show how it is incomplete and misleading.
+When you are working with a legal team as a data scientist, you are part of the team. The lawyers on the team are the experts about what negotiation strategies and legal theories to use, how to define the limits of the case (such as damages), and how to present their case or negotiate with the other party.
+
+</p>
+<p>
+It is a different matter when you are presenting to the court. This might take the form of filing an expert report to the court, testifying as an expert witness, or being deposed.
+A deposition is when you are questioned, under oath, outside of the courtroom. You are obliged to answer all questions honestly. (Your lawyer may, however, direct you not to answer a question about privileged communications.)
+
+</p>
+<p>
+
+If you are an expert witness or filing an expert report, the word “expert” is significant. A court will certify you as an expert in a case giving you permission to express your opinions. Now you have professional ethical obligations to apply your expertise honestly and openly in forming those opinions.</p>
+<p>When working on a legal case, you should get advice from a legal authority, which might be your client.
+Remember that if you do shoddy work, or fail to reply honestly to the other side’s criticisms of your work, your credibility as an expert will be imperiled.</p>
+</div>
+</div>
+<div id="algorithmic-bias" class="section level2" number="8.6">
+<h2><span class="header-section-number">8.6</span> Algorithmic bias</h2>
+<p>
+
+
+
+
+
+Algorithms are at the core of many data science models (see Chapter <a href="ch-learningI.html#ch:learningI">11</a> for a comprehensive introducion.
+These models are being used to automate decision-making in settings as diverse as navigation for self-driving cars and determinations of risk for recidivism (return to criminal behavior) in the criminal justice system.
+The potential for bias to be reinforced when these models are implemented is dramatic.</p>
+<p>Biased data may lead to algorithmic bias.
+As an example, some groups may be underrepresented or systematically excluded from data collection efforts.
+<span class="citation">D’Ignazio and Klein (2020)</span> highlight issues with data collection related to undocumented immigrants.
+<span class="citation">O’Neil (2016)</span> details several settings in which algorithmic bias has harmful consequences, whether intended or not.</p>
+<p>Consider a criminal recidivism algorithm used in several states and detailed in <a href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing">a <em>ProPublica</em> story</a> titled “Machine Bias” <span class="citation">(Angwin et al. 2016)</span>.
+The algorithm returns predictions about how likely a criminal is to commit another crime based on a survey of 137 questions.
+<em>ProPublica</em> claims that the algorithm is biased:</p>
+<blockquote>
+<p>“Black defendants were still 77 percent more likely to be pegged as at higher risk of committing a future violent crime and 45 percent more likely to be predicted to commit a future crime of any kind.”</p>
+</blockquote>
+<p>How could the predictions be biased, when the race of the defendants is not included in the model?
+Consider that one of the survey questions is “was one of your parents ever sent to jail or prison?”
+Because of the longstanding relationship between <a href="https://en.wikipedia.org/w/index.php?search=race%20and%20crime%20in%20the%20United%20States"><em>race and crime in the United States</em></a>, Black people are much more likely to have a parent who was sent to prison.
+In this manner, the question about the defendant’s parents acts as a <a href="https://en.wikipedia.org/w/index.php?search=proxy"><em>proxy</em></a> for race.
+Thus, even though the recidivism algorithm doesn’t take race into account directly, it learns about race from the data that reflects the centuries-old inequities in the criminal justice system.</p>
+<p>
+
+For another example, suppose that this model for recidivism included interactions with the police as an important feature.
+It may seem logical to assume that people who have had more interactions with the police are more likely to commit crimes in the future.
+However, including this variable would likely lead to bias, since Black people are more likely to have interactions with police, even among those whose underlying probability of criminal behavior is the same <span class="citation">(Andrew Gelman, Fagan, and Kiss 2007)</span>.</p>
+<p>
+
+
+
+
+Data scientists need to ensure that model assessment, testing, accountability, and transparency are integrated into their analysis to identify and counteract bias and maximize fairness.</p>
+</div>
+<div id="data-and-disclosure" class="section level2" number="8.7">
+<h2><span class="header-section-number">8.7</span> Data and disclosure</h2>
+<div id="reidentification-and-disclosure-avoidance" class="section level3" number="8.7.1">
+<h3><span class="header-section-number">8.7.1</span> Reidentification and disclosure avoidance</h3>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+The ability to link multiple data sets and to use public information to identify individuals is a growing problem. A glaring example of this occurred in 1996 when then-Governor of Massachusetts <a href="https://en.wikipedia.org/w/index.php?search=William%20Weld">William Weld</a> collapsed while attending a graduation ceremony at <a href="https://en.wikipedia.org/w/index.php?search=Bentley%20College"><em>Bentley College</em></a>.
+An <a href="https://en.wikipedia.org/w/index.php?search=MIT"><em>MIT</em></a> graduate student used information from a public data release by the <a href="https://en.wikipedia.org/w/index.php?search=Massachusetts%20Group%20Insurance%20Commission"><em>Massachusetts Group Insurance Commission</em></a> to identify Weld’s subsequent hospitalization records.</p>
+<p>The disclosure of this information was <a href="http://healthaffairs.org/blog/2012/08/10/the-debate-over-re-identification-of-health-information-what-do-we-risk/">highly publicized</a> and led to many changes in data releases.
+This was a situation where the right balance was not struck between disclosure (to help improve health care and control costs) and nondisclosure (to help ensure private information is not made public).
+There are many challenges to ensure disclosure avoidance <span class="citation">(Zaslavsky and Horton 1998; Ohm 2010)</span>. This remains an
+active and important area of research.</p>
+<p>
+
+
+
+
+
+
+The <a href="https://en.wikipedia.org/w/index.php?search=Health%20Insurance%20Portability%20and%20Accountability%20Act"><em>Health Insurance Portability and Accountability Act</em></a> (HIPAA) was passed by the United States Congress in 1996—the same year as Weld’s illness.
+The law augmented and clarified the role that researchers and medical care providers had in maintaining protected health information (PHI).
+The HIPAA regulations developed since then specify procedures to ensure that individually identifiable PHI is protected when it is transferred, received, handled, analyzed, or shared.
+As an example, detailed geographic information (e.g., home or office location) is not allowed to be shared unless there is an overriding need.
+For research purposes, geographic information might be limited to state or territory, though for certain rare diseases or characteristics even this level of detail may lead to disclosure.
+Those whose PHI is not protected can file a complaint with the Office of Civil Rights.</p>
+<p>
+
+
+The HIPAA structure, while limited to medical information, provides a useful model for disclosure avoidance that is relevant to other data scientists.
+Parties accessing PHI need to have privacy policies and procedures.
+They must identify a privacy official and undertake training of their employees. If there is a disclosure they must
+mitigate the effects to the extent practical.
+There must be reasonable data safeguards to prevent intentional or unintentional use.
+Covered entities may not retaliate against someone for assisting in investigations of disclosures.
+Organizations must maintain records and documentation for six years after their last use of the data.
+Similar regulations protect information collected by the statistical agencies of the United States.</p>
+</div>
+<div id="safe-data-storage" class="section level3" number="8.7.2">
+<h3><span class="header-section-number">8.7.2</span> Safe data storage</h3>
+<p>
+
+
+
+
+
+Inadvertent disclosures of data can be even more damaging than planned disclosures.
+Stories abound of protected data being made available on the internet with subsequent harm to those whose information is made accessible.
+Such releases may be due to misconfigured databases, malware, theft, or by posting on a public forum.
+Each individual and organization needs to practice safe computing, to regularly audit their systems, and to implement plans to address computer and data security.
+Such policies need to ensure that protections remain even when equipment is transferred or disposed of.</p>
+</div>
+<div id="sec:terms-of-use" class="section level3" number="8.7.3">
+<h3><span class="header-section-number">8.7.3</span> Data scraping and terms of use</h3>
+<p>
+
+
+
+
+
+
+A different issue arises relating to legal status of material on the Web.
+Consider <a href="https://en.wikipedia.org/w/index.php?search=Zillow.com"><em>Zillow.com</em></a>, an online real-estate database company that combines data from a number of public and private sources to generate house price and rental information on more than 100 million homes across the United States.
+Zillow has made access to their database
+available through an API (see Section <a href="ch-dataII.html#sec:apis">6.4.2</a>) under certain restrictions.
+The terms of use for Zillow are provided in a <a href="http://www.zillow.com/howto/api/APITerms.htm">legal document</a>.
+They require that users of the API consider the data on an “as is” basis, not replicate functionality of the Zillow website or mobile app, not retain any copies of the Zillow data, not separately extract data elements to enhance other data files, and not use the data for direct marketing.
+</p>
+<p>Another common form for terms of use is a limit to the amount or frequency of access. Zillow’s API is limited to 1,000 calls per day to the home valuations or property details. Another example: <a href="https://en.wikipedia.org/w/index.php?search=The%20Weather%20Underground"><em>The Weather Underground</em></a> maintains an API focused on weather information.
+They provide no-cost access limited to 500 calls per day and 10 calls per minute and with no access to historical information.
+They have a for-pay system with multiple tiers for accessing more extensive data.</p>
+<p>
+Data points are not just content in tabular form. Text is also data.
+Many websites have restrictions on text mining.
+<a href="https://en.wikipedia.org/w/index.php?search=Slate.com"><em>Slate.com</em></a>, for example, states that users may not:
+
+
+
+
+</p>
+<blockquote>
+<p>“Engage in unauthorized spidering, scraping, or harvesting of content or information, or use any other unauthorized automated means to compile information.”</p>
+</blockquote>
+<p>Apparently, it violates the Slate.com terms of use to compile a compendium of Slate articles (even for personal use) without their authorization.</p>
+<p>
+
+
+
+To get authorization, you need to ask for it.
+<a href="https://en.wikipedia.org/w/index.php?search=Albert%20Y.%20Kim">Albert Y. Kim</a> of <a href="https://en.wikipedia.org/w/index.php?search=Smith%20College"><em>Smith College</em></a> published data with information for 59,946 <a href="https://en.wikipedia.org/w/index.php?search=San%20Francisco"><em>San Francisco</em></a> OkCupid users (a free online dating website) with the permission of the president of OkCupid <span class="citation">(Kim and Escobedo-Land 2015)</span>.
+To help minimize possible damage, he also removed certain variables (e.g., username) that would make it more straightforward to reidentify the profiles.
+Contrast the concern for privacy taken here to the careless doxing of OkCupid users mentioned above.</p>
+</div>
+</div>
+<div id="sec:reproducibility" class="section level2" number="8.8">
+<h2><span class="header-section-number">8.8</span> Reproducibility</h2>
+<p>
+
+Disappointingly often, even the original researchers are unable to reproduce their own results upon revisitation.
+This failure arises naturally enough when researchers use menu-driven software that does not keep an audit trail of each step in the process.
+For instance, in <a href="https://en.wikipedia.org/w/index.php?search=Excel"><em>Excel</em></a>, the process of sorting data is not recorded. You can’t look at a spreadsheet and determine what range of data was sorted, so mistakes in selecting cases or variables for a sort are propagated untraceably through the subsequent analysis.</p>
+<p>Researchers commonly use tools like word processors that do not mandate an explicit tie between the result presented in a publication and the analysis that produced the result. These seemingly innocuous practices contribute to the loss of reproducibility: numbers may be copied by hand into a document and graphics are cut-and-pasted into the report. (Imagine that you have inserted a graphic into a report in this way. How could you, or anyone else, easily demonstrate that the correct graphic was selected for inclusion?)</p>
+<p>
+
+
+
+We describe <a href="https://en.wikipedia.org/w/index.php?search=reproducible%20analysis"><em>reproducible analysis</em></a> as the practice of recording each and every step, no matter how trivial seeming, in a data analysis. The main elements of a reproducible analysis plan (as described by <a href="https://www.haverford.edu/project-tier">Project TIER</a> include:</p>
+<ul>
+<li><strong>Data</strong>: all original data files in the form in which they originated,</li>
+<li><strong>Metadata</strong>: codebooks and other information needed to understand the data,</li>
+<li><strong>Commands</strong>: the computer code needed to extract, transform, and load the data—then run analyses, fit models,
+generate graphical displays, and</li>
+<li><strong>Map</strong>: a file that maps between the output and the results in the report.</li>
+</ul>
+<p>
+
+
+
+The <a href="https://en.wikipedia.org/w/index.php?search=American%20Statistical%20Association"><em>American Statistical Association</em></a> (ASA) notes the importance of reproducible analysis in its curricular guidelines.
+The development of new tools such as <strong>R</strong> Markdown and <strong>knitr</strong> have dramatically improved the usability of these methods in practice.
+See Appendix <a href="ch-reproduce.html#ch:reproduce">D</a> for an introduction to these tools.</p>
+<p>
+
+
+
+
+
+
+
+Individuals and organizations have been working to develop
+protocols to facilitate making the data analysis process more transparent and to integrate this into the workflow of practitioners and students.
+One of us has worked as part of a research project team at the <a href="https://en.wikipedia.org/w/index.php?search=Channing%20Laboratory"><em>Channing Laboratory</em></a> at <a href="https://en.wikipedia.org/w/index.php?search=Harvard%20University"><em>Harvard University</em></a>.
+As part of the vetting process for all manuscripts, an analyst outside of the research team is required to review all programs used to generate results.
+In addition, another individual is responsible for checking each number in the paper to ensure that it was correctly transcribed from the results.
+Similar practice is underway at <a href="http://www.irss.unc.edu/odum/home2.jsp">The Odum Institute for Research in Social Science</a> at the <a href="https://en.wikipedia.org/w/index.php?search=University%20of%20North%20Carolina"><em>University of North Carolina</em></a>.
+This organization performs third-party code and data verification for several political science journals.</p>
+<div id="example-erroneous-data-merging" class="section level3" number="8.8.1">
+<h3><span class="header-section-number">8.8.1</span> Example: Erroneous data merging</h3>
+<p>
+
+
+
+In Chapter <a href="ch-join.html#ch:join">5</a>, we discuss how the <a href="https://en.wikipedia.org/w/index.php?search=join"><em>join</em></a> operation can be used to merge two data tables together.
+Incorrect merges can be very difficult to unravel unless the exact details of the merge have been recorded.
+The <strong>dplyr</strong> <code>inner_join()</code> function simplifies this process.</p>
+<p>
+
+
+
+In a 2013 paper published in the journal <em>Brain, Behavior, and Immunity</em>, Kern et al. reported a link between immune response and depression. To their credit, the authors later noticed that the results were the artifact of a faulty data merge between the lab results and other survey data. A retraction <span class="citation">(Kern et al. 2013)</span>, as well as a corrected paper reporting negative results <span class="citation">(Kern et al. 2014)</span>, was published in the same journal.
+</p>
+<p>In some ways, this is science done well—ultimately the correct negative result was published, and the authors acted ethically by alerting the journal editor to their mistake.
+However, the error likely would have been caught earlier had the authors adhered to stricter standards of reproducibility (see Appendix <a href="ch-reproduce.html#ch:reproduce">D</a>) in the first place.
+</p>
+</div>
+</div>
+<div id="ethics-collectively" class="section level2" number="8.9">
+<h2><span class="header-section-number">8.9</span> Ethics, collectively</h2>
+<p>Although science is carried out by individuals and teams, the scientific community as a whole is a stakeholder.
+Some of the ethical responsibilities faced by data scientists are created by the collective nature of the enterprise.
+</p>
+<p>
+
+
+
+A team of <a href="https://en.wikipedia.org/w/index.php?search=Columbia%20University"><em>Columbia University</em></a> scientists discovered that a former post-doc in the group, unbeknownst to the others, had fabricated and falsified research reported in articles in the journals <em>Cell</em> and <em>Nature</em>.
+Needless to say, the post-doc had violated his ethical obligations both with respect to his colleagues and to the scientific enterprise as a whole.
+When the misconduct was discovered, the other members of the team incurred an ethical obligation to the scientific community.
+In fulfillment of this obligation, they notified the journals and <a href="http://retractionwatch.com/2015/06/17/columbia-biologists-deeply-regret-nature-retraction-after-postdoc-faked-74-panels-in-3-papers/">retracted</a> the papers, which had been highly cited.
+To be sure, such episodes can tarnish the reputation of even the innocent team members, but the ethical obligation outweighs the desire to protect one’s reputation.</p>
+<p>
+
+
+
+
+Perhaps surprisingly, there are situations where it is not ethical <em>not</em> to publish one’s work. <a href="https://en.wikipedia.org/w/index.php?search=Publication%20bias"><em>Publication bias</em></a> (or the “file-drawer problem”) refers to the situation where reports of statistically significant (i.e., <span class="math inline">\(p&lt;0.05\)</span>) results are much more likely to be published than reports where the results are not statistically significant.
+In many settings, this bias is for the good; a lot of scientific work is in the pursuit of hypotheses that turn out to be wrong or ideas that turn out not to be productive.</p>
+<p>But with many research teams investigating similar ideas, or even with a single research team that goes down many parallel paths, the meaning of “statistically significant” becomes clouded and corrupt.
+Imagine 100 parallel research efforts to investigate the effect of a drug that in reality has no effect at all. Roughly five of those efforts are expected to culminate in a misleadingly “statistically significant” (<span class="math inline">\(p &lt; 0.05\)</span>) result.
+Combine this with publication bias and the scientific literature might consist of reports on just the five projects that happened to be significant.
+In isolation, five such reports would be considered substantial evidence about the (non-null) effect of the drug.
+It might seem unlikely that there would be 100 parallel research efforts on the same drug, but at any given time there are tens of thousands of research efforts, any one of which has a 5% chance of producing a significant result even if there were no genuine effect.</p>
+<p>
+
+
+
+The <a href="https://en.wikipedia.org/w/index.php?search=American%20Statistical%20Association"><em>American Statistical Association</em></a>’s ethical guidelines state, “Selecting the one `significant’ result from a multiplicity of parallel tests poses a grave risk of an incorrect conclusion.
+Failure to disclose the full extent of tests and their results in such a case would be highly misleading.” So, if you’re examining the effect on five different measures of health by five different foods, and you find that broccoli consumption has a statistically significant relationship with the development of colon cancer, not only should you be skeptical but you should include in your report the null result for the other 24 tests or perform an appropriate statistical correction to account for the multiple tests.
+Often, there may be several different outcome measures, several different food types, and several potential covariates (age, sex, whether breastfed as an infant, smoking, the geographical area of residence or upbringing, etc.), so it’s easy to be performing dozens or hundreds of different tests without realizing it.</p>
+<p>
+
+
+For clinical health trials, there are efforts to address this problem through trial registries.
+In such registries (e.g., <a href="https://clinicaltrials.gov" class="uri">https://clinicaltrials.gov</a>), researchers provide their study design and analysis protocol in advance and post results.</p>
+</div>
+<div id="professional-guidelines-for-ethical-conduct" class="section level2" number="8.10">
+<h2><span class="header-section-number">8.10</span> Professional guidelines for ethical conduct</h2>
+<p>
+
+
+
+
+This chapter has outlined basic principles of professional ethics.
+Usefully, several organizations have developed detailed statements on topics such as professionalism, integrity of data and methods, responsibilities to stakeholders, conflicts of interest, and the response to allegations of misconduct. One good source is the framework for professional ethics endorsed by the <a href="https://en.wikipedia.org/w/index.php?search=American%20Statistical%20Association"><em>American Statistical Association</em></a> (ASA) <span class="citation">(Committee on Professional Ethics 1999)</span>.</p>
+<p>
+
+
+
+
+
+
+
+
+The Committee on Science, Engineering, and Public Policy of the National Academy of Sciences, National Academy of Engineering, and Institute of Medicine has published the third edition of <em>On Being a Scientist: A Guide to Responsible Conduct in Research</em>. The guide is structured into a number of chapters, many of which are highly relevant for data scientists (including “the Treatment of Data,” “Mistakes and Negligence,” “Sharing of Results,” “Competing Interests, Commitment, and Values,” and “The Researcher in Society”).</p>
+<p>
+
+
+
+
+
+
+The <a href="https://en.wikipedia.org/w/index.php?search=Association%20for%20Computing%20Machinery"><em>Association for Computing Machinery</em></a> (ACM)—the world’s largest computing society, with more than 100,000 members—adopted a code of ethics in 1992 that was revised in 2018 (see <a href="https://www.acm.org/about/code-of-ethics" class="uri">https://www.acm.org/about/code-of-ethics</a>).
+Other relevant statements and codes of conduct have been promulgated by the <a href="http://www.datascienceassn.org/code-of-conduct.html">Data Science Association</a>, the <a href="http://www.isi-web.org/about-isi/professional-ethics">International Statistical Institute</a>, and the <a href="http://unstats.un.org/unsd/dnss/gp/fundprinciples.aspx">United Nations Statistics Division</a>.
+The <a href="http://www.hhs.gov/ohrp/humansubjects/guidance/belmont.html">Belmont Report</a> outlines ethical
+principles and guidelines for the protection of human research subjects.</p>
+</div>
+<div id="ethics-further" class="section level2" number="8.11">
+<h2><span class="header-section-number">8.11</span> Further resources</h2>
+<p>
+
+
+
+
+
+For a book-length treatment of ethical issues in statistics, see <span class="citation">Hubert and Wainer (2012)</span>.
+The National Academies report on data science for undergraduates <span class="citation">National Academies of Science, Engineering, and Medicine (2018)</span> included data ethics as a key component of
+data acumen.
+The report also included a draft oath for data scientists.</p>
+<p>A historical perspective on the ASA’s Ethical Guidelines for Statistical Practice can be found in <span class="citation">Ellenberg (1983)</span>.
+The University of Michigan provides an EdX course on “<a href="https://www.edx.org/course/data-science-ethics-michiganx-ds101x">Data Science Ethics</a>.”
+<a href="https://en.wikipedia.org/w/index.php?search=Carl%20Bergstrom">Carl Bergstrom</a> and <a href="https://en.wikipedia.org/w/index.php?search=Jevin%20West">Jevin West</a> developed a course ``Calling Bullshit: Data Reasoning in a Digital World".
+Course materials and related resources can be found at <a href="https://callingbullshit.org" class="uri">https://callingbullshit.org</a>.</p>
+<p>
+
+
+
+
+
+<a href="https://en.wikipedia.org/w/index.php?search=Andrew%20Gelman">Andrew Gelman</a> has written a column on ethics in statistics in <em>CHANCE</em> for the past several years (see, for example <span class="citation">Andrew Gelman (2011)</span>; <span class="citation">Andrew Gelman and Loken (2012)</span>; <span class="citation">Andrew Gelman (2012)</span>; <span class="citation">Andrew Gelman (2020)</span>).
+<em>Weapons of Math Destruction: How Big Data Increases Inequality and Threatens Democracy</em> describes a number of frightening misuses of big data and algorithms <span class="citation">(O’Neil 2016)</span>.</p>
+<p>The <em>Teach Data Science</em> blog has a series of entries focused on data ethics (<a href="https://teachdatascience.com" class="uri">https://teachdatascience.com</a>).
+<span class="citation">D’Ignazio and Klein (2020)</span> provide a comprehensive introduction to data feminism (in contrast to data ethics).
+The ACM Conference on Fairness, Accountability, and Transparency (FAccT) provides a cross-disciplinary focus on data ethics issues (<a href="https://facctconference.org/2020" class="uri">https://facctconference.org/2020</a>).</p>
+<p>
+
+
+
+The <a href="https://cos.io/">Center for Open Science</a>—which develops the <a href="https://osf.io/">Open Science Framework</a> (OSF)—is an organization that promotes openness, integrity, and reproducibility in scientific research.
+The OSF provides an online platform for researchers to publish their scientific projects.
+<a href="https://en.wikipedia.org/w/index.php?search=Emil%20Kirkegaard">Emil Kirkegaard</a> used OSF to publish his OkCupid data set.</p>
+<p>
+
+
+
+The <a href="http://www.iq.harvard.edu/">Institute for Quantitative Social Science</a> at Harvard and the <a href="http://www.bitss.org/">Berkeley Initiative for Transparency in the Social Sciences</a> are two other organizations working to promote reproducibility in social science research.
+
+The <a href="https://en.wikipedia.org/w/index.php?search=American%20Political%20Association"><em>American Political Association</em></a> has incorporated the <a href="http://www.dartstatement.org/">Data Access and Research Transparency</a> (DA-RT) principles into its ethics guide.
+The Consolidated Standards of Reporting Trials (CONSORT) statement at (<a href="http://www.consort-statement.org" class="uri">http://www.consort-statement.org</a>) provides detailed guidance on the analysis and reporting of clinical trials.
+
+</p>
+<p>
+Many more examples of how irreproducibility has led to scientific errors are available at <a href="http://retractionwatch.com/" class="uri">http://retractionwatch.com/</a>.
+For example, <a href="http://retractionwatch.com/2015/09/10/divorce-study-felled-by-a-coding-error-gets-a-second-chance/#more-32151">a study linking severe illness and divorce rates</a> was retracted due to a coding mistake.</p>
+</div>
+<div id="ethics-exercises" class="section level2" number="8.12">
+<h2><span class="header-section-number">8.12</span> Exercises</h2>
+<p><strong>Problem 1 (Easy)</strong>: A researcher is interested in the relationship of weather to sentiment (positivity or negativity of posts) on Twitter. They want to scrape data from <a href="https://www.wunderground.com" class="uri">https://www.wunderground.com</a> and join that to Tweets in that geographic area at a particular time. One complication is that Weather Underground limits the number of data points that can be downloaded for free using their API (application program interface). The researcher sets up six free accounts to allow them to collect the data they want in a shorter time-frame. What ethical guidelines are violated by this approach to data scraping?</p>
+<p><strong>Problem 2 (Medium)</strong>: A data scientist compiled data from several public sources (voter registration, political contributions, tax records) that were used to predict sexual orientation of individuals in a community. What ethical considerations arise that should guide use of such data sets?</p>
+<p><strong>Problem 3 (Medium)</strong>: A statistical analyst carried out an investigation of the association of gender and teaching evaluations at a university. They undertook exploratory analysis of the data and carried out a number of bivariate comparisons. The multiple items on the teaching evaluation were consolidated to a single measure based on these exploratory analyses. They used this information to construct a multivariable regression model that found evidence for biases. What issues might arise based on such an analytic approach?</p>
+<p><strong>Problem 4 (Medium)</strong>: In 2006, AOL released a database of search terms that users had used in the prior month (see <a href="http://www.nytimes.com/2006/08/09/technology/09aol.html" class="uri">http://www.nytimes.com/2006/08/09/technology/09aol.html</a>). Research this disclosure and the reaction that ensued. What ethical issues are involved? What potential impact has this disclosure had?</p>
+<p><strong>Problem 5 (Medium)</strong>: A reporter carried out a clinical trial of chocolate where a small number of overweight subjects who had received medical clearance were randomized to either eat dark chocolate or not to eat dark chocolate. They were followed for a period and their change in weight was recorded from baseline until the end of the study. More than a dozen outcomes were recorded and one proved to be significantly different in the treatment group than the outcome. This study was publicized and received coverage from a number of magazines and television programs. Outline the ethical considerations that arise in this situation.</p>
+<p><strong>Problem 6 (Medium)</strong>: A <em>Slate</em> article (<a href="http://tinyurl.com/slate-ethics" class="uri">http://tinyurl.com/slate-ethics</a>) discussed whether race/ethnicity should be included in a predictive model for how long a homeless family would stay in
+homeless services. Discuss the ethical considerations involved in whether race/ethnicity should be included as a predictor in the model.</p>
+<p><strong>Problem 7 (Medium)</strong>: In the United States, the Confidential Information Protection and Statistical Efficiency Act (CIPSEA) governs the confidentiality of data collected by agencies such as the Bureau of Labor Statistics and the Census Bureau. What are the penalties for willful and knowing disclosure of protected information to
+unauthorized persons?</p>
+<p><strong>Problem 8 (Medium)</strong>: A data analyst received permission to post a data set that was scraped from a social media site. The full data set included name, screen name, email address, geographic location, IP (internet protocol) address, demographic profiles, and preferences for relationships. Why might it be problematic to post a deidentified form of this data set where name and email address were removed?</p>
+<p><strong>Problem 9 (Medium)</strong>: A company uses a machine-learning algorithm to determine which job advertisement to display for users searching for technology jobs. Based on past results, the algorithm tends to display lower-paying jobs for women than for men (after controlling for other characteristics than gender). What ethical considerations might be considered when reviewing this algorithm?</p>
+<p><strong>Problem 10 (Hard)</strong>: An investigative team wants to winnow the set of variables to include in their final multiple regression model. They have 100 variables and one outcome measured for <span class="math inline">\(n=250\)</span> observations).</p>
+<p>They use the following procedure:</p>
+<ol style="list-style-type: decimal">
+<li><p>Fit each of the 100 bivariate models for the outcome as a function of a single predictor, then</p></li>
+<li><p>Include all of the significant predictors in the overall model.</p></li>
+</ol>
+<p>What does the distribution of the p-value for the overall test look like, assuming that there are no associations between any of the predictors and the outcome (all are assumed to be multivariate normal and independent).
+Carry out a simulation to check your answer.</p>
+</div>
+<div id="ethics-online-exercises" class="section level2" number="8.13">
+<h2><span class="header-section-number">8.13</span> Supplementary exercises</h2>
+<p>Available at <a href="ch-ethics.html#ethics-online-exercises" class="uri">https://mdsr-book.github.io/mdsr2e/ch-ethics.html#ethics-online-exercises</a></p>
+<p><strong>Problem 1 (Medium)</strong>: In the United States, most students apply for grants or subsidized loans to finance their college education. Part of this process involves filling in a federal government form called the Free Application for Federal Student Aid (FAFSA). The form asks for information about family income and assets. The form also includes a place for listing the universities to which the information is to be sent. The data collected by FAFSA includes confidential financial information (listing the schools eligible to receive the information is effectively giving permission to share the data with them).</p>
+<p>It turns out that the order in which the schools are listed carries important information. Students typically apply to several schools, but can attend only one of them. Until recently, admissions offices at some universities used the information as an important part of their models of whether an admitted student will accept admissions. The earlier in a list a school appears, the more likely the student is to attend that school.</p>
+<p>Here’s the catch from the student’s point of view. Some institutions use statistical models to allocate grant aid (a scarce resource) where it is most likely to help ensure that a student enrolls. For these schools, the more likely a student is deemed to accept admissions, the lower the amount of grant aid they are likely to receive.</p>
+<p>Is this ethical? Discuss.</p>
+<hr />
+
+</div>
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch-iteration.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch-foundations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="book_assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/08-ethics.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["mdsr2e.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

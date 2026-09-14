@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 13 Simulation | Modern Data Science with R</title>
+  <meta name="description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 13 Simulation | Modern Data Science with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://mdsr-book.github.io/mdsr2e/" />
+  <meta property="og:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+  <meta property="og:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="github-repo" content="mdsr-book/mdsr2e" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 13 Simulation | Modern Data Science with R" />
+  
+  <meta name="twitter:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="twitter:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+
+<meta name="author" content="Benjamin S. Baumer, Daniel T. Kaplan, and Nicholas J. Horton" />
+
+
+<meta name="date" content="2021-07-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch-learningII.html"/>
+<link rel="next" href="ch-vizIII.html"/>
+<script src="book_assets/header-attrs-2.9/header-attrs.js"></script>
+<script src="book_assets/jquery-3.5.1/jquery.min.js"></script>
+<link href="book_assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="book_assets/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="book_assets/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="book_assets/kePrint-0.0.1/kePrint.js"></script>
+<link href="book_assets/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="book_assets/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="book_assets/bsTable-3.3.7/bootstrapTable.js"></script>
+<script src="book_assets/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="book_assets/plotly-binding-4.9.4.1/plotly.js"></script>
+<script src="book_assets/typedarray-0.1/typedarray.min.js"></script>
+<link href="book_assets/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="book_assets/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="book_assets/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="book_assets/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<link href="book_assets/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="book_assets/datatables-binding-0.18/datatables.js"></script>
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="book_assets/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="book_assets/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="book_assets/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="book_assets/dygraphs-1.1.1/shapes.js"></script>
+<script src="book_assets/moment-2.8.4/moment.js"></script>
+<script src="book_assets/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="book_assets/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="book_assets/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<script src="book_assets/d3-3.5.3/d3.min.js"></script>
+<link href="book_assets/colorbrewer-1/colorbrewer.css" rel="stylesheet" />
+<script src="book_assets/colorbrewer-1/colorbrewer.js"></script>
+<link href="book_assets/streamgraph-1/streamgraph.css" rel="stylesheet" />
+<script src="book_assets/streamgraph-binding-0.9.0/streamgraph.js"></script>
+<link href="book_assets/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-1.3.1/leaflet.js"></script>
+<link href="book_assets/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="book_assets/proj4-2.6.2/proj4.min.js"></script>
+<script src="book_assets/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="book_assets/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-binding-2.0.4.1/leaflet.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html">Modern Data Science with R, 2nd edition</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#nd-edition"><i class="fa fa-check"></i>2nd edition</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#note-about-erroneous-black-and-white-printing"><i class="fa fa-check"></i>Note about erroneous black-and-white printing!</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#cover"><i class="fa fa-check"></i>Cover</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#st-edition"><i class="fa fa-check"></i>1st edition</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#copyright"><i class="fa fa-check"></i>Copyright</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#background-and-motivation"><i class="fa fa-check"></i>Background and motivation</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#intended-audience"><i class="fa fa-check"></i>Intended audience</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-features-of-this-book"><i class="fa fa-check"></i>Key features of this book</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#focus-on-case-studies-and-extended-examples"><i class="fa fa-check"></i>Focus on case studies and extended examples</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#structure"><i class="fa fa-check"></i>Structure</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#supporting-materials"><i class="fa fa-check"></i>Supporting materials</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#changes-in-the-second-edition"><i class="fa fa-check"></i>Changes in the second edition</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-role-of-technology"><i class="fa fa-check"></i>Key role of technology</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#how-to-use-this-book"><i class="fa fa-check"></i>How to use this book</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="part"><span><b>I Part I: Introduction to Data Science</b></span></li>
+<li class="chapter" data-level="1" data-path="ch-prologue.html"><a href="ch-prologue.html"><i class="fa fa-check"></i><b>1</b> Prologue: Why data science?</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="ch-prologue.html"><a href="ch-prologue.html#what-is-data-science"><i class="fa fa-check"></i><b>1.1</b> What is data science?</a></li>
+<li class="chapter" data-level="1.2" data-path="ch-prologue.html"><a href="ch-prologue.html#case-study-the-evolution-of-sabermetrics"><i class="fa fa-check"></i><b>1.2</b> Case study: The evolution of sabermetrics</a></li>
+<li class="chapter" data-level="1.3" data-path="ch-prologue.html"><a href="ch-prologue.html#datasets"><i class="fa fa-check"></i><b>1.3</b> Datasets</a></li>
+<li class="chapter" data-level="1.4" data-path="ch-prologue.html"><a href="ch-prologue.html#intro-further"><i class="fa fa-check"></i><b>1.4</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch-vizI.html"><a href="ch-vizI.html"><i class="fa fa-check"></i><b>2</b> Data visualization</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#the-2012-federal-election-cycle"><i class="fa fa-check"></i><b>2.1</b> The 2012 federal election cycle</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="ch-vizI.html"><a href="ch-vizI.html#are-these-two-groups-different"><i class="fa fa-check"></i><b>2.1.1</b> Are these two groups different?</a></li>
+<li class="chapter" data-level="2.1.2" data-path="ch-vizI.html"><a href="ch-vizI.html#graphing-variation"><i class="fa fa-check"></i><b>2.1.2</b> Graphing variation</a></li>
+<li class="chapter" data-level="2.1.3" data-path="ch-vizI.html"><a href="ch-vizI.html#examining-relationships-among-variables"><i class="fa fa-check"></i><b>2.1.3</b> Examining relationships among variables</a></li>
+<li class="chapter" data-level="2.1.4" data-path="ch-vizI.html"><a href="ch-vizI.html#networks"><i class="fa fa-check"></i><b>2.1.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#composing-data-graphics"><i class="fa fa-check"></i><b>2.2</b> Composing data graphics</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#a-taxonomy-for-data-graphics"><i class="fa fa-check"></i><b>2.2.1</b> A taxonomy for data graphics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#sec:color"><i class="fa fa-check"></i><b>2.2.2</b> Color</a></li>
+<li class="chapter" data-level="2.2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#dissecting-data-graphics"><i class="fa fa-check"></i><b>2.2.3</b> Dissecting data graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#importance-of-data-graphics-challenger"><i class="fa fa-check"></i><b>2.3</b> Importance of data graphics: <em>Challenger</em></a></li>
+<li class="chapter" data-level="2.4" data-path="ch-vizI.html"><a href="ch-vizI.html#creating-effective-presentations"><i class="fa fa-check"></i><b>2.4</b> Creating effective presentations</a></li>
+<li class="chapter" data-level="2.5" data-path="ch-vizI.html"><a href="ch-vizI.html#the-wider-world-of-data-visualization"><i class="fa fa-check"></i><b>2.5</b> The wider world of data visualization</a></li>
+<li class="chapter" data-level="2.6" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-further"><i class="fa fa-check"></i><b>2.6</b> Further resources</a></li>
+<li class="chapter" data-level="2.7" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-exercises"><i class="fa fa-check"></i><b>2.7</b> Exercises</a></li>
+<li class="chapter" data-level="2.8" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-online-exercises"><i class="fa fa-check"></i><b>2.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch-vizII.html"><a href="ch-vizII.html"><i class="fa fa-check"></i><b>3</b> A grammar for graphics</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#a-grammar-for-data-graphics"><i class="fa fa-check"></i><b>3.1</b> A grammar for data graphics</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="ch-vizII.html"><a href="ch-vizII.html#aesthetics"><i class="fa fa-check"></i><b>3.1.1</b> Aesthetics</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ch-vizII.html"><a href="ch-vizII.html#scales"><i class="fa fa-check"></i><b>3.1.2</b> Scales</a></li>
+<li class="chapter" data-level="3.1.3" data-path="ch-vizII.html"><a href="ch-vizII.html#guides"><i class="fa fa-check"></i><b>3.1.3</b> Guides</a></li>
+<li class="chapter" data-level="3.1.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:facet"><i class="fa fa-check"></i><b>3.1.4</b> Facets</a></li>
+<li class="chapter" data-level="3.1.5" data-path="ch-vizII.html"><a href="ch-vizII.html#layers"><i class="fa fa-check"></i><b>3.1.5</b> Layers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:canonical"><i class="fa fa-check"></i><b>3.2</b> Canonical data graphics in (ref:R)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch-vizII.html"><a href="ch-vizII.html#univariate-displays"><i class="fa fa-check"></i><b>3.2.1</b> Univariate displays</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch-vizII.html"><a href="ch-vizII.html#multivariate-displays"><i class="fa fa-check"></i><b>3.2.2</b> Multivariate displays</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch-vizII.html"><a href="ch-vizII.html#maps"><i class="fa fa-check"></i><b>3.2.3</b> Maps</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:datanetwork"><i class="fa fa-check"></i><b>3.2.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:babynames"><i class="fa fa-check"></i><b>3.3</b> Extended example: Historical baby names</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#percentage-of-people-alive-today"><i class="fa fa-check"></i><b>3.3.1</b> Percentage of people alive today</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#most-common-names-for-women"><i class="fa fa-check"></i><b>3.3.2</b> Most common names for women</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-further"><i class="fa fa-check"></i><b>3.4</b> Further resources</a></li>
+<li class="chapter" data-level="3.5" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-exercises"><i class="fa fa-check"></i><b>3.5</b> Exercises</a></li>
+<li class="chapter" data-level="3.6" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-online-exercises"><i class="fa fa-check"></i><b>3.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch-dataI.html"><a href="ch-dataI.html"><i class="fa fa-check"></i><b>4</b> Data wrangling on one table</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:five_idioms"><i class="fa fa-check"></i><b>4.1</b> A grammar for data wrangling</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:pipe"><i class="fa fa-check"></i><b>4.1.1</b> <code>select()</code> and <code>filter()</code></a></li>
+<li class="chapter" data-level="4.1.2" data-path="ch-dataI.html"><a href="ch-dataI.html#mutate-and-rename"><i class="fa fa-check"></i><b>4.1.2</b> <code>mutate()</code> and <code>rename()</code></a></li>
+<li class="chapter" data-level="4.1.3" data-path="ch-dataI.html"><a href="ch-dataI.html#arrange"><i class="fa fa-check"></i><b>4.1.3</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="4.1.4" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:summarize"><i class="fa fa-check"></i><b>4.1.4</b> <code>summarize()</code> with <code>group_by()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:mets"><i class="fa fa-check"></i><b>4.2</b> Extended example: Ben’s time with the Mets</a></li>
+<li class="chapter" data-level="4.3" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-further"><i class="fa fa-check"></i><b>4.3</b> Further resources</a></li>
+<li class="chapter" data-level="4.4" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-exercises"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+<li class="chapter" data-level="4.5" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-online-exercises"><i class="fa fa-check"></i><b>4.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch-join.html"><a href="ch-join.html"><i class="fa fa-check"></i><b>5</b> Data wrangling on multiple tables</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch-join.html"><a href="ch-join.html#inner_join"><i class="fa fa-check"></i><b>5.1</b> <code>inner_join()</code></a></li>
+<li class="chapter" data-level="5.2" data-path="ch-join.html"><a href="ch-join.html#left_join"><i class="fa fa-check"></i><b>5.2</b> <code>left_join()</code></a></li>
+<li class="chapter" data-level="5.3" data-path="ch-join.html"><a href="ch-join.html#extended-example-manny-ramirez"><i class="fa fa-check"></i><b>5.3</b> Extended example: Manny Ramirez</a></li>
+<li class="chapter" data-level="5.4" data-path="ch-join.html"><a href="ch-join.html#joins-further"><i class="fa fa-check"></i><b>5.4</b> Further resources</a></li>
+<li class="chapter" data-level="5.5" data-path="ch-join.html"><a href="ch-join.html#join-exercises"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
+<li class="chapter" data-level="5.6" data-path="ch-join.html"><a href="ch-join.html#join-online-exercises"><i class="fa fa-check"></i><b>5.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch-dataII.html"><a href="ch-dataII.html"><i class="fa fa-check"></i><b>6</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch-dataII.html"><a href="ch-dataII.html#tidy-data"><i class="fa fa-check"></i><b>6.1</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="ch-dataII.html"><a href="ch-dataII.html#motivation"><i class="fa fa-check"></i><b>6.1.1</b> Motivation</a></li>
+<li class="chapter" data-level="6.1.2" data-path="ch-dataII.html"><a href="ch-dataII.html#what-are-tidy-data"><i class="fa fa-check"></i><b>6.1.2</b> What are tidy data?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="ch-dataII.html"><a href="ch-dataII.html#reshaping-data"><i class="fa fa-check"></i><b>6.2</b> Reshaping data</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-verbs-for-converting-wide-to-narrow-and-vice-versa"><i class="fa fa-check"></i><b>6.2.1</b> Data verbs for converting wide to narrow and <em>vice versa</em></a></li>
+<li class="chapter" data-level="6.2.2" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-wider"><i class="fa fa-check"></i><b>6.2.2</b> Pivoting wider</a></li>
+<li class="chapter" data-level="6.2.3" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-longer"><i class="fa fa-check"></i><b>6.2.3</b> Pivoting longer</a></li>
+<li class="chapter" data-level="6.2.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nest"><i class="fa fa-check"></i><b>6.2.4</b> List-columns</a></li>
+<li class="chapter" data-level="6.2.5" data-path="ch-dataII.html"><a href="ch-dataII.html#example-gender-neutral-names"><i class="fa fa-check"></i><b>6.2.5</b> Example: Gender-neutral names</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:naming"><i class="fa fa-check"></i><b>6.3</b> Naming conventions</a></li>
+<li class="chapter" data-level="6.4" data-path="ch-dataII.html"><a href="ch-dataII.html#data-intake"><i class="fa fa-check"></i><b>6.4</b> Data intake</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-table-friendly-formats"><i class="fa fa-check"></i><b>6.4.1</b> Data-table friendly formats</a></li>
+<li class="chapter" data-level="6.4.2" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:apis"><i class="fa fa-check"></i><b>6.4.2</b> APIs</a></li>
+<li class="chapter" data-level="6.4.3" data-path="ch-dataII.html"><a href="ch-dataII.html#cleaning-data"><i class="fa fa-check"></i><b>6.4.3</b> Cleaning data</a></li>
+<li class="chapter" data-level="6.4.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nukes"><i class="fa fa-check"></i><b>6.4.4</b> Example: Japanese nuclear reactors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-further"><i class="fa fa-check"></i><b>6.5</b> Further resources</a></li>
+<li class="chapter" data-level="6.6" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-exercises"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+<li class="chapter" data-level="6.7" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-online-exercises"><i class="fa fa-check"></i><b>6.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch-iteration.html"><a href="ch-iteration.html"><i class="fa fa-check"></i><b>7</b> Iteration</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:vectorized"><i class="fa fa-check"></i><b>7.1</b> Vectorized operations</a></li>
+<li class="chapter" data-level="7.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:scoped"><i class="fa fa-check"></i><b>7.2</b> Using <code>across()</code> with <strong>dplyr</strong> functions</a></li>
+<li class="chapter" data-level="7.3" data-path="ch-iteration.html"><a href="ch-iteration.html#appR:apply"><i class="fa fa-check"></i><b>7.3</b> The <code>map()</code> family of functions</a></li>
+<li class="chapter" data-level="7.4" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-over-a-one-dimensional-vector"><i class="fa fa-check"></i><b>7.4</b> Iterating over a one-dimensional vector</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-a-known-function"><i class="fa fa-check"></i><b>7.4.1</b> Iterating a known function</a></li>
+<li class="chapter" data-level="7.4.2" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-an-arbitrary-function"><i class="fa fa-check"></i><b>7.4.2</b> Iterating an arbitrary function</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:group-map"><i class="fa fa-check"></i><b>7.5</b> Iteration over subgroups</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:pythag"><i class="fa fa-check"></i><b>7.5.1</b> Example: Expected winning percentage</a></li>
+<li class="chapter" data-level="7.5.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:hrs"><i class="fa fa-check"></i><b>7.5.2</b> Example: Annual leaders</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="ch-iteration.html"><a href="ch-iteration.html#simulation"><i class="fa fa-check"></i><b>7.6</b> Simulation</a></li>
+<li class="chapter" data-level="7.7" data-path="ch-iteration.html"><a href="ch-iteration.html#extended-example-factors-associated-with-bmi"><i class="fa fa-check"></i><b>7.7</b> Extended example: Factors associated with BMI</a></li>
+<li class="chapter" data-level="7.8" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-further"><i class="fa fa-check"></i><b>7.8</b> Further resources</a></li>
+<li class="chapter" data-level="7.9" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-exercises"><i class="fa fa-check"></i><b>7.9</b> Exercises</a></li>
+<li class="chapter" data-level="7.10" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-online-exercises"><i class="fa fa-check"></i><b>7.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch-ethics.html"><a href="ch-ethics.html"><i class="fa fa-check"></i><b>8</b> Data science ethics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-intro"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ch-ethics.html"><a href="ch-ethics.html#truthful-falsehoods"><i class="fa fa-check"></i><b>8.2</b> Truthful falsehoods</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ch-ethics.html"><a href="ch-ethics.html#stand-your-ground"><i class="fa fa-check"></i><b>8.2.1</b> Stand your ground</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ch-ethics.html"><a href="ch-ethics.html#global-temperature"><i class="fa fa-check"></i><b>8.2.2</b> Global temperature</a></li>
+<li class="chapter" data-level="8.2.3" data-path="ch-ethics.html"><a href="ch-ethics.html#covid-19-reporting"><i class="fa fa-check"></i><b>8.2.3</b> COVID-19 reporting</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ch-ethics.html"><a href="ch-ethics.html#role-of-data-science-in-society"><i class="fa fa-check"></i><b>8.3</b> Role of data science in society</a></li>
+<li class="chapter" data-level="8.4" data-path="ch-ethics.html"><a href="ch-ethics.html#some-settings-for-professional-ethics"><i class="fa fa-check"></i><b>8.4</b> Some settings for professional ethics</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-chief-executive-officer"><i class="fa fa-check"></i><b>8.4.1</b> The chief executive officer</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination"><i class="fa fa-check"></i><b>8.4.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar"><i class="fa fa-check"></i><b>8.4.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.4.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction"><i class="fa fa-check"></i><b>8.4.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.4.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping"><i class="fa fa-check"></i><b>8.4.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.4.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis"><i class="fa fa-check"></i><b>8.4.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.4.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers"><i class="fa fa-check"></i><b>8.4.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.4.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations"><i class="fa fa-check"></i><b>8.4.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ch-ethics.html"><a href="ch-ethics.html#some-principles-to-guide-ethical-action"><i class="fa fa-check"></i><b>8.5</b> Some principles to guide ethical action</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-ceo"><i class="fa fa-check"></i><b>8.5.1</b> The CEO</a></li>
+<li class="chapter" data-level="8.5.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination-1"><i class="fa fa-check"></i><b>8.5.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.5.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar-1"><i class="fa fa-check"></i><b>8.5.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.5.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction-1"><i class="fa fa-check"></i><b>8.5.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.5.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping-1"><i class="fa fa-check"></i><b>8.5.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.5.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis-1"><i class="fa fa-check"></i><b>8.5.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.5.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers-1"><i class="fa fa-check"></i><b>8.5.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.5.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations-1"><i class="fa fa-check"></i><b>8.5.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="ch-ethics.html"><a href="ch-ethics.html#algorithmic-bias"><i class="fa fa-check"></i><b>8.6</b> Algorithmic bias</a></li>
+<li class="chapter" data-level="8.7" data-path="ch-ethics.html"><a href="ch-ethics.html#data-and-disclosure"><i class="fa fa-check"></i><b>8.7</b> Data and disclosure</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="ch-ethics.html"><a href="ch-ethics.html#reidentification-and-disclosure-avoidance"><i class="fa fa-check"></i><b>8.7.1</b> Reidentification and disclosure avoidance</a></li>
+<li class="chapter" data-level="8.7.2" data-path="ch-ethics.html"><a href="ch-ethics.html#safe-data-storage"><i class="fa fa-check"></i><b>8.7.2</b> Safe data storage</a></li>
+<li class="chapter" data-level="8.7.3" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:terms-of-use"><i class="fa fa-check"></i><b>8.7.3</b> Data scraping and terms of use</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:reproducibility"><i class="fa fa-check"></i><b>8.8</b> Reproducibility</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#example-erroneous-data-merging"><i class="fa fa-check"></i><b>8.8.1</b> Example: Erroneous data merging</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-collectively"><i class="fa fa-check"></i><b>8.9</b> Ethics, collectively</a></li>
+<li class="chapter" data-level="8.10" data-path="ch-ethics.html"><a href="ch-ethics.html#professional-guidelines-for-ethical-conduct"><i class="fa fa-check"></i><b>8.10</b> Professional guidelines for ethical conduct</a></li>
+<li class="chapter" data-level="8.11" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-further"><i class="fa fa-check"></i><b>8.11</b> Further resources</a></li>
+<li class="chapter" data-level="8.12" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-exercises"><i class="fa fa-check"></i><b>8.12</b> Exercises</a></li>
+<li class="chapter" data-level="8.13" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-online-exercises"><i class="fa fa-check"></i><b>8.13</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>II Part II: Statistics and Modeling</b></span></li>
+<li class="chapter" data-level="9" data-path="ch-foundations.html"><a href="ch-foundations.html"><i class="fa fa-check"></i><b>9</b> Statistical foundations</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch-foundations.html"><a href="ch-foundations.html#samples-and-populations"><i class="fa fa-check"></i><b>9.1</b> Samples and populations</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy-by-sampling-from-the-population"><i class="fa fa-check"></i><b>9.1.1</b> Example: Setting travel policy by sampling from the population</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="ch-foundations.html"><a href="ch-foundations.html#sample-statistics"><i class="fa fa-check"></i><b>9.2</b> Sample statistics</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:lln"><i class="fa fa-check"></i><b>9.2.1</b> The sampling distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:boot"><i class="fa fa-check"></i><b>9.3</b> The bootstrap</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy"><i class="fa fa-check"></i><b>9.3.1</b> Example: Setting travel policy</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="ch-foundations.html"><a href="ch-foundations.html#outliers"><i class="fa fa-check"></i><b>9.4</b> Outliers</a></li>
+<li class="chapter" data-level="9.5" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:gooddesign"><i class="fa fa-check"></i><b>9.5</b> Statistical models: Explaining variation</a></li>
+<li class="chapter" data-level="9.6" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:confound"><i class="fa fa-check"></i><b>9.6</b> Confounding and accounting for other factors</a></li>
+<li class="chapter" data-level="9.7" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:p-perils"><i class="fa fa-check"></i><b>9.7</b> The perils of p-values</a></li>
+<li class="chapter" data-level="9.8" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-further"><i class="fa fa-check"></i><b>9.8</b> Further resources</a></li>
+<li class="chapter" data-level="9.9" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-exercises"><i class="fa fa-check"></i><b>9.9</b> Exercises</a></li>
+<li class="chapter" data-level="9.10" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-online-exercises"><i class="fa fa-check"></i><b>9.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch-modeling.html"><a href="ch-modeling.html"><i class="fa fa-check"></i><b>10</b> Predictive modeling</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch-modeling.html"><a href="ch-modeling.html#predictive-modeling"><i class="fa fa-check"></i><b>10.1</b> Predictive modeling</a></li>
+<li class="chapter" data-level="10.2" data-path="ch-modeling.html"><a href="ch-modeling.html#simple-classification-models"><i class="fa fa-check"></i><b>10.2</b> Simple classification models</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="ch-modeling.html"><a href="ch-modeling.html#example-high-earners-in-the-1994-united-states-census"><i class="fa fa-check"></i><b>10.2.1</b> Example: High-earners in the 1994 United States Census</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="ch-modeling.html"><a href="ch-modeling.html#evaluating-models"><i class="fa fa-check"></i><b>10.3</b> Evaluating models</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:bias-variance"><i class="fa fa-check"></i><b>10.3.1</b> Bias-variance trade-off</a></li>
+<li class="chapter" data-level="10.3.2" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:cv"><i class="fa fa-check"></i><b>10.3.2</b> Cross-validation</a></li>
+<li class="chapter" data-level="10.3.3" data-path="ch-modeling.html"><a href="ch-modeling.html#confusion-matrices-and-roc-curves"><i class="fa fa-check"></i><b>10.3.3</b> Confusion matrices and ROC curves</a></li>
+<li class="chapter" data-level="10.3.4" data-path="ch-modeling.html"><a href="ch-modeling.html#measuring-prediction-error-for-quantitative-responses"><i class="fa fa-check"></i><b>10.3.4</b> Measuring prediction error for quantitative responses</a></li>
+<li class="chapter" data-level="10.3.5" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:evaluate"><i class="fa fa-check"></i><b>10.3.5</b> Example: Evaluation of income models</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:diabetes"><i class="fa fa-check"></i><b>10.4</b> Extended example: Who has diabetes?</a></li>
+<li class="chapter" data-level="10.5" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-further"><i class="fa fa-check"></i><b>10.5</b> Further resources</a></li>
+<li class="chapter" data-level="10.6" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-exercises"><i class="fa fa-check"></i><b>10.6</b> Exercises</a></li>
+<li class="chapter" data-level="10.7" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-online-exercises"><i class="fa fa-check"></i><b>10.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch-learningI.html"><a href="ch-learningI.html"><i class="fa fa-check"></i><b>11</b> Supervised learning</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch-learningI.html"><a href="ch-learningI.html#non-regression-classifiers"><i class="fa fa-check"></i><b>11.1</b> Non-regression classifiers</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="ch-learningI.html"><a href="ch-learningI.html#decision-trees"><i class="fa fa-check"></i><b>11.1.1</b> Decision trees</a></li>
+<li class="chapter" data-level="11.1.2" data-path="ch-learningI.html"><a href="ch-learningI.html#random-forests"><i class="fa fa-check"></i><b>11.1.2</b> Random forests</a></li>
+<li class="chapter" data-level="11.1.3" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:knn"><i class="fa fa-check"></i><b>11.1.3</b> Nearest neighbor</a></li>
+<li class="chapter" data-level="11.1.4" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:bayes"><i class="fa fa-check"></i><b>11.1.4</b> Naïve Bayes</a></li>
+<li class="chapter" data-level="11.1.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:neuralnet"><i class="fa fa-check"></i><b>11.1.5</b> Artificial neural networks</a></li>
+<li class="chapter" data-level="11.1.6" data-path="ch-learningI.html"><a href="ch-learningI.html#ensemble-methods"><i class="fa fa-check"></i><b>11.1.6</b> Ensemble methods</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:tuning"><i class="fa fa-check"></i><b>11.2</b> Parameter tuning</a></li>
+<li class="chapter" data-level="11.3" data-path="ch-learningI.html"><a href="ch-learningI.html#example-evaluation-of-income-models-redux"><i class="fa fa-check"></i><b>11.3</b> Example: Evaluation of income models redux</a></li>
+<li class="chapter" data-level="11.4" data-path="ch-learningI.html"><a href="ch-learningI.html#extended-example-who-has-diabetes-this-time"><i class="fa fa-check"></i><b>11.4</b> Extended example: Who has diabetes this time?</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch-learningI.html"><a href="ch-learningI.html#comparing-all-models"><i class="fa fa-check"></i><b>11.4.1</b> Comparing all models</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:regularization"><i class="fa fa-check"></i><b>11.5</b> Regularization</a></li>
+<li class="chapter" data-level="11.6" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-further"><i class="fa fa-check"></i><b>11.6</b> Further resources</a></li>
+<li class="chapter" data-level="11.7" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-exercises"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
+<li class="chapter" data-level="11.8" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-online-exercises"><i class="fa fa-check"></i><b>11.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch-learningII.html"><a href="ch-learningII.html"><i class="fa fa-check"></i><b>12</b> Unsupervised learning</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch-learningII.html"><a href="ch-learningII.html#clustering"><i class="fa fa-check"></i><b>12.1</b> Clustering</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="ch-learningII.html"><a href="ch-learningII.html#sec:hclust"><i class="fa fa-check"></i><b>12.1.1</b> Hierarchical clustering</a></li>
+<li class="chapter" data-level="12.1.2" data-path="ch-learningII.html"><a href="ch-learningII.html#k-means"><i class="fa fa-check"></i><b>12.1.2</b> <span class="math inline">\(k\)</span>-means</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="ch-learningII.html"><a href="ch-learningII.html#dimension-reduction"><i class="fa fa-check"></i><b>12.2</b> Dimension reduction</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch-learningII.html"><a href="ch-learningII.html#intuitive-approaches"><i class="fa fa-check"></i><b>12.2.1</b> Intuitive approaches</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch-learningII.html"><a href="ch-learningII.html#singular-value-decomposition"><i class="fa fa-check"></i><b>12.2.2</b> Singular value decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-further"><i class="fa fa-check"></i><b>12.3</b> Further resources</a></li>
+<li class="chapter" data-level="12.4" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-exercises"><i class="fa fa-check"></i><b>12.4</b> Exercises</a></li>
+<li class="chapter" data-level="12.5" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-online-exercises"><i class="fa fa-check"></i><b>12.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch-simulation.html"><a href="ch-simulation.html"><i class="fa fa-check"></i><b>13</b> Simulation</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch-simulation.html"><a href="ch-simulation.html#reasoning-in-reverse"><i class="fa fa-check"></i><b>13.1</b> Reasoning in reverse</a></li>
+<li class="chapter" data-level="13.2" data-path="ch-simulation.html"><a href="ch-simulation.html#extended-example-grouping-cancers"><i class="fa fa-check"></i><b>13.2</b> Extended example: Grouping cancers</a></li>
+<li class="chapter" data-level="13.3" data-path="ch-simulation.html"><a href="ch-simulation.html#randomizing-functions"><i class="fa fa-check"></i><b>13.3</b> Randomizing functions</a></li>
+<li class="chapter" data-level="13.4" data-path="ch-simulation.html"><a href="ch-simulation.html#simulating-variability"><i class="fa fa-check"></i><b>13.4</b> Simulating variability</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch-simulation.html"><a href="ch-simulation.html#the-partially-planned-rendezvous"><i class="fa fa-check"></i><b>13.4.1</b> The partially-planned rendezvous</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:jobsnum"><i class="fa fa-check"></i><b>13.4.2</b> The jobs report</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch-simulation.html"><a href="ch-simulation.html#restaurant-health-and-sanitation-grades"><i class="fa fa-check"></i><b>13.4.3</b> Restaurant health and sanitation grades</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch-simulation.html"><a href="ch-simulation.html#random-networks"><i class="fa fa-check"></i><b>13.5</b> Random networks</a></li>
+<li class="chapter" data-level="13.6" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:key-principles-random"><i class="fa fa-check"></i><b>13.6</b> Key principles of simulation</a>
+<ul>
+<li class="chapter" data-level="13.6.1" data-path="ch-simulation.html"><a href="ch-simulation.html#design"><i class="fa fa-check"></i><b>13.6.1</b> Design</a></li>
+<li class="chapter" data-level="13.6.2" data-path="ch-simulation.html"><a href="ch-simulation.html#modularity"><i class="fa fa-check"></i><b>13.6.2</b> Modularity</a></li>
+<li class="chapter" data-level="13.6.3" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:seed"><i class="fa fa-check"></i><b>13.6.3</b> Reproducibility and random number seeds</a></li>
+</ul></li>
+<li class="chapter" data-level="13.7" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-further"><i class="fa fa-check"></i><b>13.7</b> Further resources</a></li>
+<li class="chapter" data-level="13.8" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-exercises"><i class="fa fa-check"></i><b>13.8</b> Exercises</a></li>
+<li class="chapter" data-level="13.9" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-online-exercises"><i class="fa fa-check"></i><b>13.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>III Part III: Topics in Data Science</b></span></li>
+<li class="chapter" data-level="14" data-path="ch-vizIII.html"><a href="ch-vizIII.html"><i class="fa fa-check"></i><b>14</b> Dynamic and customized data graphics</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:d3"><i class="fa fa-check"></i><b>14.1</b> Rich Web content using <code>D3.js</code> and <strong>htmlwidgets</strong></a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#leaflet"><i class="fa fa-check"></i><b>14.1.1</b> Leaflet</a></li>
+<li class="chapter" data-level="14.1.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#plot.ly"><i class="fa fa-check"></i><b>14.1.2</b> Plot.ly</a></li>
+<li class="chapter" data-level="14.1.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datatables"><i class="fa fa-check"></i><b>14.1.3</b> DataTables</a></li>
+<li class="chapter" data-level="14.1.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#dygraphs"><i class="fa fa-check"></i><b>14.1.4</b> Dygraphs</a></li>
+<li class="chapter" data-level="14.1.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#streamgraphs"><i class="fa fa-check"></i><b>14.1.5</b> Streamgraphs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#animation"><i class="fa fa-check"></i><b>14.2</b> Animation</a></li>
+<li class="chapter" data-level="14.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:fleshdashboard"><i class="fa fa-check"></i><b>14.3</b> Flexdashboard</a></li>
+<li class="chapter" data-level="14.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:shiny"><i class="fa fa-check"></i><b>14.4</b> Interactive web apps with Shiny</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#example-interactive-display-of-the-beatles"><i class="fa fa-check"></i><b>14.4.1</b> Example: interactive display of the Beatles</a></li>
+<li class="chapter" data-level="14.4.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#more-on-reactive-programming"><i class="fa fa-check"></i><b>14.4.2</b> More on reactive programming</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:themes"><i class="fa fa-check"></i><b>14.5</b> Customization of <strong>ggplot2</strong> graphics</a></li>
+<li class="chapter" data-level="14.6" data-path="ch-vizIII.html"><a href="ch-vizIII.html#extended-example-hot-dog-eating"><i class="fa fa-check"></i><b>14.6</b> Extended example: Hot dog eating</a></li>
+<li class="chapter" data-level="14.7" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-further"><i class="fa fa-check"></i><b>14.7</b> Further resources</a></li>
+<li class="chapter" data-level="14.8" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-exercises"><i class="fa fa-check"></i><b>14.8</b> Exercises</a></li>
+<li class="chapter" data-level="14.9" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-online-exercises"><i class="fa fa-check"></i><b>14.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch-sql.html"><a href="ch-sql.html"><i class="fa fa-check"></i><b>15</b> Database querying using SQL</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch-sql.html"><a href="ch-sql.html#sec:dplyr-sql"><i class="fa fa-check"></i><b>15.1</b> From <strong>dplyr</strong> to SQL</a></li>
+<li class="chapter" data-level="15.2" data-path="ch-sql.html"><a href="ch-sql.html#flat-file-databases"><i class="fa fa-check"></i><b>15.2</b> Flat-file databases</a></li>
+<li class="chapter" data-level="15.3" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-universe"><i class="fa fa-check"></i><b>15.3</b> The SQL universe</a></li>
+<li class="chapter" data-level="15.4" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-data-manipulation-language"><i class="fa fa-check"></i><b>15.4</b> The SQL data manipulation language</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="ch-sql.html"><a href="ch-sql.html#select...from"><i class="fa fa-check"></i><b>15.4.1</b> <code>SELECT...FROM</code></a></li>
+<li class="chapter" data-level="15.4.2" data-path="ch-sql.html"><a href="ch-sql.html#where"><i class="fa fa-check"></i><b>15.4.2</b> <code>WHERE</code></a></li>
+<li class="chapter" data-level="15.4.3" data-path="ch-sql.html"><a href="ch-sql.html#group-by"><i class="fa fa-check"></i><b>15.4.3</b> <code>GROUP BY</code></a></li>
+<li class="chapter" data-level="15.4.4" data-path="ch-sql.html"><a href="ch-sql.html#order-by"><i class="fa fa-check"></i><b>15.4.4</b> <code>ORDER BY</code></a></li>
+<li class="chapter" data-level="15.4.5" data-path="ch-sql.html"><a href="ch-sql.html#having"><i class="fa fa-check"></i><b>15.4.5</b> <code>HAVING</code></a></li>
+<li class="chapter" data-level="15.4.6" data-path="ch-sql.html"><a href="ch-sql.html#limit"><i class="fa fa-check"></i><b>15.4.6</b> <code>LIMIT</code></a></li>
+<li class="chapter" data-level="15.4.7" data-path="ch-sql.html"><a href="ch-sql.html#join"><i class="fa fa-check"></i><b>15.4.7</b> <code>JOIN</code></a></li>
+<li class="chapter" data-level="15.4.8" data-path="ch-sql.html"><a href="ch-sql.html#union"><i class="fa fa-check"></i><b>15.4.8</b> <code>UNION</code></a></li>
+<li class="chapter" data-level="15.4.9" data-path="ch-sql.html"><a href="ch-sql.html#subqueries"><i class="fa fa-check"></i><b>15.4.9</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="ch-sql.html"><a href="ch-sql.html#sec:ft8-flights"><i class="fa fa-check"></i><b>15.5</b> Extended example: FiveThirtyEight flights</a></li>
+<li class="chapter" data-level="15.6" data-path="ch-sql.html"><a href="ch-sql.html#sql-vs.-refr"><i class="fa fa-check"></i><b>15.6</b> SQL vs. (ref:R)</a></li>
+<li class="chapter" data-level="15.7" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-further"><i class="fa fa-check"></i><b>15.7</b> Further resources</a></li>
+<li class="chapter" data-level="15.8" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-exercises"><i class="fa fa-check"></i><b>15.8</b> Exercises</a></li>
+<li class="chapter" data-level="15.9" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-online-exercises"><i class="fa fa-check"></i><b>15.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="ch-sql2.html"><a href="ch-sql2.html"><i class="fa fa-check"></i><b>16</b> Database administration</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:indices"><i class="fa fa-check"></i><b>16.1</b> Constructing efficient SQL databases</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="ch-sql2.html"><a href="ch-sql2.html#creating-new-databases"><i class="fa fa-check"></i><b>16.1.1</b> Creating new databases</a></li>
+<li class="chapter" data-level="16.1.2" data-path="ch-sql2.html"><a href="ch-sql2.html#create-table"><i class="fa fa-check"></i><b>16.1.2</b> <code>CREATE TABLE</code></a></li>
+<li class="chapter" data-level="16.1.3" data-path="ch-sql2.html"><a href="ch-sql2.html#keys"><i class="fa fa-check"></i><b>16.1.3</b> Keys</a></li>
+<li class="chapter" data-level="16.1.4" data-path="ch-sql2.html"><a href="ch-sql2.html#indices"><i class="fa fa-check"></i><b>16.1.4</b> Indices</a></li>
+<li class="chapter" data-level="16.1.5" data-path="ch-sql2.html"><a href="ch-sql2.html#query-plans"><i class="fa fa-check"></i><b>16.1.5</b> Query plans</a></li>
+<li class="chapter" data-level="16.1.6" data-path="ch-sql2.html"><a href="ch-sql2.html#partitioning"><i class="fa fa-check"></i><b>16.1.6</b> Partitioning</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-sql-data"><i class="fa fa-check"></i><b>16.2</b> Changing SQL data</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-data"><i class="fa fa-check"></i><b>16.2.1</b> Changing data</a></li>
+<li class="chapter" data-level="16.2.2" data-path="ch-sql2.html"><a href="ch-sql2.html#adding-data"><i class="fa fa-check"></i><b>16.2.2</b> Adding data</a></li>
+<li class="chapter" data-level="16.2.3" data-path="ch-sql2.html"><a href="ch-sql2.html#importing-data-from-a-file"><i class="fa fa-check"></i><b>16.2.3</b> Importing data from a file</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:toy-db"><i class="fa fa-check"></i><b>16.3</b> Extended example: Building a database</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="ch-sql2.html"><a href="ch-sql2.html#extract"><i class="fa fa-check"></i><b>16.3.1</b> Extract</a></li>
+<li class="chapter" data-level="16.3.2" data-path="ch-sql2.html"><a href="ch-sql2.html#transform"><i class="fa fa-check"></i><b>16.3.2</b> Transform</a></li>
+<li class="chapter" data-level="16.3.3" data-path="ch-sql2.html"><a href="ch-sql2.html#load-into-mysql-database"><i class="fa fa-check"></i><b>16.3.3</b> Load into MySQL database</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="ch-sql2.html"><a href="ch-sql2.html#scalability"><i class="fa fa-check"></i><b>16.4</b> Scalability</a></li>
+<li class="chapter" data-level="16.5" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-further"><i class="fa fa-check"></i><b>16.5</b> Further resources</a></li>
+<li class="chapter" data-level="16.6" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-exercises"><i class="fa fa-check"></i><b>16.6</b> Exercises</a></li>
+<li class="chapter" data-level="16.7" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-online-exercises"><i class="fa fa-check"></i><b>16.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="ch-spatial.html"><a href="ch-spatial.html"><i class="fa fa-check"></i><b>17</b> Working with geospatial data</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="ch-spatial.html"><a href="ch-spatial.html#motivation-whats-so-great-about-geospatial-data"><i class="fa fa-check"></i><b>17.1</b> Motivation: What’s so great about geospatial data?</a></li>
+<li class="chapter" data-level="17.2" data-path="ch-spatial.html"><a href="ch-spatial.html#spatial-data-structures"><i class="fa fa-check"></i><b>17.2</b> Spatial data structures</a></li>
+<li class="chapter" data-level="17.3" data-path="ch-spatial.html"><a href="ch-spatial.html#making-maps"><i class="fa fa-check"></i><b>17.3</b> Making maps</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="ch-spatial.html"><a href="ch-spatial.html#static-maps"><i class="fa fa-check"></i><b>17.3.1</b> Static maps</a></li>
+<li class="chapter" data-level="17.3.2" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:projections"><i class="fa fa-check"></i><b>17.3.2</b> Projections</a></li>
+<li class="chapter" data-level="17.3.3" data-path="ch-spatial.html"><a href="ch-spatial.html#dynamic-maps-with-leaflet"><i class="fa fa-check"></i><b>17.3.3</b> Dynamic maps with <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="ch-spatial.html"><a href="ch-spatial.html#extended-example-congressional-districts"><i class="fa fa-check"></i><b>17.4</b> Extended example: Congressional districts</a>
+<ul>
+<li class="chapter" data-level="17.4.1" data-path="ch-spatial.html"><a href="ch-spatial.html#election-results"><i class="fa fa-check"></i><b>17.4.1</b> Election results</a></li>
+<li class="chapter" data-level="17.4.2" data-path="ch-spatial.html"><a href="ch-spatial.html#congressional-districts"><i class="fa fa-check"></i><b>17.4.2</b> Congressional districts</a></li>
+<li class="chapter" data-level="17.4.3" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:sf-inner-join"><i class="fa fa-check"></i><b>17.4.3</b> Putting it all together</a></li>
+<li class="chapter" data-level="17.4.4" data-path="ch-spatial.html"><a href="ch-spatial.html#using-ggplot2"><i class="fa fa-check"></i><b>17.4.4</b> Using <code>ggplot2</code></a></li>
+<li class="chapter" data-level="17.4.5" data-path="ch-spatial.html"><a href="ch-spatial.html#using-leaflet"><i class="fa fa-check"></i><b>17.4.5</b> Using <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="ch-spatial.html"><a href="ch-spatial.html#effective-maps-how-not-to-lie"><i class="fa fa-check"></i><b>17.5</b> Effective maps: How (not) to lie</a></li>
+<li class="chapter" data-level="17.6" data-path="ch-spatial.html"><a href="ch-spatial.html#projecting-polygons"><i class="fa fa-check"></i><b>17.6</b> Projecting polygons</a></li>
+<li class="chapter" data-level="17.7" data-path="ch-spatial.html"><a href="ch-spatial.html#playing-well-with-others"><i class="fa fa-check"></i><b>17.7</b> Playing well with others</a></li>
+<li class="chapter" data-level="17.8" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialII-further"><i class="fa fa-check"></i><b>17.8</b> Further resources</a></li>
+<li class="chapter" data-level="17.9" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-exercises"><i class="fa fa-check"></i><b>17.9</b> Exercises</a></li>
+<li class="chapter" data-level="17.10" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-online-exercises"><i class="fa fa-check"></i><b>17.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="ch-spatial2.html"><a href="ch-spatial2.html"><i class="fa fa-check"></i><b>18</b> Geospatial computations</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-operations"><i class="fa fa-check"></i><b>18.1</b> Geospatial operations</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geocoding-routes-and-distances"><i class="fa fa-check"></i><b>18.1.1</b> Geocoding, routes, and distances</a></li>
+<li class="chapter" data-level="18.1.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#sec:geometric-operations"><i class="fa fa-check"></i><b>18.1.2</b> Geometric operations</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-aggregation"><i class="fa fa-check"></i><b>18.2</b> Geospatial aggregation</a></li>
+<li class="chapter" data-level="18.3" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-joins"><i class="fa fa-check"></i><b>18.3</b> Geospatial joins</a></li>
+<li class="chapter" data-level="18.4" data-path="ch-spatial2.html"><a href="ch-spatial2.html#extended-example-trail-elevations-at-macleish"><i class="fa fa-check"></i><b>18.4</b> Extended example: Trail elevations at MacLeish</a></li>
+<li class="chapter" data-level="18.5" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialI-further"><i class="fa fa-check"></i><b>18.5</b> Further resources</a></li>
+<li class="chapter" data-level="18.6" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-exercises"><i class="fa fa-check"></i><b>18.6</b> Exercises</a></li>
+<li class="chapter" data-level="18.7" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-online-exercises"><i class="fa fa-check"></i><b>18.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="ch-text.html"><a href="ch-text.html"><i class="fa fa-check"></i><b>19</b> Text as data</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="ch-text.html"><a href="ch-text.html#regular-expressions-using-macbeth"><i class="fa fa-check"></i><b>19.1</b> Regular expressions using <em>Macbeth</em></a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="ch-text.html"><a href="ch-text.html#parsing-the-text-of-the-scottish-play"><i class="fa fa-check"></i><b>19.1.1</b> Parsing the text of the <span><em>Scottish play</em></span></a></li>
+<li class="chapter" data-level="19.1.2" data-path="ch-text.html"><a href="ch-text.html#life-and-death-in-macbeth"><i class="fa fa-check"></i><b>19.1.2</b> Life and death in <em>Macbeth</em></a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="ch-text.html"><a href="ch-text.html#extended-example-analyzing-textual-data-from-arxiv.org"><i class="fa fa-check"></i><b>19.2</b> Extended example: Analyzing textual data from arXiv.org</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="ch-text.html"><a href="ch-text.html#corpora"><i class="fa fa-check"></i><b>19.2.1</b> Corpora</a></li>
+<li class="chapter" data-level="19.2.2" data-path="ch-text.html"><a href="ch-text.html#word-clouds"><i class="fa fa-check"></i><b>19.2.2</b> Word clouds</a></li>
+<li class="chapter" data-level="19.2.3" data-path="ch-text.html"><a href="ch-text.html#sentiment-analysis"><i class="fa fa-check"></i><b>19.2.3</b> Sentiment analysis</a></li>
+<li class="chapter" data-level="19.2.4" data-path="ch-text.html"><a href="ch-text.html#bigrams-and-n-grams"><i class="fa fa-check"></i><b>19.2.4</b> Bigrams and N-grams</a></li>
+<li class="chapter" data-level="19.2.5" data-path="ch-text.html"><a href="ch-text.html#document-term-matrices"><i class="fa fa-check"></i><b>19.2.5</b> Document term matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="ch-text.html"><a href="ch-text.html#ingesting-text"><i class="fa fa-check"></i><b>19.3</b> Ingesting text</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="ch-text.html"><a href="ch-text.html#example-scraping-the-songs-of-the-beatles"><i class="fa fa-check"></i><b>19.3.1</b> Example: Scraping the songs of the Beatles</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="ch-text.html"><a href="ch-text.html#text-further"><i class="fa fa-check"></i><b>19.4</b> Further resources</a></li>
+<li class="chapter" data-level="19.5" data-path="ch-text.html"><a href="ch-text.html#text-exercises"><i class="fa fa-check"></i><b>19.5</b> Exercises</a></li>
+<li class="chapter" data-level="19.6" data-path="ch-text.html"><a href="ch-text.html#text-online-exercises"><i class="fa fa-check"></i><b>19.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="ch-netsci.html"><a href="ch-netsci.html"><i class="fa fa-check"></i><b>20</b> Network science</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-intro"><i class="fa fa-check"></i><b>20.1</b> Introduction to network science</a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="ch-netsci.html"><a href="ch-netsci.html#definitions"><i class="fa fa-check"></i><b>20.1.1</b> Definitions</a></li>
+<li class="chapter" data-level="20.1.2" data-path="ch-netsci.html"><a href="ch-netsci.html#a-brief-history-of-network-science"><i class="fa fa-check"></i><b>20.1.2</b> A brief history of network science</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-six-degrees-of-kristen-stewart"><i class="fa fa-check"></i><b>20.2</b> Extended example: Six degrees of Kristen Stewart</a>
+<ul>
+<li class="chapter" data-level="20.2.1" data-path="ch-netsci.html"><a href="ch-netsci.html#sql:imdb"><i class="fa fa-check"></i><b>20.2.1</b> Collecting Hollywood data</a></li>
+<li class="chapter" data-level="20.2.2" data-path="ch-netsci.html"><a href="ch-netsci.html#building-the-hollywood-network"><i class="fa fa-check"></i><b>20.2.2</b> Building the Hollywood network</a></li>
+<li class="chapter" data-level="20.2.3" data-path="ch-netsci.html"><a href="ch-netsci.html#building-a-kristen-stewart-oracle"><i class="fa fa-check"></i><b>20.2.3</b> Building a Kristen Stewart oracle</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="ch-netsci.html"><a href="ch-netsci.html#sec:pagerank"><i class="fa fa-check"></i><b>20.3</b> PageRank</a>
+<ul>
+<li class="chapter" data-level="20.3.1" data-path="ch-netsci.html"><a href="ch-netsci.html#eigenvector-centrality"><i class="fa fa-check"></i><b>20.3.1</b> Eigenvector centrality</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-1996-mens-college-basketball"><i class="fa fa-check"></i><b>20.4</b> Extended example: 1996 men’s college basketball</a></li>
+<li class="chapter" data-level="20.5" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-further"><i class="fa fa-check"></i><b>20.5</b> Further resources</a></li>
+<li class="chapter" data-level="20.6" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-exercises"><i class="fa fa-check"></i><b>20.6</b> Exercises</a></li>
+<li class="chapter" data-level="20.7" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-online-exercises"><i class="fa fa-check"></i><b>20.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="ch-big.html"><a href="ch-big.html"><i class="fa fa-check"></i><b>21</b> Epilogue: Towards “big data”</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="ch-big.html"><a href="ch-big.html#notions-of-big-data"><i class="fa fa-check"></i><b>21.1</b> Notions of big data</a></li>
+<li class="chapter" data-level="21.2" data-path="ch-big.html"><a href="ch-big.html#tools-for-bigger-data"><i class="fa fa-check"></i><b>21.2</b> Tools for bigger data</a>
+<ul>
+<li class="chapter" data-level="21.2.1" data-path="ch-big.html"><a href="ch-big.html#data-and-memory-structures-for-big-data"><i class="fa fa-check"></i><b>21.2.1</b> Data and memory structures for big data</a></li>
+<li class="chapter" data-level="21.2.2" data-path="ch-big.html"><a href="ch-big.html#compilation"><i class="fa fa-check"></i><b>21.2.2</b> Compilation</a></li>
+<li class="chapter" data-level="21.2.3" data-path="ch-big.html"><a href="ch-big.html#parallel-and-distributed-computing"><i class="fa fa-check"></i><b>21.2.3</b> Parallel and distributed computing</a></li>
+<li class="chapter" data-level="21.2.4" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-sql"><i class="fa fa-check"></i><b>21.2.4</b> Alternatives to SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-refr"><i class="fa fa-check"></i><b>21.3</b> Alternatives to (ref:R)</a></li>
+<li class="chapter" data-level="21.4" data-path="ch-big.html"><a href="ch-big.html#closing-thoughts"><i class="fa fa-check"></i><b>21.4</b> Closing thoughts</a></li>
+<li class="chapter" data-level="21.5" data-path="ch-big.html"><a href="ch-big.html#bigdata-further"><i class="fa fa-check"></i><b>21.5</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="part"><span><b>IV Part IV: Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="ch-mdsr.html"><a href="ch-mdsr.html"><i class="fa fa-check"></i><b>A</b> Packages used in this book</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="ch-mdsr.html"><a href="ch-mdsr.html#the-mdsr-package"><i class="fa fa-check"></i><b>A.1</b> The <strong>mdsr</strong> package</a></li>
+<li class="chapter" data-level="A.2" data-path="ch-mdsr.html"><a href="ch-mdsr.html#other-packages"><i class="fa fa-check"></i><b>A.2</b> Other packages</a></li>
+<li class="chapter" data-level="A.3" data-path="ch-mdsr.html"><a href="ch-mdsr.html#pkg-further"><i class="fa fa-check"></i><b>A.3</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="ch-R.html"><a href="ch-R.html"><i class="fa fa-check"></i><b>B</b> Introduction to <code>R</code> and RStudio</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="ch-R.html"><a href="ch-R.html#appR:install"><i class="fa fa-check"></i><b>B.1</b> Installation</a>
+<ul>
+<li class="chapter" data-level="B.1.1" data-path="ch-R.html"><a href="ch-R.html#rstudio"><i class="fa fa-check"></i><b>B.1.1</b> RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="B.2" data-path="ch-R.html"><a href="ch-R.html#learning-refr"><i class="fa fa-check"></i><b>B.2</b> Learning (ref:R)</a></li>
+<li class="chapter" data-level="B.3" data-path="ch-R.html"><a href="ch-R.html#appR:objects"><i class="fa fa-check"></i><b>B.3</b> Fundamental structures and objects</a>
+<ul>
+<li class="chapter" data-level="B.3.1" data-path="ch-R.html"><a href="ch-R.html#appR:assign"><i class="fa fa-check"></i><b>B.3.1</b> Objects and vectors</a></li>
+<li class="chapter" data-level="B.3.2" data-path="ch-R.html"><a href="ch-R.html#appR:operators"><i class="fa fa-check"></i><b>B.3.2</b> Operators</a></li>
+<li class="chapter" data-level="B.3.3" data-path="ch-R.html"><a href="ch-R.html#appR:lists"><i class="fa fa-check"></i><b>B.3.3</b> Lists</a></li>
+<li class="chapter" data-level="B.3.4" data-path="ch-R.html"><a href="ch-R.html#appR:matrix"><i class="fa fa-check"></i><b>B.3.4</b> Matrices</a></li>
+<li class="chapter" data-level="B.3.5" data-path="ch-R.html"><a href="ch-R.html#appR:dataframe"><i class="fa fa-check"></i><b>B.3.5</b> Dataframes and tibbles</a></li>
+<li class="chapter" data-level="B.3.6" data-path="ch-R.html"><a href="ch-R.html#appR:attr"><i class="fa fa-check"></i><b>B.3.6</b> Attributes and classes</a></li>
+<li class="chapter" data-level="B.3.7" data-path="ch-R.html"><a href="ch-R.html#appR:options"><i class="fa fa-check"></i><b>B.3.7</b> Options</a></li>
+<li class="chapter" data-level="B.3.8" data-path="ch-R.html"><a href="ch-R.html#sec:func"><i class="fa fa-check"></i><b>B.3.8</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="ch-R.html"><a href="ch-R.html#add-ons-packages"><i class="fa fa-check"></i><b>B.4</b> Add-ons: Packages</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="ch-R.html"><a href="ch-R.html#appR:packages"><i class="fa fa-check"></i><b>B.4.1</b> Introduction to packages</a></li>
+<li class="chapter" data-level="B.4.2" data-path="ch-R.html"><a href="ch-R.html#packages-and-name-conflicts"><i class="fa fa-check"></i><b>B.4.2</b> Packages and name conflicts</a></li>
+<li class="chapter" data-level="B.4.3" data-path="ch-R.html"><a href="ch-R.html#appR:tasks"><i class="fa fa-check"></i><b>B.4.3</b> CRAN task views</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="ch-R.html"><a href="ch-R.html#appR-further"><i class="fa fa-check"></i><b>B.5</b> Further resources</a></li>
+<li class="chapter" data-level="B.6" data-path="ch-R.html"><a href="ch-R.html#appR-exercises"><i class="fa fa-check"></i><b>B.6</b> Exercises</a></li>
+<li class="chapter" data-level="B.7" data-path="ch-R.html"><a href="ch-R.html#appR-online-exercises"><i class="fa fa-check"></i><b>B.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="ch-function.html"><a href="ch-function.html"><i class="fa fa-check"></i><b>C</b> Algorithmic thinking</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-intro"><i class="fa fa-check"></i><b>C.1</b> Introduction</a></li>
+<li class="chapter" data-level="C.2" data-path="ch-function.html"><a href="ch-function.html#simple-example"><i class="fa fa-check"></i><b>C.2</b> Simple example</a></li>
+<li class="chapter" data-level="C.3" data-path="ch-function.html"><a href="ch-function.html#sec:runaverage"><i class="fa fa-check"></i><b>C.3</b> Extended example: Law of large numbers</a></li>
+<li class="chapter" data-level="C.4" data-path="ch-function.html"><a href="ch-function.html#sec:tidyeval"><i class="fa fa-check"></i><b>C.4</b> Non-standard evaluation</a></li>
+<li class="chapter" data-level="C.5" data-path="ch-function.html"><a href="ch-function.html#sec:debugging"><i class="fa fa-check"></i><b>C.5</b> Debugging and defensive coding</a></li>
+<li class="chapter" data-level="C.6" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-further"><i class="fa fa-check"></i><b>C.6</b> Further resources</a></li>
+<li class="chapter" data-level="C.7" data-path="ch-function.html"><a href="ch-function.html#algorithmic-exercises"><i class="fa fa-check"></i><b>C.7</b> Exercises</a></li>
+<li class="chapter" data-level="C.8" data-path="ch-function.html"><a href="ch-function.html#algorithmic-online-exercises"><i class="fa fa-check"></i><b>C.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="ch-reproduce.html"><a href="ch-reproduce.html"><i class="fa fa-check"></i><b>D</b> Reproducible analysis and workflow</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="ch-reproduce.html"><a href="ch-reproduce.html#scriptable-statistical-computing"><i class="fa fa-check"></i><b>D.1</b> Scriptable statistical computing</a></li>
+<li class="chapter" data-level="D.2" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-analysis-with-refr-markdown"><i class="fa fa-check"></i><b>D.2</b> Reproducible analysis with (ref:R) Markdown</a></li>
+<li class="chapter" data-level="D.3" data-path="ch-reproduce.html"><a href="ch-reproduce.html#projects-and-version-control"><i class="fa fa-check"></i><b>D.3</b> Projects and version control</a></li>
+<li class="chapter" data-level="D.4" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-further"><i class="fa fa-check"></i><b>D.4</b> Further resources</a></li>
+<li class="chapter" data-level="D.5" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-exercises"><i class="fa fa-check"></i><b>D.5</b> Exercises</a></li>
+<li class="chapter" data-level="D.6" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-online-exercises"><i class="fa fa-check"></i><b>D.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="ch-regression.html"><a href="ch-regression.html"><i class="fa fa-check"></i><b>E</b> Regression modeling</a>
+<ul>
+<li class="chapter" data-level="E.1" data-path="ch-regression.html"><a href="ch-regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>E.1</b> Simple linear regression</a>
+<ul>
+<li class="chapter" data-level="E.1.1" data-path="ch-regression.html"><a href="ch-regression.html#motivating-example-modeling-usage-of-a-rail-trail"><i class="fa fa-check"></i><b>E.1.1</b> Motivating example: Modeling usage of a rail trail</a></li>
+<li class="chapter" data-level="E.1.2" data-path="ch-regression.html"><a href="ch-regression.html#model-visualization"><i class="fa fa-check"></i><b>E.1.2</b> Model visualization</a></li>
+<li class="chapter" data-level="E.1.3" data-path="ch-regression.html"><a href="ch-regression.html#measuring-the-strength-of-fit"><i class="fa fa-check"></i><b>E.1.3</b> Measuring the strength of fit</a></li>
+<li class="chapter" data-level="E.1.4" data-path="ch-regression.html"><a href="ch-regression.html#sec:anova"><i class="fa fa-check"></i><b>E.1.4</b> Categorical explanatory variables</a></li>
+</ul></li>
+<li class="chapter" data-level="E.2" data-path="ch-regression.html"><a href="ch-regression.html#multiple-regression"><i class="fa fa-check"></i><b>E.2</b> Multiple regression</a>
+<ul>
+<li class="chapter" data-level="E.2.1" data-path="ch-regression.html"><a href="ch-regression.html#sec:indicators"><i class="fa fa-check"></i><b>E.2.1</b> Parallel slopes: Multiple regression with a categorical variable</a></li>
+<li class="chapter" data-level="E.2.2" data-path="ch-regression.html"><a href="ch-regression.html#parallel-planes-multiple-regression-with-a-second-quantitative-variable"><i class="fa fa-check"></i><b>E.2.2</b> Parallel planes: Multiple regression with a second quantitative variable</a></li>
+<li class="chapter" data-level="E.2.3" data-path="ch-regression.html"><a href="ch-regression.html#sec:interaction"><i class="fa fa-check"></i><b>E.2.3</b> Non-parallel slopes: Multiple regression with interaction</a></li>
+<li class="chapter" data-level="E.2.4" data-path="ch-regression.html"><a href="ch-regression.html#modeling-non-linear-relationships"><i class="fa fa-check"></i><b>E.2.4</b> Modeling non-linear relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="E.3" data-path="ch-regression.html"><a href="ch-regression.html#inference-for-regression"><i class="fa fa-check"></i><b>E.3</b> Inference for regression</a></li>
+<li class="chapter" data-level="E.4" data-path="ch-regression.html"><a href="ch-regression.html#assumptions-underlying-regression"><i class="fa fa-check"></i><b>E.4</b> Assumptions underlying regression</a></li>
+<li class="chapter" data-level="E.5" data-path="ch-regression.html"><a href="ch-regression.html#sec:logistic"><i class="fa fa-check"></i><b>E.5</b> Logistic regression</a></li>
+<li class="chapter" data-level="E.6" data-path="ch-regression.html"><a href="ch-regression.html#regression-further"><i class="fa fa-check"></i><b>E.6</b> Further resources</a></li>
+<li class="chapter" data-level="E.7" data-path="ch-regression.html"><a href="ch-regression.html#regression-exercises"><i class="fa fa-check"></i><b>E.7</b> Exercises</a></li>
+<li class="chapter" data-level="E.8" data-path="ch-regression.html"><a href="ch-regression.html#regression-online-exercises"><i class="fa fa-check"></i><b>E.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="F" data-path="ch-db-setup.html"><a href="ch-db-setup.html"><i class="fa fa-check"></i><b>F</b> Setting up a database server</a>
+<ul>
+<li class="chapter" data-level="F.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sqlite"><i class="fa fa-check"></i><b>F.1</b> SQLite</a></li>
+<li class="chapter" data-level="F.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#mysql"><i class="fa fa-check"></i><b>F.2</b> MySQL</a>
+<ul>
+<li class="chapter" data-level="F.2.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#installation"><i class="fa fa-check"></i><b>F.2.1</b> Installation</a></li>
+<li class="chapter" data-level="F.2.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:mysql-access"><i class="fa fa-check"></i><b>F.2.2</b> Access</a></li>
+<li class="chapter" data-level="F.2.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#running-scripts-from-the-command-line"><i class="fa fa-check"></i><b>F.2.3</b> Running scripts from the command line</a></li>
+</ul></li>
+<li class="chapter" data-level="F.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#postgresql"><i class="fa fa-check"></i><b>F.3</b> PostgreSQL</a></li>
+<li class="chapter" data-level="F.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-sql"><i class="fa fa-check"></i><b>F.4</b> Connecting to SQL</a>
+<ul>
+<li class="chapter" data-level="F.4.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#the-command-line-client"><i class="fa fa-check"></i><b>F.4.1</b> The command line client</a></li>
+<li class="chapter" data-level="F.4.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#guis"><i class="fa fa-check"></i><b>F.4.2</b> GUIs</a></li>
+<li class="chapter" data-level="F.4.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-r-sql"><i class="fa fa-check"></i><b>F.4.3</b> R and RStudio</a></li>
+<li class="chapter" data-level="F.4.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:sqlitebaby"><i class="fa fa-check"></i><b>F.4.4</b> Load into SQLite database</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="index.html">Modern Data Science with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch:simulation" class="section level1" number="13">
+<h1><span class="header-section-number">Chapter 13</span> Simulation</h1>
+<div id="reasoning-in-reverse" class="section level2" number="13.1">
+<h2><span class="header-section-number">13.1</span> Reasoning in reverse</h2>
+<p>
+
+In Chapter <a href="ch-prologue.html#ch:prologue">1</a> of this book we stated a simple truth: The purpose of data science is to turn data into usable information. Another way to think of this is that we use data to improve our understanding of the systems we live and work with: Data <span class="math inline">\(\rightarrow\)</span> Understanding.</p>
+<p>
+
+
+
+This chapter is about computing techniques relating to the reverse way of thinking: Speculation <span class="math inline">\(\rightarrow\)</span> Data. In other words, this chapter is about “making up data.”</p>
+<p>
+Many people associate “making up data” with deception. Certainly, data can be made up for exactly that purpose. Our purpose is different. We are interested in legitimate purposes for making up data, purposes that support the proper use of data science in transforming data into understanding.</p>
+<p>
+How can made-up data be legitimately useful? In order to make up data, you need to build a mechanism that contains—implicitly—an idea about how the system you are interested in works. The data you make up tell you what data generated by that system would look like. There are two main (legitimate) purposes for doing this:</p>
+<p>
+</p>
+<ul>
+<li><p>Conditional inference. If our mechanism is reflective of how the real system works, the data it generates are similar to real data. You might use these to inform tweaks to the mechanism in order to produce even more representative results. This process can help you refine your understanding in ways that are relevant to the real world.
+</p></li>
+<li><p>Winnowing out hypotheses. To “winnow” means to remove from a set the less desirable choices so that what remains is useful. Traditionally, grain was winnowed to separate the edible parts from the inedible chaff. For data science, the set is composed of hypotheses, which are ideas about how the world works. Data are generated from each hypothesis and compared to the data we collect from the real world. When the hypothesis-generated data fails to resemble the
+real-world data, we can remove that hypothesis from the set. What remains are hypotheses that are plausible candidates for describing the real-world mechanisms.
+
+
+</p></li>
+</ul>
+<p>“Making up” data is undignified, so we will leave that term to refer to fraud and trickery. In its place we’ll use use <a href="https://en.wikipedia.org/w/index.php?search=simulation"><em>simulation</em></a>, which derives from “similar.” Simulations involve constructing mechanisms that are similar to how systems in the real world work—or at least to our belief and understanding of how such systems work.</p>
+<p>
+</p>
+</div>
+<div id="extended-example-grouping-cancers" class="section level2" number="13.2">
+<h2><span class="header-section-number">13.2</span> Extended example: Grouping cancers</h2>
+<p>
+
+
+
+
+
+
+
+There are many different kinds of cancer.
+They are often given the name of the tissue in which they originate: lung cancer, ovarian cancer, prostate cancer, and so on.
+Different kinds of cancer are treated with different chemotherapeutic drugs.
+But perhaps the tissue origin of each cancer is not the best indicator of how it should be treated.
+Could we find a better way?
+Let’s revisit the data introduced in Section <a href="ch-vizII.html#sec:datanetwork">3.2.4</a>.</p>
+<p>Like all cells, cancer cells have a genome containing tens of thousands of genes.
+Sometimes just a few genes dictate a cell’s behavior. Other times there are networks of genes that regulate one another’s expression in ways that shape cell features, such as the over-rapid reproduction characteristic of cancer cells.
+It is now possible to examine the expression of individual genes within a cell.
+So-called <a href="https://en.wikipedia.org/w/index.php?search=microarrays"><em>microarrays</em></a> are routinely used for this purpose. Each microarray has tens to hundreds of thousands of <a href="https://en.wikipedia.org/w/index.php?search=probes"><em>probes</em></a> for gene activity.
+The result of a microarray assay is a snapshot of gene activity.
+By comparing snapshots of cells in different states, it’s possible to identify the genes that are expressed differently in the states.
+This can provide insight into how specific genes govern various aspects of cell activity.</p>
+<p>A data scientist, as part of a team of biomedical researchers, might take on the job of compiling data from many microarray assays to identify whether different types of cancer are related based on their gene expression.
+For instance, the <code>NCI60</code> data (provided by the <code>etl_NCI60()</code> function in the <strong>mdsr</strong> package) contains readings from assays of <span class="math inline">\(n=60\)</span> different cell lines of cancer of different tissue types. For each cell line, the data contain readings on over <span class="math inline">\(p&gt;40,000\)</span> different probes.
+Your job might be to find relationships between different cell lines based on the patterns of probe expression.
+For this purpose, you might find the techniques of statistical learning and unsupervised learning from Chapters <a href="ch-modeling.html#ch:modeling">10</a>–<a href="ch-learningII.html#ch:learningII">12</a> to be helpful.</p>
+<p>However, there is a problem.
+Even cancer cells have to carry out the routine actions that all cells use to maintain themselves.
+Presumably, the expression of most of the genes in the <code>NCI60</code> data are irrelevant to the pecularities of cancer and the similarities and differences between different cancer types.
+Data interpreting methods—including those in Chapters <a href="ch-modeling.html#ch:modeling">10</a> and <a href="ch-learningI.html#ch:learningI">11</a>—can be swamped by a wave of irrelevant data.
+They are more likely to be effective if the irrelevant data can be removed.
+Dimension reduction methods such as those described in Chapter <a href="ch-learningII.html#ch:learningII">12</a> can be attractive for this purpose.</p>
+<p>When you start down the road toward your goal of finding links among different cancer types, you don’t know if you will reach your destination.
+If you don’t, before concluding that there are no relationships, it’s helpful to rule out some other possibilities. Perhaps the data reduction and data interpretation methods you used are not powerful enough.
+Another set of methods might be better. Or perhaps there isn’t enough data to be able to detect the patterns you are looking for.</p>
+<p>Simulations can help here. To illustrate, consider a rather simple data reduction technique for the <code>NCI60</code> microarray data.
+If the expression of a probe is the same or very similar across all the different cancers, there’s nothing that that probe can tell us about the links among cancers.
+One way to quantify the variation in a probe from cell line to cell line is the standard deviation of microarray readings for that probe.</p>
+<p>It is a straightforward exercise in data wrangling to calculate this for each probe. The <code>NCI60</code> data come in a wide form: a matrix that’s 60 columns wide (one for each cell line) and 41,078 rows long (one row for each probe). This pipeline will find the standard deviation across cell lines for each probe.</p>
+<p>
+
+
+
+
+</p>
+<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="ch-simulation.html#cb611-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb611-2"><a href="ch-simulation.html#cb611-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdsr)</span>
+<span id="cb611-3"><a href="ch-simulation.html#cb611-3" aria-hidden="true" tabindex="-1"></a>NCI60 <span class="ot">&lt;-</span> <span class="fu">etl_NCI60</span>()</span>
+<span id="cb611-4"><a href="ch-simulation.html#cb611-4" aria-hidden="true" tabindex="-1"></a>spreads <span class="ot">&lt;-</span> NCI60 <span class="sc">%&gt;%</span></span>
+<span id="cb611-5"><a href="ch-simulation.html#cb611-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb611-6"><a href="ch-simulation.html#cb611-6" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span>Probe, <span class="at">values_to =</span> <span class="st">&quot;expression&quot;</span>, </span>
+<span id="cb611-7"><a href="ch-simulation.html#cb611-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;cellLine&quot;</span></span>
+<span id="cb611-8"><a href="ch-simulation.html#cb611-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span>  </span>
+<span id="cb611-9"><a href="ch-simulation.html#cb611-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Probe) <span class="sc">%&gt;%</span></span>
+<span id="cb611-10"><a href="ch-simulation.html#cb611-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>(), <span class="at">spread =</span> <span class="fu">sd</span>(expression)) <span class="sc">%&gt;%</span></span>
+<span id="cb611-11"><a href="ch-simulation.html#cb611-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(spread)) <span class="sc">%&gt;%</span></span>
+<span id="cb611-12"><a href="ch-simulation.html#cb611-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">order =</span> <span class="fu">row_number</span>())</span></code></pre></div>
+<p><code>NCI60</code> has been rearranged into narrow format in <code>spreads</code>, with columns <code>Probe</code> and <code>spread</code> for each of 32,344 probes.
+(A large number of the probes appear several times in the microarray, in one case as many as 14 times.)
+We arrange this dataset in descending order by the size of the standard deviation, so we can collect the probes that exhibit the most variation across cell lines by taking the topmost ones in <code>spreads</code>.
+For ease in plotting, we add the variable <code>order</code> to mark the order of each probe in the list.</p>
+<p>
+
+
+How many of the probes with top standard deviations should we include in further data reduction and interpretation? 1? 10? 1000? 10,000? How should we go about answering this question?
+We’ll use a simulation to help determine the number of probes that we select.
+
+
+
+</p>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="ch-simulation.html#cb612-1" aria-hidden="true" tabindex="-1"></a>sim_spreads <span class="ot">&lt;-</span> NCI60 <span class="sc">%&gt;%</span></span>
+<span id="cb612-2"><a href="ch-simulation.html#cb612-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb612-3"><a href="ch-simulation.html#cb612-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span>Probe, <span class="at">values_to =</span> <span class="st">&quot;expression&quot;</span>, </span>
+<span id="cb612-4"><a href="ch-simulation.html#cb612-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">&quot;cellLine&quot;</span></span>
+<span id="cb612-5"><a href="ch-simulation.html#cb612-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb612-6"><a href="ch-simulation.html#cb612-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Probe =</span> mosaic<span class="sc">::</span><span class="fu">shuffle</span>(Probe)) <span class="sc">%&gt;%</span></span>
+<span id="cb612-7"><a href="ch-simulation.html#cb612-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Probe) <span class="sc">%&gt;%</span></span>
+<span id="cb612-8"><a href="ch-simulation.html#cb612-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>(), <span class="at">spread =</span> <span class="fu">sd</span>(expression)) <span class="sc">%&gt;%</span></span>
+<span id="cb612-9"><a href="ch-simulation.html#cb612-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(spread)) <span class="sc">%&gt;%</span></span>
+<span id="cb612-10"><a href="ch-simulation.html#cb612-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">order =</span> <span class="fu">row_number</span>())</span></code></pre></div>
+<p>What makes this a simulation is the <code>mutate()</code> command where we call <code>shuffle()</code>.
+In that line, we replace each of the probe labels with a randomly selected label.
+The result is that the <code>expression</code> has been statistically disconnected from any other variable, particularly <code>cellLine</code>.
+The simulation creates the kind of data that would result from a system in which the probe expression data is meaningless.
+In other words, the simulation mechanism matches the null hypothesis that the probe labels are irrelevant.
+By comparing the real <code>NCI60</code> data to the simulated data, we can see which probes give evidence that the null hypothesis is false.
+Let’s compare the top-500 spread values in <code>spreads</code> and <code>sim_spreads</code>.
+
+
+</p>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="ch-simulation.html#cb613-1" aria-hidden="true" tabindex="-1"></a>spreads <span class="sc">%&gt;%</span></span>
+<span id="cb613-2"><a href="ch-simulation.html#cb613-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(order <span class="sc">&lt;=</span> <span class="dv">500</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb613-3"><a href="ch-simulation.html#cb613-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> order, <span class="at">y =</span> spread)) <span class="sc">+</span></span>
+<span id="cb613-4"><a href="ch-simulation.html#cb613-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb613-5"><a href="ch-simulation.html#cb613-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb613-6"><a href="ch-simulation.html#cb613-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">filter</span>(sim_spreads, order <span class="sc">&lt;=</span> <span class="dv">500</span>), </span>
+<span id="cb613-7"><a href="ch-simulation.html#cb613-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, </span>
+<span id="cb613-8"><a href="ch-simulation.html#cb613-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">2</span></span>
+<span id="cb613-9"><a href="ch-simulation.html#cb613-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb613-10"><a href="ch-simulation.html#cb613-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb613-11"><a href="ch-simulation.html#cb613-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&quot;simulated&quot;</span>, <span class="at">x =</span> <span class="dv">275</span>, <span class="at">y =</span> <span class="fl">4.4</span>, </span>
+<span id="cb613-12"><a href="ch-simulation.html#cb613-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span></span>
+<span id="cb613-13"><a href="ch-simulation.html#cb613-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb613-14"><a href="ch-simulation.html#cb613-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb613-15"><a href="ch-simulation.html#cb613-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&quot;observed&quot;</span>, <span class="at">x =</span> <span class="dv">75</span>, <span class="at">y =</span> <span class="fl">5.5</span>, </span>
+<span id="cb613-16"><a href="ch-simulation.html#cb613-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span></span>
+<span id="cb613-17"><a href="ch-simulation.html#cb613-17" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="figure"><span id="fig:nci60sim"></span>
+<img src="13-simulation_files/figure-html/nci60sim-1.png" alt="Comparing the variation in expression for individual probes across cell lines data (blue) and a simulation of a null hypothesis (red)." width="100%" />
+<p class="caption">
+Figure 13.1: Comparing the variation in expression for individual probes across cell lines data (blue) and a simulation of a null hypothesis (red).
+</p>
+</div>
+<p>We can tell a lot from the results of the simulation shown in Figure <a href="ch-simulation.html#fig:nci60sim">13.1</a>.
+If we decided to use the top-500 probes, we would risk including many that were no more variable than random noise (i.e., that which could have been generated under the null hypothesis).</p>
+<p>But if we set the threshold much lower, including, say, only those probes with a spread greater than 5.0, we would be unlikely to include any that were generated by a mechanism consistent with the null hypothesis.
+The simulation is telling us that it would be good to look at roughly the top-50 probes, since that is about how many in <code>NCI60</code> were out of the range of the simulated results for the null hypothesis.
+Methods of this sort are often identified as <a href="https://en.wikipedia.org/w/index.php?search=false%20discovery%20rate"><em>false discovery rate</em></a> methods.
+
+
+
+</p>
+</div>
+<div id="randomizing-functions" class="section level2" number="13.3">
+<h2><span class="header-section-number">13.3</span> Randomizing functions</h2>
+<p>There are as many possible simulations as there are possible hypotheses—that is, an unlimited number. Different hypotheses call for different techniques for building simulations. But there are some techniques that appear in a wide range of simulations. It’s worth knowing about these.</p>
+<p>
+
+
+
+The previous example about false discovery rates in gene expression uses an everyday method of randomization: <a href="https://en.wikipedia.org/w/index.php?search=shuffling"><em>shuffling</em></a>. Shuffling is, of course, a way of destroying any genuine order in a sequence, leaving only those appearances of order that are due to chance. Closely-related methods, <a href="https://en.wikipedia.org/w/index.php?search=sampling"><em>sampling</em></a> and <a href="https://en.wikipedia.org/w/index.php?search=resampling"><em>resampling</em></a>, were introduced in Chapter <a href="ch-foundations.html#ch:foundations">9</a> when we used simulation to assess the statistical significance of patterns observed in data.</p>
+<p>Counter-intuitively, the use of random numbers is an important component of many simulations. In simulation, we want to induce variation. For instance, the simulated probes for the cancer example do not all have the same spread. But in creating that variation, we do not want to introduce any structure other than what we specify explicitly in the simulation. Using random numbers ensures that any structure that we find in the simulation is either due to the mechanism we’ve built for the simulation or is purely accidental.</p>
+<p>
+</p>
+<p>The workhorse of simulation is the generation of random numbers in the range from zero to one, with each possibility being equally likely. In <strong>R</strong>, the most widely-used such <a href="https://en.wikipedia.org/w/index.php?search=uniform%20random%20number%20generator"><em>uniform random number generator</em></a> is <code>runif()</code>. For instance, here we ask for five uniform random numbers:
+</p>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="ch-simulation.html#cb614-1" aria-hidden="true" tabindex="-1"></a><span class="fu">runif</span>(<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>[1] 0.280 0.435 0.717 0.407 0.131</code></pre>
+<p>Other randomization devices can be built out of uniform random number generators. To illustrate, here is a device for selecting one value at random from a vector:</p>
+<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="ch-simulation.html#cb616-1" aria-hidden="true" tabindex="-1"></a>select_one <span class="ot">&lt;-</span> <span class="cf">function</span>(vec) {</span>
+<span id="cb616-2"><a href="ch-simulation.html#cb616-2" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(vec)</span>
+<span id="cb616-3"><a href="ch-simulation.html#cb616-3" aria-hidden="true" tabindex="-1"></a>  ind <span class="ot">&lt;-</span> <span class="fu">which.max</span>(<span class="fu">runif</span>(n))</span>
+<span id="cb616-4"><a href="ch-simulation.html#cb616-4" aria-hidden="true" tabindex="-1"></a>  vec[ind]</span>
+<span id="cb616-5"><a href="ch-simulation.html#cb616-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb616-6"><a href="ch-simulation.html#cb616-6" aria-hidden="true" tabindex="-1"></a><span class="fu">select_one</span>(letters) <span class="co"># letters are a, b, c, ..., z</span></span></code></pre></div>
+<pre><code>[1] &quot;r&quot;</code></pre>
+<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="ch-simulation.html#cb618-1" aria-hidden="true" tabindex="-1"></a><span class="fu">select_one</span>(letters)</span></code></pre></div>
+<pre><code>[1] &quot;i&quot;</code></pre>
+<p>The <code>select_one()</code> function is functionally equivalent to <code>slice_sample()</code> with the <code>size</code> argument set to 1.
+Random numbers are so important that you should try to use generators that have been written by experts and vetted by the community.</p>
+<p>There is a lot of sophisticated theory behind programs that generate uniform random numbers. After all, you generally don’t want sequences of random numbers to repeat themselves. (An exception is described in Section <a href="ch-simulation.html#sec:key-principles-random">13.6</a>.) The theory has to do with techniques for making repeated sub-sequences as rare as possible.</p>
+<p>
+
+
+
+
+
+
+
+Perhaps the widest use of simulation in data analysis involves the randomness introduced by sampling, resampling, and shuffling. These operations are provided by the functions <code>sample()</code>, <code>resample()</code>, and <code>shuffle()</code> from the <strong>mosaic</strong> package.
+These functions sample uniformly at random from a data frame (or vector) with or without replacement, or permute the rows of a data frame. <code>resample()</code> is equivalent to <code>sample()</code> with the <code>replace</code> argument set to <code>TRUE</code>, while <code>shuffle()</code> is equivalent to <code>sample()</code> with <code>size</code> equal to the number of rows in the data frame and <code>replace</code> equal to <code>FALSE</code>. Non-uniform sampling can be achieved using the <code>prob</code> option.</p>
+<p>Other important functions for building simulations are those that generate random numbers with certain important properties. We’ve already seen <code>runif()</code> for creating uniform random numbers. Very widely used are <code>rnorm()</code>, <code>rexp()</code>, and <code>rpois()</code> for generating numbers that are distributed normally (that is, in the bell-shaped, <a href="https://en.wikipedia.org/w/index.php?search=Gaussian%20distribution"><em>Gaussian distribution</em></a>, exponentially, and with a Poisson (count) pattern, respectively. These different distributions correspond to idealized descriptions of mechanisms in the real world. For instance, events that are equally likely to happen at any time (e.g., earthquakes) will tend to have a time spacing between events that is exponential. Events that have a rate that remains the same over time (e.g., the number of cars passing a point on a low-traffic road in one minute) are often modeled using a <a href="https://en.wikipedia.org/w/index.php?search=Poisson%20distribution"><em>Poisson distribution</em></a>. There are many other forms of distributions that are considered good models of particular random processes.
+Functions analogous to <code>runif()</code> and <code>rnorm()</code> are available for other common probability distributions (see the <a href="https://cran.r-project.org/web/views/Distributions.html">Probability Distributions CRAN Task View</a>).
+
+</p>
+</div>
+<div id="simulating-variability" class="section level2" number="13.4">
+<h2><span class="header-section-number">13.4</span> Simulating variability</h2>
+<div id="the-partially-planned-rendezvous" class="section level3" number="13.4.1">
+<h3><span class="header-section-number">13.4.1</span> The partially-planned rendezvous</h3>
+<p></p>
+<p>Imagine a situation where Sally and Joan plan to meet to study in their college campus center <span class="citation">(F. Mosteller 1987)</span>.
+They are both impatient people who will wait only 10 minutes for the other before leaving.</p>
+<p>But their planning was incomplete.
+Sally said, “Meet me between 7 and 8 tonight at the center.”
+When should Joan plan to arrive at the campus center? And what is the probability that they actually meet?</p>
+<p>A simulation can help answer these questions. Joan might reasonably assume that it doesn’t really matter when she arrives, and that Sally is equally likely to arrive any time between 7:00 and 8:00 pm.</p>
+<p>So to Joan, Sally’s arrival time is random and uniformly distributed between 7:00 and 8:00 pm.
+The same is true for Sally.
+Such a simulation is easy to write: generate uniform random numbers between 0 and 60 minutes after 7:00 pm. For each pair of such numbers, check whether or not the time difference between them is 10 minutes or less. If so, they successfully met. Otherwise, they missed each other.</p>
+<p>Here’s an implementation in <strong>R</strong>, with 100,000 trials of the simulation being run to make sure that the possibilities are well covered.</p>
+<p>
+
+
+</p>
+<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="ch-simulation.html#cb620-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100000</span></span>
+<span id="cb620-2"><a href="ch-simulation.html#cb620-2" aria-hidden="true" tabindex="-1"></a>sim_meet <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb620-3"><a href="ch-simulation.html#cb620-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sally =</span> <span class="fu">runif</span>(n, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">60</span>),</span>
+<span id="cb620-4"><a href="ch-simulation.html#cb620-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">joan =</span> <span class="fu">runif</span>(n, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">60</span>),</span>
+<span id="cb620-5"><a href="ch-simulation.html#cb620-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">result =</span> <span class="fu">ifelse</span>(</span>
+<span id="cb620-6"><a href="ch-simulation.html#cb620-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">abs</span>(sally <span class="sc">-</span> joan) <span class="sc">&lt;=</span> <span class="dv">10</span>, <span class="st">&quot;They meet&quot;</span>, <span class="st">&quot;They do not&quot;</span></span>
+<span id="cb620-7"><a href="ch-simulation.html#cb620-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb620-8"><a href="ch-simulation.html#cb620-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb620-9"><a href="ch-simulation.html#cb620-9" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">tally</span>(<span class="sc">~</span> result, <span class="at">format =</span> <span class="st">&quot;percent&quot;</span>, <span class="at">data =</span> sim_meet)</span></code></pre></div>
+<pre><code>result
+They do not   They meet 
+       69.4        30.6 </code></pre>
+<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="ch-simulation.html#cb622-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">binom.test</span>(<span class="sc">~</span>result, n, <span class="at">success =</span> <span class="st">&quot;They meet&quot;</span>, <span class="at">data =</span> sim_meet)</span></code></pre></div>
+<pre><code>
+
+
+data:  sim_meet$result  [with success = They meet]
+number of successes = 30601, number of trials = 1e+05, p-value
+&lt;2e-16
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.303 0.309
+sample estimates:
+probability of success 
+                 0.306 </code></pre>
+<p>There’s about a 30% chance that they meet (the true probability is <span class="math inline">\(11/36 \approx 0.3055556\)</span>).
+The confidence interval, the width of which is determined in part by the number of simulations, is relatively narrow.
+For any reasonable decision that Joan might consider (``Oh, it seems unlikely we’ll meet. I’ll just skip it.") would be the same regardless of which end of the confidence interval is considered.
+So the simulation is good enough for Joan’s purposes.
+(If the interval was not narrow enough for this, you would want to add more trials. The <span class="math inline">\(1/\sqrt{n}\)</span> rule for the width of a confidence interval described in Chapter <a href="ch-foundations.html#ch:foundations">9</a> can guide your choice.)</p>
+<p>
+
+
+</p>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="ch-simulation.html#cb624-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sim_meet, <span class="fu">aes</span>(<span class="at">x =</span> joan, <span class="at">y =</span> sally, <span class="at">color =</span> result)) <span class="sc">+</span> </span>
+<span id="cb624-2"><a href="ch-simulation.html#cb624-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span> </span>
+<span id="cb624-3"><a href="ch-simulation.html#cb624-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">10</span>, <span class="at">slope =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb624-4"><a href="ch-simulation.html#cb624-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="sc">-</span><span class="dv">10</span>, <span class="at">slope =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb624-5"><a href="ch-simulation.html#cb624-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set2&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:sally1"></span>
+<img src="13-simulation_files/figure-html/sally1-1.png" alt="Distribution of Sally and Joan arrival times (shaded area indicates where they meet)." width="100%" />
+<p class="caption">
+Figure 13.2: Distribution of Sally and Joan arrival times (shaded area indicates where they meet).
+</p>
+</div>
+<p>
+
+
+
+Often, it’s valuable to visualize the possibilities generated in the simulation as in Figure <a href="ch-simulation.html#fig:sally1">13.2</a>. The arrival times uniformly cover the rectangle of possibilities, but only those that fall into the stripe in the center of the plot are successful. Looking at the plot,
+Joan notices a pattern. For any arrival time she plans, the probability of success is the fraction of a vertical band of the plot that is covered in blue. For instance, if Joan chose to arrive at 7:20, the probability of success is the proportion of blue in the vertical band with boundaries of 20 minutes and 30 minutes on the horizontal axis. Joan observes that near 0 and 60 minutes, the probability goes down, since the diagonal band tapers. This observation guides an important decision: Joan will plan to arrive somewhere from 7:10 to 7:50. Following this strategy, what is the probability of success? (Hint: Repeat the simulation but set Joan’s <code>min()</code> to 10 and her <code>max()</code> to 50.)
+If Joan had additional information about Sally (“She wouldn’t arrange to meet at 7:21—most likely at 7:00, 7:15, 7:30, or 7:45.”) the simulation can be easily modified, e.g., <code>sally = resample(c(0, 15, 30, 45), n)</code> to incorporate that hypothesis.</p>
+</div>
+<div id="sec:jobsnum" class="section level3" number="13.4.2">
+<h3><span class="header-section-number">13.4.2</span> The jobs report</h3>
+<p>
+</p>
+<p>One hour before the opening of the stock market on the first Friday of each month, the <a href="https://en.wikipedia.org/w/index.php?search=U.S.%20Bureau%20of%20Labor%20Statistics"><em>U.S. Bureau of Labor Statistics</em></a> releases the employment report.
+This widely anticipated estimate of the monthly change in non-farm payroll is an economic indicator that often leads to stock market shifts.
+
+
+
+
+
+</p>
+<p>If you read the financial blogs, you’ll hear lots of speculation before the report is released, and lots to account for the change in the stock market in the minutes <em>after</em> the report comes out. And you’ll hear a lot of anticipation of the consequences of that month’s job report on the prospects for the economy as a whole. It happens that many financiers read a lot into the ups and downs of the jobs report. (And other people, who don’t take the report so seriously, see opportunities in responding to the actions of the believers.)</p>
+<p>You are a skeptic. You know that in the months after the jobs report, an updated number is reported that is able to take into account late-arriving data that couldn’t be included in the original report. One analysis, the article <a href="http://www.nytimes.com/2014/05/02/upshot/how-not-to-be-misled-by-the-jobs-report.html">``How not to be misled by the jobs report"</a> from the May 1, 2014 <em>New York Times</em> modeled the monthly report as a random number from a Gaussian distribution with a mean of 150,000 jobs and a standard deviation of 65,000 jobs.</p>
+<p>You are preparing a briefing for your bosses to convince them not to take the jobs report itself seriously as an economic indicator. For many bosses, the phrases “Gaussian distribution,” “standard deviation,” and “confidence interval” will trigger a primitive “I’m not listening!” response, so your message won’t get through in that form.</p>
+<p>It turns out that many such people will have a better understanding of a simulation than of theoretical concepts. You decide on a strategy: Use a simulation to generate a year’s worth of job reports. Ask the bosses what patterns they see and what they would look for in the next month’s report. Then inform them that there are no actual patterns in the graphs you showed them.</p>
+<p>
+
+
+
+
+
+
+</p>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="ch-simulation.html#cb625-1" aria-hidden="true" tabindex="-1"></a>jobs_true <span class="ot">&lt;-</span> <span class="dv">150</span></span>
+<span id="cb625-2"><a href="ch-simulation.html#cb625-2" aria-hidden="true" tabindex="-1"></a>jobs_se <span class="ot">&lt;-</span> <span class="dv">65</span>  <span class="co"># in thousands of jobs</span></span>
+<span id="cb625-3"><a href="ch-simulation.html#cb625-3" aria-hidden="true" tabindex="-1"></a>gen_samp <span class="ot">&lt;-</span> <span class="cf">function</span>(true_mean, true_sd, </span>
+<span id="cb625-4"><a href="ch-simulation.html#cb625-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">num_months =</span> <span class="dv">12</span>, <span class="at">delta =</span> <span class="dv">0</span>, <span class="at">id =</span> <span class="dv">1</span>) {</span>
+<span id="cb625-5"><a href="ch-simulation.html#cb625-5" aria-hidden="true" tabindex="-1"></a>  samp_year <span class="ot">&lt;-</span> <span class="fu">rep</span>(true_mean, num_months) <span class="sc">+</span> </span>
+<span id="cb625-6"><a href="ch-simulation.html#cb625-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(num_months, <span class="at">mean =</span> delta <span class="sc">*</span> (<span class="dv">1</span><span class="sc">:</span>num_months), <span class="at">sd =</span> true_sd)</span>
+<span id="cb625-7"><a href="ch-simulation.html#cb625-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(</span>
+<span id="cb625-8"><a href="ch-simulation.html#cb625-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb625-9"><a href="ch-simulation.html#cb625-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">jobs_number =</span> samp_year, </span>
+<span id="cb625-10"><a href="ch-simulation.html#cb625-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">month =</span> <span class="fu">as.factor</span>(<span class="dv">1</span><span class="sc">:</span>num_months), </span>
+<span id="cb625-11"><a href="ch-simulation.html#cb625-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">id =</span> id</span>
+<span id="cb625-12"><a href="ch-simulation.html#cb625-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb625-13"><a href="ch-simulation.html#cb625-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb625-14"><a href="ch-simulation.html#cb625-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>
+We begin by defining some constants that will be needed, along with a function to calculate a year’s worth of monthly samples from this known truth.
+Since the default value of <code>delta</code> is equal to zero, the “true” value remains constant over time. When the function argument <code>true_sd</code> is set to
+<code>0</code>, no random noise is added to the system.</p>
+<p>Next, we prepare a data frame that contains the function argument values over which we want to simulate. In this case, we want our first simulation to have no random noise—thus the <code>true_sd</code> argument will be set to <code>0</code> and the <code>id</code> argument will be set to <code>Truth</code>. Following that, we will generate three random simulations with <code>true_sd</code> set to the assumed value of <code>jobs_se</code>. The data frame <code>params</code> contains complete information about the simulations we want to run.</p>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="ch-simulation.html#cb626-1" aria-hidden="true" tabindex="-1"></a>n_sims <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb626-2"><a href="ch-simulation.html#cb626-2" aria-hidden="true" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb626-3"><a href="ch-simulation.html#cb626-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">rep</span>(jobs_se, n_sims)), </span>
+<span id="cb626-4"><a href="ch-simulation.html#cb626-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="fu">c</span>(<span class="st">&quot;Truth&quot;</span>, <span class="fu">paste</span>(<span class="st">&quot;Sample&quot;</span>, <span class="dv">1</span><span class="sc">:</span>n_sims))</span>
+<span id="cb626-5"><a href="ch-simulation.html#cb626-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb626-6"><a href="ch-simulation.html#cb626-6" aria-hidden="true" tabindex="-1"></a>params</span></code></pre></div>
+<pre><code># A tibble: 4 × 2
+     sd id      
+  &lt;dbl&gt; &lt;chr&gt;   
+1     0 Truth   
+2    65 Sample 1
+3    65 Sample 2
+4    65 Sample 3</code></pre>
+<p>Finally, we will actually perform the simulation using the <code>pmap_dfr()</code> function from the <strong>purrr</strong> package (see Chapter <a href="ch-iteration.html#ch:iteration">7</a>). This will iterate over the <code>params</code> data frame and apply the appropriate values to each simulation.</p>
+<p>
+</p>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="ch-simulation.html#cb628-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> params <span class="sc">%&gt;%</span></span>
+<span id="cb628-2"><a href="ch-simulation.html#cb628-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pmap_dfr</span>(<span class="sc">~</span><span class="fu">gen_samp</span>(<span class="at">true_mean =</span> jobs_true, <span class="at">true_sd =</span> ..<span class="dv">1</span>, <span class="at">id =</span> ..<span class="dv">2</span>))</span></code></pre></div>
+<p>Note how the two arguments are given in a compact and flexible form (<code>..1</code> and <code>..2</code>).</p>
+<p>
+</p>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="ch-simulation.html#cb629-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> jobs_number)) <span class="sc">+</span> </span>
+<span id="cb629-2"><a href="ch-simulation.html#cb629-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> jobs_true, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb629-3"><a href="ch-simulation.html#cb629-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> </span>
+<span id="cb629-4"><a href="ch-simulation.html#cb629-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> id) <span class="sc">+</span> </span>
+<span id="cb629-5"><a href="ch-simulation.html#cb629-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Number of new jobs (in thousands)&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:nytimes"></span>
+<img src="13-simulation_files/figure-html/nytimes-1.png" alt="True number of new jobs from simulation as well as three realizations from a simulation." width="100%" />
+<p class="caption">
+Figure 13.3: True number of new jobs from simulation as well as three realizations from a simulation.
+</p>
+</div>
+<p>Figure <a href="ch-simulation.html#fig:nytimes">13.3</a> displays the “true” number as well as three realizations from the simulation.
+While all of the three samples are taken from a “true” universe where the jobs number is constant, each could easily be misinterpreted
+to conclude that the numbers of new jobs was decreasing at some point during the series. The moral is clear: It is important to be able to
+understand the underlying variability of a system before making inferential conclusions.</p>
+</div>
+<div id="restaurant-health-and-sanitation-grades" class="section level3" number="13.4.3">
+<h3><span class="header-section-number">13.4.3</span> Restaurant health and sanitation grades</h3>
+<p>
+
+
+
+
+
+
+
+
+We take our next simulation from the data set of restaurant health violations in <a href="https://en.wikipedia.org/w/index.php?search=New%20York%20City"><em>New York City</em></a>.
+To help ensure the safety of patrons, health inspectors make unannounced inspections at least once per year to each restaurant.
+Establishments are graded based on <a href="http://www.nyc.gov/html/doh/downloads/pdf/rii/how-we-score-grade.pdf">a range of criteria</a> including food handling, personal hygiene, and vermin control.
+Those with a score between 0 and 13 points receive a coveted A grade, those with 14 to 27 points receive the less desirable B, and those of 28 or above receive a C.
+We’ll display values in a subset of this range to focus on the threshold between an A and B grade, after grouping by <code>dba</code> (Doing Business As) and <code>score</code>.
+We focus our analysis on the year 2015.</p>
+<p></p>
+<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="ch-simulation.html#cb630-1" aria-hidden="true" tabindex="-1"></a>minval <span class="ot">&lt;-</span> <span class="dv">7</span></span>
+<span id="cb630-2"><a href="ch-simulation.html#cb630-2" aria-hidden="true" tabindex="-1"></a>maxval <span class="ot">&lt;-</span> <span class="dv">19</span></span>
+<span id="cb630-3"><a href="ch-simulation.html#cb630-3" aria-hidden="true" tabindex="-1"></a>violation_scores <span class="ot">&lt;-</span> Violations <span class="sc">%&gt;%</span></span>
+<span id="cb630-4"><a href="ch-simulation.html#cb630-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(lubridate<span class="sc">::</span><span class="fu">year</span>(inspection_date) <span class="sc">==</span> <span class="dv">2015</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb630-5"><a href="ch-simulation.html#cb630-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(score <span class="sc">&gt;=</span> minval <span class="sc">&amp;</span> score <span class="sc">&lt;=</span> maxval) <span class="sc">%&gt;%</span></span>
+<span id="cb630-6"><a href="ch-simulation.html#cb630-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(dba, score)</span></code></pre></div>
+<p>
+
+
+
+</p>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="ch-simulation.html#cb631-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> violation_scores, <span class="fu">aes</span>(<span class="at">x =</span> score)) <span class="sc">+</span> </span>
+<span id="cb631-2"><a href="ch-simulation.html#cb631-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb631-3"><a href="ch-simulation.html#cb631-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">13</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb631-4"><a href="ch-simulation.html#cb631-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> minval<span class="sc">:</span>maxval) <span class="sc">+</span> </span>
+<span id="cb631-5"><a href="ch-simulation.html#cb631-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb631-6"><a href="ch-simulation.html#cb631-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">10</span>, <span class="at">y =</span> <span class="dv">15000</span>, </span>
+<span id="cb631-7"><a href="ch-simulation.html#cb631-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&quot;&#39;A&#39; grade: score of 13 or less&quot;</span></span>
+<span id="cb631-8"><a href="ch-simulation.html#cb631-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="figure"><span id="fig:rest"></span>
+<img src="13-simulation_files/figure-html/rest-1.png" alt="Distribution of NYC restaurant health violation scores." width="100%" />
+<p class="caption">
+Figure 13.4: Distribution of NYC restaurant health violation scores.
+</p>
+</div>
+<p>
+Figure <a href="ch-simulation.html#fig:rest">13.4</a> displays the distribution of restaurant violation scores.
+Is something unusual happening at the threshold of 13 points (the highest value to still receive an A)?
+Or could sampling variability be the cause of the dramatic decrease in the frequency of restaurants graded between 13 and 14 points?
+Let’s carry out a simple simulation in which a grade of 13 or 14 is equally likely. The <code>nflip()</code> function allows us to flip a fair coin that determines whether a grade is a 14 (heads) or 13 (tails).</p>
+<p>
+
+</p>
+<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="ch-simulation.html#cb632-1" aria-hidden="true" tabindex="-1"></a>scores <span class="ot">&lt;-</span> mosaic<span class="sc">::</span><span class="fu">tally</span>(<span class="sc">~</span>score, <span class="at">data =</span> violation_scores)</span>
+<span id="cb632-2"><a href="ch-simulation.html#cb632-2" aria-hidden="true" tabindex="-1"></a>scores</span></code></pre></div>
+<pre><code>score
+    7     8     9    10    11    12    13    14    15    16    17    18 
+ 5985  3026  8401  9007  8443 13907  9021  2155  2679  2973  4720  4119 
+   19 
+ 4939 </code></pre>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="ch-simulation.html#cb634-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(scores[<span class="fu">c</span>(<span class="st">&quot;13&quot;</span>, <span class="st">&quot;14&quot;</span>)])</span></code></pre></div>
+<pre><code>[1] 5588</code></pre>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="ch-simulation.html#cb636-1" aria-hidden="true" tabindex="-1"></a>random_flip <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span> <span class="sc">%&gt;%</span></span>
+<span id="cb636-2"><a href="ch-simulation.html#cb636-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="sc">~</span>mosaic<span class="sc">::</span><span class="fu">nflip</span>(scores[<span class="st">&quot;13&quot;</span>] <span class="sc">+</span> scores[<span class="st">&quot;14&quot;</span>])) <span class="sc">%&gt;%</span></span>
+<span id="cb636-3"><a href="ch-simulation.html#cb636-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enframe</span>(<span class="at">name =</span> <span class="st">&quot;sim&quot;</span>, <span class="at">value =</span> <span class="st">&quot;heads&quot;</span>)</span>
+<span id="cb636-4"><a href="ch-simulation.html#cb636-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(random_flip, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code># A tibble: 3 × 2
+    sim heads
+  &lt;int&gt; &lt;dbl&gt;
+1     1  5648
+2     2  5614
+3     3  5642</code></pre>
+<p>
+
+
+
+</p>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="ch-simulation.html#cb638-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> random_flip, <span class="fu">aes</span>(<span class="at">x =</span> heads)) <span class="sc">+</span> </span>
+<span id="cb638-2"><a href="ch-simulation.html#cb638-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">10</span>) <span class="sc">+</span> </span>
+<span id="cb638-3"><a href="ch-simulation.html#cb638-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> scores[<span class="st">&quot;14&quot;</span>], <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb638-4"><a href="ch-simulation.html#cb638-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb638-5"><a href="ch-simulation.html#cb638-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">2200</span>, <span class="at">y =</span> <span class="dv">75</span>, </span>
+<span id="cb638-6"><a href="ch-simulation.html#cb638-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">&quot;observed&quot;</span>, <span class="at">hjust =</span> <span class="st">&quot;left&quot;</span></span>
+<span id="cb638-7"><a href="ch-simulation.html#cb638-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb638-8"><a href="ch-simulation.html#cb638-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Number of restaurants with scores of 14 (if equal probability)&quot;</span>) </span></code></pre></div>
+<div class="figure"><span id="fig:rest2"></span>
+<img src="13-simulation_files/figure-html/rest2-1.png" alt="Distribution of health violation scores under a randomization procedure (permutation test)." width="100%" />
+<p class="caption">
+Figure 13.5: Distribution of health violation scores under a randomization procedure (permutation test).
+</p>
+</div>
+<p>
+Figure <a href="ch-simulation.html#fig:rest2">13.5</a> demonstrates that the observed number of restaurants with a 14 are nowhere near what we would expect if there was an equal chance of receiving a score of 13 or 14.
+While the number of restaurants receiving a 13 might exceed the number receiving a 14 by 100 or so due to chance alone, there is essentially no chance of observing 5,000 more 13s than 14s if the two scores are truly equally likely.
+(It is not surprising given the large number of restaurants inspected in New York City that we wouldn’t observe much sampling variability in terms of the proportion that are 14.)
+It appears as if the inspectors tend to give restaurants near the threshold the benefit of the doubt, and not drop their grade from A to B if the restaurant is on the margin between a 13 and 14 grade.</p>
+<p>This is another situation where simulation can provide a more intuitive solution starting from first principles than an investigation using more formal statistical methods.
+(A more nuanced test of the “edge effect” might be considered given the drop in the numbers of restaurants with violation scores between 14 and 19.)</p>
+</div>
+</div>
+<div id="random-networks" class="section level2" number="13.5">
+<h2><span class="header-section-number">13.5</span> Random networks</h2>
+<p>
+
+
+
+
+
+
+As noted in Chapter <a href="ch-vizI.html#ch:vizI">2</a>, a network (or graph) is a collection of nodes, along with edges that connect certain pairs of those nodes.
+Networks are often used to model real-world systems that contain these pairwise relationships.
+Although these networks are often simple to describe, many of the interesting problems in the mathematical discipline of graph theory are very hard to solve analytically, and intractable computationally <span class="citation">(Garey and Johnson 1979)</span>.
+For this reason, simulation has become a useful technique for exploring questions in <a href="https://en.wikipedia.org/w/index.php?search=network%20science"><em>network science</em></a>.
+We illustrate how simulation can be used to verify properties of random graphs in Chapter <a href="ch-netsci.html#ch:netsci">20</a>.</p>
+</div>
+<div id="sec:key-principles-random" class="section level2" number="13.6">
+<h2><span class="header-section-number">13.6</span> Key principles of simulation</h2>
+<p>
+Many of the key principles needed to develop the capacity to simulate come straight from computer science, including aspects of design, modularity, and reproducibility.
+In this section, we will briefly propose guidelines for simulations.</p>
+<div id="design" class="section level3" number="13.6.1">
+<h3><span class="header-section-number">13.6.1</span> Design</h3>
+<p>
+
+It is important to consider design issues relative to simulation. As the analyst, you control all aspects and
+decide what assumptions and scenarios to explore.
+You have the ability (and responsibility) to determine which scenarios are relevant and what assumptions are appropriate.<br />
+The choice of scenarios depends on the underlying model: they should reflect plausible situations that are relevant to the problem at hand.
+It is often useful to start with a simple setting, then gradually add complexity as needed.</p>
+</div>
+<div id="modularity" class="section level3" number="13.6.2">
+<h3><span class="header-section-number">13.6.2</span> Modularity</h3>
+<p>
+It is very helpful to write a function to implement the simulation, which can be called repeatedly with different options and parameters (see Appendix <a href="ch-function.html#ch:function">C</a>). Spending time planning what features the simulation might have,
+and how these can be split off into different functions (that might be reused in other simulations)
+will pay off handsomely.</p>
+</div>
+<div id="sec:seed" class="section level3" number="13.6.3">
+<h3><span class="header-section-number">13.6.3</span> Reproducibility and random number seeds</h3>
+<p>
+
+
+
+It is important that simulations are both reproducible and representative.
+Sampling variability is inherent in simulations: Our results will be sensitive to the number of computations that we are willing to carry out.
+We need to find a balance to avoid unneeded calculations while ensuring that our results aren’t subject to random fluctuation. What is a reasonable number of simulations to consider?
+Let’s revisit Sally and Joan, who will meet only if they both arrive within 10 minutes of each other.
+How variable are our estimates if we carry out only <code>num_sims</code> <span class="math inline">\(=100\)</span> simulations?
+We’ll assess this by carrying out 5,000 replications, saving the results from each simulation of 100 possible meetings.
+Then we’ll repeat the process, but with <code>num_sims</code> <span class="math inline">\(=400\)</span> and <code>num_sims</code> <span class="math inline">\(=1600\)</span>.
+Note that we can do this efficiently using <code>map_dfr()</code> twice (once to iterate over the changing number of simulations, and once to repeat the procedure 5,000 times.</p>
+<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="ch-simulation.html#cb639-1" aria-hidden="true" tabindex="-1"></a>campus_sim <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">sims =</span> <span class="dv">1000</span>, <span class="at">wait =</span> <span class="dv">10</span>) {</span>
+<span id="cb639-2"><a href="ch-simulation.html#cb639-2" aria-hidden="true" tabindex="-1"></a>  sally <span class="ot">&lt;-</span> <span class="fu">runif</span>(sims, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">60</span>)</span>
+<span id="cb639-3"><a href="ch-simulation.html#cb639-3" aria-hidden="true" tabindex="-1"></a>  joan <span class="ot">&lt;-</span> <span class="fu">runif</span>(sims, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">60</span>)</span>
+<span id="cb639-4"><a href="ch-simulation.html#cb639-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(</span>
+<span id="cb639-5"><a href="ch-simulation.html#cb639-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb639-6"><a href="ch-simulation.html#cb639-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">num_sims =</span> sims, </span>
+<span id="cb639-7"><a href="ch-simulation.html#cb639-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">meet =</span> <span class="fu">sum</span>(<span class="fu">abs</span>(sally <span class="sc">-</span> joan) <span class="sc">&lt;=</span> wait),</span>
+<span id="cb639-8"><a href="ch-simulation.html#cb639-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">meet_pct =</span> meet <span class="sc">/</span> num_sims,</span>
+<span id="cb639-9"><a href="ch-simulation.html#cb639-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb639-10"><a href="ch-simulation.html#cb639-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb639-11"><a href="ch-simulation.html#cb639-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb639-12"><a href="ch-simulation.html#cb639-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb639-13"><a href="ch-simulation.html#cb639-13" aria-hidden="true" tabindex="-1"></a>reps <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb639-14"><a href="ch-simulation.html#cb639-14" aria-hidden="true" tabindex="-1"></a>sim_results <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>reps <span class="sc">%&gt;%</span></span>
+<span id="cb639-15"><a href="ch-simulation.html#cb639-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dfr</span>(<span class="sc">~</span><span class="fu">map_dfr</span>(<span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">400</span>, <span class="dv">1600</span>), campus_sim))</span>
+<span id="cb639-16"><a href="ch-simulation.html#cb639-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb639-17"><a href="ch-simulation.html#cb639-17" aria-hidden="true" tabindex="-1"></a>sim_results <span class="sc">%&gt;%</span></span>
+<span id="cb639-18"><a href="ch-simulation.html#cb639-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(num_sims) <span class="sc">%&gt;%</span></span>
+<span id="cb639-19"><a href="ch-simulation.html#cb639-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>(meet_pct)</span></code></pre></div>
+<pre><code>
+── Variable type: numeric ──────────────────────────────────────────────────
+  var      num_sims     n    na  mean     sd    p0   p25   p50   p75  p100
+1 meet_pct      100  5000     0 0.305 0.0460 0.12  0.28  0.3   0.33  0.49 
+2 meet_pct      400  5000     0 0.306 0.0231 0.23  0.29  0.305 0.322 0.39 
+3 meet_pct     1600  5000     0 0.306 0.0116 0.263 0.298 0.306 0.314 0.352</code></pre>
+<p>Note that each of the simulations yields an unbiased estimate of the true probability that they meet, but there is variability within each individual simulation (of size 100, 400, or 1600).
+The standard deviation is halved each time we increase the number of simulations by a factor of 4.
+We can display the results graphically (see Figure <a href="ch-simulation.html#fig:converge">13.6</a>).</p>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="ch-simulation.html#cb641-1" aria-hidden="true" tabindex="-1"></a>sim_results <span class="sc">%&gt;%</span></span>
+<span id="cb641-2"><a href="ch-simulation.html#cb641-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> meet_pct, <span class="at">color =</span> <span class="fu">factor</span>(num_sims))) <span class="sc">+</span> </span>
+<span id="cb641-3"><a href="ch-simulation.html#cb641-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb641-4"><a href="ch-simulation.html#cb641-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> <span class="dv">11</span><span class="sc">/</span><span class="dv">36</span>), <span class="at">linetype =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb641-5"><a href="ch-simulation.html#cb641-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">&quot;Proportion of times that Sally and Joan meet&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb641-6"><a href="ch-simulation.html#cb641-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="st">&quot;Number</span><span class="sc">\n</span><span class="st">of sims&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;Set2&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:converge"></span>
+<img src="13-simulation_files/figure-html/converge-1.png" alt="Convergence of the estimate of the proportion of times that Sally and Joan meet." width="100%" />
+<p class="caption">
+Figure 13.6: Convergence of the estimate of the proportion of times that Sally and Joan meet.
+</p>
+</div>
+<p>
+
+What would be a reasonable value for <code>num_sims</code> in this setting?
+The answer depends on how accurate we want to be.
+(And we can also simulate to see how variable our results are!)
+Carrying out 20,000 simulations yields relatively little variability and would likely be sufficient for a first pass.
+We could state that these results have <a href="https://en.wikipedia.org/w/index.php?search=converged"><em>converged</em></a> sufficiently close to the true value since the sampling variability due to the simulation is negligible.</p>
+<p></p>
+<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb642-1"><a href="ch-simulation.html#cb642-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span>reps <span class="sc">%&gt;%</span></span>
+<span id="cb642-2"><a href="ch-simulation.html#cb642-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dfr</span>(<span class="sc">~</span><span class="fu">campus_sim</span>(<span class="dv">20000</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb642-3"><a href="ch-simulation.html#cb642-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(num_sims) <span class="sc">%&gt;%</span></span>
+<span id="cb642-4"><a href="ch-simulation.html#cb642-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>(meet_pct)</span></code></pre></div>
+<p>
+
+
+
+Given the inherent nature of variability due to sampling, it can be very useful to set (and save) a <a href="https://en.wikipedia.org/w/index.php?search=seed"><em>seed</em></a> for the
+pseudo-random number generator (using the <code>set.seed()</code> function).
+This ensures that the results are the same each time the simulation is run since the simulation will use the same list of random numbers.
+The seed itself is arbitrary, but each seed defines a different sequence of random numbers.</p>
+<p></p>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="ch-simulation.html#cb643-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1974</span>)</span>
+<span id="cb643-2"><a href="ch-simulation.html#cb643-2" aria-hidden="true" tabindex="-1"></a><span class="fu">campus_sim</span>()</span></code></pre></div>
+<pre><code># A tibble: 1 × 3
+  num_sims  meet meet_pct
+     &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt;
+1     1000   308    0.308</code></pre>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="ch-simulation.html#cb645-1" aria-hidden="true" tabindex="-1"></a><span class="fu">campus_sim</span>()</span></code></pre></div>
+<pre><code># A tibble: 1 × 3
+  num_sims  meet meet_pct
+     &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt;
+1     1000   331    0.331</code></pre>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="ch-simulation.html#cb647-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1974</span>)</span>
+<span id="cb647-2"><a href="ch-simulation.html#cb647-2" aria-hidden="true" tabindex="-1"></a><span class="fu">campus_sim</span>()</span></code></pre></div>
+<pre><code># A tibble: 1 × 3
+  num_sims  meet meet_pct
+     &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt;
+1     1000   308    0.308</code></pre>
+</div>
+</div>
+<div id="simulation-further" class="section level2" number="13.7">
+<h2><span class="header-section-number">13.7</span> Further resources</h2>
+<p>This chapter has been a basic introduction to simulation.
+Over the last 30 years, the ability to use simulation to match observed data has become an essential component of <a href="https://en.wikipedia.org/w/index.php?search=Bayesian%20statistics"><em>Bayesian statistics</em></a>.
+A central technique is called <a href="https://en.wikipedia.org/w/index.php?search=Markov%20Chain%20Monte%20Carlo"><em>Markov Chain Monte Carlo</em></a> (MCMC).
+For an accessible introduction to Bayesian methods, see <span class="citation">Jim Albert and Hu (2019)</span>.</p>
+<p>
+
+
+
+
+
+
+<span class="citation">Rizzo (2019)</span> provides a comprehensive introduction to statistical computing in <strong>R</strong>, while <span class="citation">Horton, Brown, and Qian (2004)</span> and <span class="citation">Horton (2013)</span> describe the use of <strong>R</strong> for simulation studies.
+The importance of simulation as part of an analyst’s toolbox is enunciated in <span class="citation">American Statistical Association Undergraduate Guidelines Workgroup (2014)</span>, <span class="citation">Horton (2015)</span>, and <span class="citation">National Academies of Science, Engineering, and Medicine (2018)</span>.
+The <strong>simstudy</strong> package can be used to simplify data generation or exploration using simulation.</p>
+</div>
+<div id="simulation-exercises" class="section level2" number="13.8">
+<h2><span class="header-section-number">13.8</span> Exercises</h2>
+<p><strong>Problem 1 (Medium)</strong>: The time a manager takes to interview a job applicant has an exponential distribution with mean of half an hour, and these times are independent of each other. The applicants are scheduled at quarter-hour intervals beginning at 8:00 am, and all of the applicants arrive exactly on time (this is an excellent thing to do, by the way). When the applicant with an 8:15 am appointment arrives at the manager’s office office, what is the probability that she will have to wait before seeing the manager? What is the expected time that her interview will finish?</p>
+<p><strong>Problem 2 (Medium)</strong>: Consider an example where a recording device that measures remote activity is placed in a remote location. The time, <span class="math inline">\(T\)</span>, to failure of the remote device has an exponential distribution with mean of 3 years. Since the location is so remote, the device will not be monitored during its first 2 years of service. As a result, the time to
+discovery of its failure is <span class="math inline">\(X\)</span> = max<span class="math inline">\((T, 2)\)</span>. The problem here is to determine the average of the time to discovery of the truncated variable (in probability parlance, the expected value of the observed variable <span class="math inline">\(X\)</span>, E[X]).</p>
+<p>The analytic solution is fairly straightforward but requires calculus. We need to evaluate:</p>
+<p><span class="math display">\[E[X] = \int_0^{2} 2 f(u) du + \int_2^{\infty} u f(u) du,\]</span> where <span class="math inline">\(f(u) = 1/3 \exp{(-1/3 u)}\)</span> for <span class="math inline">\(u &gt; 0\)</span>.<br />
+We can use the calculus functions in the <code>mosaicCalc</code> package to find the answer.</p>
+<p>Is calculus strictly necessary here?
+Conduct a simulation to estimate (or check) the value for the average time to discovery.</p>
+<p><strong>Problem 3 (Medium)</strong>: Two people toss a fair coin 4 times each. Find the probability that they throw equal numbers of heads. Also estimate the probability that they throw equal numbers of heads using a simulation in R (with an associated 95% confidence interval for your estimate).</p>
+<p><strong>Problem 4 (Medium)</strong>: In this chapter, we considered a simulation where the true jobs number remained constant over time. Modify the call to the function provided in that example so that the true situation is that there are 15,000 new jobs created every month. Set your random number seed to the value <span class="math inline">\(1976\)</span>. Summarize what you might conclude from these results as if you were a journalist without a background in data science.</p>
+<p><strong>Problem 5 (Medium)</strong>: The <code>Violations</code> dataset in the <code>mdsr</code> package contains information about health violations across different restaurants in New York City. Is there evidence that restaurant health inspectors in New York City give the benefit of the doubt to those at the threshold between a B grade (14 to 27) or C grade (28 or above)?</p>
+<p><strong>Problem 6 (Medium)</strong>: Sally and Joan plan to meet to study in their college campus center. They are both impatient people who will only wait 10 minutes for the other before leaving. Rather than pick a specific time to meet, they agree to head over to the campus center sometime between 7:00 and 8:00 pm. Let both arrival times be normally distributed with mean 30 minutes past and a standard deviation of 10 minutes. Assume that they are independent of each other. What is the probability that they actually meet? Estimate the answer using simulation techniques introduced in this chapter, with at least 10,000 simulations.</p>
+<p><strong>Problem 7 (Medium)</strong>: What is the impact if the residuals from a linear regression model are skewed (and not from a normal distribution)?</p>
+<p>Repeatedly generate data from a “true” model given by:</p>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="ch-simulation.html#cb649-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">250</span></span>
+<span id="cb649-2"><a href="ch-simulation.html#cb649-2" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb649-3"><a href="ch-simulation.html#cb649-3" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">each =</span> n <span class="sc">/</span> <span class="dv">2</span>) <span class="co"># x1 resembles 0 0 0 ... 1 1 1</span></span>
+<span id="cb649-4"><a href="ch-simulation.html#cb649-4" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">5</span>)</span>
+<span id="cb649-5"><a href="ch-simulation.html#cb649-5" aria-hidden="true" tabindex="-1"></a>beta0 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb649-6"><a href="ch-simulation.html#cb649-6" aria-hidden="true" tabindex="-1"></a>beta1 <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb649-7"><a href="ch-simulation.html#cb649-7" aria-hidden="true" tabindex="-1"></a>beta2 <span class="ot">&lt;-</span> <span class="fl">1.5</span></span>
+<span id="cb649-8"><a href="ch-simulation.html#cb649-8" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> beta0 <span class="sc">+</span> beta1 <span class="sc">*</span> x1 <span class="sc">+</span> beta2 <span class="sc">*</span> x2 <span class="sc">+</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span>)</span></code></pre></div>
+<p>For each simulation, fit the linear regression model and display the distribution of 1,000 estimates of the <span class="math inline">\(\beta_1\)</span> parameter (note that you need to generate the vector of outcomes each time).</p>
+<p><strong>Problem 8 (Medium)</strong>: What is the impact of the violation of the equal variance
+assumption for linear regression models? Repeatedly generate data from a “true” model given by the following code.</p>
+<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="ch-simulation.html#cb650-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">250</span></span>
+<span id="cb650-2"><a href="ch-simulation.html#cb650-2" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb650-3"><a href="ch-simulation.html#cb650-3" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">each =</span> n <span class="sc">/</span> <span class="dv">2</span>) <span class="co"># x1 resembles 0 0 0 ... 1 1 1</span></span>
+<span id="cb650-4"><a href="ch-simulation.html#cb650-4" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">5</span>)</span>
+<span id="cb650-5"><a href="ch-simulation.html#cb650-5" aria-hidden="true" tabindex="-1"></a>beta0 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb650-6"><a href="ch-simulation.html#cb650-6" aria-hidden="true" tabindex="-1"></a>beta1 <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb650-7"><a href="ch-simulation.html#cb650-7" aria-hidden="true" tabindex="-1"></a>beta2 <span class="ot">&lt;-</span> <span class="fl">1.5</span></span>
+<span id="cb650-8"><a href="ch-simulation.html#cb650-8" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> beta0 <span class="sc">+</span> beta1 <span class="sc">*</span> x1 <span class="sc">+</span> beta2 <span class="sc">*</span> x2 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> rmse <span class="sc">+</span> x2)</span></code></pre></div>
+<p>For each simulation, fit the linear regression model and display the distribution of 1,000 estimates of the <span class="math inline">\(\beta_1\)</span> parameter (note that you need to generate the vector of outcomes each time). Does the distribution of the parameter follow a normal distribution?</p>
+<p><strong>Problem 9 (Medium)</strong>: Generate <span class="math inline">\(n=5,000\)</span> observations from a logistic regression model with parameters
+intercept <span class="math inline">\(\beta_0=-1\)</span>, slope <span class="math inline">\(\beta_1=0.5\)</span>, and distribution of the predictor being normal with mean 1 and standard deviation 1. Calculate and interpret the resulting parameter estimates and confidence intervals.</p>
+</div>
+<div id="simulation-online-exercises" class="section level2" number="13.9">
+<h2><span class="header-section-number">13.9</span> Supplementary exercises</h2>
+<p>Available at <a href="https://mdsr-book.github.io/mdsr2e/simulation.html#simulation-online-exercises" class="uri">https://mdsr-book.github.io/mdsr2e/simulation.html#simulation-online-exercises</a></p>
+<p><strong>Problem 1 (Medium)</strong>: Consider a queuing example where customers arrive at a bank at a given minute past the hour and are served by the next available teller.<br />
+Use the following data to explore wait times for a bank with one teller vs. one with two tellers, where the duration of the transaction is given below.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">arrival</th>
+<th align="right">duration</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="right">11</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="right">15</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<p>What is the average total time for customers in the bank with one teller? What is the average for a bank with two tellers?</p>
+<p><strong>Problem 2 (Hard)</strong>: The Monty Hall problem illustrates a simple setting where intuition is often misleading. The situation is based on the TV game show <em>Let’s Make a Deal</em>.</p>
+<p>First, Monty (the host) puts a prize behind one of three doors. Then the player chooses a door. Next, (without moving the prize) Monty opens an unselected door, revealing that the prize is not behind it. The player may then switch to the other nonselected door. Should the player switch?</p>
+<p>Many people see that there are now two doors to choose between and feel that since Monty can always open a nonprize door, there is still equal probability for each door. If that were the case, the player might as well keep the original door. This intuition is so attractive that when Marilyn vos Savant asserted that the player should switch (in her <em>Parade</em> magazine column), there were reportedly 10,000 letters asserting she was wrong.</p>
+<p>A correct intuitive route is to observe that Monty’s door is fixed. The probability that the player has the right door is 1/3 before Monty opens the nonprize door, and remains 1/3 after that door is open. This means that the probability the prize is behind one of the other doors is 2/3, both before and after Monty opens the nonprize door. After Monty opens the nonprize door, the player gets a 2/3 chance of winning by switching to the remaining door. If the player wants to win, they should switch doors.</p>
+<p>One way to prove to yourself that switching improves your chances of winning is through simulation. In fact, even deciding how to code the problem may be enough to convince yourself to switch.</p>
+<p>In the simulation, you need to assign the prize to a door, then make an initial guess. If the guess was right, Monty can open either door. We’ll switch to the other door. Rather than have Monty choose a door, we’ll choose one, under the assumption that Monty opened the other one. If our initial guess was wrong, Monty will open the only remaining nonprize door, and when we switch we’ll be choosing the prize door.</p>
+
+</div>
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch-learningII.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch-vizIII.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="book_assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/13-simulation.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["mdsr2e.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 10 Predictive modeling | Modern Data Science with R</title>
+  <meta name="description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 10 Predictive modeling | Modern Data Science with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://mdsr-book.github.io/mdsr2e/" />
+  <meta property="og:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+  <meta property="og:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="github-repo" content="mdsr-book/mdsr2e" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 Predictive modeling | Modern Data Science with R" />
+  
+  <meta name="twitter:description" content="A comprehensive data science textbook for undergraduates that incorporates statistical and computational thinking to solve real-world problems with data." />
+  <meta name="twitter:image" content="https://mdsr-book.github.io/mdsr2e//gfx/mdsr2e_cover.jpg" />
+
+<meta name="author" content="Benjamin S. Baumer, Daniel T. Kaplan, and Nicholas J. Horton" />
+
+
+<meta name="date" content="2021-07-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch-foundations.html"/>
+<link rel="next" href="ch-learningI.html"/>
+<script src="book_assets/header-attrs-2.9/header-attrs.js"></script>
+<script src="book_assets/jquery-3.5.1/jquery.min.js"></script>
+<link href="book_assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="book_assets/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="book_assets/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="book_assets/kePrint-0.0.1/kePrint.js"></script>
+<link href="book_assets/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="book_assets/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="book_assets/bsTable-3.3.7/bootstrapTable.js"></script>
+<script src="book_assets/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="book_assets/plotly-binding-4.9.4.1/plotly.js"></script>
+<script src="book_assets/typedarray-0.1/typedarray.min.js"></script>
+<link href="book_assets/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="book_assets/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="book_assets/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="book_assets/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<link href="book_assets/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="book_assets/datatables-binding-0.18/datatables.js"></script>
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="book_assets/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="book_assets/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="book_assets/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="book_assets/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="book_assets/dygraphs-1.1.1/shapes.js"></script>
+<script src="book_assets/moment-2.8.4/moment.js"></script>
+<script src="book_assets/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="book_assets/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="book_assets/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<script src="book_assets/d3-3.5.3/d3.min.js"></script>
+<link href="book_assets/colorbrewer-1/colorbrewer.css" rel="stylesheet" />
+<script src="book_assets/colorbrewer-1/colorbrewer.js"></script>
+<link href="book_assets/streamgraph-1/streamgraph.css" rel="stylesheet" />
+<script src="book_assets/streamgraph-binding-0.9.0/streamgraph.js"></script>
+<link href="book_assets/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-1.3.1/leaflet.js"></script>
+<link href="book_assets/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="book_assets/proj4-2.6.2/proj4.min.js"></script>
+<script src="book_assets/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="book_assets/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="book_assets/leaflet-binding-2.0.4.1/leaflet.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html">Modern Data Science with R, 2nd edition</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#nd-edition"><i class="fa fa-check"></i>2nd edition</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#note-about-erroneous-black-and-white-printing"><i class="fa fa-check"></i>Note about erroneous black-and-white printing!</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#cover"><i class="fa fa-check"></i>Cover</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#st-edition"><i class="fa fa-check"></i>1st edition</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#copyright"><i class="fa fa-check"></i>Copyright</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#background-and-motivation"><i class="fa fa-check"></i>Background and motivation</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#intended-audience"><i class="fa fa-check"></i>Intended audience</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-features-of-this-book"><i class="fa fa-check"></i>Key features of this book</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#focus-on-case-studies-and-extended-examples"><i class="fa fa-check"></i>Focus on case studies and extended examples</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#structure"><i class="fa fa-check"></i>Structure</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#supporting-materials"><i class="fa fa-check"></i>Supporting materials</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#changes-in-the-second-edition"><i class="fa fa-check"></i>Changes in the second edition</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#key-role-of-technology"><i class="fa fa-check"></i>Key role of technology</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#how-to-use-this-book"><i class="fa fa-check"></i>How to use this book</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="part"><span><b>I Part I: Introduction to Data Science</b></span></li>
+<li class="chapter" data-level="1" data-path="ch-prologue.html"><a href="ch-prologue.html"><i class="fa fa-check"></i><b>1</b> Prologue: Why data science?</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="ch-prologue.html"><a href="ch-prologue.html#what-is-data-science"><i class="fa fa-check"></i><b>1.1</b> What is data science?</a></li>
+<li class="chapter" data-level="1.2" data-path="ch-prologue.html"><a href="ch-prologue.html#case-study-the-evolution-of-sabermetrics"><i class="fa fa-check"></i><b>1.2</b> Case study: The evolution of sabermetrics</a></li>
+<li class="chapter" data-level="1.3" data-path="ch-prologue.html"><a href="ch-prologue.html#datasets"><i class="fa fa-check"></i><b>1.3</b> Datasets</a></li>
+<li class="chapter" data-level="1.4" data-path="ch-prologue.html"><a href="ch-prologue.html#intro-further"><i class="fa fa-check"></i><b>1.4</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ch-vizI.html"><a href="ch-vizI.html"><i class="fa fa-check"></i><b>2</b> Data visualization</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#the-2012-federal-election-cycle"><i class="fa fa-check"></i><b>2.1</b> The 2012 federal election cycle</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="ch-vizI.html"><a href="ch-vizI.html#are-these-two-groups-different"><i class="fa fa-check"></i><b>2.1.1</b> Are these two groups different?</a></li>
+<li class="chapter" data-level="2.1.2" data-path="ch-vizI.html"><a href="ch-vizI.html#graphing-variation"><i class="fa fa-check"></i><b>2.1.2</b> Graphing variation</a></li>
+<li class="chapter" data-level="2.1.3" data-path="ch-vizI.html"><a href="ch-vizI.html#examining-relationships-among-variables"><i class="fa fa-check"></i><b>2.1.3</b> Examining relationships among variables</a></li>
+<li class="chapter" data-level="2.1.4" data-path="ch-vizI.html"><a href="ch-vizI.html#networks"><i class="fa fa-check"></i><b>2.1.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#composing-data-graphics"><i class="fa fa-check"></i><b>2.2</b> Composing data graphics</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="ch-vizI.html"><a href="ch-vizI.html#a-taxonomy-for-data-graphics"><i class="fa fa-check"></i><b>2.2.1</b> A taxonomy for data graphics</a></li>
+<li class="chapter" data-level="2.2.2" data-path="ch-vizI.html"><a href="ch-vizI.html#sec:color"><i class="fa fa-check"></i><b>2.2.2</b> Color</a></li>
+<li class="chapter" data-level="2.2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#dissecting-data-graphics"><i class="fa fa-check"></i><b>2.2.3</b> Dissecting data graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="ch-vizI.html"><a href="ch-vizI.html#importance-of-data-graphics-challenger"><i class="fa fa-check"></i><b>2.3</b> Importance of data graphics: <em>Challenger</em></a></li>
+<li class="chapter" data-level="2.4" data-path="ch-vizI.html"><a href="ch-vizI.html#creating-effective-presentations"><i class="fa fa-check"></i><b>2.4</b> Creating effective presentations</a></li>
+<li class="chapter" data-level="2.5" data-path="ch-vizI.html"><a href="ch-vizI.html#the-wider-world-of-data-visualization"><i class="fa fa-check"></i><b>2.5</b> The wider world of data visualization</a></li>
+<li class="chapter" data-level="2.6" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-further"><i class="fa fa-check"></i><b>2.6</b> Further resources</a></li>
+<li class="chapter" data-level="2.7" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-exercises"><i class="fa fa-check"></i><b>2.7</b> Exercises</a></li>
+<li class="chapter" data-level="2.8" data-path="ch-vizI.html"><a href="ch-vizI.html#datavizI-online-exercises"><i class="fa fa-check"></i><b>2.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ch-vizII.html"><a href="ch-vizII.html"><i class="fa fa-check"></i><b>3</b> A grammar for graphics</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#a-grammar-for-data-graphics"><i class="fa fa-check"></i><b>3.1</b> A grammar for data graphics</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="ch-vizII.html"><a href="ch-vizII.html#aesthetics"><i class="fa fa-check"></i><b>3.1.1</b> Aesthetics</a></li>
+<li class="chapter" data-level="3.1.2" data-path="ch-vizII.html"><a href="ch-vizII.html#scales"><i class="fa fa-check"></i><b>3.1.2</b> Scales</a></li>
+<li class="chapter" data-level="3.1.3" data-path="ch-vizII.html"><a href="ch-vizII.html#guides"><i class="fa fa-check"></i><b>3.1.3</b> Guides</a></li>
+<li class="chapter" data-level="3.1.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:facet"><i class="fa fa-check"></i><b>3.1.4</b> Facets</a></li>
+<li class="chapter" data-level="3.1.5" data-path="ch-vizII.html"><a href="ch-vizII.html#layers"><i class="fa fa-check"></i><b>3.1.5</b> Layers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:canonical"><i class="fa fa-check"></i><b>3.2</b> Canonical data graphics in (ref:R)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="ch-vizII.html"><a href="ch-vizII.html#univariate-displays"><i class="fa fa-check"></i><b>3.2.1</b> Univariate displays</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ch-vizII.html"><a href="ch-vizII.html#multivariate-displays"><i class="fa fa-check"></i><b>3.2.2</b> Multivariate displays</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ch-vizII.html"><a href="ch-vizII.html#maps"><i class="fa fa-check"></i><b>3.2.3</b> Maps</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:datanetwork"><i class="fa fa-check"></i><b>3.2.4</b> Networks</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ch-vizII.html"><a href="ch-vizII.html#sec:babynames"><i class="fa fa-check"></i><b>3.3</b> Extended example: Historical baby names</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="ch-vizII.html"><a href="ch-vizII.html#percentage-of-people-alive-today"><i class="fa fa-check"></i><b>3.3.1</b> Percentage of people alive today</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ch-vizII.html"><a href="ch-vizII.html#most-common-names-for-women"><i class="fa fa-check"></i><b>3.3.2</b> Most common names for women</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-further"><i class="fa fa-check"></i><b>3.4</b> Further resources</a></li>
+<li class="chapter" data-level="3.5" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-exercises"><i class="fa fa-check"></i><b>3.5</b> Exercises</a></li>
+<li class="chapter" data-level="3.6" data-path="ch-vizII.html"><a href="ch-vizII.html#datavizII-online-exercises"><i class="fa fa-check"></i><b>3.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ch-dataI.html"><a href="ch-dataI.html"><i class="fa fa-check"></i><b>4</b> Data wrangling on one table</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:five_idioms"><i class="fa fa-check"></i><b>4.1</b> A grammar for data wrangling</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:pipe"><i class="fa fa-check"></i><b>4.1.1</b> <code>select()</code> and <code>filter()</code></a></li>
+<li class="chapter" data-level="4.1.2" data-path="ch-dataI.html"><a href="ch-dataI.html#mutate-and-rename"><i class="fa fa-check"></i><b>4.1.2</b> <code>mutate()</code> and <code>rename()</code></a></li>
+<li class="chapter" data-level="4.1.3" data-path="ch-dataI.html"><a href="ch-dataI.html#arrange"><i class="fa fa-check"></i><b>4.1.3</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="4.1.4" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:summarize"><i class="fa fa-check"></i><b>4.1.4</b> <code>summarize()</code> with <code>group_by()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ch-dataI.html"><a href="ch-dataI.html#sec:mets"><i class="fa fa-check"></i><b>4.2</b> Extended example: Ben’s time with the Mets</a></li>
+<li class="chapter" data-level="4.3" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-further"><i class="fa fa-check"></i><b>4.3</b> Further resources</a></li>
+<li class="chapter" data-level="4.4" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-exercises"><i class="fa fa-check"></i><b>4.4</b> Exercises</a></li>
+<li class="chapter" data-level="4.5" data-path="ch-dataI.html"><a href="ch-dataI.html#dataI-online-exercises"><i class="fa fa-check"></i><b>4.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="ch-join.html"><a href="ch-join.html"><i class="fa fa-check"></i><b>5</b> Data wrangling on multiple tables</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="ch-join.html"><a href="ch-join.html#inner_join"><i class="fa fa-check"></i><b>5.1</b> <code>inner_join()</code></a></li>
+<li class="chapter" data-level="5.2" data-path="ch-join.html"><a href="ch-join.html#left_join"><i class="fa fa-check"></i><b>5.2</b> <code>left_join()</code></a></li>
+<li class="chapter" data-level="5.3" data-path="ch-join.html"><a href="ch-join.html#extended-example-manny-ramirez"><i class="fa fa-check"></i><b>5.3</b> Extended example: Manny Ramirez</a></li>
+<li class="chapter" data-level="5.4" data-path="ch-join.html"><a href="ch-join.html#joins-further"><i class="fa fa-check"></i><b>5.4</b> Further resources</a></li>
+<li class="chapter" data-level="5.5" data-path="ch-join.html"><a href="ch-join.html#join-exercises"><i class="fa fa-check"></i><b>5.5</b> Exercises</a></li>
+<li class="chapter" data-level="5.6" data-path="ch-join.html"><a href="ch-join.html#join-online-exercises"><i class="fa fa-check"></i><b>5.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ch-dataII.html"><a href="ch-dataII.html"><i class="fa fa-check"></i><b>6</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="ch-dataII.html"><a href="ch-dataII.html#tidy-data"><i class="fa fa-check"></i><b>6.1</b> Tidy data</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="ch-dataII.html"><a href="ch-dataII.html#motivation"><i class="fa fa-check"></i><b>6.1.1</b> Motivation</a></li>
+<li class="chapter" data-level="6.1.2" data-path="ch-dataII.html"><a href="ch-dataII.html#what-are-tidy-data"><i class="fa fa-check"></i><b>6.1.2</b> What are tidy data?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="ch-dataII.html"><a href="ch-dataII.html#reshaping-data"><i class="fa fa-check"></i><b>6.2</b> Reshaping data</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-verbs-for-converting-wide-to-narrow-and-vice-versa"><i class="fa fa-check"></i><b>6.2.1</b> Data verbs for converting wide to narrow and <em>vice versa</em></a></li>
+<li class="chapter" data-level="6.2.2" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-wider"><i class="fa fa-check"></i><b>6.2.2</b> Pivoting wider</a></li>
+<li class="chapter" data-level="6.2.3" data-path="ch-dataII.html"><a href="ch-dataII.html#pivoting-longer"><i class="fa fa-check"></i><b>6.2.3</b> Pivoting longer</a></li>
+<li class="chapter" data-level="6.2.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nest"><i class="fa fa-check"></i><b>6.2.4</b> List-columns</a></li>
+<li class="chapter" data-level="6.2.5" data-path="ch-dataII.html"><a href="ch-dataII.html#example-gender-neutral-names"><i class="fa fa-check"></i><b>6.2.5</b> Example: Gender-neutral names</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:naming"><i class="fa fa-check"></i><b>6.3</b> Naming conventions</a></li>
+<li class="chapter" data-level="6.4" data-path="ch-dataII.html"><a href="ch-dataII.html#data-intake"><i class="fa fa-check"></i><b>6.4</b> Data intake</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="ch-dataII.html"><a href="ch-dataII.html#data-table-friendly-formats"><i class="fa fa-check"></i><b>6.4.1</b> Data-table friendly formats</a></li>
+<li class="chapter" data-level="6.4.2" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:apis"><i class="fa fa-check"></i><b>6.4.2</b> APIs</a></li>
+<li class="chapter" data-level="6.4.3" data-path="ch-dataII.html"><a href="ch-dataII.html#cleaning-data"><i class="fa fa-check"></i><b>6.4.3</b> Cleaning data</a></li>
+<li class="chapter" data-level="6.4.4" data-path="ch-dataII.html"><a href="ch-dataII.html#sec:nukes"><i class="fa fa-check"></i><b>6.4.4</b> Example: Japanese nuclear reactors</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-further"><i class="fa fa-check"></i><b>6.5</b> Further resources</a></li>
+<li class="chapter" data-level="6.6" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-exercises"><i class="fa fa-check"></i><b>6.6</b> Exercises</a></li>
+<li class="chapter" data-level="6.7" data-path="ch-dataII.html"><a href="ch-dataII.html#dataII-online-exercises"><i class="fa fa-check"></i><b>6.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ch-iteration.html"><a href="ch-iteration.html"><i class="fa fa-check"></i><b>7</b> Iteration</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:vectorized"><i class="fa fa-check"></i><b>7.1</b> Vectorized operations</a></li>
+<li class="chapter" data-level="7.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:scoped"><i class="fa fa-check"></i><b>7.2</b> Using <code>across()</code> with <strong>dplyr</strong> functions</a></li>
+<li class="chapter" data-level="7.3" data-path="ch-iteration.html"><a href="ch-iteration.html#appR:apply"><i class="fa fa-check"></i><b>7.3</b> The <code>map()</code> family of functions</a></li>
+<li class="chapter" data-level="7.4" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-over-a-one-dimensional-vector"><i class="fa fa-check"></i><b>7.4</b> Iterating over a one-dimensional vector</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-a-known-function"><i class="fa fa-check"></i><b>7.4.1</b> Iterating a known function</a></li>
+<li class="chapter" data-level="7.4.2" data-path="ch-iteration.html"><a href="ch-iteration.html#iterating-an-arbitrary-function"><i class="fa fa-check"></i><b>7.4.2</b> Iterating an arbitrary function</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:group-map"><i class="fa fa-check"></i><b>7.5</b> Iteration over subgroups</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:pythag"><i class="fa fa-check"></i><b>7.5.1</b> Example: Expected winning percentage</a></li>
+<li class="chapter" data-level="7.5.2" data-path="ch-iteration.html"><a href="ch-iteration.html#sec:hrs"><i class="fa fa-check"></i><b>7.5.2</b> Example: Annual leaders</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="ch-iteration.html"><a href="ch-iteration.html#simulation"><i class="fa fa-check"></i><b>7.6</b> Simulation</a></li>
+<li class="chapter" data-level="7.7" data-path="ch-iteration.html"><a href="ch-iteration.html#extended-example-factors-associated-with-bmi"><i class="fa fa-check"></i><b>7.7</b> Extended example: Factors associated with BMI</a></li>
+<li class="chapter" data-level="7.8" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-further"><i class="fa fa-check"></i><b>7.8</b> Further resources</a></li>
+<li class="chapter" data-level="7.9" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-exercises"><i class="fa fa-check"></i><b>7.9</b> Exercises</a></li>
+<li class="chapter" data-level="7.10" data-path="ch-iteration.html"><a href="ch-iteration.html#iteration-online-exercises"><i class="fa fa-check"></i><b>7.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ch-ethics.html"><a href="ch-ethics.html"><i class="fa fa-check"></i><b>8</b> Data science ethics</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-intro"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="ch-ethics.html"><a href="ch-ethics.html#truthful-falsehoods"><i class="fa fa-check"></i><b>8.2</b> Truthful falsehoods</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="ch-ethics.html"><a href="ch-ethics.html#stand-your-ground"><i class="fa fa-check"></i><b>8.2.1</b> Stand your ground</a></li>
+<li class="chapter" data-level="8.2.2" data-path="ch-ethics.html"><a href="ch-ethics.html#global-temperature"><i class="fa fa-check"></i><b>8.2.2</b> Global temperature</a></li>
+<li class="chapter" data-level="8.2.3" data-path="ch-ethics.html"><a href="ch-ethics.html#covid-19-reporting"><i class="fa fa-check"></i><b>8.2.3</b> COVID-19 reporting</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="ch-ethics.html"><a href="ch-ethics.html#role-of-data-science-in-society"><i class="fa fa-check"></i><b>8.3</b> Role of data science in society</a></li>
+<li class="chapter" data-level="8.4" data-path="ch-ethics.html"><a href="ch-ethics.html#some-settings-for-professional-ethics"><i class="fa fa-check"></i><b>8.4</b> Some settings for professional ethics</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-chief-executive-officer"><i class="fa fa-check"></i><b>8.4.1</b> The chief executive officer</a></li>
+<li class="chapter" data-level="8.4.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination"><i class="fa fa-check"></i><b>8.4.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.4.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar"><i class="fa fa-check"></i><b>8.4.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.4.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction"><i class="fa fa-check"></i><b>8.4.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.4.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping"><i class="fa fa-check"></i><b>8.4.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.4.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis"><i class="fa fa-check"></i><b>8.4.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.4.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers"><i class="fa fa-check"></i><b>8.4.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.4.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations"><i class="fa fa-check"></i><b>8.4.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="ch-ethics.html"><a href="ch-ethics.html#some-principles-to-guide-ethical-action"><i class="fa fa-check"></i><b>8.5</b> Some principles to guide ethical action</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="ch-ethics.html"><a href="ch-ethics.html#the-ceo"><i class="fa fa-check"></i><b>8.5.1</b> The CEO</a></li>
+<li class="chapter" data-level="8.5.2" data-path="ch-ethics.html"><a href="ch-ethics.html#employment-discrimination-1"><i class="fa fa-check"></i><b>8.5.2</b> Employment discrimination</a></li>
+<li class="chapter" data-level="8.5.3" data-path="ch-ethics.html"><a href="ch-ethics.html#gaydar-1"><i class="fa fa-check"></i><b>8.5.3</b> “Gaydar”</a></li>
+<li class="chapter" data-level="8.5.4" data-path="ch-ethics.html"><a href="ch-ethics.html#race-prediction-1"><i class="fa fa-check"></i><b>8.5.4</b> Race prediction</a></li>
+<li class="chapter" data-level="8.5.5" data-path="ch-ethics.html"><a href="ch-ethics.html#data-scraping-1"><i class="fa fa-check"></i><b>8.5.5</b> Data scraping</a></li>
+<li class="chapter" data-level="8.5.6" data-path="ch-ethics.html"><a href="ch-ethics.html#reproducible-spreadsheet-analysis-1"><i class="fa fa-check"></i><b>8.5.6</b> Reproducible spreadsheet analysis</a></li>
+<li class="chapter" data-level="8.5.7" data-path="ch-ethics.html"><a href="ch-ethics.html#drug-dangers-1"><i class="fa fa-check"></i><b>8.5.7</b> Drug dangers</a></li>
+<li class="chapter" data-level="8.5.8" data-path="ch-ethics.html"><a href="ch-ethics.html#legal-negotiations-1"><i class="fa fa-check"></i><b>8.5.8</b> Legal negotiations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="ch-ethics.html"><a href="ch-ethics.html#algorithmic-bias"><i class="fa fa-check"></i><b>8.6</b> Algorithmic bias</a></li>
+<li class="chapter" data-level="8.7" data-path="ch-ethics.html"><a href="ch-ethics.html#data-and-disclosure"><i class="fa fa-check"></i><b>8.7</b> Data and disclosure</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="ch-ethics.html"><a href="ch-ethics.html#reidentification-and-disclosure-avoidance"><i class="fa fa-check"></i><b>8.7.1</b> Reidentification and disclosure avoidance</a></li>
+<li class="chapter" data-level="8.7.2" data-path="ch-ethics.html"><a href="ch-ethics.html#safe-data-storage"><i class="fa fa-check"></i><b>8.7.2</b> Safe data storage</a></li>
+<li class="chapter" data-level="8.7.3" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:terms-of-use"><i class="fa fa-check"></i><b>8.7.3</b> Data scraping and terms of use</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="ch-ethics.html"><a href="ch-ethics.html#sec:reproducibility"><i class="fa fa-check"></i><b>8.8</b> Reproducibility</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="ch-ethics.html"><a href="ch-ethics.html#example-erroneous-data-merging"><i class="fa fa-check"></i><b>8.8.1</b> Example: Erroneous data merging</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-collectively"><i class="fa fa-check"></i><b>8.9</b> Ethics, collectively</a></li>
+<li class="chapter" data-level="8.10" data-path="ch-ethics.html"><a href="ch-ethics.html#professional-guidelines-for-ethical-conduct"><i class="fa fa-check"></i><b>8.10</b> Professional guidelines for ethical conduct</a></li>
+<li class="chapter" data-level="8.11" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-further"><i class="fa fa-check"></i><b>8.11</b> Further resources</a></li>
+<li class="chapter" data-level="8.12" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-exercises"><i class="fa fa-check"></i><b>8.12</b> Exercises</a></li>
+<li class="chapter" data-level="8.13" data-path="ch-ethics.html"><a href="ch-ethics.html#ethics-online-exercises"><i class="fa fa-check"></i><b>8.13</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>II Part II: Statistics and Modeling</b></span></li>
+<li class="chapter" data-level="9" data-path="ch-foundations.html"><a href="ch-foundations.html"><i class="fa fa-check"></i><b>9</b> Statistical foundations</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ch-foundations.html"><a href="ch-foundations.html#samples-and-populations"><i class="fa fa-check"></i><b>9.1</b> Samples and populations</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy-by-sampling-from-the-population"><i class="fa fa-check"></i><b>9.1.1</b> Example: Setting travel policy by sampling from the population</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="ch-foundations.html"><a href="ch-foundations.html#sample-statistics"><i class="fa fa-check"></i><b>9.2</b> Sample statistics</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:lln"><i class="fa fa-check"></i><b>9.2.1</b> The sampling distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:boot"><i class="fa fa-check"></i><b>9.3</b> The bootstrap</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="ch-foundations.html"><a href="ch-foundations.html#example-setting-travel-policy"><i class="fa fa-check"></i><b>9.3.1</b> Example: Setting travel policy</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="ch-foundations.html"><a href="ch-foundations.html#outliers"><i class="fa fa-check"></i><b>9.4</b> Outliers</a></li>
+<li class="chapter" data-level="9.5" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:gooddesign"><i class="fa fa-check"></i><b>9.5</b> Statistical models: Explaining variation</a></li>
+<li class="chapter" data-level="9.6" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:confound"><i class="fa fa-check"></i><b>9.6</b> Confounding and accounting for other factors</a></li>
+<li class="chapter" data-level="9.7" data-path="ch-foundations.html"><a href="ch-foundations.html#sec:p-perils"><i class="fa fa-check"></i><b>9.7</b> The perils of p-values</a></li>
+<li class="chapter" data-level="9.8" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-further"><i class="fa fa-check"></i><b>9.8</b> Further resources</a></li>
+<li class="chapter" data-level="9.9" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-exercises"><i class="fa fa-check"></i><b>9.9</b> Exercises</a></li>
+<li class="chapter" data-level="9.10" data-path="ch-foundations.html"><a href="ch-foundations.html#foundations-online-exercises"><i class="fa fa-check"></i><b>9.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="ch-modeling.html"><a href="ch-modeling.html"><i class="fa fa-check"></i><b>10</b> Predictive modeling</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="ch-modeling.html"><a href="ch-modeling.html#predictive-modeling"><i class="fa fa-check"></i><b>10.1</b> Predictive modeling</a></li>
+<li class="chapter" data-level="10.2" data-path="ch-modeling.html"><a href="ch-modeling.html#simple-classification-models"><i class="fa fa-check"></i><b>10.2</b> Simple classification models</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="ch-modeling.html"><a href="ch-modeling.html#example-high-earners-in-the-1994-united-states-census"><i class="fa fa-check"></i><b>10.2.1</b> Example: High-earners in the 1994 United States Census</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="ch-modeling.html"><a href="ch-modeling.html#evaluating-models"><i class="fa fa-check"></i><b>10.3</b> Evaluating models</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:bias-variance"><i class="fa fa-check"></i><b>10.3.1</b> Bias-variance trade-off</a></li>
+<li class="chapter" data-level="10.3.2" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:cv"><i class="fa fa-check"></i><b>10.3.2</b> Cross-validation</a></li>
+<li class="chapter" data-level="10.3.3" data-path="ch-modeling.html"><a href="ch-modeling.html#confusion-matrices-and-roc-curves"><i class="fa fa-check"></i><b>10.3.3</b> Confusion matrices and ROC curves</a></li>
+<li class="chapter" data-level="10.3.4" data-path="ch-modeling.html"><a href="ch-modeling.html#measuring-prediction-error-for-quantitative-responses"><i class="fa fa-check"></i><b>10.3.4</b> Measuring prediction error for quantitative responses</a></li>
+<li class="chapter" data-level="10.3.5" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:evaluate"><i class="fa fa-check"></i><b>10.3.5</b> Example: Evaluation of income models</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="ch-modeling.html"><a href="ch-modeling.html#sec:diabetes"><i class="fa fa-check"></i><b>10.4</b> Extended example: Who has diabetes?</a></li>
+<li class="chapter" data-level="10.5" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-further"><i class="fa fa-check"></i><b>10.5</b> Further resources</a></li>
+<li class="chapter" data-level="10.6" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-exercises"><i class="fa fa-check"></i><b>10.6</b> Exercises</a></li>
+<li class="chapter" data-level="10.7" data-path="ch-modeling.html"><a href="ch-modeling.html#modeling-online-exercises"><i class="fa fa-check"></i><b>10.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="ch-learningI.html"><a href="ch-learningI.html"><i class="fa fa-check"></i><b>11</b> Supervised learning</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ch-learningI.html"><a href="ch-learningI.html#non-regression-classifiers"><i class="fa fa-check"></i><b>11.1</b> Non-regression classifiers</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="ch-learningI.html"><a href="ch-learningI.html#decision-trees"><i class="fa fa-check"></i><b>11.1.1</b> Decision trees</a></li>
+<li class="chapter" data-level="11.1.2" data-path="ch-learningI.html"><a href="ch-learningI.html#random-forests"><i class="fa fa-check"></i><b>11.1.2</b> Random forests</a></li>
+<li class="chapter" data-level="11.1.3" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:knn"><i class="fa fa-check"></i><b>11.1.3</b> Nearest neighbor</a></li>
+<li class="chapter" data-level="11.1.4" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:bayes"><i class="fa fa-check"></i><b>11.1.4</b> Naïve Bayes</a></li>
+<li class="chapter" data-level="11.1.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:neuralnet"><i class="fa fa-check"></i><b>11.1.5</b> Artificial neural networks</a></li>
+<li class="chapter" data-level="11.1.6" data-path="ch-learningI.html"><a href="ch-learningI.html#ensemble-methods"><i class="fa fa-check"></i><b>11.1.6</b> Ensemble methods</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:tuning"><i class="fa fa-check"></i><b>11.2</b> Parameter tuning</a></li>
+<li class="chapter" data-level="11.3" data-path="ch-learningI.html"><a href="ch-learningI.html#example-evaluation-of-income-models-redux"><i class="fa fa-check"></i><b>11.3</b> Example: Evaluation of income models redux</a></li>
+<li class="chapter" data-level="11.4" data-path="ch-learningI.html"><a href="ch-learningI.html#extended-example-who-has-diabetes-this-time"><i class="fa fa-check"></i><b>11.4</b> Extended example: Who has diabetes this time?</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="ch-learningI.html"><a href="ch-learningI.html#comparing-all-models"><i class="fa fa-check"></i><b>11.4.1</b> Comparing all models</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="ch-learningI.html"><a href="ch-learningI.html#sec:regularization"><i class="fa fa-check"></i><b>11.5</b> Regularization</a></li>
+<li class="chapter" data-level="11.6" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-further"><i class="fa fa-check"></i><b>11.6</b> Further resources</a></li>
+<li class="chapter" data-level="11.7" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-exercises"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
+<li class="chapter" data-level="11.8" data-path="ch-learningI.html"><a href="ch-learningI.html#learningI-online-exercises"><i class="fa fa-check"></i><b>11.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="ch-learningII.html"><a href="ch-learningII.html"><i class="fa fa-check"></i><b>12</b> Unsupervised learning</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="ch-learningII.html"><a href="ch-learningII.html#clustering"><i class="fa fa-check"></i><b>12.1</b> Clustering</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="ch-learningII.html"><a href="ch-learningII.html#sec:hclust"><i class="fa fa-check"></i><b>12.1.1</b> Hierarchical clustering</a></li>
+<li class="chapter" data-level="12.1.2" data-path="ch-learningII.html"><a href="ch-learningII.html#k-means"><i class="fa fa-check"></i><b>12.1.2</b> <span class="math inline">\(k\)</span>-means</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="ch-learningII.html"><a href="ch-learningII.html#dimension-reduction"><i class="fa fa-check"></i><b>12.2</b> Dimension reduction</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="ch-learningII.html"><a href="ch-learningII.html#intuitive-approaches"><i class="fa fa-check"></i><b>12.2.1</b> Intuitive approaches</a></li>
+<li class="chapter" data-level="12.2.2" data-path="ch-learningII.html"><a href="ch-learningII.html#singular-value-decomposition"><i class="fa fa-check"></i><b>12.2.2</b> Singular value decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-further"><i class="fa fa-check"></i><b>12.3</b> Further resources</a></li>
+<li class="chapter" data-level="12.4" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-exercises"><i class="fa fa-check"></i><b>12.4</b> Exercises</a></li>
+<li class="chapter" data-level="12.5" data-path="ch-learningII.html"><a href="ch-learningII.html#learningII-online-exercises"><i class="fa fa-check"></i><b>12.5</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="ch-simulation.html"><a href="ch-simulation.html"><i class="fa fa-check"></i><b>13</b> Simulation</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch-simulation.html"><a href="ch-simulation.html#reasoning-in-reverse"><i class="fa fa-check"></i><b>13.1</b> Reasoning in reverse</a></li>
+<li class="chapter" data-level="13.2" data-path="ch-simulation.html"><a href="ch-simulation.html#extended-example-grouping-cancers"><i class="fa fa-check"></i><b>13.2</b> Extended example: Grouping cancers</a></li>
+<li class="chapter" data-level="13.3" data-path="ch-simulation.html"><a href="ch-simulation.html#randomizing-functions"><i class="fa fa-check"></i><b>13.3</b> Randomizing functions</a></li>
+<li class="chapter" data-level="13.4" data-path="ch-simulation.html"><a href="ch-simulation.html#simulating-variability"><i class="fa fa-check"></i><b>13.4</b> Simulating variability</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="ch-simulation.html"><a href="ch-simulation.html#the-partially-planned-rendezvous"><i class="fa fa-check"></i><b>13.4.1</b> The partially-planned rendezvous</a></li>
+<li class="chapter" data-level="13.4.2" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:jobsnum"><i class="fa fa-check"></i><b>13.4.2</b> The jobs report</a></li>
+<li class="chapter" data-level="13.4.3" data-path="ch-simulation.html"><a href="ch-simulation.html#restaurant-health-and-sanitation-grades"><i class="fa fa-check"></i><b>13.4.3</b> Restaurant health and sanitation grades</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="ch-simulation.html"><a href="ch-simulation.html#random-networks"><i class="fa fa-check"></i><b>13.5</b> Random networks</a></li>
+<li class="chapter" data-level="13.6" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:key-principles-random"><i class="fa fa-check"></i><b>13.6</b> Key principles of simulation</a>
+<ul>
+<li class="chapter" data-level="13.6.1" data-path="ch-simulation.html"><a href="ch-simulation.html#design"><i class="fa fa-check"></i><b>13.6.1</b> Design</a></li>
+<li class="chapter" data-level="13.6.2" data-path="ch-simulation.html"><a href="ch-simulation.html#modularity"><i class="fa fa-check"></i><b>13.6.2</b> Modularity</a></li>
+<li class="chapter" data-level="13.6.3" data-path="ch-simulation.html"><a href="ch-simulation.html#sec:seed"><i class="fa fa-check"></i><b>13.6.3</b> Reproducibility and random number seeds</a></li>
+</ul></li>
+<li class="chapter" data-level="13.7" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-further"><i class="fa fa-check"></i><b>13.7</b> Further resources</a></li>
+<li class="chapter" data-level="13.8" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-exercises"><i class="fa fa-check"></i><b>13.8</b> Exercises</a></li>
+<li class="chapter" data-level="13.9" data-path="ch-simulation.html"><a href="ch-simulation.html#simulation-online-exercises"><i class="fa fa-check"></i><b>13.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="part"><span><b>III Part III: Topics in Data Science</b></span></li>
+<li class="chapter" data-level="14" data-path="ch-vizIII.html"><a href="ch-vizIII.html"><i class="fa fa-check"></i><b>14</b> Dynamic and customized data graphics</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:d3"><i class="fa fa-check"></i><b>14.1</b> Rich Web content using <code>D3.js</code> and <strong>htmlwidgets</strong></a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#leaflet"><i class="fa fa-check"></i><b>14.1.1</b> Leaflet</a></li>
+<li class="chapter" data-level="14.1.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#plot.ly"><i class="fa fa-check"></i><b>14.1.2</b> Plot.ly</a></li>
+<li class="chapter" data-level="14.1.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datatables"><i class="fa fa-check"></i><b>14.1.3</b> DataTables</a></li>
+<li class="chapter" data-level="14.1.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#dygraphs"><i class="fa fa-check"></i><b>14.1.4</b> Dygraphs</a></li>
+<li class="chapter" data-level="14.1.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#streamgraphs"><i class="fa fa-check"></i><b>14.1.5</b> Streamgraphs</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#animation"><i class="fa fa-check"></i><b>14.2</b> Animation</a></li>
+<li class="chapter" data-level="14.3" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:fleshdashboard"><i class="fa fa-check"></i><b>14.3</b> Flexdashboard</a></li>
+<li class="chapter" data-level="14.4" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:shiny"><i class="fa fa-check"></i><b>14.4</b> Interactive web apps with Shiny</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="ch-vizIII.html"><a href="ch-vizIII.html#example-interactive-display-of-the-beatles"><i class="fa fa-check"></i><b>14.4.1</b> Example: interactive display of the Beatles</a></li>
+<li class="chapter" data-level="14.4.2" data-path="ch-vizIII.html"><a href="ch-vizIII.html#more-on-reactive-programming"><i class="fa fa-check"></i><b>14.4.2</b> More on reactive programming</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="ch-vizIII.html"><a href="ch-vizIII.html#sec:themes"><i class="fa fa-check"></i><b>14.5</b> Customization of <strong>ggplot2</strong> graphics</a></li>
+<li class="chapter" data-level="14.6" data-path="ch-vizIII.html"><a href="ch-vizIII.html#extended-example-hot-dog-eating"><i class="fa fa-check"></i><b>14.6</b> Extended example: Hot dog eating</a></li>
+<li class="chapter" data-level="14.7" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-further"><i class="fa fa-check"></i><b>14.7</b> Further resources</a></li>
+<li class="chapter" data-level="14.8" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-exercises"><i class="fa fa-check"></i><b>14.8</b> Exercises</a></li>
+<li class="chapter" data-level="14.9" data-path="ch-vizIII.html"><a href="ch-vizIII.html#datavizIII-online-exercises"><i class="fa fa-check"></i><b>14.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ch-sql.html"><a href="ch-sql.html"><i class="fa fa-check"></i><b>15</b> Database querying using SQL</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="ch-sql.html"><a href="ch-sql.html#sec:dplyr-sql"><i class="fa fa-check"></i><b>15.1</b> From <strong>dplyr</strong> to SQL</a></li>
+<li class="chapter" data-level="15.2" data-path="ch-sql.html"><a href="ch-sql.html#flat-file-databases"><i class="fa fa-check"></i><b>15.2</b> Flat-file databases</a></li>
+<li class="chapter" data-level="15.3" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-universe"><i class="fa fa-check"></i><b>15.3</b> The SQL universe</a></li>
+<li class="chapter" data-level="15.4" data-path="ch-sql.html"><a href="ch-sql.html#the-sql-data-manipulation-language"><i class="fa fa-check"></i><b>15.4</b> The SQL data manipulation language</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="ch-sql.html"><a href="ch-sql.html#select...from"><i class="fa fa-check"></i><b>15.4.1</b> <code>SELECT...FROM</code></a></li>
+<li class="chapter" data-level="15.4.2" data-path="ch-sql.html"><a href="ch-sql.html#where"><i class="fa fa-check"></i><b>15.4.2</b> <code>WHERE</code></a></li>
+<li class="chapter" data-level="15.4.3" data-path="ch-sql.html"><a href="ch-sql.html#group-by"><i class="fa fa-check"></i><b>15.4.3</b> <code>GROUP BY</code></a></li>
+<li class="chapter" data-level="15.4.4" data-path="ch-sql.html"><a href="ch-sql.html#order-by"><i class="fa fa-check"></i><b>15.4.4</b> <code>ORDER BY</code></a></li>
+<li class="chapter" data-level="15.4.5" data-path="ch-sql.html"><a href="ch-sql.html#having"><i class="fa fa-check"></i><b>15.4.5</b> <code>HAVING</code></a></li>
+<li class="chapter" data-level="15.4.6" data-path="ch-sql.html"><a href="ch-sql.html#limit"><i class="fa fa-check"></i><b>15.4.6</b> <code>LIMIT</code></a></li>
+<li class="chapter" data-level="15.4.7" data-path="ch-sql.html"><a href="ch-sql.html#join"><i class="fa fa-check"></i><b>15.4.7</b> <code>JOIN</code></a></li>
+<li class="chapter" data-level="15.4.8" data-path="ch-sql.html"><a href="ch-sql.html#union"><i class="fa fa-check"></i><b>15.4.8</b> <code>UNION</code></a></li>
+<li class="chapter" data-level="15.4.9" data-path="ch-sql.html"><a href="ch-sql.html#subqueries"><i class="fa fa-check"></i><b>15.4.9</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="ch-sql.html"><a href="ch-sql.html#sec:ft8-flights"><i class="fa fa-check"></i><b>15.5</b> Extended example: FiveThirtyEight flights</a></li>
+<li class="chapter" data-level="15.6" data-path="ch-sql.html"><a href="ch-sql.html#sql-vs.-refr"><i class="fa fa-check"></i><b>15.6</b> SQL vs. (ref:R)</a></li>
+<li class="chapter" data-level="15.7" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-further"><i class="fa fa-check"></i><b>15.7</b> Further resources</a></li>
+<li class="chapter" data-level="15.8" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-exercises"><i class="fa fa-check"></i><b>15.8</b> Exercises</a></li>
+<li class="chapter" data-level="15.9" data-path="ch-sql.html"><a href="ch-sql.html#sqlI-online-exercises"><i class="fa fa-check"></i><b>15.9</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="ch-sql2.html"><a href="ch-sql2.html"><i class="fa fa-check"></i><b>16</b> Database administration</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:indices"><i class="fa fa-check"></i><b>16.1</b> Constructing efficient SQL databases</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="ch-sql2.html"><a href="ch-sql2.html#creating-new-databases"><i class="fa fa-check"></i><b>16.1.1</b> Creating new databases</a></li>
+<li class="chapter" data-level="16.1.2" data-path="ch-sql2.html"><a href="ch-sql2.html#create-table"><i class="fa fa-check"></i><b>16.1.2</b> <code>CREATE TABLE</code></a></li>
+<li class="chapter" data-level="16.1.3" data-path="ch-sql2.html"><a href="ch-sql2.html#keys"><i class="fa fa-check"></i><b>16.1.3</b> Keys</a></li>
+<li class="chapter" data-level="16.1.4" data-path="ch-sql2.html"><a href="ch-sql2.html#indices"><i class="fa fa-check"></i><b>16.1.4</b> Indices</a></li>
+<li class="chapter" data-level="16.1.5" data-path="ch-sql2.html"><a href="ch-sql2.html#query-plans"><i class="fa fa-check"></i><b>16.1.5</b> Query plans</a></li>
+<li class="chapter" data-level="16.1.6" data-path="ch-sql2.html"><a href="ch-sql2.html#partitioning"><i class="fa fa-check"></i><b>16.1.6</b> Partitioning</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-sql-data"><i class="fa fa-check"></i><b>16.2</b> Changing SQL data</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="ch-sql2.html"><a href="ch-sql2.html#changing-data"><i class="fa fa-check"></i><b>16.2.1</b> Changing data</a></li>
+<li class="chapter" data-level="16.2.2" data-path="ch-sql2.html"><a href="ch-sql2.html#adding-data"><i class="fa fa-check"></i><b>16.2.2</b> Adding data</a></li>
+<li class="chapter" data-level="16.2.3" data-path="ch-sql2.html"><a href="ch-sql2.html#importing-data-from-a-file"><i class="fa fa-check"></i><b>16.2.3</b> Importing data from a file</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="ch-sql2.html"><a href="ch-sql2.html#sec:toy-db"><i class="fa fa-check"></i><b>16.3</b> Extended example: Building a database</a>
+<ul>
+<li class="chapter" data-level="16.3.1" data-path="ch-sql2.html"><a href="ch-sql2.html#extract"><i class="fa fa-check"></i><b>16.3.1</b> Extract</a></li>
+<li class="chapter" data-level="16.3.2" data-path="ch-sql2.html"><a href="ch-sql2.html#transform"><i class="fa fa-check"></i><b>16.3.2</b> Transform</a></li>
+<li class="chapter" data-level="16.3.3" data-path="ch-sql2.html"><a href="ch-sql2.html#load-into-mysql-database"><i class="fa fa-check"></i><b>16.3.3</b> Load into MySQL database</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="ch-sql2.html"><a href="ch-sql2.html#scalability"><i class="fa fa-check"></i><b>16.4</b> Scalability</a></li>
+<li class="chapter" data-level="16.5" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-further"><i class="fa fa-check"></i><b>16.5</b> Further resources</a></li>
+<li class="chapter" data-level="16.6" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-exercises"><i class="fa fa-check"></i><b>16.6</b> Exercises</a></li>
+<li class="chapter" data-level="16.7" data-path="ch-sql2.html"><a href="ch-sql2.html#sqlII-online-exercises"><i class="fa fa-check"></i><b>16.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="ch-spatial.html"><a href="ch-spatial.html"><i class="fa fa-check"></i><b>17</b> Working with geospatial data</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="ch-spatial.html"><a href="ch-spatial.html#motivation-whats-so-great-about-geospatial-data"><i class="fa fa-check"></i><b>17.1</b> Motivation: What’s so great about geospatial data?</a></li>
+<li class="chapter" data-level="17.2" data-path="ch-spatial.html"><a href="ch-spatial.html#spatial-data-structures"><i class="fa fa-check"></i><b>17.2</b> Spatial data structures</a></li>
+<li class="chapter" data-level="17.3" data-path="ch-spatial.html"><a href="ch-spatial.html#making-maps"><i class="fa fa-check"></i><b>17.3</b> Making maps</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="ch-spatial.html"><a href="ch-spatial.html#static-maps"><i class="fa fa-check"></i><b>17.3.1</b> Static maps</a></li>
+<li class="chapter" data-level="17.3.2" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:projections"><i class="fa fa-check"></i><b>17.3.2</b> Projections</a></li>
+<li class="chapter" data-level="17.3.3" data-path="ch-spatial.html"><a href="ch-spatial.html#dynamic-maps-with-leaflet"><i class="fa fa-check"></i><b>17.3.3</b> Dynamic maps with <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="ch-spatial.html"><a href="ch-spatial.html#extended-example-congressional-districts"><i class="fa fa-check"></i><b>17.4</b> Extended example: Congressional districts</a>
+<ul>
+<li class="chapter" data-level="17.4.1" data-path="ch-spatial.html"><a href="ch-spatial.html#election-results"><i class="fa fa-check"></i><b>17.4.1</b> Election results</a></li>
+<li class="chapter" data-level="17.4.2" data-path="ch-spatial.html"><a href="ch-spatial.html#congressional-districts"><i class="fa fa-check"></i><b>17.4.2</b> Congressional districts</a></li>
+<li class="chapter" data-level="17.4.3" data-path="ch-spatial.html"><a href="ch-spatial.html#sec:sf-inner-join"><i class="fa fa-check"></i><b>17.4.3</b> Putting it all together</a></li>
+<li class="chapter" data-level="17.4.4" data-path="ch-spatial.html"><a href="ch-spatial.html#using-ggplot2"><i class="fa fa-check"></i><b>17.4.4</b> Using <code>ggplot2</code></a></li>
+<li class="chapter" data-level="17.4.5" data-path="ch-spatial.html"><a href="ch-spatial.html#using-leaflet"><i class="fa fa-check"></i><b>17.4.5</b> Using <code>leaflet</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="ch-spatial.html"><a href="ch-spatial.html#effective-maps-how-not-to-lie"><i class="fa fa-check"></i><b>17.5</b> Effective maps: How (not) to lie</a></li>
+<li class="chapter" data-level="17.6" data-path="ch-spatial.html"><a href="ch-spatial.html#projecting-polygons"><i class="fa fa-check"></i><b>17.6</b> Projecting polygons</a></li>
+<li class="chapter" data-level="17.7" data-path="ch-spatial.html"><a href="ch-spatial.html#playing-well-with-others"><i class="fa fa-check"></i><b>17.7</b> Playing well with others</a></li>
+<li class="chapter" data-level="17.8" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialII-further"><i class="fa fa-check"></i><b>17.8</b> Further resources</a></li>
+<li class="chapter" data-level="17.9" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-exercises"><i class="fa fa-check"></i><b>17.9</b> Exercises</a></li>
+<li class="chapter" data-level="17.10" data-path="ch-spatial.html"><a href="ch-spatial.html#geospatialI-online-exercises"><i class="fa fa-check"></i><b>17.10</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="ch-spatial2.html"><a href="ch-spatial2.html"><i class="fa fa-check"></i><b>18</b> Geospatial computations</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-operations"><i class="fa fa-check"></i><b>18.1</b> Geospatial operations</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geocoding-routes-and-distances"><i class="fa fa-check"></i><b>18.1.1</b> Geocoding, routes, and distances</a></li>
+<li class="chapter" data-level="18.1.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#sec:geometric-operations"><i class="fa fa-check"></i><b>18.1.2</b> Geometric operations</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-aggregation"><i class="fa fa-check"></i><b>18.2</b> Geospatial aggregation</a></li>
+<li class="chapter" data-level="18.3" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatial-joins"><i class="fa fa-check"></i><b>18.3</b> Geospatial joins</a></li>
+<li class="chapter" data-level="18.4" data-path="ch-spatial2.html"><a href="ch-spatial2.html#extended-example-trail-elevations-at-macleish"><i class="fa fa-check"></i><b>18.4</b> Extended example: Trail elevations at MacLeish</a></li>
+<li class="chapter" data-level="18.5" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialI-further"><i class="fa fa-check"></i><b>18.5</b> Further resources</a></li>
+<li class="chapter" data-level="18.6" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-exercises"><i class="fa fa-check"></i><b>18.6</b> Exercises</a></li>
+<li class="chapter" data-level="18.7" data-path="ch-spatial2.html"><a href="ch-spatial2.html#geospatialII-online-exercises"><i class="fa fa-check"></i><b>18.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="ch-text.html"><a href="ch-text.html"><i class="fa fa-check"></i><b>19</b> Text as data</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="ch-text.html"><a href="ch-text.html#regular-expressions-using-macbeth"><i class="fa fa-check"></i><b>19.1</b> Regular expressions using <em>Macbeth</em></a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="ch-text.html"><a href="ch-text.html#parsing-the-text-of-the-scottish-play"><i class="fa fa-check"></i><b>19.1.1</b> Parsing the text of the <span><em>Scottish play</em></span></a></li>
+<li class="chapter" data-level="19.1.2" data-path="ch-text.html"><a href="ch-text.html#life-and-death-in-macbeth"><i class="fa fa-check"></i><b>19.1.2</b> Life and death in <em>Macbeth</em></a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="ch-text.html"><a href="ch-text.html#extended-example-analyzing-textual-data-from-arxiv.org"><i class="fa fa-check"></i><b>19.2</b> Extended example: Analyzing textual data from arXiv.org</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="ch-text.html"><a href="ch-text.html#corpora"><i class="fa fa-check"></i><b>19.2.1</b> Corpora</a></li>
+<li class="chapter" data-level="19.2.2" data-path="ch-text.html"><a href="ch-text.html#word-clouds"><i class="fa fa-check"></i><b>19.2.2</b> Word clouds</a></li>
+<li class="chapter" data-level="19.2.3" data-path="ch-text.html"><a href="ch-text.html#sentiment-analysis"><i class="fa fa-check"></i><b>19.2.3</b> Sentiment analysis</a></li>
+<li class="chapter" data-level="19.2.4" data-path="ch-text.html"><a href="ch-text.html#bigrams-and-n-grams"><i class="fa fa-check"></i><b>19.2.4</b> Bigrams and N-grams</a></li>
+<li class="chapter" data-level="19.2.5" data-path="ch-text.html"><a href="ch-text.html#document-term-matrices"><i class="fa fa-check"></i><b>19.2.5</b> Document term matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="ch-text.html"><a href="ch-text.html#ingesting-text"><i class="fa fa-check"></i><b>19.3</b> Ingesting text</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="ch-text.html"><a href="ch-text.html#example-scraping-the-songs-of-the-beatles"><i class="fa fa-check"></i><b>19.3.1</b> Example: Scraping the songs of the Beatles</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="ch-text.html"><a href="ch-text.html#text-further"><i class="fa fa-check"></i><b>19.4</b> Further resources</a></li>
+<li class="chapter" data-level="19.5" data-path="ch-text.html"><a href="ch-text.html#text-exercises"><i class="fa fa-check"></i><b>19.5</b> Exercises</a></li>
+<li class="chapter" data-level="19.6" data-path="ch-text.html"><a href="ch-text.html#text-online-exercises"><i class="fa fa-check"></i><b>19.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="ch-netsci.html"><a href="ch-netsci.html"><i class="fa fa-check"></i><b>20</b> Network science</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-intro"><i class="fa fa-check"></i><b>20.1</b> Introduction to network science</a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="ch-netsci.html"><a href="ch-netsci.html#definitions"><i class="fa fa-check"></i><b>20.1.1</b> Definitions</a></li>
+<li class="chapter" data-level="20.1.2" data-path="ch-netsci.html"><a href="ch-netsci.html#a-brief-history-of-network-science"><i class="fa fa-check"></i><b>20.1.2</b> A brief history of network science</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-six-degrees-of-kristen-stewart"><i class="fa fa-check"></i><b>20.2</b> Extended example: Six degrees of Kristen Stewart</a>
+<ul>
+<li class="chapter" data-level="20.2.1" data-path="ch-netsci.html"><a href="ch-netsci.html#sql:imdb"><i class="fa fa-check"></i><b>20.2.1</b> Collecting Hollywood data</a></li>
+<li class="chapter" data-level="20.2.2" data-path="ch-netsci.html"><a href="ch-netsci.html#building-the-hollywood-network"><i class="fa fa-check"></i><b>20.2.2</b> Building the Hollywood network</a></li>
+<li class="chapter" data-level="20.2.3" data-path="ch-netsci.html"><a href="ch-netsci.html#building-a-kristen-stewart-oracle"><i class="fa fa-check"></i><b>20.2.3</b> Building a Kristen Stewart oracle</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="ch-netsci.html"><a href="ch-netsci.html#sec:pagerank"><i class="fa fa-check"></i><b>20.3</b> PageRank</a>
+<ul>
+<li class="chapter" data-level="20.3.1" data-path="ch-netsci.html"><a href="ch-netsci.html#eigenvector-centrality"><i class="fa fa-check"></i><b>20.3.1</b> Eigenvector centrality</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="ch-netsci.html"><a href="ch-netsci.html#extended-example-1996-mens-college-basketball"><i class="fa fa-check"></i><b>20.4</b> Extended example: 1996 men’s college basketball</a></li>
+<li class="chapter" data-level="20.5" data-path="ch-netsci.html"><a href="ch-netsci.html#netsci-further"><i class="fa fa-check"></i><b>20.5</b> Further resources</a></li>
+<li class="chapter" data-level="20.6" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-exercises"><i class="fa fa-check"></i><b>20.6</b> Exercises</a></li>
+<li class="chapter" data-level="20.7" data-path="ch-netsci.html"><a href="ch-netsci.html#networks-online-exercises"><i class="fa fa-check"></i><b>20.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="ch-big.html"><a href="ch-big.html"><i class="fa fa-check"></i><b>21</b> Epilogue: Towards “big data”</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="ch-big.html"><a href="ch-big.html#notions-of-big-data"><i class="fa fa-check"></i><b>21.1</b> Notions of big data</a></li>
+<li class="chapter" data-level="21.2" data-path="ch-big.html"><a href="ch-big.html#tools-for-bigger-data"><i class="fa fa-check"></i><b>21.2</b> Tools for bigger data</a>
+<ul>
+<li class="chapter" data-level="21.2.1" data-path="ch-big.html"><a href="ch-big.html#data-and-memory-structures-for-big-data"><i class="fa fa-check"></i><b>21.2.1</b> Data and memory structures for big data</a></li>
+<li class="chapter" data-level="21.2.2" data-path="ch-big.html"><a href="ch-big.html#compilation"><i class="fa fa-check"></i><b>21.2.2</b> Compilation</a></li>
+<li class="chapter" data-level="21.2.3" data-path="ch-big.html"><a href="ch-big.html#parallel-and-distributed-computing"><i class="fa fa-check"></i><b>21.2.3</b> Parallel and distributed computing</a></li>
+<li class="chapter" data-level="21.2.4" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-sql"><i class="fa fa-check"></i><b>21.2.4</b> Alternatives to SQL</a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="ch-big.html"><a href="ch-big.html#alternatives-to-refr"><i class="fa fa-check"></i><b>21.3</b> Alternatives to (ref:R)</a></li>
+<li class="chapter" data-level="21.4" data-path="ch-big.html"><a href="ch-big.html#closing-thoughts"><i class="fa fa-check"></i><b>21.4</b> Closing thoughts</a></li>
+<li class="chapter" data-level="21.5" data-path="ch-big.html"><a href="ch-big.html#bigdata-further"><i class="fa fa-check"></i><b>21.5</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="appendix"><span><b>Appendices</b></span></li>
+<li class="part"><span><b>IV Part IV: Appendices</b></span></li>
+<li class="chapter" data-level="A" data-path="ch-mdsr.html"><a href="ch-mdsr.html"><i class="fa fa-check"></i><b>A</b> Packages used in this book</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="ch-mdsr.html"><a href="ch-mdsr.html#the-mdsr-package"><i class="fa fa-check"></i><b>A.1</b> The <strong>mdsr</strong> package</a></li>
+<li class="chapter" data-level="A.2" data-path="ch-mdsr.html"><a href="ch-mdsr.html#other-packages"><i class="fa fa-check"></i><b>A.2</b> Other packages</a></li>
+<li class="chapter" data-level="A.3" data-path="ch-mdsr.html"><a href="ch-mdsr.html#pkg-further"><i class="fa fa-check"></i><b>A.3</b> Further resources</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="ch-R.html"><a href="ch-R.html"><i class="fa fa-check"></i><b>B</b> Introduction to <code>R</code> and RStudio</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="ch-R.html"><a href="ch-R.html#appR:install"><i class="fa fa-check"></i><b>B.1</b> Installation</a>
+<ul>
+<li class="chapter" data-level="B.1.1" data-path="ch-R.html"><a href="ch-R.html#rstudio"><i class="fa fa-check"></i><b>B.1.1</b> RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="B.2" data-path="ch-R.html"><a href="ch-R.html#learning-refr"><i class="fa fa-check"></i><b>B.2</b> Learning (ref:R)</a></li>
+<li class="chapter" data-level="B.3" data-path="ch-R.html"><a href="ch-R.html#appR:objects"><i class="fa fa-check"></i><b>B.3</b> Fundamental structures and objects</a>
+<ul>
+<li class="chapter" data-level="B.3.1" data-path="ch-R.html"><a href="ch-R.html#appR:assign"><i class="fa fa-check"></i><b>B.3.1</b> Objects and vectors</a></li>
+<li class="chapter" data-level="B.3.2" data-path="ch-R.html"><a href="ch-R.html#appR:operators"><i class="fa fa-check"></i><b>B.3.2</b> Operators</a></li>
+<li class="chapter" data-level="B.3.3" data-path="ch-R.html"><a href="ch-R.html#appR:lists"><i class="fa fa-check"></i><b>B.3.3</b> Lists</a></li>
+<li class="chapter" data-level="B.3.4" data-path="ch-R.html"><a href="ch-R.html#appR:matrix"><i class="fa fa-check"></i><b>B.3.4</b> Matrices</a></li>
+<li class="chapter" data-level="B.3.5" data-path="ch-R.html"><a href="ch-R.html#appR:dataframe"><i class="fa fa-check"></i><b>B.3.5</b> Dataframes and tibbles</a></li>
+<li class="chapter" data-level="B.3.6" data-path="ch-R.html"><a href="ch-R.html#appR:attr"><i class="fa fa-check"></i><b>B.3.6</b> Attributes and classes</a></li>
+<li class="chapter" data-level="B.3.7" data-path="ch-R.html"><a href="ch-R.html#appR:options"><i class="fa fa-check"></i><b>B.3.7</b> Options</a></li>
+<li class="chapter" data-level="B.3.8" data-path="ch-R.html"><a href="ch-R.html#sec:func"><i class="fa fa-check"></i><b>B.3.8</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="ch-R.html"><a href="ch-R.html#add-ons-packages"><i class="fa fa-check"></i><b>B.4</b> Add-ons: Packages</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="ch-R.html"><a href="ch-R.html#appR:packages"><i class="fa fa-check"></i><b>B.4.1</b> Introduction to packages</a></li>
+<li class="chapter" data-level="B.4.2" data-path="ch-R.html"><a href="ch-R.html#packages-and-name-conflicts"><i class="fa fa-check"></i><b>B.4.2</b> Packages and name conflicts</a></li>
+<li class="chapter" data-level="B.4.3" data-path="ch-R.html"><a href="ch-R.html#appR:tasks"><i class="fa fa-check"></i><b>B.4.3</b> CRAN task views</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="ch-R.html"><a href="ch-R.html#appR-further"><i class="fa fa-check"></i><b>B.5</b> Further resources</a></li>
+<li class="chapter" data-level="B.6" data-path="ch-R.html"><a href="ch-R.html#appR-exercises"><i class="fa fa-check"></i><b>B.6</b> Exercises</a></li>
+<li class="chapter" data-level="B.7" data-path="ch-R.html"><a href="ch-R.html#appR-online-exercises"><i class="fa fa-check"></i><b>B.7</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="ch-function.html"><a href="ch-function.html"><i class="fa fa-check"></i><b>C</b> Algorithmic thinking</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-intro"><i class="fa fa-check"></i><b>C.1</b> Introduction</a></li>
+<li class="chapter" data-level="C.2" data-path="ch-function.html"><a href="ch-function.html#simple-example"><i class="fa fa-check"></i><b>C.2</b> Simple example</a></li>
+<li class="chapter" data-level="C.3" data-path="ch-function.html"><a href="ch-function.html#sec:runaverage"><i class="fa fa-check"></i><b>C.3</b> Extended example: Law of large numbers</a></li>
+<li class="chapter" data-level="C.4" data-path="ch-function.html"><a href="ch-function.html#sec:tidyeval"><i class="fa fa-check"></i><b>C.4</b> Non-standard evaluation</a></li>
+<li class="chapter" data-level="C.5" data-path="ch-function.html"><a href="ch-function.html#sec:debugging"><i class="fa fa-check"></i><b>C.5</b> Debugging and defensive coding</a></li>
+<li class="chapter" data-level="C.6" data-path="ch-function.html"><a href="ch-function.html#sec:algorithmic-further"><i class="fa fa-check"></i><b>C.6</b> Further resources</a></li>
+<li class="chapter" data-level="C.7" data-path="ch-function.html"><a href="ch-function.html#algorithmic-exercises"><i class="fa fa-check"></i><b>C.7</b> Exercises</a></li>
+<li class="chapter" data-level="C.8" data-path="ch-function.html"><a href="ch-function.html#algorithmic-online-exercises"><i class="fa fa-check"></i><b>C.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="ch-reproduce.html"><a href="ch-reproduce.html"><i class="fa fa-check"></i><b>D</b> Reproducible analysis and workflow</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="ch-reproduce.html"><a href="ch-reproduce.html#scriptable-statistical-computing"><i class="fa fa-check"></i><b>D.1</b> Scriptable statistical computing</a></li>
+<li class="chapter" data-level="D.2" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-analysis-with-refr-markdown"><i class="fa fa-check"></i><b>D.2</b> Reproducible analysis with (ref:R) Markdown</a></li>
+<li class="chapter" data-level="D.3" data-path="ch-reproduce.html"><a href="ch-reproduce.html#projects-and-version-control"><i class="fa fa-check"></i><b>D.3</b> Projects and version control</a></li>
+<li class="chapter" data-level="D.4" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-further"><i class="fa fa-check"></i><b>D.4</b> Further resources</a></li>
+<li class="chapter" data-level="D.5" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-exercises"><i class="fa fa-check"></i><b>D.5</b> Exercises</a></li>
+<li class="chapter" data-level="D.6" data-path="ch-reproduce.html"><a href="ch-reproduce.html#reproducible-online-exercises"><i class="fa fa-check"></i><b>D.6</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="ch-regression.html"><a href="ch-regression.html"><i class="fa fa-check"></i><b>E</b> Regression modeling</a>
+<ul>
+<li class="chapter" data-level="E.1" data-path="ch-regression.html"><a href="ch-regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>E.1</b> Simple linear regression</a>
+<ul>
+<li class="chapter" data-level="E.1.1" data-path="ch-regression.html"><a href="ch-regression.html#motivating-example-modeling-usage-of-a-rail-trail"><i class="fa fa-check"></i><b>E.1.1</b> Motivating example: Modeling usage of a rail trail</a></li>
+<li class="chapter" data-level="E.1.2" data-path="ch-regression.html"><a href="ch-regression.html#model-visualization"><i class="fa fa-check"></i><b>E.1.2</b> Model visualization</a></li>
+<li class="chapter" data-level="E.1.3" data-path="ch-regression.html"><a href="ch-regression.html#measuring-the-strength-of-fit"><i class="fa fa-check"></i><b>E.1.3</b> Measuring the strength of fit</a></li>
+<li class="chapter" data-level="E.1.4" data-path="ch-regression.html"><a href="ch-regression.html#sec:anova"><i class="fa fa-check"></i><b>E.1.4</b> Categorical explanatory variables</a></li>
+</ul></li>
+<li class="chapter" data-level="E.2" data-path="ch-regression.html"><a href="ch-regression.html#multiple-regression"><i class="fa fa-check"></i><b>E.2</b> Multiple regression</a>
+<ul>
+<li class="chapter" data-level="E.2.1" data-path="ch-regression.html"><a href="ch-regression.html#sec:indicators"><i class="fa fa-check"></i><b>E.2.1</b> Parallel slopes: Multiple regression with a categorical variable</a></li>
+<li class="chapter" data-level="E.2.2" data-path="ch-regression.html"><a href="ch-regression.html#parallel-planes-multiple-regression-with-a-second-quantitative-variable"><i class="fa fa-check"></i><b>E.2.2</b> Parallel planes: Multiple regression with a second quantitative variable</a></li>
+<li class="chapter" data-level="E.2.3" data-path="ch-regression.html"><a href="ch-regression.html#sec:interaction"><i class="fa fa-check"></i><b>E.2.3</b> Non-parallel slopes: Multiple regression with interaction</a></li>
+<li class="chapter" data-level="E.2.4" data-path="ch-regression.html"><a href="ch-regression.html#modeling-non-linear-relationships"><i class="fa fa-check"></i><b>E.2.4</b> Modeling non-linear relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="E.3" data-path="ch-regression.html"><a href="ch-regression.html#inference-for-regression"><i class="fa fa-check"></i><b>E.3</b> Inference for regression</a></li>
+<li class="chapter" data-level="E.4" data-path="ch-regression.html"><a href="ch-regression.html#assumptions-underlying-regression"><i class="fa fa-check"></i><b>E.4</b> Assumptions underlying regression</a></li>
+<li class="chapter" data-level="E.5" data-path="ch-regression.html"><a href="ch-regression.html#sec:logistic"><i class="fa fa-check"></i><b>E.5</b> Logistic regression</a></li>
+<li class="chapter" data-level="E.6" data-path="ch-regression.html"><a href="ch-regression.html#regression-further"><i class="fa fa-check"></i><b>E.6</b> Further resources</a></li>
+<li class="chapter" data-level="E.7" data-path="ch-regression.html"><a href="ch-regression.html#regression-exercises"><i class="fa fa-check"></i><b>E.7</b> Exercises</a></li>
+<li class="chapter" data-level="E.8" data-path="ch-regression.html"><a href="ch-regression.html#regression-online-exercises"><i class="fa fa-check"></i><b>E.8</b> Supplementary exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="F" data-path="ch-db-setup.html"><a href="ch-db-setup.html"><i class="fa fa-check"></i><b>F</b> Setting up a database server</a>
+<ul>
+<li class="chapter" data-level="F.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sqlite"><i class="fa fa-check"></i><b>F.1</b> SQLite</a></li>
+<li class="chapter" data-level="F.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#mysql"><i class="fa fa-check"></i><b>F.2</b> MySQL</a>
+<ul>
+<li class="chapter" data-level="F.2.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#installation"><i class="fa fa-check"></i><b>F.2.1</b> Installation</a></li>
+<li class="chapter" data-level="F.2.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:mysql-access"><i class="fa fa-check"></i><b>F.2.2</b> Access</a></li>
+<li class="chapter" data-level="F.2.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#running-scripts-from-the-command-line"><i class="fa fa-check"></i><b>F.2.3</b> Running scripts from the command line</a></li>
+</ul></li>
+<li class="chapter" data-level="F.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#postgresql"><i class="fa fa-check"></i><b>F.3</b> PostgreSQL</a></li>
+<li class="chapter" data-level="F.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-sql"><i class="fa fa-check"></i><b>F.4</b> Connecting to SQL</a>
+<ul>
+<li class="chapter" data-level="F.4.1" data-path="ch-db-setup.html"><a href="ch-db-setup.html#the-command-line-client"><i class="fa fa-check"></i><b>F.4.1</b> The command line client</a></li>
+<li class="chapter" data-level="F.4.2" data-path="ch-db-setup.html"><a href="ch-db-setup.html#guis"><i class="fa fa-check"></i><b>F.4.2</b> GUIs</a></li>
+<li class="chapter" data-level="F.4.3" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:connect-r-sql"><i class="fa fa-check"></i><b>F.4.3</b> R and RStudio</a></li>
+<li class="chapter" data-level="F.4.4" data-path="ch-db-setup.html"><a href="ch-db-setup.html#sec:sqlitebaby"><i class="fa fa-check"></i><b>F.4.4</b> Load into SQLite database</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="index.html">Modern Data Science with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch:modeling" class="section level1" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Predictive modeling</h1>
+<p>
+
+
+
+
+
+
+
+
+
+Thus far, we have discussed two primary methods for investigating relationships among variables in our data: graphics and regression models. Graphics are often interpretable through intuitive inspection alone. They can be used to identify patterns and multivariate relationships in data—this is called <a href="https://en.wikipedia.org/w/index.php?search=exploratory%20data%20analysis"><em>exploratory data analysis</em></a>. Regression models can help us quantify the magnitude and direction of relationships among variables. Thus, both are useful for helping us understand the world and then tell a coherent story about it.
+
+</p>
+<p>However, graphics are not always the best way to explore or to present data. Graphics work well when there are two or three or even four variables involved. As we saw in Chapter <a href="ch-vizI.html#ch:vizI">2</a>, two variables can be represented with position on paper or on screen via a scatterplot. Ultimately, that information is processed by the eye’s retina. To represent a third variable, color or size can be used. In principle, more variables can be represented by other graphical aesthetics: shape, angle, color saturation, opacity, facets, etc., but doing so raises problems for human cognition—people simply struggle to integrate so many graphical modes into a coherent whole.</p>
+<p>
+While regression scales well into higher dimensions, it is a limited modeling framework. Rather, it is just one type of model, and the space of all possible models is infinite. In the next three chapters we will explore this space by considering a variety of models that exist outside of a regression framework. The idea that a general specification for a model could be tuned to a specific data set automatically has led to the field of <a href="https://en.wikipedia.org/w/index.php?search=machine%20learning"><em>machine learning</em></a>.</p>
+<p>
+
+The term machine learning was coined in the late 1950s to describe a set of inter-related algorithmic techniques for extracting information from data without human intervention.</p>
+<p>
+
+
+In the days before computers, the dominant modeling framework was regression, which is based heavily on the mathematical disciplines of linear algebra and calculus.
+Many of the important concepts in machine learning emerged from the development of regression, but models that are associated with machine learning tend to be valued more for their ability to make accurate predictions and scale to large data sets, as opposed to the mathematical simplicity, ease of interpretation of the parameters, and solid inferential setting that has made regression so widespread <span class="citation">Bradley Efron (2020)</span>.
+Nevertheless, regression and related statistical techniques from Chapter <a href="ch-foundations.html#ch:foundations">9</a> provide an important foundation for understanding machine learning.
+Appendix <a href="ch-regression.html#ch:regression">E</a> provides a brief overview of regression modeling.</p>
+<p>
+
+There are two main branches in machine learning: <a href="https://en.wikipedia.org/w/index.php?search=supervised%20learning"><em>supervised learning</em></a> (modeling a specific response variable as a function of some explanatory variables) and <a href="https://en.wikipedia.org/w/index.php?search=unsupervised%20learning"><em>unsupervised learning</em></a> (approaches to finding patterns or groupings in data where there is no clear response variable).</p>
+<p>
+
+
+
+In unsupervised learning, the outcome is unmeasured, and thus the task is often framed as a search for otherwise <a href="https://en.wikipedia.org/w/index.php?search=unmeasured%20features"><em>unmeasured features</em></a> of the cases.
+For instance, assembling DNA data into an evolutionary tree is a problem in unsupervised learning.
+No matter how much DNA data you have, you don’t have a direct measurement of where each organism fits on the “true” evolutionary tree.
+Instead, the problem is to create a representation that organizes the DNA data themselves.</p>
+<p>
+
+
+
+
+By contrast, in supervised learning—which includes linear and logistic regression—the data being studied already include measurements of outcome variables.
+For instance, in the <strong>NHANES</strong> data, there is already a variable indicating whether or not a person has diabetes.
+These outcome variables are often referred to as <a href="https://en.wikipedia.org/w/index.php?search=labels"><em>labels</em></a>.
+Building a model to explore or describe how other variables (often called <a href="https://en.wikipedia.org/w/index.php?search=features"><em>features</em></a> or predictors) are related to diabetes (weight? age? smoking?) is an exercise in supervised learning.</p>
+<p>We discuss metrics for model evaluation in this chapter, several types of supervised learning models in the next, and postpone discussion of unsupervised learning to Chapter <a href="ch-learningII.html#ch:learningII">12</a>.
+It is important to understand that we cannot provide an in-depth treatment of each technique in this book.
+Rather, our goal is to provide a high-level overview of machine learning techniques that you are likely to come across.
+By working through these chapters, you will understand the general goals of machine learning, the evaluation techniques that are typically employed, and the basic models that are most commonly used.
+For a deeper understanding of these techniques, we strongly recommend <span class="citation">G. James et al. (2013)</span> or <span class="citation">Hastie, Tibshirani, and Friedman (2009)</span>.</p>
+<div id="predictive-modeling" class="section level2" number="10.1">
+<h2><span class="header-section-number">10.1</span> Predictive modeling</h2>
+<p>
+
+
+The basic goal of predictive modeling is to find a <a href="https://en.wikipedia.org/w/index.php?search=function"><em>function</em></a> that accurately describes how different measured explanatory variables can be combined to make a prediction about a response variable.</p>
+<p>
+
+A function represents a relationship between inputs and an output (see Appendix <a href="ch-function.html#ch:function">C</a>). Outdoor temperature is a function of season: Season is the input; temperature is the output. Length of the day—i.e., how many hours of
+daylight—is a function of latitude and day of the year: Latitude and day of the year (e.g., March 22) are the inputs; day length is the output.
+Modeling a person’s risk of developing <a href="https://en.wikipedia.org/w/index.php?search=diabetes"><em>diabetes</em></a> could also be a function.
+We might suspect that age and obesity are likely informative, but how should they be combined?</p>
+<p>
+
+
+A bit of <strong>R</strong> syntax will help with defining functions: the <a href="https://en.wikipedia.org/w/index.php?search=tilde"><em>tilde</em></a>. The tilde is used to define what the output variable (or outcome, on the
+left-hand side) is and what the input variables (or predictors, on the right-hand side) are. You’ll see expressions like this:</p>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="ch-modeling.html#cb439-1" aria-hidden="true" tabindex="-1"></a>diabetic <span class="sc">~</span> age <span class="sc">+</span> sex <span class="sc">+</span> weight <span class="sc">+</span> height</span></code></pre></div>
+<p>Here, the variable <code>diabetic</code> is marked as the output, simply because it is on the left of the tilde (<code>~</code>). The variables <code>age</code>, <code>sex</code>, <code>weight</code>, and <code>height</code> are to be the inputs to the function. You may also see the form <code>diabetic ~ .</code> in certain places. The dot to the right of the tilde is a shortcut that means: “use all the available variables (except the output).” The object above has class <code>formula</code> in <strong>R</strong>.</p>
+<p>There are several different goals that might motivate constructing a function.</p>
+<p>
+</p>
+<ul>
+<li><p>Predict the output given an input. It is February, what will the temperature be? Or on June 15th in <a href="https://en.wikipedia.org/w/index.php?search=Northampton,%20MA"><em>Northampton, MA</em></a>, U.S.A. (latitude 42.3 deg N), how many hours of daylight will there be?</p></li>
+<li><p>Determine which variables are useful inputs. It is obvious from experience that temperature is a function of season. But in less familiar situations, e.g., predicting diabetes, the relevant inputs are uncertain or unknown.
+
+
+
+
+
+</p></li>
+<li><p>Generate hypotheses. For a scientist trying to figure out the causes of diabetes, it can be useful to construct a predictive model, then look to see what variables turn out to be related to the risk of developing this disorder. For instance, you might find that diet, age, and blood pressure are risk factors. Socioeconomic status is not a direct cause of diabetes, but it might be that there an association through factors related to the accessibility of health care. That “might be” is a hypothesis, and one that you probably would not have thought of before finding a function relating risk of diabetes to those inputs.</p></li>
+<li><p>Understand how a system works. For instance, a reasonable function relating hours of daylight to day-of-the-year and latitude reveals that the northern and southern hemisphere have reversed patterns: Long days in the southern hemisphere will be short days in the northern hemisphere.</p></li>
+</ul>
+<p>
+Depending on your motivation, the kind of model and the input variables may differ. In understanding how a system works, the variables you use should be related to the actual, causal mechanisms involved, e.g., the genetics of diabetes. For predicting an output, it hardly matters what the causal mechanisms are. Instead, all that’s required is that the inputs are known at a time
+<em>before</em> the prediction is to be made.</p>
+</div>
+<div id="simple-classification-models" class="section level2" number="10.2">
+<h2><span class="header-section-number">10.2</span> Simple classification models</h2>
+<p>
+</p>
+<p>
+
+
+
+
+
+Classifiers are an important complement to regression models in the fields of machine learning and predictive modeling.
+Whereas regression models have a quantitative response variable (and can thus often be visualized as a geometric surface), classification models have a categorical response (and are often visualized as a discrete surface, i.e., a tree).</p>
+<p>To reduce cognitive overhead, we will restrict our attention in this chapter to classification models based on logistic regression.
+In the next chapter, we will introduce other types of <a href="https://en.wikipedia.org/w/index.php?search=classifiers"><em>classifiers</em></a>.</p>
+<p>
+
+
+
+
+
+A <a href="https://en.wikipedia.org/w/index.php?search=logistic%20regression"><em>logistic regression</em></a> model (see Appendix <a href="ch-regression.html#ch:regression">E</a>) can take a set of explanatory variables (or features) and convert them into a predicted probability.
+In such a model, the analyst specifies the form of the relationship and what variables are included.
+If <span class="math inline">\(\mathbf{X}\)</span> is the <a href="https://en.wikipedia.org/w/index.php?search=matrix"><em>matrix</em></a> of our <span class="math inline">\(p\)</span> explanatory variables, we can think of this as a function <span class="math inline">\(f: \mathbb{R}^p \rightarrow (0,1)\)</span> that returns a probability <span class="math inline">\(\pi \in (0,1)\)</span>.
+However, since the actual values of the response variable <span class="math inline">\(y\)</span> are binary (i.e., in <span class="math inline">\(\{0,1\}\)</span>), we can implement rules <span class="math inline">\(g: (0,1) \rightarrow \{0,1\}\)</span> that map values of <span class="math inline">\(p\)</span> to either 0 or 1.
+Thus, we can use a logistic regression model as the core of a function <span class="math inline">\(h: \mathbb{R}^p \rightarrow \{0,1\}\)</span>, such that <span class="math inline">\(h(\mathbf{X}) = g(f(\mathbf{X}))\)</span> is always either <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>.
+Such models are known as <a href="https://en.wikipedia.org/w/index.php?search=classifiers"><em>classifiers</em></a>.
+More generally, whereas regression models for quantitative response variables return real numbers, models for categorical response variables are called classifiers.</p>
+<div id="example-high-earners-in-the-1994-united-states-census" class="section level3" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span> Example: High-earners in the 1994 United States Census</h3>
+<p>
+
+
+
+A marketing analyst might be interested in finding factors that can be used
+to predict whether a potential customer is a high-earner.
+The 1994 <a href="https://en.wikipedia.org/w/index.php?search=United%20States%20Census"><em>United States Census</em></a> provides information that can inform such a model,
+with records from 32,561 adults that include a binary variable indicating whether each person makes greater or less than $50,000 (nearly $90,000 in 2020 after accounting for inflation).
+We will use the indicator of high income as our response variable.</p>
+<p>
+
+</p>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="ch-modeling.html#cb440-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb440-2"><a href="ch-modeling.html#cb440-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdsr)</span>
+<span id="cb440-3"><a href="ch-modeling.html#cb440-3" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span></span>
+<span id="cb440-4"><a href="ch-modeling.html#cb440-4" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data&quot;</span></span>
+<span id="cb440-5"><a href="ch-modeling.html#cb440-5" aria-hidden="true" tabindex="-1"></a>census <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb440-6"><a href="ch-modeling.html#cb440-6" aria-hidden="true" tabindex="-1"></a>  url,</span>
+<span id="cb440-7"><a href="ch-modeling.html#cb440-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(</span>
+<span id="cb440-8"><a href="ch-modeling.html#cb440-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;age&quot;</span>, <span class="st">&quot;workclass&quot;</span>, <span class="st">&quot;fnlwgt&quot;</span>, <span class="st">&quot;education&quot;</span>, </span>
+<span id="cb440-9"><a href="ch-modeling.html#cb440-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;education_1&quot;</span>, <span class="st">&quot;marital_status&quot;</span>, <span class="st">&quot;occupation&quot;</span>, <span class="st">&quot;relationship&quot;</span>, </span>
+<span id="cb440-10"><a href="ch-modeling.html#cb440-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;race&quot;</span>, <span class="st">&quot;sex&quot;</span>, <span class="st">&quot;capital_gain&quot;</span>, <span class="st">&quot;capital_loss&quot;</span>, <span class="st">&quot;hours_per_week&quot;</span>, </span>
+<span id="cb440-11"><a href="ch-modeling.html#cb440-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;native_country&quot;</span>, <span class="st">&quot;income&quot;</span></span>
+<span id="cb440-12"><a href="ch-modeling.html#cb440-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb440-13"><a href="ch-modeling.html#cb440-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb440-14"><a href="ch-modeling.html#cb440-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">income =</span> <span class="fu">factor</span>(income))</span>
+<span id="cb440-15"><a href="ch-modeling.html#cb440-15" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(census)</span></code></pre></div>
+<pre><code>Rows: 32,561
+Columns: 15
+$ age            &lt;dbl&gt; 39, 50, 38, 53, 28, 37, 49, 52, 31, 42, 37, 30, 23,…
+$ workclass      &lt;chr&gt; &quot;State-gov&quot;, &quot;Self-emp-not-inc&quot;, &quot;Private&quot;, &quot;Privat…
+$ fnlwgt         &lt;dbl&gt; 77516, 83311, 215646, 234721, 338409, 284582, 16018…
+$ education      &lt;chr&gt; &quot;Bachelors&quot;, &quot;Bachelors&quot;, &quot;HS-grad&quot;, &quot;11th&quot;, &quot;Bache…
+$ education_1    &lt;dbl&gt; 13, 13, 9, 7, 13, 14, 5, 9, 14, 13, 10, 13, 13, 12,…
+$ marital_status &lt;chr&gt; &quot;Never-married&quot;, &quot;Married-civ-spouse&quot;, &quot;Divorced&quot;, …
+$ occupation     &lt;chr&gt; &quot;Adm-clerical&quot;, &quot;Exec-managerial&quot;, &quot;Handlers-cleane…
+$ relationship   &lt;chr&gt; &quot;Not-in-family&quot;, &quot;Husband&quot;, &quot;Not-in-family&quot;, &quot;Husba…
+$ race           &lt;chr&gt; &quot;White&quot;, &quot;White&quot;, &quot;White&quot;, &quot;Black&quot;, &quot;Black&quot;, &quot;White…
+$ sex            &lt;chr&gt; &quot;Male&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;Female&quot;,…
+$ capital_gain   &lt;dbl&gt; 2174, 0, 0, 0, 0, 0, 0, 0, 14084, 5178, 0, 0, 0, 0,…
+$ capital_loss   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ hours_per_week &lt;dbl&gt; 40, 13, 40, 40, 40, 40, 16, 45, 50, 40, 80, 40, 30,…
+$ native_country &lt;chr&gt; &quot;United-States&quot;, &quot;United-States&quot;, &quot;United-States&quot;, …
+$ income         &lt;fct&gt; &lt;=50K, &lt;=50K, &lt;=50K, &lt;=50K, &lt;=50K, &lt;=50K, &lt;=50K, &gt;5…</code></pre>
+<p>
+
+
+
+
+
+Throughout this chapter, we will use the <strong>tidymodels</strong> package to streamline our computations.
+The <strong>tidymodels</strong> package is really a collection of packages, similar to the <strong>tidyverse</strong>. The workhorse package for model fitting is called <strong>parsnip</strong>, while the model evaluation metrics are provided by the <strong>yardstick</strong> package.</p>
+<p>For reasons that we will discuss later (in Section <a href="ch-modeling.html#sec:cv">10.3.2</a>), we will first separate our data set into two pieces by sampling the rows at random.
+A sample of 80% of the rows will become the training data set, with the remaining 20% set aside as the testing (or “hold-out”) data set.
+The <code>initial_split()</code> function divides the data, while the <code>training()</code> and <code>testing()</code> functions recover the two smaller data sets.</p>
+<p>
+</p>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="ch-modeling.html#cb442-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb442-2"><a href="ch-modeling.html#cb442-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">364</span>)</span>
+<span id="cb442-3"><a href="ch-modeling.html#cb442-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(census)</span>
+<span id="cb442-4"><a href="ch-modeling.html#cb442-4" aria-hidden="true" tabindex="-1"></a>census_parts <span class="ot">&lt;-</span> census <span class="sc">%&gt;%</span></span>
+<span id="cb442-5"><a href="ch-modeling.html#cb442-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">initial_split</span>(<span class="at">prop =</span> <span class="fl">0.8</span>)</span>
+<span id="cb442-6"><a href="ch-modeling.html#cb442-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb442-7"><a href="ch-modeling.html#cb442-7" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> census_parts <span class="sc">%&gt;%</span></span>
+<span id="cb442-8"><a href="ch-modeling.html#cb442-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">training</span>()</span>
+<span id="cb442-9"><a href="ch-modeling.html#cb442-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb442-10"><a href="ch-modeling.html#cb442-10" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> census_parts <span class="sc">%&gt;%</span></span>
+<span id="cb442-11"><a href="ch-modeling.html#cb442-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">testing</span>()</span>
+<span id="cb442-12"><a href="ch-modeling.html#cb442-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb442-13"><a href="ch-modeling.html#cb442-13" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(train, test) <span class="sc">%&gt;%</span></span>
+<span id="cb442-14"><a href="ch-modeling.html#cb442-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_int</span>(nrow)</span></code></pre></div>
+<pre><code>[1] 26048  6513</code></pre>
+<p>We first compute the observed percentage of high earners in the training set as <span class="math inline">\(\bar{\pi}\)</span>.</p>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="ch-modeling.html#cb444-1" aria-hidden="true" tabindex="-1"></a>pi_bar <span class="ot">&lt;-</span> train <span class="sc">%&gt;%</span></span>
+<span id="cb444-2"><a href="ch-modeling.html#cb444-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(income) <span class="sc">%&gt;%</span></span>
+<span id="cb444-3"><a href="ch-modeling.html#cb444-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb444-4"><a href="ch-modeling.html#cb444-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(income <span class="sc">==</span> <span class="st">&quot;&gt;50K&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb444-5"><a href="ch-modeling.html#cb444-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(pct)</span>
+<span id="cb444-6"><a href="ch-modeling.html#cb444-6" aria-hidden="true" tabindex="-1"></a>pi_bar</span></code></pre></div>
+<pre><code>[1] 0.241</code></pre>
+<p>Note that only about 24% of those in the sample make more than $50k.</p>
+<div id="the-null-model" class="section level4" number="10.2.1.1">
+<h4><span class="header-section-number">10.2.1.1</span> The null model</h4>
+<p>Since we know <span class="math inline">\(\bar{\pi}\)</span>, it follows that the <a href="https://en.wikipedia.org/w/index.php?search=accuracy"><em>accuracy</em></a> of the <a href="https://en.wikipedia.org/w/index.php?search=null%20model"><em>null model</em></a> is <span class="math inline">\(1 - \bar{\pi}\)</span>, which is about 76%, since we can get that many right by just predicting that everyone makes less than $50k.</p>
+<p></p>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="ch-modeling.html#cb446-1" aria-hidden="true" tabindex="-1"></a>train <span class="sc">%&gt;%</span></span>
+<span id="cb446-2"><a href="ch-modeling.html#cb446-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(income) <span class="sc">%&gt;%</span></span>
+<span id="cb446-3"><a href="ch-modeling.html#cb446-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n))</span></code></pre></div>
+<pre><code># A tibble: 2 × 3
+  income     n   pct
+  &lt;fct&gt;  &lt;int&gt; &lt;dbl&gt;
+1 &lt;=50K  19763 0.759
+2 &gt;50K    6285 0.241</code></pre>
+<p>While we can compute the accuracy of the null model with simple arithmetic, when we compare models later, it will be useful to have our null model stored as a model object. We can create such an object using <strong>tidymodels</strong> by specifying a logistic regression model with no explanatory variables. The computational engine is <code>glm</code> because <code>glm()</code> is the name of the <strong>R</strong> function that actually fits <code>vocab("generalized linear models")</code> (of which logistic regression is a special case).</p>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="ch-modeling.html#cb448-1" aria-hidden="true" tabindex="-1"></a>mod_null <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>(<span class="at">mode =</span> <span class="st">&quot;classification&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb448-2"><a href="ch-modeling.html#cb448-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb448-3"><a href="ch-modeling.html#cb448-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(income <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> train)</span></code></pre></div>
+<p>After using the <code>predict()</code> function to compute the predicted values, the <strong>yardstick</strong> package will help us compute the accuracy.</p>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="ch-modeling.html#cb449-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(yardstick)</span>
+<span id="cb449-2"><a href="ch-modeling.html#cb449-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> train <span class="sc">%&gt;%</span></span>
+<span id="cb449-3"><a href="ch-modeling.html#cb449-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(income, capital_gain) <span class="sc">%&gt;%</span></span>
+<span id="cb449-4"><a href="ch-modeling.html#cb449-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
+<span id="cb449-5"><a href="ch-modeling.html#cb449-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">predict</span>(mod_null, <span class="at">new_data =</span> train, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb449-6"><a href="ch-modeling.html#cb449-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb449-7"><a href="ch-modeling.html#cb449-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">income_null =</span> .pred_class)</span>
+<span id="cb449-8"><a href="ch-modeling.html#cb449-8" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, income, income_null)</span></code></pre></div>
+<pre><code># A tibble: 1 × 3
+  .metric  .estimator .estimate
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy binary         0.759</code></pre>
+<p>
+
+</p>
+<div class="rmdtip">
+<p>Always benchmark your predictive models against a reasonable null model.</p>
+</div>
+<p>
+
+
+Another important tool in verifying a model’s accuracy is called the <a href="https://en.wikipedia.org/w/index.php?search=confusion%20matrix"><em>confusion matrix</em></a> (really).
+Simply put, this is a two-way table that counts how often our model made the correct prediction.
+Note that there are two different types of mistakes that our model can make: predicting a high income when the income was in fact low (a <a href="https://en.wikipedia.org/w/index.php?search=Type%20I%20error"><em>Type I error</em></a>), and predicting a low income when the income was in fact high (a <a href="https://en.wikipedia.org/w/index.php?search=Type%20II%20error"><em>Type II error</em></a>).</p>
+<p></p>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="ch-modeling.html#cb451-1" aria-hidden="true" tabindex="-1"></a>confusion_null <span class="ot">&lt;-</span> pred <span class="sc">%&gt;%</span></span>
+<span id="cb451-2"><a href="ch-modeling.html#cb451-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> income, <span class="at">estimate =</span> income_null)</span>
+<span id="cb451-3"><a href="ch-modeling.html#cb451-3" aria-hidden="true" tabindex="-1"></a>confusion_null</span></code></pre></div>
+<pre><code>          Truth
+Prediction &lt;=50K  &gt;50K
+     &lt;=50K 19763  6285
+     &gt;50K      0     0</code></pre>
+<p>
+
+Note again that the null model predicts that <em>everyone</em> is a low earner, so it makes many Type II errors (false negatives) but no Type I errors (false positives).</p>
+</div>
+<div id="logistic-regression" class="section level4" number="10.2.1.2">
+<h4><span class="header-section-number">10.2.1.2</span> Logistic regression</h4>
+<p>Beating the null model shouldn’t be hard. Our first attempt will be to employ a simple logistic regression model. First, we’ll fit the model using only one explanatory variable: <code>capital_gain</code>. This variable measures the amount of money that each person paid in <a href="https://en.wikipedia.org/w/index.php?search=capital%20gains"><em>capital gains</em></a> tax. Since capital gains are accrued on assets (e.g., stocks, houses), it stands to reason that people who pay more in capital gains are likely to have more wealth and, similarly, are likely to have high incomes.
+In addition, capital gains is directly related since it is a component of total income.</p>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="ch-modeling.html#cb453-1" aria-hidden="true" tabindex="-1"></a>mod_log_1 <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>(<span class="at">mode =</span> <span class="st">&quot;classification&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb453-2"><a href="ch-modeling.html#cb453-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb453-3"><a href="ch-modeling.html#cb453-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(income <span class="sc">~</span> capital_gain, <span class="at">data =</span> train)</span></code></pre></div>
+<p>Figure <a href="ch-modeling.html#fig:log-cap-gains">10.1</a> illustrates how the predicted probability of being a high earner varies in our simple logistic regression model with respect to the amount of capital gains tax paid.</p>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="ch-modeling.html#cb454-1" aria-hidden="true" tabindex="-1"></a>train_plus <span class="ot">&lt;-</span> train <span class="sc">%&gt;%</span></span>
+<span id="cb454-2"><a href="ch-modeling.html#cb454-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">high_earner =</span> <span class="fu">as.integer</span>(income <span class="sc">==</span> <span class="st">&quot;&gt;50K&quot;</span>))</span>
+<span id="cb454-3"><a href="ch-modeling.html#cb454-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb454-4"><a href="ch-modeling.html#cb454-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(train_plus, <span class="fu">aes</span>(<span class="at">x =</span> capital_gain, <span class="at">y =</span> high_earner)) <span class="sc">+</span> </span>
+<span id="cb454-5"><a href="ch-modeling.html#cb454-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>(</span>
+<span id="cb454-6"><a href="ch-modeling.html#cb454-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="dv">0</span>, <span class="at">height =</span> <span class="fl">0.05</span>), </span>
+<span id="cb454-7"><a href="ch-modeling.html#cb454-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span></span>
+<span id="cb454-8"><a href="ch-modeling.html#cb454-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb454-9"><a href="ch-modeling.html#cb454-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(</span>
+<span id="cb454-10"><a href="ch-modeling.html#cb454-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>), </span>
+<span id="cb454-11"><a href="ch-modeling.html#cb454-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">se =</span> <span class="cn">FALSE</span></span>
+<span id="cb454-12"><a href="ch-modeling.html#cb454-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb454-13"><a href="ch-modeling.html#cb454-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>), <span class="at">linetype =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb454-14"><a href="ch-modeling.html#cb454-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>dollar)</span></code></pre></div>
+<div class="figure"><span id="fig:log-cap-gains"></span>
+<img src="10-modeling_files/figure-html/log-cap-gains-1.png" alt="Simple logistic regression model for high-earner status based on capital gains tax paid. " width="100%" />
+<p class="caption">
+Figure 10.1: Simple logistic regression model for high-earner status based on capital gains tax paid.
+</p>
+</div>
+<p>How accurate is this model?</p>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="ch-modeling.html#cb455-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> pred <span class="sc">%&gt;%</span></span>
+<span id="cb455-2"><a href="ch-modeling.html#cb455-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
+<span id="cb455-3"><a href="ch-modeling.html#cb455-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">predict</span>(mod_log_1, <span class="at">new_data =</span> train, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb455-4"><a href="ch-modeling.html#cb455-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb455-5"><a href="ch-modeling.html#cb455-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">income_log_1 =</span> .pred_class)</span>
+<span id="cb455-6"><a href="ch-modeling.html#cb455-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb455-7"><a href="ch-modeling.html#cb455-7" aria-hidden="true" tabindex="-1"></a>confusion_log_1 <span class="ot">&lt;-</span> pred <span class="sc">%&gt;%</span></span>
+<span id="cb455-8"><a href="ch-modeling.html#cb455-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> income, <span class="at">estimate =</span> income_log_1)</span>
+<span id="cb455-9"><a href="ch-modeling.html#cb455-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb455-10"><a href="ch-modeling.html#cb455-10" aria-hidden="true" tabindex="-1"></a>confusion_log_1</span></code></pre></div>
+<pre><code>          Truth
+Prediction &lt;=50K  &gt;50K
+     &lt;=50K 19560  5015
+     &gt;50K    203  1270</code></pre>
+<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="ch-modeling.html#cb457-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, income, income_log_1)</span></code></pre></div>
+<pre><code># A tibble: 1 × 3
+  .metric  .estimator .estimate
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy binary         0.800</code></pre>
+<p>In Figure <a href="ch-modeling.html#fig:autoplot-null-confusion">10.2</a>, we graphically compare the confusion matrices of the null model and the simple logistic regression model. The true positives of the latter model are an important improvement.</p>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="ch-modeling.html#cb459-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(confusion_null) <span class="sc">+</span></span>
+<span id="cb459-2"><a href="ch-modeling.html#cb459-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(</span>
+<span id="cb459-3"><a href="ch-modeling.html#cb459-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb459-4"><a href="ch-modeling.html#cb459-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> (xmax <span class="sc">+</span> xmin) <span class="sc">/</span> <span class="dv">2</span>, </span>
+<span id="cb459-5"><a href="ch-modeling.html#cb459-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> (ymax <span class="sc">+</span> ymin) <span class="sc">/</span> <span class="dv">2</span>, </span>
+<span id="cb459-6"><a href="ch-modeling.html#cb459-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;TN&quot;</span>, <span class="st">&quot;FP&quot;</span>, <span class="st">&quot;FN&quot;</span>, <span class="st">&quot;TP&quot;</span>)</span>
+<span id="cb459-7"><a href="ch-modeling.html#cb459-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb459-8"><a href="ch-modeling.html#cb459-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb459-9"><a href="ch-modeling.html#cb459-9" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(confusion_log_1) <span class="sc">+</span></span>
+<span id="cb459-10"><a href="ch-modeling.html#cb459-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(</span>
+<span id="cb459-11"><a href="ch-modeling.html#cb459-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb459-12"><a href="ch-modeling.html#cb459-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> (xmax <span class="sc">+</span> xmin) <span class="sc">/</span> <span class="dv">2</span>, </span>
+<span id="cb459-13"><a href="ch-modeling.html#cb459-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> (ymax <span class="sc">+</span> ymin) <span class="sc">/</span> <span class="dv">2</span>, </span>
+<span id="cb459-14"><a href="ch-modeling.html#cb459-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;TN&quot;</span>, <span class="st">&quot;FP&quot;</span>, <span class="st">&quot;FN&quot;</span>, <span class="st">&quot;TP&quot;</span>)</span>
+<span id="cb459-15"><a href="ch-modeling.html#cb459-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb459-16"><a href="ch-modeling.html#cb459-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="figure"><span id="fig:autoplot-null-confusion"></span>
+<img src="10-modeling_files/figure-html/autoplot-null-confusion-1.png" alt="Visual summary of the predictive accuracy of the null model (left) versus the logistic regression model with one explanatory variable (right). The null model never predicts a positive." width="50%" /><img src="10-modeling_files/figure-html/autoplot-null-confusion-2.png" alt="Visual summary of the predictive accuracy of the null model (left) versus the logistic regression model with one explanatory variable (right). The null model never predicts a positive." width="50%" />
+<p class="caption">
+Figure 10.2: Visual summary of the predictive accuracy of the null model (left) versus the logistic regression model with one explanatory variable (right). The null model never predicts a positive.
+</p>
+</div>
+<p>Using <code>capital_gains</code> as a single explanatory variable improved the model’s accuracy on the training data to 80%, a notable increase over the null model’s accuracy of 75.9%.</p>
+<p>We can easily interpret the rule generated by the logistic regression model here, since there is only a single predictor.</p>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="ch-modeling.html#cb460-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(mod_log_1)</span></code></pre></div>
+<pre><code># A tibble: 2 × 5
+  term          estimate  std.error statistic   p.value
+  &lt;chr&gt;            &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)  -1.37     0.0159         -86.1 0        
+2 capital_gain  0.000335 0.00000962      34.8 3.57e-265</code></pre>
+<p>Recall that logistic regression uses the <a href="https://en.wikipedia.org/w/index.php?search=logit"><em>logit</em></a> function to map predicted probabilities to the whole real line.
+We can invert this function to find the value of capital gains that would yield
+a predicted value of 0.5.</p>
+<p><span class="math display">\[
+  logit(\hat{\pi}) = \log{ \left( \frac{\hat{\pi}}{1-\hat{\pi}} \right) } = \beta_0 + \beta_1 \cdot capital\_gain
+\]</span></p>
+<p>We can invert this function to find the value of capital gains that would yield a predicted value of 0.5 by plugging in <span class="math inline">\(\hat{\pi} = 0.5\)</span>, <span class="math inline">\(\beta_0=\)</span> -1.373, <span class="math inline">\(\beta_1=\)</span> 0.000335, and solving for <span class="math inline">\(capital\_gain\)</span>.
+The answer in this case is <span class="math inline">\(-\beta_0 / \beta_1\)</span>, or $4,102.</p>
+<p>We can confirm that when we inspect the predicted probabilities, the classification shifts from <code>&lt;=50K</code> to <code>&gt;50K</code> as the value of <code>captial_gain</code> jumps from $4,101 to $4,386.
+For these observations, the predicted probabilities jump from 0.494 to 0.517.</p>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="ch-modeling.html#cb462-1" aria-hidden="true" tabindex="-1"></a>income_probs <span class="ot">&lt;-</span> pred <span class="sc">%&gt;%</span></span>
+<span id="cb462-2"><a href="ch-modeling.html#cb462-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(income, income_log_1, capital_gain) <span class="sc">%&gt;%</span></span>
+<span id="cb462-3"><a href="ch-modeling.html#cb462-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
+<span id="cb462-4"><a href="ch-modeling.html#cb462-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">predict</span>(mod_log_1, <span class="at">new_data =</span> train, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb462-5"><a href="ch-modeling.html#cb462-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb462-6"><a href="ch-modeling.html#cb462-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb462-7"><a href="ch-modeling.html#cb462-7" aria-hidden="true" tabindex="-1"></a>income_probs <span class="sc">%&gt;%</span></span>
+<span id="cb462-8"><a href="ch-modeling.html#cb462-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">rich_prob =</span> <span class="st">`</span><span class="at">.pred_&gt;50K</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb462-9"><a href="ch-modeling.html#cb462-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb462-10"><a href="ch-modeling.html#cb462-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">abs</span>(rich_prob <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">&lt;</span> <span class="fl">0.02</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb462-11"><a href="ch-modeling.html#cb462-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(rich_prob))</span></code></pre></div>
+<pre><code># A tibble: 5 × 5
+  income income_log_1 capital_gain `.pred_&lt;=50K` rich_prob
+  &lt;fct&gt;  &lt;fct&gt;               &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;
+1 &lt;=50K  &lt;=50K                4101         0.500     0.500
+2 &lt;=50K  &lt;=50K                4064         0.503     0.497
+3 &lt;=50K  &lt;=50K                3942         0.513     0.487
+4 &lt;=50K  &lt;=50K                3908         0.516     0.484
+5 &lt;=50K  &lt;=50K                3887         0.518     0.482</code></pre>
+<p>Thus, the model says to call a taxpayer high income if their capital gains are above $4,102.</p>
+<p>But why should we restrict our model to one explanatory variable? Let’s fit a more sophisticated model that incorporates the other explanatory variables.</p>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="ch-modeling.html#cb464-1" aria-hidden="true" tabindex="-1"></a>mod_log_all <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>(<span class="at">mode =</span> <span class="st">&quot;classification&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb464-2"><a href="ch-modeling.html#cb464-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb464-3"><a href="ch-modeling.html#cb464-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(</span>
+<span id="cb464-4"><a href="ch-modeling.html#cb464-4" aria-hidden="true" tabindex="-1"></a>    income <span class="sc">~</span> age <span class="sc">+</span> workclass <span class="sc">+</span> education <span class="sc">+</span> marital_status <span class="sc">+</span> </span>
+<span id="cb464-5"><a href="ch-modeling.html#cb464-5" aria-hidden="true" tabindex="-1"></a>      occupation <span class="sc">+</span> relationship <span class="sc">+</span> race <span class="sc">+</span> sex <span class="sc">+</span> </span>
+<span id="cb464-6"><a href="ch-modeling.html#cb464-6" aria-hidden="true" tabindex="-1"></a>      capital_gain <span class="sc">+</span> capital_loss <span class="sc">+</span> hours_per_week, </span>
+<span id="cb464-7"><a href="ch-modeling.html#cb464-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> train</span>
+<span id="cb464-8"><a href="ch-modeling.html#cb464-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb464-9"><a href="ch-modeling.html#cb464-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb464-10"><a href="ch-modeling.html#cb464-10" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> pred <span class="sc">%&gt;%</span></span>
+<span id="cb464-11"><a href="ch-modeling.html#cb464-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
+<span id="cb464-12"><a href="ch-modeling.html#cb464-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">predict</span>(mod_log_all, <span class="at">new_data =</span> train, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb464-13"><a href="ch-modeling.html#cb464-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb464-14"><a href="ch-modeling.html#cb464-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">income_log_all =</span> .pred_class)</span>
+<span id="cb464-15"><a href="ch-modeling.html#cb464-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb464-16"><a href="ch-modeling.html#cb464-16" aria-hidden="true" tabindex="-1"></a>pred <span class="sc">%&gt;%</span></span>
+<span id="cb464-17"><a href="ch-modeling.html#cb464-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> income, <span class="at">estimate =</span> income_log_all)</span></code></pre></div>
+<pre><code>          Truth
+Prediction &lt;=50K  &gt;50K
+     &lt;=50K 18395  2493
+     &gt;50K   1368  3792</code></pre>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="ch-modeling.html#cb466-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(pred, income, income_log_all)</span></code></pre></div>
+<pre><code># A tibble: 1 × 3
+  .metric  .estimator .estimate
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy binary         0.852</code></pre>
+<p>Not surprisingly, by including more explanatory variables, we have improved the predictive accuracy on the training set.
+Unfortunately, predictive modeling is not quite this easy.
+In the next section, we’ll see where our naïve approach can fail.</p>
+</div>
+</div>
+</div>
+<div id="evaluating-models" class="section level2" number="10.3">
+<h2><span class="header-section-number">10.3</span> Evaluating models</h2>
+<p>
+
+How do you know if your model is a good one? In this section, we outline some of the key concepts in model evaluation—a critical step in predictive analytics.</p>
+<div id="sec:bias-variance" class="section level3" number="10.3.1">
+<h3><span class="header-section-number">10.3.1</span> Bias-variance trade-off</h3>
+<p>
+
+</p>
+<p>We want to have models that minimize both <a href="https://en.wikipedia.org/w/index.php?search=bias"><em>bias</em></a> and <a href="https://en.wikipedia.org/w/index.php?search=variance"><em>variance</em></a>, but to some extent these are mutually exclusive goals. A complicated model will have less bias, but will in general have higher variance. A simple model can reduce variance but at the cost of increased bias. The optimal balance between bias and variance depends on the purpose for which the model is constructed (e.g., prediction vs. description of causal relationships) and the system being modeled. One helpful class of techniques—called <a href="https://en.wikipedia.org/w/index.php?search=regularization"><em>regularization</em></a>—provides model architectures that can balance bias and variance in a graduated way. Examples of regularization techniques are <a href="https://en.wikipedia.org/w/index.php?search=ridge%20regression"><em>ridge regression</em></a> and the <a href="https://en.wikipedia.org/w/index.php?search=lasso"><em>lasso</em></a> (see Section <a href="ch-learningI.html#sec:regularization">11.5</a>).
+
+
+
+
+</p>
+</div>
+<div id="sec:cv" class="section level3" number="10.3.2">
+<h3><span class="header-section-number">10.3.2</span> Cross-validation</h3>
+<p>
+
+
+
+
+A vexing and seductive trap that modelers sometimes fall into is <a href="https://en.wikipedia.org/w/index.php?search=overfitting"><em>overfitting</em></a>.
+Every model discussed in this chapter is <a href="https://en.wikipedia.org/w/index.php?search=fit"><em>fit</em></a> to a set of data.
+That is, given a set of <a href="https://en.wikipedia.org/w/index.php?search=training"><em>training</em></a> data and the specification for the type of model, each algorithm will determine the optimal set of parameters for that model and those data.
+However, if the model works well on those training data, but not so well on a set of <a href="https://en.wikipedia.org/w/index.php?search=testing"><em>testing</em></a> data—that the model has never seen—then the model is said to be <a href="https://en.wikipedia.org/w/index.php?search=overfitting"><em>overfitting</em></a>.
+Perhaps the most elementary mistake in predictive analytics is to overfit your model to the training data, only to see it later perform miserably on the testing set.</p>
+<p>In predictive analytics, data sets are often divided into two sets:</p>
+<ul>
+<li><strong>Training</strong>: The set of data on which you build your model</li>
+<li><strong>Testing</strong>: After your model is built, this is the set used to test it by evaluating it against data that it has not previously seen.</li>
+</ul>
+<p>
+
+
+</p>
+<p>For example, in this chapter we set aside 80% of the observations to use as a training set, but held back another 20% for testing.
+The 80/20 scheme we have employed in this chapter is among the simplest possible schemes, but there are other possibilities.
+Perhaps a 90/10 or a 75/25 split would be a better option.
+The goal is to have as much data in the training set to allow the model to perform well while having sufficient numbers in the test set to properly assess it.</p>
+<p>An alternative approach to combat this problem is <a href="https://en.wikipedia.org/w/index.php?search=cross-validation"><em>cross-validation</em></a>.
+To perform a 2-fold cross-validation:</p>
+<ul>
+<li>Randomly separate your data (by rows) into two data sets with the same number of observations. Let’s call them <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>.</li>
+<li>Build your model on the data in <span class="math inline">\(X_1\)</span>, and then run the data in <span class="math inline">\(X_2\)</span> through your model. How well does it perform? Just because your model performs well on <span class="math inline">\(X_1\)</span> (this is known as <a href="https://en.wikipedia.org/w/index.php?search=in-sample"><em>in-sample</em></a> testing) does not imply that it will perform as well on the data in <span class="math inline">\(X_2\)</span> (<a href="https://en.wikipedia.org/w/index.php?search=out-of-sample"><em>out-of-sample</em></a> testing).</li>
+<li>Now reverse the roles of <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, so that the data in <span class="math inline">\(X_2\)</span> is used for training, and the data in <span class="math inline">\(X_1\)</span> is used for testing.</li>
+<li>If your first model is overfit, then it will likely not perform as well on the second set of data.</li>
+</ul>
+<p>
+
+</p>
+<p>More complex schemes for cross-validating are possible. <span class="math inline">\(k\)</span>-fold cross-validation is the generalization of 2-fold cross validation, in which the data are separated into <span class="math inline">\(k\)</span> equal-sized partitions, and each of the <span class="math inline">\(k\)</span> partitions is chosen to be the testing set once, with the other <span class="math inline">\(k-1\)</span> partitions used for training.</p>
+</div>
+<div id="confusion-matrices-and-roc-curves" class="section level3" number="10.3.3">
+<h3><span class="header-section-number">10.3.3</span> Confusion matrices and ROC curves</h3>
+<p>
+
+</p>
+<p>For classifiers, we have already seen the confusion matrix, which is a common way to assess the effectiveness of a classifier.</p>
+<p>
+</p>
+<p>Recall that each of the classifiers we have discussed in this chapter are capable of producing not only a binary class label, but also the predicted probability of belonging to either class.
+Rounding the probabilities in the usual way (using 0.5 as a threshold) may not be a good idea, since the average probability might not be anywhere near 0.5, and thus we could have far too many predictions in one class.</p>
+<p>For example, in the <code>census</code> data, only about 24% of the people in the training set had income above $50,000.
+Thus, a properly calibrated predictive model should predict that about 24% of the people have incomes above $50,000. Consider the raw probabilities returned by the simple logistic regression model.</p>
+<p>
+</p>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="ch-modeling.html#cb468-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(income_probs)</span></code></pre></div>
+<pre><code># A tibble: 6 × 5
+  income income_log_1 capital_gain `.pred_&lt;=50K` `.pred_&gt;50K`
+  &lt;fct&gt;  &lt;fct&gt;               &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;
+1 &lt;=50K  &lt;=50K                   0         0.798        0.202
+2 &gt;50K   &lt;=50K                   0         0.798        0.202
+3 &lt;=50K  &lt;=50K                   0         0.798        0.202
+4 &lt;=50K  &lt;=50K                   0         0.798        0.202
+5 &lt;=50K  &lt;=50K                   0         0.798        0.202
+6 &lt;=50K  &lt;=50K                   0         0.798        0.202</code></pre>
+<p>
+
+
+
+
+If we round these using a threshold of 0.5, then only NA% are predicted to have high incomes.
+Note that here we are able to work with the unfortunate characters in the variable names by wrapping them with backticks. Of course, we could also rename them.</p>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="ch-modeling.html#cb470-1" aria-hidden="true" tabindex="-1"></a>income_probs <span class="sc">%&gt;%</span></span>
+<span id="cb470-2"><a href="ch-modeling.html#cb470-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">rich =</span> <span class="st">`</span><span class="at">.pred_&gt;50K</span><span class="st">`</span> <span class="sc">&gt;</span> <span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb470-3"><a href="ch-modeling.html#cb470-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb470-4"><a href="ch-modeling.html#cb470-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> n <span class="sc">/</span> <span class="fu">nrow</span>(income_probs))</span></code></pre></div>
+<pre><code># A tibble: 2 × 3
+# Groups:   rich [2]
+  rich      n    pct
+  &lt;lgl&gt; &lt;int&gt;  &lt;dbl&gt;
+1 FALSE 24575 0.943 
+2 TRUE   1473 0.0565</code></pre>
+<p>A better alternative would be to use the overall observed percentage (i.e., 24%) as a threshold instead:</p>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="ch-modeling.html#cb472-1" aria-hidden="true" tabindex="-1"></a>income_probs <span class="sc">%&gt;%</span></span>
+<span id="cb472-2"><a href="ch-modeling.html#cb472-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">rich =</span> <span class="st">`</span><span class="at">.pred_&gt;50K</span><span class="st">`</span> <span class="sc">&gt;</span> pi_bar) <span class="sc">%&gt;%</span></span>
+<span id="cb472-3"><a href="ch-modeling.html#cb472-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb472-4"><a href="ch-modeling.html#cb472-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> n <span class="sc">/</span> <span class="fu">nrow</span>(income_probs))</span></code></pre></div>
+<pre><code># A tibble: 2 × 3
+# Groups:   rich [2]
+  rich      n    pct
+  &lt;lgl&gt; &lt;int&gt;  &lt;dbl&gt;
+1 FALSE 23930 0.919 
+2 TRUE   2118 0.0813</code></pre>
+<p>This is an improvement, but a more principled approach to assessing the quality of a classifier is a <a href="https://en.wikipedia.org/w/index.php?search=receiver%20operating%20characteristic"><em>receiver operating characteristic</em></a> (ROC) curve. This considers all possible threshold values for rounding, and graphically displays the trade-off between <a href="https://en.wikipedia.org/w/index.php?search=sensitivity"><em>sensitivity</em></a> (the true positive rate) and <a href="https://en.wikipedia.org/w/index.php?search=specificity"><em>specificity</em></a> (the true negative rate). What is actually plotted is the true positive rate as a function of the false positive rate.</p>
+<p>
+
+
+
+
+
+ROC curves are common in machine learning and operations research as well
+as assessment of test characteristics and medical imaging. They can be constructed in <strong>R</strong> using the <strong>yardstick</strong> package. Note that ROC curves operate on the fitted probabilities in <span class="math inline">\((0,1)\)</span>.</p>
+<p></p>
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="ch-modeling.html#cb474-1" aria-hidden="true" tabindex="-1"></a>roc <span class="ot">&lt;-</span> pred <span class="sc">%&gt;%</span></span>
+<span id="cb474-2"><a href="ch-modeling.html#cb474-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimate =</span> <span class="fu">pull</span>(income_probs, <span class="st">`</span><span class="at">.pred_&gt;50K</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb474-3"><a href="ch-modeling.html#cb474-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(<span class="at">truth =</span> income, estimate, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb474-4"><a href="ch-modeling.html#cb474-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code></pre></div>
+<p>Note that while the <code>roc_curve()</code> function performs the calculations necessary to draw the ROC curve, the <code>autoplot()</code> function is the one that actually returns a <strong>ggplot2</strong> object.</p>
+<p>
+
+
+
+In Figure <a href="ch-modeling.html#fig:roc-log">10.3</a> the upper-left corner represents a perfect classifier, which would have a true positive rate of 1 and a false positive rate of 0. On the other hand, a random classifier would lie along the diagonal, since it would be equally likely to make either kind of mistake.</p>
+<p>
+
+The simple logistic regression model that we used had the following true and false positive rates, which are indicated in Figure <a href="ch-modeling.html#fig:roc-log">10.3</a> by the black dot.
+A number of other metrics are available.</p>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="ch-modeling.html#cb475-1" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> pred <span class="sc">%&gt;%</span></span>
+<span id="cb475-2"><a href="ch-modeling.html#cb475-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_mat</span>(income, income_log_1) <span class="sc">%&gt;%</span></span>
+<span id="cb475-3"><a href="ch-modeling.html#cb475-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(<span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>)</span>
+<span id="cb475-4"><a href="ch-modeling.html#cb475-4" aria-hidden="true" tabindex="-1"></a>metrics</span></code></pre></div>
+<pre><code># A tibble: 13 × 3
+   .metric              .estimator .estimate
+   &lt;chr&gt;                &lt;chr&gt;          &lt;dbl&gt;
+ 1 accuracy             binary        0.800 
+ 2 kap                  binary        0.260 
+ 3 sens                 binary        0.202 
+ 4 spec                 binary        0.990 
+ 5 ppv                  binary        0.862 
+ 6 npv                  binary        0.796 
+ 7 mcc                  binary        0.355 
+ 8 j_index              binary        0.192 
+ 9 bal_accuracy         binary        0.596 
+10 detection_prevalence binary        0.0565
+11 precision            binary        0.862 
+12 recall               binary        0.202 
+13 f_meas               binary        0.327 </code></pre>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="ch-modeling.html#cb477-1" aria-hidden="true" tabindex="-1"></a>roc_mod <span class="ot">&lt;-</span> metrics <span class="sc">%&gt;%</span></span>
+<span id="cb477-2"><a href="ch-modeling.html#cb477-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.metric <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;sens&quot;</span>, <span class="st">&quot;spec&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb477-3"><a href="ch-modeling.html#cb477-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="sc">-</span>.estimator, <span class="at">names_from =</span> .metric, <span class="at">values_from =</span> .estimate)</span>
+<span id="cb477-4"><a href="ch-modeling.html#cb477-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb477-5"><a href="ch-modeling.html#cb477-5" aria-hidden="true" tabindex="-1"></a>roc <span class="sc">+</span> </span>
+<span id="cb477-6"><a href="ch-modeling.html#cb477-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb477-7"><a href="ch-modeling.html#cb477-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> roc_mod, <span class="at">size =</span> <span class="dv">3</span>, </span>
+<span id="cb477-8"><a href="ch-modeling.html#cb477-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span> <span class="sc">-</span> spec, <span class="at">y =</span> sens)</span>
+<span id="cb477-9"><a href="ch-modeling.html#cb477-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="figure"><span id="fig:roc-log"></span>
+<img src="10-modeling_files/figure-html/roc-log-1.png" alt="ROC curve for the simple logistic regression model." width="100%" />
+<p class="caption">
+Figure 10.3: ROC curve for the simple logistic regression model.
+</p>
+</div>
+<p>Depending on our tolerance for false positives vs. false negatives, we could modify the way that our logistic regression model rounds probabilities, which would have the effect of moving the black dot in Figure <a href="ch-modeling.html#fig:roc-log">10.3</a> along the curve.</p>
+</div>
+<div id="measuring-prediction-error-for-quantitative-responses" class="section level3" number="10.3.4">
+<h3><span class="header-section-number">10.3.4</span> Measuring prediction error for quantitative responses</h3>
+<p>
+</p>
+<p>
+
+For evaluating models with a quantitative response, there are a variety of criteria that are commonly used. Here we outline three of the simplest and most common. The following presumes a vector of real observations denoted <span class="math inline">\(y\)</span> and a corresponding vector of prediction <span class="math inline">\(\hat{y}\)</span>:</p>
+<ul>
+<li><p><strong>RMSE</strong>: <a href="https://en.wikipedia.org/w/index.php?search=Root-mean-square%20error"><em>Root-mean-square error</em></a> is probably the most common:</p>
+<p><span class="math display">\[
+  RMSE(y, \hat{y}) = \sqrt{\frac{1}{n} \sum_{i=1}^n (y - \hat{y})^2} \,.
+\]</span>
+The RMSE has several desirable properties. Namely, it is in the same units as the response variable <span class="math inline">\(y\)</span>, it captures both overestimates and underestimates equally, and it penalizes large misses heavily.</p></li>
+<li><p><strong>MAE</strong>: <a href="https://en.wikipedia.org/w/index.php?search=Mean%20absolute%20error"><em>Mean absolute error</em></a> is similar to the RMSE, but does not penalize large misses as heavily, due to the replacement of the squared term by an absolute value:</p>
+<p><span class="math display">\[
+  MAE(y, \hat{y}) = \frac{1}{n} \sum_{i=1}^n |y - \hat{y}| \,.
+\]</span>
+
+</p></li>
+<li><p><strong>Correlation</strong>: The previous two methods require that the units and scale of the predictions <span class="math inline">\(\hat{y}\)</span> are the same as the response variable <span class="math inline">\(y\)</span>.
+While this is of course necessary for accurate predictions, some predictive models merely want to track the trends in the response.
+In many such cases the <a href="https://en.wikipedia.org/w/index.php?search=correlation"><em>correlation</em></a> between <span class="math inline">\(y\)</span> and <span class="math inline">\(\hat{y}\)</span> may suffice.
+
+
+In addition to the usual Pearson product-moment correlation (measure of linear association), statistics related to <a href="https://en.wikipedia.org/w/index.php?search=rank%20correlation"><em>rank correlation</em></a> may be useful.
+That is, instead of trying to minimize <span class="math inline">\(y - \hat{y}\)</span>, it might be enough to make sure that the <span class="math inline">\(\hat{y}_i\)</span>’s are in the same relative order as the <span class="math inline">\(y_i\)</span>’s.
+
+
+
+Popular measures of rank correlation include Spearman’s <span class="math inline">\(\rho\)</span> and Kendall’s <span class="math inline">\(\tau\)</span>.
+</p></li>
+<li><p><strong>Coefficient of determination</strong>: (<span class="math inline">\(R^2\)</span>) The <a href="https://en.wikipedia.org/w/index.php?search=coefficient%20of%20determination"><em>coefficient of determination</em></a> describes what proportion of variability in the outcome is explained by the model.
+
+
+It is measured on a scale of <span class="math inline">\([0,1]\)</span>, with 1 indicating a perfect match between <span class="math inline">\(y\)</span> and <span class="math inline">\(\hat{y}\)</span>.</p></li>
+</ul>
+</div>
+<div id="sec:evaluate" class="section level3" number="10.3.5">
+<h3><span class="header-section-number">10.3.5</span> Example: Evaluation of income models</h3>
+<p>
+
+Recall that we separated the 32,561 observations in the <code>census</code> data set into a training set that contained 80% of the observations and a testing set that contained the remaining 20%.
+Since the separation was done by selecting rows uniformly at random, and the number of observations was fairly large, it seems likely that both the training and testing set will contain similar information.
+For example, the distribution of <code>capital_gain</code> is similar in both the testing and training sets.
+Nevertheless, it is worth formally testing the performance of our models on both sets.</p>
+<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="ch-modeling.html#cb478-1" aria-hidden="true" tabindex="-1"></a>train <span class="sc">%&gt;%</span></span>
+<span id="cb478-2"><a href="ch-modeling.html#cb478-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>(capital_gain)</span></code></pre></div>
+<pre><code>
+── Variable type: numeric ──────────────────────────────────────────────────
+  var              n    na  mean    sd    p0   p25   p50   p75  p100
+1 capital_gain 26048     0 1079. 7406.     0     0     0     0 99999</code></pre>
+<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="ch-modeling.html#cb480-1" aria-hidden="true" tabindex="-1"></a>test <span class="sc">%&gt;%</span></span>
+<span id="cb480-2"><a href="ch-modeling.html#cb480-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>(capital_gain)</span></code></pre></div>
+<pre><code>
+── Variable type: numeric ──────────────────────────────────────────────────
+  var              n    na  mean    sd    p0   p25   p50   p75  p100
+1 capital_gain  6513     0 1073. 7300.     0     0     0     0 99999</code></pre>
+<p>We note that at least three quarters of both samples reported no capital gains.</p>
+<p>
+
+
+To do this, we build a data frame that contains an identifier for each of our three models, as well as a list-column with the model objects.
+
+
+</p>
+<p>
+
+</p>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="ch-modeling.html#cb482-1" aria-hidden="true" tabindex="-1"></a>mods <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb482-2"><a href="ch-modeling.html#cb482-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;null&quot;</span>, <span class="st">&quot;log_1&quot;</span>, <span class="st">&quot;log_all&quot;</span>),</span>
+<span id="cb482-3"><a href="ch-modeling.html#cb482-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mod =</span> <span class="fu">list</span>(mod_null, mod_log_1, mod_log_all)</span>
+<span id="cb482-4"><a href="ch-modeling.html#cb482-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>We can iterate through the list of models and apply the <code>predict()</code> method to each object, using both the testing and training sets.</p>
+<p>
+
+</p>
+<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="ch-modeling.html#cb483-1" aria-hidden="true" tabindex="-1"></a>mods <span class="ot">&lt;-</span> mods <span class="sc">%&gt;%</span></span>
+<span id="cb483-2"><a href="ch-modeling.html#cb483-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb483-3"><a href="ch-modeling.html#cb483-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">y_train =</span> <span class="fu">list</span>(<span class="fu">pull</span>(train, income)),</span>
+<span id="cb483-4"><a href="ch-modeling.html#cb483-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">y_test =</span> <span class="fu">list</span>(<span class="fu">pull</span>(test, income)),</span>
+<span id="cb483-5"><a href="ch-modeling.html#cb483-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y_hat_train =</span> <span class="fu">map</span>(</span>
+<span id="cb483-6"><a href="ch-modeling.html#cb483-6" aria-hidden="true" tabindex="-1"></a>      mod, </span>
+<span id="cb483-7"><a href="ch-modeling.html#cb483-7" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span><span class="fu">pull</span>(<span class="fu">predict</span>(.x, <span class="at">new_data =</span> train, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>), .pred_class)</span>
+<span id="cb483-8"><a href="ch-modeling.html#cb483-8" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb483-9"><a href="ch-modeling.html#cb483-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y_hat_test =</span> <span class="fu">map</span>(</span>
+<span id="cb483-10"><a href="ch-modeling.html#cb483-10" aria-hidden="true" tabindex="-1"></a>      mod, </span>
+<span id="cb483-11"><a href="ch-modeling.html#cb483-11" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span><span class="fu">pull</span>(<span class="fu">predict</span>(.x, <span class="at">new_data =</span> test, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>), .pred_class)</span>
+<span id="cb483-12"><a href="ch-modeling.html#cb483-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb483-13"><a href="ch-modeling.html#cb483-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb483-14"><a href="ch-modeling.html#cb483-14" aria-hidden="true" tabindex="-1"></a>mods</span></code></pre></div>
+<pre><code># A tibble: 3 × 6
+  type    mod      y_train        y_test        y_hat_train    y_hat_test   
+  &lt;chr&gt;   &lt;list&gt;   &lt;list&gt;         &lt;list&gt;        &lt;list&gt;         &lt;list&gt;       
+1 null    &lt;fit[+]&gt; &lt;fct [26,048]&gt; &lt;fct [6,513]&gt; &lt;fct [26,048]&gt; &lt;fct [6,513]&gt;
+2 log_1   &lt;fit[+]&gt; &lt;fct [26,048]&gt; &lt;fct [6,513]&gt; &lt;fct [26,048]&gt; &lt;fct [6,513]&gt;
+3 log_all &lt;fit[+]&gt; &lt;fct [26,048]&gt; &lt;fct [6,513]&gt; &lt;fct [26,048]&gt; &lt;fct [6,513]&gt;</code></pre>
+<p>
+Now that we have the predictions for each model, we just need to compare them to the truth (<code>y</code>) and tally the results. We can do this using the <code>map2_dbl()</code> function from the <strong>purrr</strong> package.</p>
+<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="ch-modeling.html#cb485-1" aria-hidden="true" tabindex="-1"></a>mods <span class="ot">&lt;-</span> mods <span class="sc">%&gt;%</span></span>
+<span id="cb485-2"><a href="ch-modeling.html#cb485-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb485-3"><a href="ch-modeling.html#cb485-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">accuracy_train =</span> <span class="fu">map2_dbl</span>(y_train, y_hat_train, accuracy_vec),</span>
+<span id="cb485-4"><a href="ch-modeling.html#cb485-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">accuracy_test =</span> <span class="fu">map2_dbl</span>(y_test, y_hat_test, accuracy_vec),</span>
+<span id="cb485-5"><a href="ch-modeling.html#cb485-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sens_test =</span> </span>
+<span id="cb485-6"><a href="ch-modeling.html#cb485-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">map2_dbl</span>(y_test, y_hat_test, sens_vec, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>),</span>
+<span id="cb485-7"><a href="ch-modeling.html#cb485-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">spec_test =</span> </span>
+<span id="cb485-8"><a href="ch-modeling.html#cb485-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">map2_dbl</span>(y_test, y_hat_test, spec_vec, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>)</span>
+<span id="cb485-9"><a href="ch-modeling.html#cb485-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:accuracytest">Table 10.1: </span>Model accuracy measures for the income model.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+type
+</th>
+<th style="text-align:right;">
+accuracy_train
+</th>
+<th style="text-align:right;">
+accuracy_test
+</th>
+<th style="text-align:right;">
+sens_test
+</th>
+<th style="text-align:right;">
+spec_test
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+log_all
+</td>
+<td style="text-align:right;">
+0.852
+</td>
+<td style="text-align:right;">
+0.849
+</td>
+<td style="text-align:right;">
+0.598
+</td>
+<td style="text-align:right;">
+0.928
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+log_1
+</td>
+<td style="text-align:right;">
+0.800
+</td>
+<td style="text-align:right;">
+0.803
+</td>
+<td style="text-align:right;">
+0.204
+</td>
+<td style="text-align:right;">
+0.991
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+null
+</td>
+<td style="text-align:right;">
+0.759
+</td>
+<td style="text-align:right;">
+0.761
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+1.000
+</td>
+</tr>
+</tbody>
+</table>
+<p>Table <a href="ch-modeling.html#tab:accuracytest">10.1</a> displays a number of model accuracy measures.
+Note that each model performs slightly worse on the testing set than it did on the training set.
+As expected, the null model has a sensitivity of 0 and a specificity of 1, because it always makes the same prediction.
+While the model that includes all of the variables is slightly less specific than the single explanatory variable model, it is much more sensitive.
+In this case, we should probably conclude that the <code>log_all</code> model is the most likely to be useful.</p>
+<p>In Figure <a href="ch-modeling.html#fig:roc-log-compare">10.4</a>, we compare the ROC curves for all census models on the testing data set. Some data wrangling is necessary before we can gather the information to make these curves.
+
+
+
+</p>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="ch-modeling.html#cb486-1" aria-hidden="true" tabindex="-1"></a>mods <span class="ot">&lt;-</span> mods <span class="sc">%&gt;%</span></span>
+<span id="cb486-2"><a href="ch-modeling.html#cb486-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb486-3"><a href="ch-modeling.html#cb486-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">y_hat_prob_test =</span> <span class="fu">map</span>(</span>
+<span id="cb486-4"><a href="ch-modeling.html#cb486-4" aria-hidden="true" tabindex="-1"></a>      mod, </span>
+<span id="cb486-5"><a href="ch-modeling.html#cb486-5" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span><span class="fu">pull</span>(<span class="fu">predict</span>(.x, <span class="at">new_data =</span> test, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>), <span class="st">`</span><span class="at">.pred_&gt;50K</span><span class="st">`</span>)</span>
+<span id="cb486-6"><a href="ch-modeling.html#cb486-6" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb486-7"><a href="ch-modeling.html#cb486-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="fu">fct_reorder</span>(type, sens_test, <span class="at">.desc =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb486-8"><a href="ch-modeling.html#cb486-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="ch-modeling.html#cb487-1" aria-hidden="true" tabindex="-1"></a>mods <span class="sc">%&gt;%</span></span>
+<span id="cb487-2"><a href="ch-modeling.html#cb487-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(type, y_test, y_hat_prob_test) <span class="sc">%&gt;%</span></span>
+<span id="cb487-3"><a href="ch-modeling.html#cb487-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(y_test, y_hat_prob_test)) <span class="sc">%&gt;%</span></span>
+<span id="cb487-4"><a href="ch-modeling.html#cb487-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(type) <span class="sc">%&gt;%</span></span>
+<span id="cb487-5"><a href="ch-modeling.html#cb487-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(<span class="at">truth =</span> y_test, y_hat_prob_test, <span class="at">event_level =</span> <span class="st">&quot;second&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb487-6"><a href="ch-modeling.html#cb487-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>() <span class="sc">+</span> </span>
+<span id="cb487-7"><a href="ch-modeling.html#cb487-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb487-8"><a href="ch-modeling.html#cb487-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> mods, </span>
+<span id="cb487-9"><a href="ch-modeling.html#cb487-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span> <span class="sc">-</span> spec_test, <span class="at">y =</span> sens_test, <span class="at">color =</span> type), </span>
+<span id="cb487-10"><a href="ch-modeling.html#cb487-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span></span>
+<span id="cb487-11"><a href="ch-modeling.html#cb487-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb487-12"><a href="ch-modeling.html#cb487-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="st">&quot;Model&quot;</span>, <span class="at">palette =</span> <span class="st">&quot;Set2&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:roc-log-compare"></span>
+<img src="10-modeling_files/figure-html/roc-log-compare-1.png" alt="Comparison of ROC curves across three logistic regression models on the Census testing data. The null model has a true positive rate of zero and lies along the diagonal. The full model is the best overall performer, as its curve lies furthest from the diagonal." width="100%" />
+<p class="caption">
+Figure 10.4: Comparison of ROC curves across three logistic regression models on the Census testing data. The null model has a true positive rate of zero and lies along the diagonal. The full model is the best overall performer, as its curve lies furthest from the diagonal.
+</p>
+</div>
+</div>
+</div>
+<div id="sec:diabetes" class="section level2" number="10.4">
+<h2><span class="header-section-number">10.4</span> Extended example: Who has diabetes?</h2>
+<p></p>
+<p>
+
+Consider the relationship between age and <a href="https://en.wikipedia.org/w/index.php?search=diabetes%20mellitus"><em>diabetes mellitus</em></a>, a group of metabolic diseases characterized by high blood sugar levels.
+As with many diseases, the risk of contracting diabetes increases with age and is associated with many other factors.
+Age does not suggest a way to avoid diabetes: there is no way for you to change your age.
+You can, however, change things like diet, physical fitness, etc.
+Knowing what is predictive of diabetes can be helpful in practice, for instance, to design an efficient screening program to test people for the disease.</p>
+<p>
+
+Let’s start simply. What is the relationship between age, body-mass index (BMI), and diabetes for adults surveyed in <code>NHANES</code>?
+Note that the overall rate of diabetes is relatively low.</p>
+<p></p>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="ch-modeling.html#cb488-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
+<span id="cb488-2"><a href="ch-modeling.html#cb488-2" aria-hidden="true" tabindex="-1"></a>people <span class="ot">&lt;-</span> NHANES <span class="sc">%&gt;%</span></span>
+<span id="cb488-3"><a href="ch-modeling.html#cb488-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Age, Gender, Diabetes, BMI, HHIncome, PhysActive) <span class="sc">%&gt;%</span> </span>
+<span id="cb488-4"><a href="ch-modeling.html#cb488-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb488-5"><a href="ch-modeling.html#cb488-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(people)</span></code></pre></div>
+<pre><code>Rows: 7,555
+Columns: 6
+$ Age        &lt;int&gt; 34, 34, 34, 49, 45, 45, 45, 66, 58, 54, 58, 50, 33, 60,…
+$ Gender     &lt;fct&gt; male, male, male, female, female, female, female, male,…
+$ Diabetes   &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, No, No,…
+$ BMI        &lt;dbl&gt; 32.2, 32.2, 32.2, 30.6, 27.2, 27.2, 27.2, 23.7, 23.7, 2…
+$ HHIncome   &lt;fct&gt; 25000-34999, 25000-34999, 25000-34999, 35000-44999, 750…
+$ PhysActive &lt;fct&gt; No, No, No, No, Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes,…</code></pre>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="ch-modeling.html#cb490-1" aria-hidden="true" tabindex="-1"></a>people <span class="sc">%&gt;%</span></span>
+<span id="cb490-2"><a href="ch-modeling.html#cb490-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Diabetes) <span class="sc">%&gt;%</span></span>
+<span id="cb490-3"><a href="ch-modeling.html#cb490-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb490-4"><a href="ch-modeling.html#cb490-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> n <span class="sc">/</span> <span class="fu">nrow</span>(people))</span></code></pre></div>
+<pre><code># A tibble: 2 × 3
+# Groups:   Diabetes [2]
+  Diabetes     n    pct
+  &lt;fct&gt;    &lt;int&gt;  &lt;dbl&gt;
+1 No        6871 0.909 
+2 Yes        684 0.0905</code></pre>
+<p>We can visualize any model.
+In this case, we will tile the <span class="math inline">\((Age, BMI)\)</span>-plane with a fine grid of 10,000 points.</p>
+<p>
+</p>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="ch-modeling.html#cb492-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
+<span id="cb492-2"><a href="ch-modeling.html#cb492-2" aria-hidden="true" tabindex="-1"></a>num_points <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb492-3"><a href="ch-modeling.html#cb492-3" aria-hidden="true" tabindex="-1"></a>fake_grid <span class="ot">&lt;-</span> <span class="fu">data_grid</span>(</span>
+<span id="cb492-4"><a href="ch-modeling.html#cb492-4" aria-hidden="true" tabindex="-1"></a>  people, </span>
+<span id="cb492-5"><a href="ch-modeling.html#cb492-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Age =</span> <span class="fu">seq_range</span>(Age, num_points),</span>
+<span id="cb492-6"><a href="ch-modeling.html#cb492-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">BMI =</span> <span class="fu">seq_range</span>(BMI, num_points)</span>
+<span id="cb492-7"><a href="ch-modeling.html#cb492-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Next, we will evaluate each of our four models on each grid point, taking care to retrieve not the classification itself, but the probability of having diabetes.
+The null model considers no variable.
+The next two models consider only age, or BMI, while the last model considers both.</p>
+<p></p>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="ch-modeling.html#cb493-1" aria-hidden="true" tabindex="-1"></a>dmod_null <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>(<span class="at">mode =</span> <span class="st">&quot;classification&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb493-2"><a href="ch-modeling.html#cb493-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb493-3"><a href="ch-modeling.html#cb493-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(Diabetes <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> people)</span>
+<span id="cb493-4"><a href="ch-modeling.html#cb493-4" aria-hidden="true" tabindex="-1"></a>dmod_log_1 <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>(<span class="at">mode =</span> <span class="st">&quot;classification&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb493-5"><a href="ch-modeling.html#cb493-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb493-6"><a href="ch-modeling.html#cb493-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(Diabetes <span class="sc">~</span> Age, <span class="at">data =</span> people)</span>
+<span id="cb493-7"><a href="ch-modeling.html#cb493-7" aria-hidden="true" tabindex="-1"></a>dmod_log_2 <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>(<span class="at">mode =</span> <span class="st">&quot;classification&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb493-8"><a href="ch-modeling.html#cb493-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb493-9"><a href="ch-modeling.html#cb493-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(Diabetes <span class="sc">~</span> BMI, <span class="at">data =</span> people)</span>
+<span id="cb493-10"><a href="ch-modeling.html#cb493-10" aria-hidden="true" tabindex="-1"></a>dmod_log_12 <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>(<span class="at">mode =</span> <span class="st">&quot;classification&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb493-11"><a href="ch-modeling.html#cb493-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">&quot;glm&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb493-12"><a href="ch-modeling.html#cb493-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(Diabetes <span class="sc">~</span> Age <span class="sc">+</span> BMI, <span class="at">data =</span> people)</span>
+<span id="cb493-13"><a href="ch-modeling.html#cb493-13" aria-hidden="true" tabindex="-1"></a>bmi_mods <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb493-14"><a href="ch-modeling.html#cb493-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">factor</span>(</span>
+<span id="cb493-15"><a href="ch-modeling.html#cb493-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;Null&quot;</span>, <span class="st">&quot;Logistic (Age)&quot;</span>, <span class="st">&quot;Logistic (BMI)&quot;</span>, <span class="st">&quot;Logistic (Age, BMI)&quot;</span>)</span>
+<span id="cb493-16"><a href="ch-modeling.html#cb493-16" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb493-17"><a href="ch-modeling.html#cb493-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">mod =</span> <span class="fu">list</span>(dmod_null, dmod_log_1, dmod_log_2, dmod_log_12),</span>
+<span id="cb493-18"><a href="ch-modeling.html#cb493-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">y_hat =</span> <span class="fu">map</span>(mod, predict, <span class="at">new_data =</span> fake_grid, <span class="at">type =</span> <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb493-19"><a href="ch-modeling.html#cb493-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Next, we add the grid data (<code>X</code>), and then use <code>map2()</code> to combine the predictions (<code>y_hat</code>) with the grid data.</p>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="ch-modeling.html#cb494-1" aria-hidden="true" tabindex="-1"></a>bmi_mods <span class="ot">&lt;-</span> bmi_mods <span class="sc">%&gt;%</span></span>
+<span id="cb494-2"><a href="ch-modeling.html#cb494-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb494-3"><a href="ch-modeling.html#cb494-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> <span class="fu">list</span>(fake_grid),</span>
+<span id="cb494-4"><a href="ch-modeling.html#cb494-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">yX =</span> <span class="fu">map2</span>(y_hat, X, bind_cols)</span>
+<span id="cb494-5"><a href="ch-modeling.html#cb494-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>Finally, we use <code>unnest()</code> to stretch the data frame out.
+We now have a prediction at each of our 10,000 grid points for each of our four models.
+
+</p>
+<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="ch-modeling.html#cb495-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> bmi_mods <span class="sc">%&gt;%</span></span>
+<span id="cb495-2"><a href="ch-modeling.html#cb495-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(type, yX) <span class="sc">%&gt;%</span></span>
+<span id="cb495-3"><a href="ch-modeling.html#cb495-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(<span class="at">cols =</span> yX)</span>
+<span id="cb495-4"><a href="ch-modeling.html#cb495-4" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
+<pre><code># A tibble: 40,000 × 5
+   type  .pred_No .pred_Yes   Age   BMI
+   &lt;fct&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 Null     0.909    0.0905    12  13.3
+ 2 Null     0.909    0.0905    12  14.0
+ 3 Null     0.909    0.0905    12  14.7
+ 4 Null     0.909    0.0905    12  15.4
+ 5 Null     0.909    0.0905    12  16.0
+ 6 Null     0.909    0.0905    12  16.7
+ 7 Null     0.909    0.0905    12  17.4
+ 8 Null     0.909    0.0905    12  18.1
+ 9 Null     0.909    0.0905    12  18.8
+10 Null     0.909    0.0905    12  19.5
+# … with 39,990 more rows</code></pre>
+<p>Figure <a href="ch-modeling.html#fig:mod-log-compare">10.5</a> illustrates each model in the data space. Whereas the null model predicts the probability of diabetes to be constant irrespective of age and BMI, including age (BMI) as an explanatory variable allows the predicted probability to vary in the horizontal (vertical) direction.
+Older patients and those with larger body mass have a higher probability of having diabetes.
+Having both variables as covariates allows the probability to vary with respect to both age and BMI.
+
+</p>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="ch-modeling.html#cb497-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> res, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> BMI)) <span class="sc">+</span></span>
+<span id="cb497-2"><a href="ch-modeling.html#cb497-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill =</span> .pred_Yes), <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb497-3"><a href="ch-modeling.html#cb497-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_count</span>(</span>
+<span id="cb497-4"><a href="ch-modeling.html#cb497-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> people, </span>
+<span id="cb497-5"><a href="ch-modeling.html#cb497-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">color =</span> Diabetes), <span class="at">alpha =</span> <span class="fl">0.4</span></span>
+<span id="cb497-6"><a href="ch-modeling.html#cb497-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb497-7"><a href="ch-modeling.html#cb497-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="st">&quot;Prob of</span><span class="sc">\n</span><span class="st">Diabetes&quot;</span>, <span class="at">low =</span> <span class="st">&quot;white&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb497-8"><a href="ch-modeling.html#cb497-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;gold&quot;</span>, <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb497-9"><a href="ch-modeling.html#cb497-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>)) <span class="sc">+</span> </span>
+<span id="cb497-10"><a href="ch-modeling.html#cb497-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="fl">0.02</span>, <span class="dv">0</span>)) <span class="sc">+</span> </span>
+<span id="cb497-11"><a href="ch-modeling.html#cb497-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="fl">0.02</span>, <span class="dv">0</span>)) <span class="sc">+</span> </span>
+<span id="cb497-12"><a href="ch-modeling.html#cb497-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span><span class="fu">fct_rev</span>(type))</span></code></pre></div>
+<div class="figure"><span id="fig:mod-log-compare"></span>
+<img src="10-modeling_files/figure-html/mod-log-compare-1.png" alt="Comparison of logistic regression models in the data space. Note the greater flexibility as more variables are introduced." width="100%" />
+<p class="caption">
+Figure 10.5: Comparison of logistic regression models in the data space. Note the greater flexibility as more variables are introduced.
+</p>
+</div>
+</div>
+<div id="modeling-further" class="section level2" number="10.5">
+<h2><span class="header-section-number">10.5</span> Further resources</h2>
+<p>The <strong>tidymodels</strong> package and documentation contains many vignettes<a href="ch-modeling.html#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a> that go into further detail on how the package can be used.</p>
+</div>
+<div id="modeling-exercises" class="section level2" number="10.6">
+<h2><span class="header-section-number">10.6</span> Exercises</h2>
+<p><strong>Problem 1 (Easy)</strong>: In the first example in the chapter, a training dataset of 80% of the rows was created for the Census data.
+What would be the tradeoffs of using a 90%/10% split instead?</p>
+<p><strong>Problem 2 (Easy)</strong>: Without using jargon, describe what a receiver operating characteristic (ROC) curve is and why it is important in predictive analytics and machine learning.</p>
+<p><strong>Problem 3 (Medium)</strong>: Investigators in the HELP (Health Evaluation and Linkage to Primary Care) study were interested in modeling the probability of being <code>homeless</code> (one or more nights spent on the street or in a shelter in the past six months vs. housed) as a function of age.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Generate a confusion matrix for the null model and interpret the result.</p></li>
+<li><p>Fit and interpret logistic regression model for the probability of being <code>homeless</code> as a function of age.</p></li>
+<li><p>What is the predicted probability of being homeless for a 20 year old? For a 40 year old?</p></li>
+<li><p>Generate a confusion matrix for the second model and interpret the result.</p></li>
+</ol>
+<p><strong>Problem 4 (Medium)</strong>: Investigators in the HELP (Health Evaluation and Linkage to Primary Care) study were interested in modeling associations between demographic factors and a baseline measure of depressive symptoms <code>cesd</code>.
+They fit a linear regression model using the following predictors: <code>age</code>, <code>sex</code>, and <code>homeless</code> to the <code>HELPrct</code> data from the <code>mosaicData</code> package.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Calculate and interpret the coefficient of determination (<span class="math inline">\(R^2\)</span>) for this model and the null model.</p></li>
+<li><p>Calculate and interpret the root mean squared error for this model and for the null model.</p></li>
+<li><p>Calculate and interpret the mean absolute error (MAE) for this model and the null model.</p></li>
+</ol>
+<p><strong>Problem 5 (Medium)</strong>: What impact does the random number seed have on our results?</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Repeat the Census logistic regression model that controlled only for capital gains but using a different random number seed (365 instead of 364) for the 80%/20% split. Would you expect big differences in the accuracy using the training data? Testing data?</p></li>
+<li><p>Repeat the process using a random number seed of 366. What do you conclude?</p></li>
+</ol>
+<p><strong>Problem 6 (Hard)</strong>: Smoking is an important public health concern. Use the <code>NHANES</code> data from the <code>NHANES</code> package to develop a logistic regression model that identifies predictors of current smoking among those 20 or older. (Hint: note that the <code>SmokeNow</code> variable is missing for those who have never smoked: you will need to recode the variable to construct your outcome variable.)</p>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="ch-modeling.html#cb498-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb498-2"><a href="ch-modeling.html#cb498-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
+<span id="cb498-3"><a href="ch-modeling.html#cb498-3" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">tally</span>(<span class="sc">~</span> SmokeNow <span class="sc">+</span> Smoke100, <span class="at">data =</span> <span class="fu">filter</span>(NHANES, Age <span class="sc">&gt;=</span> <span class="dv">20</span>))</span></code></pre></div>
+<pre><code>        Smoke100
+SmokeNow   No  Yes
+    No      0 1745
+    Yes     0 1466
+    &lt;NA&gt; 4024    0</code></pre>
+</div>
+<div id="modeling-online-exercises" class="section level2" number="10.7">
+<h2><span class="header-section-number">10.7</span> Supplementary exercises</h2>
+<p>Available at <a href="ch-modeling.html#modeling-online-exercises" class="uri">https://mdsr-book.github.io/mdsr2e/ch-modeling.html#modeling-online-exercises</a></p>
+<p>No exercises found</p>
+<hr />
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="15">
+<li id="fn15"><p><a href="https://www.tidymodels.org/learn/statistics/tidy-analysis" class="uri">https://www.tidymodels.org/learn/statistics/tidy-analysis</a><a href="ch-modeling.html#fnref15" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch-foundations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch-learningI.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="book_assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/10-modeling.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["mdsr2e.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
